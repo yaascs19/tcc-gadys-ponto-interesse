@@ -1,0 +1,18 @@
+# LOGO GADYS CRIADA!
+# 
+# A logo foi criada como arquivo SVG: gadys-logo.svg
+# 
+# Elementos da logo:
+# - Bússola (navegação/exploração)
+# - Pin de localização (pontos de interesse)  
+# - Cores: azul escuro (#1a237e) e vermelho (#e74c3c)
+# - Texto "GADYS" + subtítulo "Pontos de Interesse"
+#
+# Para usar a logo no site:
+# <img src="/gadys-logo.svg" alt="GADYS Logo" />
+#
+# Ou como logo na navbar:
+# <img src="/gadys-logo.svg" alt="GADYS" className="logo-img" />
+#
+# Se quiser adicionar sua própria imagem, substitua este arquivo
+# por sua foto (formatos: .jpg, .jpeg, .png, .gif, .webp)

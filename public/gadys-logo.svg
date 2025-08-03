@@ -1,0 +1,37 @@
+<svg width="190" height="50" viewBox="0 0 190 50" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient circle -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e3f2fd;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#bbdefb;stop-opacity:0.8" />
+    </linearGradient>
+    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ffffff" />
+      <stop offset="100%" style="stop-color:#e3f2fd" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Main background -->
+  <rect width="190" height="50" rx="25" fill="url(#bgGradient)"/>
+  
+  <!-- Globe/World icon -->
+  <circle cx="25" cy="25" r="12" fill="none" stroke="#ffffff" stroke-width="2"/>
+  <path d="M13 25 Q25 15 37 25 Q25 35 13 25" fill="none" stroke="#ffffff" stroke-width="1.5"/>
+  <path d="M25 13 L25 37" stroke="#ffffff" stroke-width="1.5"/>
+  <path d="M13 25 L37 25" stroke="#ffffff" stroke-width="1.5"/>
+  
+  <!-- Small stars around globe -->
+  <path d="M40 18 L41 20 L43 20 L41.5 21.5 L42 23.5 L40 22.5 L38 23.5 L38.5 21.5 L37 20 L39 20 Z" fill="#e74c3c" opacity="0.8"/>
+  <path d="M10 15 L10.5 16 L11.5 16 L10.8 16.7 L11 17.7 L10 17.2 L9 17.7 L9.2 16.7 L8.5 16 L9.5 16 Z" fill="#e74c3c" opacity="0.8"/>
+  
+  <!-- Text GADYS with gradient -->
+  <text x="50" y="20" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="url(#textGradient)">GADYS</text>
+  
+  <!-- Elegant subtitle -->
+  <text x="50" y="32" font-family="Arial, sans-serif" font-size="9" fill="#000000" font-style="italic">Explore • Discover • Experience</text>
+  
+  <!-- Location pin accent -->
+  <path d="M170 15 C172.5 15 174.5 17 174.5 19.5 C174.5 22.5 170 28 170 28 S165.5 22.5 165.5 19.5 C165.5 17 167.5 15 170 15 Z" fill="#e74c3c"/>
+  <circle cx="170" cy="19.5" r="2.5" fill="white"/>
+  <circle cx="170" cy="19.5" r="1" fill="#e74c3c"/>
+</svg>

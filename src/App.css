@@ -5,7 +5,7 @@
 }
 
 .header {
-  background: #1976d2;
+  background: #1a237e;
   color: white;
   padding: 1rem 0;
   position: sticky;
@@ -65,6 +65,45 @@
 
 .nav-links a:hover::before {
   width: 100%;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 200px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1000;
+  border-radius: 5px;
+  top: 100%;
+  left: 0;
+}
+
+.dropdown-content a {
+  color: #333 !important;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  transition: background-color 0.3s;
+}
+
+.dropdown-content a::before {
+  display: none;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+  color: #1a237e !important;
+  transform: none;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
 }
 
 .main {
@@ -132,14 +171,17 @@
 }
 
 .nav-dot {
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.5);
   border: 2px solid rgba(255, 255, 255, 0.8);
   cursor: pointer;
   transition: all 0.3s ease;
   padding: 0;
+  outline: none;
+  z-index: 10;
+  position: relative;
 }
 
 .nav-dot:hover {

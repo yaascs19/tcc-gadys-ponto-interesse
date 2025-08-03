@@ -1,0 +1,102 @@
+.lugares-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-lugares {
+  background: linear-gradient(rgba(26, 35, 126, 0.8), rgba(26, 35, 126, 0.8)), url('https://images.unsplash.com/photo-1483729558449-99ef09a8c325?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  padding: 6rem 2rem 4rem;
+  text-align: center;
+}
+
+.hero-lugares h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.hero-lugares p {
+  font-size: 1.3rem;
+  opacity: 0.9;
+}
+
+.lugares-grid-section {
+  padding: 5rem 0;
+  background: #f8f9fa;
+}
+
+.lugares-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+}
+
+.lugar-card {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.lugar-card:hover {
+  transform: translateY(-5px);
+}
+
+.lugar-card img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.lugar-info {
+  padding: 2rem;
+}
+
+.lugar-info h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+}
+
+.cidade {
+  color: #7f8c8d;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.descricao {
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.btn-visitar {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 0.8rem 2rem;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s ease;
+}
+
+.btn-visitar:hover {
+  background: #c0392b;
+}
+
+@media (max-width: 768px) {
+  .hero-lugares h1 {
+    font-size: 2.5rem;
+  }
+  
+  .lugares-grid {
+    grid-template-columns: 1fr;
+  }
+}
