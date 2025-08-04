@@ -53,6 +53,7 @@ function App() {
       stopAutoSlide()
     }
   }, [])
+
   return (
     <div className="app">
       <header className="header">
@@ -63,14 +64,15 @@ function App() {
             <li className="dropdown">
               <a href="#features" onClick={(e) => {e.preventDefault(); document.getElementById('features').scrollIntoView({behavior: 'smooth'})}}>Categorias ▼</a>
               <div className="dropdown-content">
-                <a href="#monumentos">🏛️ Monumentos</a>
-                <a href="#natureza">🌳 Natureza</a>
-                <a href="#gastronomia">🍽️ Gastronomia</a>
-                <a href="#cultura">🎨 Cultura</a>
+                <a href="/monumentos.html">🏛️ Monumentos</a>
+                <a href="/natureza.html">🌳 Natureza</a>
+                <a href="/gastronomia.html">🍽️ Gastronomia</a>
+                <a href="/cultura.html">🎨 Cultura</a>
               </div>
             </li>
-            <li><a href="#about">Sobre</a></li>
-            <li><a href="#contact">Contato</a></li>
+            <li><a href="/adicionar-locais.html">Adicionar locais</a></li>
+            <li><a href="/sobre.html">Sobre</a></li>
+            <li><a href="/contato.html">Contato</a></li>
           </ul>
         </nav>
       </header>

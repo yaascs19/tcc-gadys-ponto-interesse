@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GADYS - Lugares Mais Visitados</title>
+    <title>GADYS - Monumentos Históricos</title>
     <style>
         * {
             margin: 0;
@@ -39,8 +39,7 @@
         }
         
         .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
+            height: 40px;
         }
         
         .nav-links {
@@ -61,8 +60,42 @@
             background: rgba(255, 255, 255, 0.1);
         }
         
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1000;
+            border-radius: 5px;
+            top: 100%;
+            left: 0;
+        }
+        
+        .dropdown-content a {
+            color: #333 !important;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+            color: #1a237e !important;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
         .hero {
-            background: linear-gradient(rgba(26, 35, 126, 0.8), rgba(26, 35, 126, 0.8)), url('https://images.unsplash.com/photo-1483729558449-99ef09a8c325?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background: linear-gradient(rgba(26, 35, 126, 0.8), rgba(26, 35, 126, 0.8)), url('https://images.unsplash.com/photo-1539037116277-4db20889f2d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
             background-position: center;
             color: white;
@@ -162,40 +195,6 @@
             padding: 2rem;
         }
         
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-        
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: white;
-            min-width: 200px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1000;
-            border-radius: 5px;
-            top: 100%;
-            left: 0;
-        }
-        
-        .dropdown-content a {
-            color: #333 !important;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            transition: background-color 0.3s;
-        }
-        
-        .dropdown-content a:hover {
-            background-color: #f1f1f1;
-            color: #1a237e !important;
-        }
-        
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2.5rem;
@@ -220,7 +219,7 @@
     <div class="page">
         <header class="header">
             <nav class="nav">
-                <img src="/gadys-logo.svg" alt="GADYS" class="logo" style="height: 40px;" />
+                <img src="/gadys-logo.svg" alt="GADYS" class="logo" />
                 <ul class="nav-links">
                     <li><a href="/" onclick="window.location.href='/'">Início</a></li>
                     <li class="dropdown">
@@ -242,8 +241,8 @@
         <main>
             <section class="hero">
                 <div>
-                    <h1>Lugares Mais Visitados do Brasil</h1>
-                    <p>Descubra os destinos mais procurados pelos turistas</p>
+                    <h1>Monumentos Históricos do Brasil</h1>
+                    <p>Descubra marcos históricos e arquitetônicos únicos</p>
                 </div>
             </section>
 
@@ -252,61 +251,61 @@
                     <div class="grid">
                         
                         <div class="card">
-                            <img src="https://images.unsplash.com/photo-1483729558449-99ef09a8c325?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Cristo Redentor">
+                            <img src="/cristo.webp" alt="Cristo Redentor">
                             <div class="card-info">
                                 <h3 class="card-title">Cristo Redentor</h3>
                                 <p class="cidade">Rio de Janeiro - RJ</p>
-                                <p class="descricao">Uma das Sete Maravilhas do Mundo Moderno</p>
+                                <p class="descricao">Uma das Sete Maravilhas do Mundo Moderno, localizada no topo do Corcovado</p>
                                 <button class="button">Visitar</button>
                             </div>
                         </div>
 
                         <div class="card">
-                            <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pão de Açúcar">
-                            <div class="card-info">
-                                <h3 class="card-title">Pão de Açúcar</h3>
-                                <p class="cidade">Rio de Janeiro - RJ</p>
-                                <p class="descricao">Cartão postal do Rio de Janeiro</p>
-                                <button class="button">Visitar</button>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <img src="https://images.unsplash.com/photo-1516306580123-e6e52b1b7b5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Cataratas do Iguaçu">
-                            <div class="card-info">
-                                <h3 class="card-title">Cataratas do Iguaçu</h3>
-                                <p class="cidade">Foz do Iguaçu - PR</p>
-                                <p class="descricao">Uma das maiores quedas d'água do mundo</p>
-                                <button class="button">Visitar</button>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <img src="https://images.unsplash.com/photo-1539037116277-4db20889f2d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pelourinho">
+                            <img src="/pelourinho.jpg" alt="Pelourinho">
                             <div class="card-info">
                                 <h3 class="card-title">Pelourinho</h3>
                                 <p class="cidade">Salvador - BA</p>
-                                <p class="descricao">Centro histórico de Salvador</p>
+                                <p class="descricao">Centro histórico colonial com arquitetura barroca preservada</p>
                                 <button class="button">Visitar</button>
                             </div>
                         </div>
 
                         <div class="card">
-                            <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Fernando de Noronha">
+                            <img src="/teatro-amazonas1.jpeg" alt="Teatro Amazonas">
                             <div class="card-info">
-                                <h3 class="card-title">Fernando de Noronha</h3>
-                                <p class="cidade">Pernambuco - PE</p>
-                                <p class="descricao">Paraíso ecológico brasileiro</p>
+                                <h3 class="card-title">Teatro Amazonas</h3>
+                                <p class="cidade">Manaus - AM</p>
+                                <p class="descricao">Majestoso teatro da época áurea da borracha na Amazônia</p>
                                 <button class="button">Visitar</button>
                             </div>
                         </div>
 
                         <div class="card">
-                            <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pantanal">
+                            <img src="/ouro.jpeg" alt="Ouro Preto">
                             <div class="card-info">
-                                <h3 class="card-title">Pantanal</h3>
-                                <p class="cidade">Mato Grosso - MT</p>
-                                <p class="descricao">Maior planície alagável do mundo</p>
+                                <h3 class="card-title">Centro Histórico de Ouro Preto</h3>
+                                <p class="cidade">Ouro Preto - MG</p>
+                                <p class="descricao">Cidade colonial com arquitetura barroca e igrejas históricas</p>
+                                <button class="button">Visitar</button>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <img src="/zero.jpeg" alt="Marco Zero">
+                            <div class="card-info">
+                                <h3 class="card-title">Marco Zero</h3>
+                                <p class="cidade">Recife - PE</p>
+                                <p class="descricao">Ponto de referência histórico no centro do Recife Antigo</p>
+                                <button class="button">Visitar</button>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <img src="/forte.jpeg" alt="Forte de Copacabana">
+                            <div class="card-info">
+                                <h3 class="card-title">Forte de Copacabana</h3>
+                                <p class="cidade">Rio de Janeiro - RJ</p>
+                                <p class="descricao">Fortaleza militar histórica com vista para a praia de Copacabana</p>
                                 <button class="button">Visitar</button>
                             </div>
                         </div>

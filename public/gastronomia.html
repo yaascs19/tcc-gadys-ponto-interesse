@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GADYS - Lugares Mais Visitados</title>
+    <title>GADYS - Gastronomia Brasileira</title>
     <style>
         * {
             margin: 0;
@@ -39,8 +39,7 @@
         }
         
         .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
+            height: 40px;
         }
         
         .nav-links {
@@ -61,8 +60,42 @@
             background: rgba(255, 255, 255, 0.1);
         }
         
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1000;
+            border-radius: 5px;
+            top: 100%;
+            left: 0;
+        }
+        
+        .dropdown-content a {
+            color: #333 !important;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+            color: #1a237e !important;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
         .hero {
-            background: linear-gradient(rgba(26, 35, 126, 0.8), rgba(26, 35, 126, 0.8)), url('https://images.unsplash.com/photo-1483729558449-99ef09a8c325?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background: linear-gradient(rgba(255, 152, 0, 0.8), rgba(255, 193, 7, 0.8)), url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
             background-position: center;
             color: white;
@@ -141,7 +174,7 @@
         }
         
         .button {
-            background: #e74c3c;
+            background: #ff9800;
             color: white;
             border: none;
             padding: 0.8rem 2rem;
@@ -152,7 +185,7 @@
         }
         
         .button:hover {
-            background: #c0392b;
+            background: #f57c00;
         }
         
         .footer {
@@ -162,40 +195,6 @@
             padding: 2rem;
         }
         
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-        
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: white;
-            min-width: 200px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1000;
-            border-radius: 5px;
-            top: 100%;
-            left: 0;
-        }
-        
-        .dropdown-content a {
-            color: #333 !important;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            transition: background-color 0.3s;
-        }
-        
-        .dropdown-content a:hover {
-            background-color: #f1f1f1;
-            color: #1a237e !important;
-        }
-        
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2.5rem;
@@ -220,7 +219,7 @@
     <div class="page">
         <header class="header">
             <nav class="nav">
-                <img src="/gadys-logo.svg" alt="GADYS" class="logo" style="height: 40px;" />
+                <img src="/gadys-logo.svg" alt="GADYS" class="logo" />
                 <ul class="nav-links">
                     <li><a href="/" onclick="window.location.href='/'">Início</a></li>
                     <li class="dropdown">
@@ -242,8 +241,8 @@
         <main>
             <section class="hero">
                 <div>
-                    <h1>Lugares Mais Visitados do Brasil</h1>
-                    <p>Descubra os destinos mais procurados pelos turistas</p>
+                    <h1>Gastronomia Brasileira</h1>
+                    <p>Sabores únicos e experiências culinárias inesquecíveis</p>
                 </div>
             </section>
 
@@ -252,62 +251,82 @@
                     <div class="grid">
                         
                         <div class="card">
-                            <img src="https://images.unsplash.com/photo-1483729558449-99ef09a8c325?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Cristo Redentor">
+                            <img src="/feijoada.jpeg" alt="Feijoada">
                             <div class="card-info">
-                                <h3 class="card-title">Cristo Redentor</h3>
+                                <h3 class="card-title">Feijoada</h3>
                                 <p class="cidade">Rio de Janeiro - RJ</p>
-                                <p class="descricao">Uma das Sete Maravilhas do Mundo Moderno</p>
-                                <button class="button">Visitar</button>
+                                <p class="descricao">O prato mais tradicional do Brasil com feijão preto e carnes</p>
+                                <button class="button">Experimentar</button>
                             </div>
                         </div>
 
                         <div class="card">
-                            <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pão de Açúcar">
+                            <img src="/acai.jpeg" alt="Açaí">
                             <div class="card-info">
-                                <h3 class="card-title">Pão de Açúcar</h3>
+                                <h3 class="card-title">Açaí na Tigela</h3>
+                                <p class="cidade">Belém - PA</p>
+                                <p class="descricao">Superfruit amazônico servido gelado com acompanhamentos</p>
+                                <button class="button">Experimentar</button>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <img src="/coxinha.jpeg" alt="Coxinha">
+                            <div class="card-info">
+                                <h3 class="card-title">Coxinha</h3>
+                                <p class="cidade">São Paulo - SP</p>
+                                <p class="descricao">Salgado mais amado do Brasil com massa e recheio de frango</p>
+                                <button class="button">Experimentar</button>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <img src="/brigadeiro.jpeg" alt="Brigadeiro">
+                            <div class="card-info">
+                                <h3 class="card-title">Brigadeiro</h3>
                                 <p class="cidade">Rio de Janeiro - RJ</p>
-                                <p class="descricao">Cartão postal do Rio de Janeiro</p>
-                                <button class="button">Visitar</button>
+                                <p class="descricao">Doce tradicional brasileiro feito com chocolate e leite condensado</p>
+                                <button class="button">Experimentar</button>
                             </div>
                         </div>
 
                         <div class="card">
-                            <img src="https://images.unsplash.com/photo-1516306580123-e6e52b1b7b5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Cataratas do Iguaçu">
+                            <img src="/acaraje.jpeg" alt="Acarajé">
                             <div class="card-info">
-                                <h3 class="card-title">Cataratas do Iguaçu</h3>
-                                <p class="cidade">Foz do Iguaçu - PR</p>
-                                <p class="descricao">Uma das maiores quedas d'água do mundo</p>
-                                <button class="button">Visitar</button>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <img src="https://images.unsplash.com/photo-1539037116277-4db20889f2d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pelourinho">
-                            <div class="card-info">
-                                <h3 class="card-title">Pelourinho</h3>
+                                <h3 class="card-title">Acarajé</h3>
                                 <p class="cidade">Salvador - BA</p>
-                                <p class="descricao">Centro histórico de Salvador</p>
-                                <button class="button">Visitar</button>
+                                <p class="descricao">Bolinho de feijão fradinho frito no dendê com recheios típicos</p>
+                                <button class="button">Experimentar</button>
                             </div>
                         </div>
 
                         <div class="card">
-                            <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Fernando de Noronha">
+                            <img src="/gaucho.jpeg" alt="Churrasco">
                             <div class="card-info">
-                                <h3 class="card-title">Fernando de Noronha</h3>
-                                <p class="cidade">Pernambuco - PE</p>
-                                <p class="descricao">Paraíso ecológico brasileiro</p>
-                                <button class="button">Visitar</button>
+                                <h3 class="card-title">Churrasco Gaúcho</h3>
+                                <p class="cidade">Porto Alegre - RS</p>
+                                <p class="descricao">Tradição sulista de carnes grelhadas na brasa</p>
+                                <button class="button">Experimentar</button>
                             </div>
                         </div>
 
                         <div class="card">
-                            <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pantanal">
+                            <img src="/tapioca.jpeg" alt="Tapioca">
                             <div class="card-info">
-                                <h3 class="card-title">Pantanal</h3>
-                                <p class="cidade">Mato Grosso - MT</p>
-                                <p class="descricao">Maior planície alagável do mundo</p>
-                                <button class="button">Visitar</button>
+                                <h3 class="card-title">Tapioca</h3>
+                                <p class="cidade">Recife - PE</p>
+                                <p class="descricao">Massa de mandioca versátil com recheios doces ou salgados</p>
+                                <button class="button">Experimentar</button>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <img src="/moqueca.jpeg" alt="Moqueca">
+                            <div class="card-info">
+                                <h3 class="card-title">Moqueca Capixaba</h3>
+                                <p class="cidade">Vitória - ES</p>
+                                <p class="descricao">Peixe cozido com leite de coco, dendê e temperos especiais</p>
+                                <button class="button">Experimentar</button>
                             </div>
                         </div>
 
