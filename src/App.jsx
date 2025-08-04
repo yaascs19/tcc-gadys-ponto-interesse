@@ -135,7 +135,7 @@ function App() {
       </main>
 
       <footer className="footer">
-        <p>&copy; 2024 GADYS. Todos os direitos reservados.</p>
+        <p>&copy; 2025 GADYS. Todos os direitos reservados.</p>
       </footer>
     </div>
   )

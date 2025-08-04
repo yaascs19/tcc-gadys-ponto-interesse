@@ -97,7 +97,7 @@ function LugaresMaisVisitados({ onBack }) {
       </main>
 
       <footer style={{ background: '#2c3e50', color: 'white', textAlign: 'center', padding: '2rem' }}>
-        <p>&copy; 2024 GADYS. Todos os direitos reservados.</p>
+        <p>&copy; 2025 GADYS. Todos os direitos reservados.</p>
       </footer>
     </div>
   )
