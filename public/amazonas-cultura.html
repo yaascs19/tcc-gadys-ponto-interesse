@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GADYS - Natureza do Brasil</title>
+    <title>GADYS - Cultura do Amazonas</title>
     <style>
         * {
             margin: 0;
@@ -97,7 +97,7 @@
         }
         
         .hero {
-            background: linear-gradient(rgba(76, 175, 80, 0.8), rgba(139, 195, 74, 0.8)), url('https://images.unsplash.com/photo-1516306580123-e6e52b1b7b5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background: linear-gradient(rgba(128, 0, 128, 0.8), rgba(75, 0, 130, 0.8)), url('/festival.jpeg');
             background-size: cover;
             background-position: center;
             color: white;
@@ -176,7 +176,7 @@
         }
         
         .button {
-            background: #4caf50;
+            background: #800080;
             color: white;
             border: none;
             padding: 0.8rem 2rem;
@@ -187,7 +187,7 @@
         }
         
         .button:hover {
-            background: #45a049;
+            background: #4b0082;
         }
         
         .footer {
@@ -195,25 +195,6 @@
             color: white;
             text-align: center;
             padding: 2rem;
-        }
-        
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .nav {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            .nav-links {
-                gap: 1rem;
-            }
         }
     </style>
 </head>
@@ -223,7 +204,7 @@
             <nav class="nav">
                 <img src="/gadys-logo.svg" alt="GADYS" class="logo" />
                 <ul class="nav-links">
-                    <li><a href="/" onclick="window.location.href='/'">Início</a></li>
+                    <li><a href="/">Início</a></li>
                     <li class="dropdown">
                         <a href="#estados">Estados Brasileiros ▼</a>
                         <div class="dropdown-content">
@@ -266,110 +247,73 @@
         <main>
             <section class="hero">
                 <div>
-                    <h1>Natureza Exuberante do Brasil</h1>
-                    <p>Explore parques, trilhas e áreas naturais preservadas</p>
+                    <h1>🎨 Cultura do Amazonas</h1>
+                    <p>Tradições e manifestações culturais</p>
                 </div>
             </section>
 
             <section class="section">
                 <div class="container">
-                    <div style="text-align: center; margin-bottom: 2rem; padding: 1.5rem; background: linear-gradient(135deg, #228b22, #32cd32); color: white; border-radius: 15px; box-shadow: 0 5px 15px rgba(34, 139, 34, 0.3);">
-                        <h3 style="margin-bottom: 0.5rem; font-size: 1.3rem;">🌟 Explore o Amazonas por Categoria</h3>
-                        <p style="opacity: 0.9; font-size: 1rem; margin-bottom: 1.5rem;">Descubra os tesouros do Amazonas! Escolha uma categoria abaixo e mergulhe nas maravilhas deste estado único.</p>
-                        
-                        <div class="dropdown" style="display: inline-block;">
-                            <button style="background: rgba(255,255,255,0.2); color: white; border: 2px solid white; padding: 1rem 2rem; border-radius: 10px; font-size: 1.1rem; cursor: pointer; transition: all 0.3s;">Categorias ▼</button>
-                            <div class="dropdown-content" style="position: absolute; left: 50%; transform: translateX(-50%);">
-                                <a href="/amazonas-monumentos.html">🏛️ Monumentos</a>
-                                <a href="/amazonas-natureza.html">🌳 Natureza</a>
-                                <a href="/amazonas-gastronomia.html">🍽️ Gastronomia</a>
-                                <a href="/amazonas-cultura.html">🎨 Cultura</a>
-                            </div>
-                        </div>
-                    </div>
-                    
                     <div class="grid">
-                        
                         <div class="card">
-                            <img src="/cataratas.jpeg" alt="Cataratas do Iguaçu">
+                            <img src="/festival.jpeg" alt="Festival de Parintins">
                             <div class="card-info">
-                                <h3 class="card-title">Cataratas do Iguaçu</h3>
-                                <p class="cidade">Foz do Iguaçu - PR</p>
-                                <p class="descricao">Uma das maiores quedas d'água do mundo com 275 saltos</p>
-                                <button class="button">Explorar</button>
+                                <h3 class="card-title">Festival de Parintins</h3>
+                                <p class="cidade">Parintins - AM</p>
+                                <p class="descricao">Maior festival folclórico do Brasil com bois-bumbás</p>
+                                <button class="button">Vivenciar</button>
                             </div>
                         </div>
 
                         <div class="card">
-                            <img src="/pantanal.jpeg" alt="Pantanal">
+                            <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Lendas Amazônicas">
                             <div class="card-info">
-                                <h3 class="card-title">Pantanal</h3>
-                                <p class="cidade">Mato Grosso - MT</p>
-                                <p class="descricao">Maior planície alagável do mundo com rica biodiversidade</p>
-                                <button class="button">Explorar</button>
+                                <h3 class="card-title">Lendas Amazônicas</h3>
+                                <p class="cidade">Região Amazônica - AM</p>
+                                <p class="descricao">Curupira, Boto-cor-de-rosa, Iara e outras lendas da floresta</p>
+                                <button class="button">Vivenciar</button>
                             </div>
                         </div>
 
                         <div class="card">
-                            <img src="/noronha.jpeg" alt="Fernando de Noronha">
+                            <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Artesanato Indígena">
                             <div class="card-info">
-                                <h3 class="card-title">Fernando de Noronha</h3>
-                                <p class="cidade">Pernambuco - PE</p>
-                                <p class="descricao">Arquipélago paradisíaco com praias cristalinas e vida marinha</p>
-                                <button class="button">Explorar</button>
+                                <h3 class="card-title">Artesanato Indígena</h3>
+                                <p class="cidade">Comunidades Indígenas - AM</p>
+                                <p class="descricao">Cestas, cerâmicas e objetos tradicionais dos povos originários</p>
+                                <button class="button">Vivenciar</button>
                             </div>
                         </div>
 
                         <div class="card">
-                            <img src="/lencois.jpeg" alt="Lençóis Maranhenses">
+                            <img src="https://images.unsplash.com/photo-1516306580123-e6e52b1b7b5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Ciranda Amazônica">
                             <div class="card-info">
-                                <h3 class="card-title">Lençóis Maranhenses</h3>
-                                <p class="cidade">Barreirinhas - MA</p>
-                                <p class="descricao">Dunas de areia branca com lagoas de água doce cristalina</p>
-                                <button class="button">Explorar</button>
+                                <h3 class="card-title">Ciranda Amazônica</h3>
+                                <p class="cidade">Manaus - AM</p>
+                                <p class="descricao">Dança tradicional em roda com cantos e instrumentos regionais</p>
+                                <button class="button">Vivenciar</button>
                             </div>
                         </div>
 
                         <div class="card">
-                            <img src="/chapada.jpeg" alt="Chapada Diamantina">
+                            <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Carimbó">
                             <div class="card-info">
-                                <h3 class="card-title">Chapada Diamantina</h3>
-                                <p class="cidade">Lençóis - BA</p>
-                                <p class="descricao">Cachoeiras espetaculares e formações rochosas únicas</p>
-                                <button class="button">Explorar</button>
+                                <h3 class="card-title">Carimbó</h3>
+                                <p class="cidade">Região Norte - AM</p>
+                                <p class="descricao">Ritmo e dança típica com tambores e movimentos sensuais</p>
+                                <button class="button">Vivenciar</button>
                             </div>
                         </div>
 
                         <div class="card">
-                            <img src="/floresta.jpeg" alt="Floresta Amazônica">
+                            <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Rituais Xamânicos">
                             <div class="card-info">
-                                <h3 class="card-title">Floresta Amazônica</h3>
-                                <p class="cidade">Amazonas - AM</p>
-                                <p class="descricao">Maior floresta tropical do mundo com biodiversidade única</p>
-                                <button class="button">Explorar</button>
+                                <h3 class="card-title">Rituais Xamânicos</h3>
+                                <p class="cidade">Floresta Amazônica - AM</p>
+                                <p class="descricao">Cerimônias ancestrais com plantas sagradas e cura espiritual</p>
+                                <button class="button">Vivenciar</button>
                             </div>
                         </div>
-
-                        <div class="card">
-                            <img src="/bonito.jpeg" alt="Bonito">
-                            <div class="card-info">
-                                <h3 class="card-title">Bonito</h3>
-                                <p class="cidade">Bonito - MS</p>
-                                <p class="descricao">Águas cristalinas ideais para mergulho e ecoturismo</p>
-                                <button class="button">Explorar</button>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <img src="/veadeiros.jpeg" alt="Chapada dos Veadeiros">
-                            <div class="card-info">
-                                <h3 class="card-title">Chapada dos Veadeiros</h3>
-                                <p class="cidade">Alto Paraíso - GO</p>
-                                <p class="descricao">Cerrado preservado com cachoeiras e trilhas ecológicas</p>
-                                <button class="button">Explorar</button>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </section>

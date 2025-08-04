@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GADYS - Natureza do Brasil</title>
+    <title>GADYS - Amazonas</title>
     <style>
         * {
             margin: 0;
@@ -97,7 +97,7 @@
         }
         
         .hero {
-            background: linear-gradient(rgba(76, 175, 80, 0.8), rgba(139, 195, 74, 0.8)), url('https://images.unsplash.com/photo-1516306580123-e6e52b1b7b5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background: linear-gradient(rgba(34, 139, 34, 0.8), rgba(0, 100, 0, 0.8)), url('https://images.unsplash.com/photo-1544735716-392fe2489ffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
             background-position: center;
             color: white;
@@ -176,7 +176,7 @@
         }
         
         .button {
-            background: #4caf50;
+            background: #228b22;
             color: white;
             border: none;
             padding: 0.8rem 2rem;
@@ -187,7 +187,7 @@
         }
         
         .button:hover {
-            background: #45a049;
+            background: #006400;
         }
         
         .footer {
@@ -256,6 +256,7 @@
                             <a href="#">Tocantins</a>
                         </div>
                     </li>
+
                     <li><a href="/adicionar-locais.html">Adicionar locais</a></li>
                     <li><a href="/sobre.html">Sobre</a></li>
                     <li><a href="/contato.html">Contato</a></li>
@@ -264,15 +265,39 @@
         </header>
 
         <main>
-            <section class="hero">
-                <div>
-                    <h1>Natureza Exuberante do Brasil</h1>
-                    <p>Explore parques, trilhas e áreas naturais preservadas</p>
+            <section class="hero" style="position: relative; overflow: hidden; background: none;">
+                <div class="carousel-slide" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 1; transition: opacity 0.5s; z-index: 1;">
+                    <img src="/teatro-amazonas1.jpeg" alt="Teatro Amazonas" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                </div>
+                <div class="carousel-slide" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.5s; z-index: 1;">
+                    <img src="/floresta.jpeg" alt="Floresta Amazônica" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                </div>
+                <div class="carousel-slide" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.5s; z-index: 1;">
+                    <img src="/pantanal.jpeg" alt="Encontro das Águas" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                </div>
+                <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(34, 139, 34, 0.6); z-index: 2;"></div>
+                <div style="position: relative; z-index: 3; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; text-align: center;">
+                    <h1>Amazonas</h1>
+                    <p>O coração da Amazônia brasileira</p>
+                </div>
+                <div style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 0.5rem; z-index: 3;">
+                    <button class="carousel-dot" onclick="showSlide(0)" style="width: 12px; height: 12px; border-radius: 50%; border: none; background: white; cursor: pointer;"></button>
+                    <button class="carousel-dot" onclick="showSlide(1)" style="width: 12px; height: 12px; border-radius: 50%; border: none; background: rgba(255,255,255,0.5); cursor: pointer;"></button>
+                    <button class="carousel-dot" onclick="showSlide(2)" style="width: 12px; height: 12px; border-radius: 50%; border: none; background: rgba(255,255,255,0.5); cursor: pointer;"></button>
                 </div>
             </section>
 
             <section class="section">
                 <div class="container">
+                    <div style="background: white; padding: 2rem; border-radius: 15px; margin-bottom: 3rem; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);">
+                        <h2 style="color: #228b22; margin-bottom: 1rem; font-size: 2rem;">Sobre o Amazonas</h2>
+                        <p style="color: #555; line-height: 1.8; margin-bottom: 1rem;">O Amazonas é o maior estado do Brasil, localizado na região Norte do país. Com uma área de mais de 1,5 milhão de km², abriga a maior parte da Floresta Amazônica brasileira e é conhecido mundialmente por sua biodiversidade única.</p>
+                        <p style="color: #555; line-height: 1.8; margin-bottom: 1rem;">Manaus, a capital, é um importante centro econômico e turístico da região, famosa pelo Teatro Amazonas e pelo fenômeno natural do Encontro das Águas. O estado possui uma rica cultura indígena e é lar de diversas comunidades tradicionais.</p>
+                        <p style="color: #555; line-height: 1.8;">Com mais de 4 milhões de habitantes, o Amazonas é fundamental para o equilíbrio ecológico mundial e oferece experiências únicas de ecoturismo e turismo cultural.</p>
+                    </div>
+                    
+
+                    
                     <div style="text-align: center; margin-bottom: 2rem; padding: 1.5rem; background: linear-gradient(135deg, #228b22, #32cd32); color: white; border-radius: 15px; box-shadow: 0 5px 15px rgba(34, 139, 34, 0.3);">
                         <h3 style="margin-bottom: 0.5rem; font-size: 1.3rem;">🌟 Explore o Amazonas por Categoria</h3>
                         <p style="opacity: 0.9; font-size: 1rem; margin-bottom: 1.5rem;">Descubra os tesouros do Amazonas! Escolha uma categoria abaixo e mergulhe nas maravilhas deste estado único.</p>
@@ -287,90 +312,7 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="grid">
-                        
-                        <div class="card">
-                            <img src="/cataratas.jpeg" alt="Cataratas do Iguaçu">
-                            <div class="card-info">
-                                <h3 class="card-title">Cataratas do Iguaçu</h3>
-                                <p class="cidade">Foz do Iguaçu - PR</p>
-                                <p class="descricao">Uma das maiores quedas d'água do mundo com 275 saltos</p>
-                                <button class="button">Explorar</button>
-                            </div>
-                        </div>
 
-                        <div class="card">
-                            <img src="/pantanal.jpeg" alt="Pantanal">
-                            <div class="card-info">
-                                <h3 class="card-title">Pantanal</h3>
-                                <p class="cidade">Mato Grosso - MT</p>
-                                <p class="descricao">Maior planície alagável do mundo com rica biodiversidade</p>
-                                <button class="button">Explorar</button>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <img src="/noronha.jpeg" alt="Fernando de Noronha">
-                            <div class="card-info">
-                                <h3 class="card-title">Fernando de Noronha</h3>
-                                <p class="cidade">Pernambuco - PE</p>
-                                <p class="descricao">Arquipélago paradisíaco com praias cristalinas e vida marinha</p>
-                                <button class="button">Explorar</button>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <img src="/lencois.jpeg" alt="Lençóis Maranhenses">
-                            <div class="card-info">
-                                <h3 class="card-title">Lençóis Maranhenses</h3>
-                                <p class="cidade">Barreirinhas - MA</p>
-                                <p class="descricao">Dunas de areia branca com lagoas de água doce cristalina</p>
-                                <button class="button">Explorar</button>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <img src="/chapada.jpeg" alt="Chapada Diamantina">
-                            <div class="card-info">
-                                <h3 class="card-title">Chapada Diamantina</h3>
-                                <p class="cidade">Lençóis - BA</p>
-                                <p class="descricao">Cachoeiras espetaculares e formações rochosas únicas</p>
-                                <button class="button">Explorar</button>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <img src="/floresta.jpeg" alt="Floresta Amazônica">
-                            <div class="card-info">
-                                <h3 class="card-title">Floresta Amazônica</h3>
-                                <p class="cidade">Amazonas - AM</p>
-                                <p class="descricao">Maior floresta tropical do mundo com biodiversidade única</p>
-                                <button class="button">Explorar</button>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <img src="/bonito.jpeg" alt="Bonito">
-                            <div class="card-info">
-                                <h3 class="card-title">Bonito</h3>
-                                <p class="cidade">Bonito - MS</p>
-                                <p class="descricao">Águas cristalinas ideais para mergulho e ecoturismo</p>
-                                <button class="button">Explorar</button>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <img src="/veadeiros.jpeg" alt="Chapada dos Veadeiros">
-                            <div class="card-info">
-                                <h3 class="card-title">Chapada dos Veadeiros</h3>
-                                <p class="cidade">Alto Paraíso - GO</p>
-                                <p class="descricao">Cerrado preservado com cachoeiras e trilhas ecológicas</p>
-                                <button class="button">Explorar</button>
-                            </div>
-                        </div>
-
-                    </div>
                 </div>
             </section>
         </main>
@@ -379,5 +321,28 @@
             <p>&copy; 2024 GADYS. Todos os direitos reservados.</p>
         </footer>
     </div>
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.carousel-dot');
+        
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.style.opacity = i === index ? '1' : '0';
+            });
+            dots.forEach((dot, i) => {
+                dot.style.background = i === index ? 'white' : 'rgba(255,255,255,0.5)';
+            });
+            currentSlide = index;
+        }
+        
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+        
+        // Auto slide every 4 seconds
+        setInterval(nextSlide, 4000);
+    </script>
 </body>
 </html>

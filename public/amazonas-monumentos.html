@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GADYS - Natureza do Brasil</title>
+    <title>GADYS - Monumentos do Amazonas</title>
     <style>
         * {
             margin: 0;
@@ -97,7 +97,7 @@
         }
         
         .hero {
-            background: linear-gradient(rgba(76, 175, 80, 0.8), rgba(139, 195, 74, 0.8)), url('https://images.unsplash.com/photo-1516306580123-e6e52b1b7b5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background: linear-gradient(rgba(139, 69, 19, 0.8), rgba(160, 82, 45, 0.8)), url('/teatro-amazonas1.jpeg');
             background-size: cover;
             background-position: center;
             color: white;
@@ -176,7 +176,7 @@
         }
         
         .button {
-            background: #4caf50;
+            background: #8b4513;
             color: white;
             border: none;
             padding: 0.8rem 2rem;
@@ -187,7 +187,7 @@
         }
         
         .button:hover {
-            background: #45a049;
+            background: #a0522d;
         }
         
         .footer {
@@ -195,25 +195,6 @@
             color: white;
             text-align: center;
             padding: 2rem;
-        }
-        
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .nav {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            .nav-links {
-                gap: 1rem;
-            }
         }
     </style>
 </head>
@@ -223,7 +204,7 @@
             <nav class="nav">
                 <img src="/gadys-logo.svg" alt="GADYS" class="logo" />
                 <ul class="nav-links">
-                    <li><a href="/" onclick="window.location.href='/'">Início</a></li>
+                    <li><a href="/">Início</a></li>
                     <li class="dropdown">
                         <a href="#estados">Estados Brasileiros ▼</a>
                         <div class="dropdown-content">
@@ -266,110 +247,73 @@
         <main>
             <section class="hero">
                 <div>
-                    <h1>Natureza Exuberante do Brasil</h1>
-                    <p>Explore parques, trilhas e áreas naturais preservadas</p>
+                    <h1>🏛️ Monumentos do Amazonas</h1>
+                    <p>Patrimônios históricos e arquitetônicos</p>
                 </div>
             </section>
 
             <section class="section">
                 <div class="container">
-                    <div style="text-align: center; margin-bottom: 2rem; padding: 1.5rem; background: linear-gradient(135deg, #228b22, #32cd32); color: white; border-radius: 15px; box-shadow: 0 5px 15px rgba(34, 139, 34, 0.3);">
-                        <h3 style="margin-bottom: 0.5rem; font-size: 1.3rem;">🌟 Explore o Amazonas por Categoria</h3>
-                        <p style="opacity: 0.9; font-size: 1rem; margin-bottom: 1.5rem;">Descubra os tesouros do Amazonas! Escolha uma categoria abaixo e mergulhe nas maravilhas deste estado único.</p>
-                        
-                        <div class="dropdown" style="display: inline-block;">
-                            <button style="background: rgba(255,255,255,0.2); color: white; border: 2px solid white; padding: 1rem 2rem; border-radius: 10px; font-size: 1.1rem; cursor: pointer; transition: all 0.3s;">Categorias ▼</button>
-                            <div class="dropdown-content" style="position: absolute; left: 50%; transform: translateX(-50%);">
-                                <a href="/amazonas-monumentos.html">🏛️ Monumentos</a>
-                                <a href="/amazonas-natureza.html">🌳 Natureza</a>
-                                <a href="/amazonas-gastronomia.html">🍽️ Gastronomia</a>
-                                <a href="/amazonas-cultura.html">🎨 Cultura</a>
-                            </div>
-                        </div>
-                    </div>
-                    
                     <div class="grid">
+                        <div class="card">
+                            <img src="/teatro-amazonas1.jpeg" alt="Teatro Amazonas">
+                            <div class="card-info">
+                                <h3 class="card-title">Teatro Amazonas</h3>
+                                <p class="cidade">Manaus - AM</p>
+                                <p class="descricao">Majestoso teatro construído durante o período áureo da borracha</p>
+                                <button class="button">Visitar</button>
+                            </div>
+                        </div>
                         
                         <div class="card">
-                            <img src="/cataratas.jpeg" alt="Cataratas do Iguaçu">
+                            <img src="/forte.jpeg" alt="Forte de São José">
                             <div class="card-info">
-                                <h3 class="card-title">Cataratas do Iguaçu</h3>
-                                <p class="cidade">Foz do Iguaçu - PR</p>
-                                <p class="descricao">Uma das maiores quedas d'água do mundo com 275 saltos</p>
-                                <button class="button">Explorar</button>
+                                <h3 class="card-title">Forte de São José</h3>
+                                <p class="cidade">Manaus - AM</p>
+                                <p class="descricao">Fortaleza histórica que marca o início da colonização de Manaus</p>
+                                <button class="button">Visitar</button>
                             </div>
                         </div>
-
+                        
                         <div class="card">
-                            <img src="/pantanal.jpeg" alt="Pantanal">
+                            <img src="/ouro.jpeg" alt="Palácio da Justiça">
                             <div class="card-info">
-                                <h3 class="card-title">Pantanal</h3>
-                                <p class="cidade">Mato Grosso - MT</p>
-                                <p class="descricao">Maior planície alagável do mundo com rica biodiversidade</p>
-                                <button class="button">Explorar</button>
+                                <h3 class="card-title">Palácio da Justiça</h3>
+                                <p class="cidade">Manaus - AM</p>
+                                <p class="descricao">Edifício histórico com arquitetura colonial preservada</p>
+                                <button class="button">Visitar</button>
                             </div>
                         </div>
-
+                        
                         <div class="card">
-                            <img src="/noronha.jpeg" alt="Fernando de Noronha">
+                            <img src="/pelourinho.jpg" alt="Mercado Municipal">
                             <div class="card-info">
-                                <h3 class="card-title">Fernando de Noronha</h3>
-                                <p class="cidade">Pernambuco - PE</p>
-                                <p class="descricao">Arquipélago paradisíaco com praias cristalinas e vida marinha</p>
-                                <button class="button">Explorar</button>
+                                <h3 class="card-title">Mercado Municipal</h3>
+                                <p class="cidade">Manaus - AM</p>
+                                <p class="descricao">Mercado histórico inspirado no mercado Les Halles de Paris</p>
+                                <button class="button">Visitar</button>
                             </div>
                         </div>
-
+                        
                         <div class="card">
-                            <img src="/lencois.jpeg" alt="Lençóis Maranhenses">
+                            <img src="/cristo.webp" alt="Igreja de São Sebastião">
                             <div class="card-info">
-                                <h3 class="card-title">Lençóis Maranhenses</h3>
-                                <p class="cidade">Barreirinhas - MA</p>
-                                <p class="descricao">Dunas de areia branca com lagoas de água doce cristalina</p>
-                                <button class="button">Explorar</button>
+                                <h3 class="card-title">Igreja de São Sebastião</h3>
+                                <p class="cidade">Manaus - AM</p>
+                                <p class="descricao">Igreja histórica com arquitetura colonial e importância religiosa</p>
+                                <button class="button">Visitar</button>
                             </div>
                         </div>
-
+                        
                         <div class="card">
-                            <img src="/chapada.jpeg" alt="Chapada Diamantina">
+                            <img src="/linda.jpeg" alt="Palácio Rio Negro">
                             <div class="card-info">
-                                <h3 class="card-title">Chapada Diamantina</h3>
-                                <p class="cidade">Lençóis - BA</p>
-                                <p class="descricao">Cachoeiras espetaculares e formações rochosas únicas</p>
-                                <button class="button">Explorar</button>
+                                <h3 class="card-title">Palácio Rio Negro</h3>
+                                <p class="cidade">Manaus - AM</p>
+                                <p class="descricao">Antiga residência dos governadores, hoje centro cultural</p>
+                                <button class="button">Visitar</button>
                             </div>
                         </div>
-
-                        <div class="card">
-                            <img src="/floresta.jpeg" alt="Floresta Amazônica">
-                            <div class="card-info">
-                                <h3 class="card-title">Floresta Amazônica</h3>
-                                <p class="cidade">Amazonas - AM</p>
-                                <p class="descricao">Maior floresta tropical do mundo com biodiversidade única</p>
-                                <button class="button">Explorar</button>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <img src="/bonito.jpeg" alt="Bonito">
-                            <div class="card-info">
-                                <h3 class="card-title">Bonito</h3>
-                                <p class="cidade">Bonito - MS</p>
-                                <p class="descricao">Águas cristalinas ideais para mergulho e ecoturismo</p>
-                                <button class="button">Explorar</button>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <img src="/veadeiros.jpeg" alt="Chapada dos Veadeiros">
-                            <div class="card-info">
-                                <h3 class="card-title">Chapada dos Veadeiros</h3>
-                                <p class="cidade">Alto Paraíso - GO</p>
-                                <p class="descricao">Cerrado preservado com cachoeiras e trilhas ecológicas</p>
-                                <button class="button">Explorar</button>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </section>

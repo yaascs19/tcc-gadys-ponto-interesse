@@ -62,12 +62,35 @@ function App() {
           <ul className="nav-links">
             <li><a href="#home">Início</a></li>
             <li className="dropdown">
-              <a href="#features" onClick={(e) => {e.preventDefault(); document.getElementById('features').scrollIntoView({behavior: 'smooth'})}}>Categorias ▼</a>
+              <a href="#features" onClick={(e) => {e.preventDefault(); document.getElementById('features').scrollIntoView({behavior: 'smooth'})}}>Estados Brasileiros ▼</a>
               <div className="dropdown-content">
-                <a href="/monumentos.html">🏛️ Monumentos</a>
-                <a href="/natureza.html">🌳 Natureza</a>
-                <a href="/gastronomia.html">🍽️ Gastronomia</a>
-                <a href="/cultura.html">🎨 Cultura</a>
+                <a href="#">Acre</a>
+                <a href="#">Alagoas</a>
+                <a href="#">Amapá</a>
+                <a href="/amazonas.html">Amazonas</a>
+                <a href="#">Bahia</a>
+                <a href="#">Ceará</a>
+                <a href="#">Distrito Federal</a>
+                <a href="#">Espírito Santo</a>
+                <a href="#">Goiás</a>
+                <a href="#">Maranhão</a>
+                <a href="#">Mato Grosso</a>
+                <a href="#">Mato Grosso do Sul</a>
+                <a href="#">Minas Gerais</a>
+                <a href="#">Pará</a>
+                <a href="#">Paraíba</a>
+                <a href="#">Paraná</a>
+                <a href="#">Pernambuco</a>
+                <a href="#">Piauí</a>
+                <a href="#">Rio de Janeiro</a>
+                <a href="#">Rio Grande do Norte</a>
+                <a href="#">Rio Grande do Sul</a>
+                <a href="#">Rondônia</a>
+                <a href="#">Roraima</a>
+                <a href="#">Santa Catarina</a>
+                <a href="#">São Paulo</a>
+                <a href="#">Sergipe</a>
+                <a href="#">Tocantins</a>
               </div>
             </li>
             <li><a href="/adicionar-locais.html">Adicionar locais</a></li>

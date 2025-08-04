@@ -70,6 +70,8 @@
             position: absolute;
             background-color: white;
             min-width: 200px;
+            max-height: 300px;
+            overflow-y: auto;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 1000;
             border-radius: 5px;
@@ -195,6 +197,21 @@
             padding: 2rem;
         }
         
+        .amazonas-section {
+            visibility: visible !important;
+            opacity: 1 !important;
+            display: block !important;
+        }
+        
+        .amazonas-section .dropdown:hover .dropdown-content {
+            display: block !important;
+        }
+        
+        .amazonas-section .dropdown-content a:hover {
+            background-color: #f8f9fa !important;
+            color: #228b22 !important;
+        }
+        
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2.5rem;
@@ -223,12 +240,35 @@
                 <ul class="nav-links">
                     <li><a href="/" onclick="window.location.href='/'">Início</a></li>
                     <li class="dropdown">
-                        <a href="#categorias">Categorias ▼</a>
+                        <a href="#estados">Estados Brasileiros ▼</a>
                         <div class="dropdown-content">
-                            <a href="/monumentos.html">🏛️ Monumentos</a>
-                            <a href="/natureza.html">🌳 Natureza</a>
-                            <a href="/gastronomia.html">🍽️ Gastronomia</a>
-                            <a href="/cultura.html">🎨 Cultura</a>
+                            <a href="#">Acre</a>
+                            <a href="#">Alagoas</a>
+                            <a href="#">Amapá</a>
+                            <a href="/amazonas.html">Amazonas</a>
+                            <a href="#">Bahia</a>
+                            <a href="#">Ceará</a>
+                            <a href="#">Distrito Federal</a>
+                            <a href="#">Espírito Santo</a>
+                            <a href="#">Goiás</a>
+                            <a href="#">Maranhão</a>
+                            <a href="#">Mato Grosso</a>
+                            <a href="#">Mato Grosso do Sul</a>
+                            <a href="#">Minas Gerais</a>
+                            <a href="#">Pará</a>
+                            <a href="#">Paraíba</a>
+                            <a href="#">Paraná</a>
+                            <a href="#">Pernambuco</a>
+                            <a href="#">Piauí</a>
+                            <a href="#">Rio de Janeiro</a>
+                            <a href="#">Rio Grande do Norte</a>
+                            <a href="#">Rio Grande do Sul</a>
+                            <a href="#">Rondônia</a>
+                            <a href="#">Roraima</a>
+                            <a href="#">Santa Catarina</a>
+                            <a href="#">São Paulo</a>
+                            <a href="#">Sergipe</a>
+                            <a href="#">Tocantins</a>
                         </div>
                     </li>
                     <li><a href="/adicionar-locais.html">Adicionar locais</a></li>
@@ -248,6 +288,21 @@
 
             <section class="section">
                 <div class="container">
+                    
+                    <div style="background: #228b22; color: white; padding: 30px; margin-bottom: 40px; border-radius: 15px; text-align: center;">
+                        <h2 style="font-size: 24px; margin-bottom: 15px;">🌟 Explore o Amazonas por Categoria</h2>
+                        <p style="font-size: 16px; margin-bottom: 25px;">Descubra os tesouros do Amazonas! Escolha uma categoria abaixo e mergulhe nas maravilhas deste estado único.</p>
+                        <div style="position: relative; display: inline-block;">
+                            <button onclick="toggleDropdown()" style="background: rgba(255,255,255,0.2); color: white; border: 2px solid white; padding: 12px 25px; border-radius: 8px; font-size: 16px; cursor: pointer;">Categorias ▼</button>
+                            <div id="amazonasDropdown" style="display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: white; min-width: 200px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 1000; margin-top: 5px;">
+                                <a href="/amazonas-monumentos.html" style="display: block; padding: 12px 16px; color: #333; text-decoration: none; border-bottom: 1px solid #eee;">🏛️ Monumentos</a>
+                                <a href="/amazonas-natureza.html" style="display: block; padding: 12px 16px; color: #333; text-decoration: none; border-bottom: 1px solid #eee;">🌳 Natureza</a>
+                                <a href="/amazonas-gastronomia.html" style="display: block; padding: 12px 16px; color: #333; text-decoration: none; border-bottom: 1px solid #eee;">🍽️ Gastronomia</a>
+                                <a href="/amazonas-cultura.html" style="display: block; padding: 12px 16px; color: #333; text-decoration: none;">🎨 Cultura</a>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div class="grid">
                         
                         <div class="card">
@@ -319,5 +374,26 @@
             <p>&copy; 2024 GADYS. Todos os direitos reservados.</p>
         </footer>
     </div>
+    
+    <script>
+        function toggleDropdown() {
+            var dropdown = document.getElementById('amazonasDropdown');
+            if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+                dropdown.style.display = 'block';
+            } else {
+                dropdown.style.display = 'none';
+            }
+        }
+        
+        // Close dropdown when clicking outside
+        window.onclick = function(event) {
+            if (!event.target.matches('button')) {
+                var dropdown = document.getElementById('amazonasDropdown');
+                if (dropdown && dropdown.style.display === 'block') {
+                    dropdown.style.display = 'none';
+                }
+            }
+        }
+    </script>
 </body>
 </html>
