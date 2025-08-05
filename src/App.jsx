@@ -1,58 +1,90 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
+import Login from './Login'
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    return localStorage.getItem('isLoggedIn') === 'true'
+  })
+  const [currentPage, setCurrentPage] = useState('home')
+
+  const handleLogin = (userType, userName) => {
+    setIsLoggedIn(true)
+    localStorage.setItem('isLoggedIn', 'true')
+    localStorage.setItem('userType', userType)
+    localStorage.setItem('userName', userName)
+    setCurrentPage('home')
+  }
+
+  const handleLogout = () => {
+    setIsLoggedIn(false)
+    localStorage.removeItem('isLoggedIn')
+    localStorage.removeItem('userType')
+    localStorage.removeItem('userName')
+    setCurrentPage('login')
+  }
+
   useEffect(() => {
-    const slides = document.querySelectorAll('.carousel-slide')
-    const dots = document.querySelectorAll('.nav-dot')
-    let currentSlide = 0
-    let autoSlideInterval
+    if (!isLoggedIn || currentPage === 'login') return
 
-    const showSlide = (index) => {
-      if (slides.length === 0 || dots.length === 0) return
-      
-      slides.forEach(slide => slide.classList.remove('active'))
-      dots.forEach(dot => dot.classList.remove('active'))
-      
-      if (slides[index] && dots[index]) {
-        slides[index].classList.add('active')
-        dots[index].classList.add('active')
+    const timer = setTimeout(() => {
+      const slides = document.querySelectorAll('.carousel-slide')
+      const dots = document.querySelectorAll('.nav-dot')
+      let currentSlide = 0
+      let autoSlideInterval
+
+      const showSlide = (index) => {
+        if (slides.length === 0 || dots.length === 0) return
+        
+        slides.forEach(slide => slide.classList.remove('active'))
+        dots.forEach(dot => dot.classList.remove('active'))
+        
+        if (slides[index] && dots[index]) {
+          slides[index].classList.add('active')
+          dots[index].classList.add('active')
+        }
       }
-    }
 
-    const startAutoSlide = () => {
-      autoSlideInterval = setInterval(() => {
-        currentSlide = (currentSlide + 1) % slides.length
-        showSlide(currentSlide)
-      }, 4000)
-    }
-
-    const stopAutoSlide = () => {
-      if (autoSlideInterval) {
-        clearInterval(autoSlideInterval)
+      const startAutoSlide = () => {
+        autoSlideInterval = setInterval(() => {
+          currentSlide = (currentSlide + 1) % slides.length
+          showSlide(currentSlide)
+        }, 4000)
       }
-    }
 
-    // Add click listeners to dots
-    dots.forEach((dot, index) => {
-      dot.addEventListener('click', (e) => {
-        e.preventDefault()
-        stopAutoSlide()
-        currentSlide = index
-        showSlide(currentSlide)
-        startAutoSlide()
+      const stopAutoSlide = () => {
+        if (autoSlideInterval) {
+          clearInterval(autoSlideInterval)
+        }
+      }
+
+      // Add click listeners to dots
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', (e) => {
+          e.preventDefault()
+          stopAutoSlide()
+          currentSlide = index
+          showSlide(currentSlide)
+          startAutoSlide()
+        })
       })
-    })
 
-    // Start auto slide
-    if (slides.length > 0) {
-      startAutoSlide()
-    }
+      // Start auto slide
+      if (slides.length > 0) {
+        startAutoSlide()
+      }
 
-    return () => {
-      stopAutoSlide()
-    }
-  }, [])
+      return () => {
+        stopAutoSlide()
+      }
+    }, 100)
+
+    return () => clearTimeout(timer)
+  }, [isLoggedIn, currentPage])
+
+  if (!isLoggedIn || currentPage === 'login') {
+    return <Login onLogin={handleLogin} />
+  }
 
   return (
     <div className="app">
@@ -60,7 +92,7 @@ function App() {
         <nav className="nav">
           <img src="/gadys-logo.svg" alt="GADYS" className="logo" style={{height: '40px'}} />
           <ul className="nav-links">
-            <li><a href="#home">Início</a></li>
+            <li><a href="#" onClick={(e) => {e.preventDefault(); setCurrentPage('home')}}>Início</a></li>
             <li className="dropdown">
               <a href="#features" onClick={(e) => {e.preventDefault(); document.getElementById('features').scrollIntoView({behavior: 'smooth'})}}>Estados Brasileiros ▼</a>
               <div className="dropdown-content">
@@ -96,6 +128,7 @@ function App() {
             <li><a href="/adicionar-locais.html">Adicionar locais</a></li>
             <li><a href="/sobre.html">Sobre</a></li>
             <li><a href="/contato.html">Contato</a></li>
+            <li><a href="#" onClick={(e) => {e.preventDefault(); handleLogout()}}>Login</a></li>
           </ul>
         </nav>
       </header>
@@ -105,6 +138,10 @@ function App() {
           <div className="carousel">
             <div className="carousel-slide active">
               <div className="hero-content">
+                <div className="welcome-box">
+                  <h3>Bem-vindo, {localStorage.getItem('userName') || 'Usuário'}! 👋</h3>
+                  <p>Tipo de acesso: {localStorage.getItem('userType') === 'adm' ? 'Administrador' : 'Usuário'}</p>
+                </div>
                 <h2>Descubra Lugares Incríveis</h2>
                 <p>Explore pontos de interesse únicos e encontre experiências inesquecíveis</p>
                 <button className="cta-button" onClick={() => window.location.href = '/lugares.html'}>Começar Exploração</button>
@@ -112,6 +149,10 @@ function App() {
             </div>
             <div className="carousel-slide">
               <div className="hero-content">
+                <div className="welcome-box">
+                  <h3>Bem-vindo, {localStorage.getItem('userName') || 'Usuário'}! 👋</h3>
+                  <p>Tipo de acesso: {localStorage.getItem('userType') === 'adm' ? 'Administrador' : 'Usuário'}</p>
+                </div>
                 <h2>Descubra Lugares Incríveis</h2>
                 <p>Explore pontos de interesse únicos e encontre experiências inesquecíveis</p>
                 <button className="cta-button" onClick={() => window.location.href = '/lugares.html'}>Começar Exploração</button>
@@ -119,6 +160,10 @@ function App() {
             </div>
             <div className="carousel-slide">
               <div className="hero-content">
+                <div className="welcome-box">
+                  <h3>Bem-vindo, {localStorage.getItem('userName') || 'Usuário'}! 👋</h3>
+                  <p>Tipo de acesso: {localStorage.getItem('userType') === 'adm' ? 'Administrador' : 'Usuário'}</p>
+                </div>
                 <h2>Descubra Lugares Incríveis</h2>
                 <p>Explore pontos de interesse únicos e encontre experiências inesquecíveis</p>
                 <button className="cta-button" onClick={() => window.location.href = '/lugares.html'}>Começar Exploração</button>
@@ -126,9 +171,9 @@ function App() {
             </div>
           </div>
           <div className="carousel-nav">
-            <button className="nav-dot active" data-slide="0"></button>
-            <button className="nav-dot" data-slide="1"></button>
-            <button className="nav-dot" data-slide="2"></button>
+            <button className="nav-dot active"></button>
+            <button className="nav-dot"></button>
+            <button className="nav-dot"></button>
           </div>
         </section>
 

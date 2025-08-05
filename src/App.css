@@ -165,7 +165,7 @@
 
 .carousel-nav {
   position: absolute;
-  bottom: 2rem;
+  bottom: 0.5rem;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -375,6 +375,40 @@
   padding: 2rem;
 }
 
+.welcome-box {
+  background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.85));
+  backdrop-filter: blur(15px);
+  padding: 1.5rem 2.5rem;
+  border-radius: 20px;
+  margin-bottom: 2rem;
+  color: #333;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  border: 1px solid rgba(255,255,255,0.3);
+  animation: welcomeFloat 3s ease-in-out infinite;
+}
+
+.welcome-box h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.welcome-box p {
+  font-size: 0.95rem;
+  opacity: 0.8;
+  font-weight: 500;
+  margin: 0;
+}
+
+@keyframes welcomeFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+}
+
 @media (max-width: 768px) {
   .nav {
     flex-direction: column;
@@ -399,5 +433,13 @@
   
   .feature-grid {
     grid-template-columns: 1fr;
+  }
+  
+  .welcome-box {
+    padding: 1rem 1.5rem;
+  }
+  
+  .welcome-box h3 {
+    font-size: 1.2rem;
   }
 }
