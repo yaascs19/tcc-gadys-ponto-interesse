@@ -66,7 +66,12 @@ function AdminPanel() {
         estado: 'AM',
         categoria: locationToApprove.category.toLowerCase(),
         descricao: locationToApprove.description,
-        imagem: '/minha-imagem.jpg' // Imagem padrão
+        imagem: locationToApprove.imagem || '/minha-imagem.jpg',
+        localizacao: locationToApprove.localizacao || '',
+        horario: locationToApprove.horario || '',
+        preco: locationToApprove.preco || '',
+        infoAdicional: locationToApprove.infoAdicional || '',
+        id: locationToApprove.id
       }
       
       locaisAdicionados.push(novoLocal)

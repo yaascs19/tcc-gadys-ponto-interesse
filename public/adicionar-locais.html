@@ -350,6 +350,26 @@
                             <input type="url" id="imagem" name="imagem" placeholder="https://exemplo.com/imagem.jpg">
                         </div>
                         
+                        <div class="form-group" data-icon="📍">
+                            <label for="localizacao">Localização/Endereço:</label>
+                            <input type="text" id="localizacao" name="localizacao" placeholder="Endereço completo ou ponto de referência">
+                        </div>
+                        
+                        <div class="form-group" data-icon="🕒">
+                            <label for="horario">Horário de Funcionamento:</label>
+                            <input type="text" id="horario" name="horario" placeholder="Ex: Segunda a Sexta: 8h às 18h">
+                        </div>
+                        
+                        <div class="form-group" data-icon="💰">
+                            <label for="preco">Preço/Entrada:</label>
+                            <input type="text" id="preco" name="preco" placeholder="Ex: Gratuito, R$ 10,00, Varia">
+                        </div>
+                        
+                        <div class="form-group" data-icon="ℹ️">
+                            <label for="infoAdicional">Informações Adicionais:</label>
+                            <textarea id="infoAdicional" name="infoAdicional" placeholder="Dicas, curiosidades, como chegar, o que levar..." style="padding-left: 3rem;"></textarea>
+                        </div>
+                        
                         <button type="submit" class="submit-btn" id="submitBtn">Adicionar Local</button>
                     </form>
                 </div>
@@ -374,6 +394,10 @@
                 city: document.getElementById('cidade').value + ', ' + document.getElementById('estado').value,
                 description: document.getElementById('descricao').value,
                 imagem: document.getElementById('imagem').value || '/minha-imagem.jpg',
+                localizacao: document.getElementById('localizacao').value,
+                horario: document.getElementById('horario').value,
+                preco: document.getElementById('preco').value,
+                infoAdicional: document.getElementById('infoAdicional').value,
                 submittedBy: userName,
                 date: new Date().toLocaleDateString('pt-BR'),
                 coordinates: 'A definir'
@@ -396,7 +420,12 @@
                         estado: 'AM',
                         categoria: formData.category,
                         descricao: formData.description,
-                        imagem: document.getElementById('imagem').value || '/minha-imagem.jpg'
+                        imagem: document.getElementById('imagem').value || '/minha-imagem.jpg',
+                        localizacao: formData.localizacao,
+                        horario: formData.horario,
+                        preco: formData.preco,
+                        infoAdicional: formData.infoAdicional,
+                        id: formData.id
                     };
                     
                     locaisAdicionados.push(novoLocal);

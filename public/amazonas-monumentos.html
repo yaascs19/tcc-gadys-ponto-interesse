@@ -359,7 +359,7 @@
                             <h3 class="card-title">${monumento.nome}</h3>
                             <p class="cidade">${monumento.cidade} - ${monumento.estado}</p>
                             <p class="descricao">${monumento.descricao}</p>
-                            <button class="button">Visitar</button>
+                            <button class="button" onclick="window.location.href='/detalhes-local.html?id=${monumento.id}'">Visitar</button>
                         </div>
                     `;
                     grid.appendChild(card);

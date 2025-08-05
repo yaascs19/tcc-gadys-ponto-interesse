@@ -359,7 +359,7 @@
                             <h3 class="card-title">${local.nome}</h3>
                             <p class="cidade">${local.cidade} - ${local.estado}</p>
                             <p class="descricao">${local.descricao}</p>
-                            <button class="button">Vivenciar</button>
+                            <button class="button" onclick="window.location.href='/detalhes-local.html?id=${local.id}'">Vivenciar</button>
                         </div>
                     `;
                     grid.appendChild(card);

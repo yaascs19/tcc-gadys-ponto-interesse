@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GADYS - Detalhes do Local</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .header {
+            background: #1a237e;
+            color: white;
+            padding: 1rem 0;
+        }
+        
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            height: 40px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .local-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .local-title {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+        
+        .local-location {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+        }
+        
+        .local-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .info-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 4px solid #1a237e;
+        }
+        
+        .info-card h3 {
+            color: #1a237e;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .description-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .description-section h2 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+        
+        .back-btn {
+            background: #1a237e;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            margin-bottom: 2rem;
+        }
+        
+        .back-btn:hover {
+            background: #3f51b5;
+            transform: translateY(-2px);
+        }
+        
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        
+        @media (max-width: 768px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .local-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <img src="/gadys-logo.svg" alt="GADYS" class="logo" />
+            <ul class="nav-links">
+                <li><a href="/">Início</a></li>
+                <li><a href="/amazonas.html">Amazonas</a></li>
+                <li><a href="/adicionar-locais.html">Adicionar locais</a></li>
+                <li><a href="/sobre.html">Sobre</a></li>
+                <li><a href="/contato.html">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <button class="back-btn" onclick="history.back()">← Voltar</button>
+            
+            <div class="local-header">
+                <h1 class="local-title" id="localNome">Carregando...</h1>
+                <p class="local-location" id="localCidade">Carregando...</p>
+            </div>
+            
+            <img id="localImagem" class="local-image" src="/minha-imagem.jpg" alt="Local">
+            
+            <div class="info-grid">
+                <div class="info-card" id="localizacaoCard">
+                    <h3>📍 Localização</h3>
+                    <p id="localLocalizacao">Não informado</p>
+                </div>
+                
+                <div class="info-card" id="horarioCard">
+                    <h3>🕒 Horário</h3>
+                    <p id="localHorario">Não informado</p>
+                </div>
+                
+                <div class="info-card" id="precoCard">
+                    <h3>💰 Preço</h3>
+                    <p id="localPreco">Não informado</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3>📋 Categoria</h3>
+                    <p id="localCategoria">Não informado</p>
+                </div>
+            </div>
+            
+            <div class="description-section">
+                <h2>📝 Descrição</h2>
+                <p id="localDescricao">Carregando descrição...</p>
+            </div>
+            
+            <div class="description-section" id="infoAdicionalSection">
+                <h2>ℹ️ Informações Adicionais</h2>
+                <p id="localInfoAdicional">Nenhuma informação adicional disponível.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 GADYS. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        function carregarDetalhesLocal() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const localId = urlParams.get('id');
+            
+            if (!localId) {
+                alert('Local não encontrado!');
+                history.back();
+                return;
+            }
+            
+            // Busca nos locais adicionados
+            const locaisAdicionados = JSON.parse(localStorage.getItem('locaisAdicionados')) || [];
+            const local = locaisAdicionados.find(l => l.id == localId);
+            
+            if (!local) {
+                alert('Local não encontrado!');
+                history.back();
+                return;
+            }
+            
+            // Preenche os dados na página
+            document.getElementById('localNome').textContent = local.nome;
+            document.getElementById('localCidade').textContent = `${local.cidade} - ${local.estado}`;
+            document.getElementById('localImagem').src = local.imagem || '/minha-imagem.jpg';
+            document.getElementById('localImagem').alt = local.nome;
+            document.getElementById('localDescricao').textContent = local.descricao;
+            document.getElementById('localCategoria').textContent = local.categoria.charAt(0).toUpperCase() + local.categoria.slice(1);
+            
+            // Informações opcionais
+            if (local.localizacao) {
+                document.getElementById('localLocalizacao').textContent = local.localizacao;
+            } else {
+                document.getElementById('localizacaoCard').style.display = 'none';
+            }
+            
+            if (local.horario) {
+                document.getElementById('localHorario').textContent = local.horario;
+            } else {
+                document.getElementById('horarioCard').style.display = 'none';
+            }
+            
+            if (local.preco) {
+                document.getElementById('localPreco').textContent = local.preco;
+            } else {
+                document.getElementById('precoCard').style.display = 'none';
+            }
+            
+            if (local.infoAdicional) {
+                document.getElementById('localInfoAdicional').textContent = local.infoAdicional;
+            } else {
+                document.getElementById('infoAdicionalSection').style.display = 'none';
+            }
+            
+            // Atualiza o título da página
+            document.title = `GADYS - ${local.nome}`;
+        }
+        
+        document.addEventListener('DOMContentLoaded', carregarDetalhesLocal);
+    </script>
+</body>
+</html>
