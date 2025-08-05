@@ -385,6 +385,24 @@
                 approvedLocations.push(formData);
                 localStorage.setItem('approvedLocations', JSON.stringify(approvedLocations));
                 
+                // Se for do Amazonas, adiciona automaticamente às categorias
+                const estado = document.getElementById('estado').value;
+                if (estado.toLowerCase().includes('am') || estado.toLowerCase().includes('amazonas')) {
+                    let locaisAdicionados = JSON.parse(localStorage.getItem('locaisAdicionados')) || [];
+                    
+                    const novoLocal = {
+                        nome: formData.name,
+                        cidade: document.getElementById('cidade').value,
+                        estado: 'AM',
+                        categoria: formData.category,
+                        descricao: formData.description,
+                        imagem: document.getElementById('imagem').value || '/minha-imagem.jpg'
+                    };
+                    
+                    locaisAdicionados.push(novoLocal);
+                    localStorage.setItem('locaisAdicionados', JSON.stringify(locaisAdicionados));
+                }
+                
                 document.getElementById('successMessage').innerHTML = '<strong>✅ Sucesso:</strong> Local adicionado diretamente ao site!';
             } else {
                 // Usuário comum: local vai para aprovação

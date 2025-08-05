@@ -4,6 +4,8 @@ import './AdminPanel.css'
 function AdminPanel() {
   const [expandedCard, setExpandedCard] = useState(null)
   const [pendingLocations, setPendingLocations] = useState([])
+  const [approvedLocations, setApprovedLocations] = useState([])
+  const [activeTab, setActiveTab] = useState('pending')
   
   useEffect(() => {
     // Carrega locais pendentes do localStorage
@@ -37,6 +39,12 @@ function AdminPanel() {
       setPendingLocations(initialData)
       localStorage.setItem('pendingLocations', JSON.stringify(initialData))
     }
+    
+    // Carrega locais aprovados
+    const approvedStored = localStorage.getItem('approvedLocations')
+    if (approvedStored) {
+      setApprovedLocations(JSON.parse(approvedStored))
+    }
   }, [])
 
   const handleApprove = (id) => {
@@ -48,11 +56,28 @@ function AdminPanel() {
     approvedLocations.push(locationToApprove)
     localStorage.setItem('approvedLocations', JSON.stringify(approvedLocations))
     
+    // Adiciona automaticamente às categorias do Amazonas se for do estado AM
+    if (locationToApprove.city.toLowerCase().includes('am') || locationToApprove.city.toLowerCase().includes('amazonas')) {
+      let locaisAdicionados = JSON.parse(localStorage.getItem('locaisAdicionados')) || []
+      
+      const novoLocal = {
+        nome: locationToApprove.name,
+        cidade: locationToApprove.city.split(',')[0].trim(),
+        estado: 'AM',
+        categoria: locationToApprove.category.toLowerCase(),
+        descricao: locationToApprove.description,
+        imagem: '/minha-imagem.jpg' // Imagem padrão
+      }
+      
+      locaisAdicionados.push(novoLocal)
+      localStorage.setItem('locaisAdicionados', JSON.stringify(locaisAdicionados))
+    }
+    
     // Remove da lista de pendentes
     setPendingLocations(updatedLocations)
     localStorage.setItem('pendingLocations', JSON.stringify(updatedLocations))
     
-    alert(`Local aprovado e adicionado ao site!`)
+    alert(`Local aprovado e adicionado automaticamente às categorias do Amazonas!`)
   }
 
   const handleReject = (id) => {
@@ -60,6 +85,26 @@ function AdminPanel() {
     setPendingLocations(updatedLocations)
     localStorage.setItem('pendingLocations', JSON.stringify(updatedLocations))
     alert(`Local rejeitado e removido da lista!`)
+  }
+
+  const handleRemove = (id) => {
+    if (confirm('Tem certeza que deseja remover este local?')) {
+      const locationToRemove = approvedLocations.find(location => location.id === id)
+      const updatedApproved = approvedLocations.filter(location => location.id !== id)
+      
+      // Remove da lista de aprovados
+      setApprovedLocations(updatedApproved)
+      localStorage.setItem('approvedLocations', JSON.stringify(updatedApproved))
+      
+      // Remove das categorias do Amazonas se existir
+      if (locationToRemove && (locationToRemove.city.toLowerCase().includes('am') || locationToRemove.city.toLowerCase().includes('amazonas'))) {
+        let locaisAdicionados = JSON.parse(localStorage.getItem('locaisAdicionados')) || []
+        locaisAdicionados = locaisAdicionados.filter(local => local.nome !== locationToRemove.name)
+        localStorage.setItem('locaisAdicionados', JSON.stringify(locaisAdicionados))
+      }
+      
+      alert('Local removido com sucesso!')
+    }
   }
 
   const toggleExpand = (id) => {
@@ -70,11 +115,24 @@ function AdminPanel() {
     <div className="admin-panel">
       <div className="admin-header">
         <h1>Painel Administrativo</h1>
-        <p>Locais pendentes de aprovação</p>
+        <div className="admin-tabs">
+          <button 
+            className={`tab-btn ${activeTab === 'pending' ? 'active' : ''}`}
+            onClick={() => setActiveTab('pending')}
+          >
+            Pendentes ({pendingLocations.length})
+          </button>
+          <button 
+            className={`tab-btn ${activeTab === 'approved' ? 'active' : ''}`}
+            onClick={() => setActiveTab('approved')}
+          >
+            Aprovados ({approvedLocations.length})
+          </button>
+        </div>
       </div>
       
       <div className="admin-grid">
-        {pendingLocations.map(location => (
+        {activeTab === 'pending' && pendingLocations.map(location => (
           <div key={location.id} className={`admin-card ${expandedCard === location.id ? 'expanded' : ''}`}>
             <div className="card-header">
               <h3>{location.name}</h3>
@@ -112,6 +170,43 @@ function AdminPanel() {
                 onClick={() => handleReject(location.id)}
               >
                 Rejeitar
+              </button>
+            </div>
+          </div>
+        ))}
+        
+        {activeTab === 'approved' && approvedLocations.map(location => (
+          <div key={location.id} className={`admin-card ${expandedCard === location.id ? 'expanded' : ''}`}>
+            <div className="card-header">
+              <h3>{location.name}</h3>
+              <span className="category-badge approved">{location.category}</span>
+            </div>
+            
+            <div className="card-info">
+              <p><strong>Cidade:</strong> {location.city}</p>
+              <p><strong>Enviado por:</strong> {location.submittedBy}</p>
+              <p><strong>Data:</strong> {location.date}</p>
+            </div>
+
+            {expandedCard === location.id && (
+              <div className="card-details">
+                <p><strong>Descrição:</strong> {location.description}</p>
+                <p><strong>Coordenadas:</strong> {location.coordinates}</p>
+              </div>
+            )}
+
+            <div className="card-actions">
+              <button 
+                className="expand-btn"
+                onClick={() => toggleExpand(location.id)}
+              >
+                {expandedCard === location.id ? 'Recolher' : 'Expandir'}
+              </button>
+              <button 
+                className="remove-btn"
+                onClick={() => handleRemove(location.id)}
+              >
+                Remover
               </button>
             </div>
           </div>

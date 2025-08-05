@@ -20,6 +20,34 @@
   font-size: 1.1rem;
 }
 
+.admin-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.tab-btn {
+  padding: 0.8rem 1.5rem;
+  border: 2px solid #667eea;
+  background: white;
+  color: #667eea;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.tab-btn.active {
+  background: #667eea;
+  color: white;
+}
+
+.tab-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
 .admin-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
@@ -69,6 +97,10 @@
   border-radius: 20px;
   font-size: 0.8rem;
   font-weight: 500;
+}
+
+.category-badge.approved {
+  background: linear-gradient(135deg, #28a745, #20c997);
 }
 
 .card-info {
@@ -140,6 +172,17 @@
 }
 
 .reject-btn:hover {
+  background: #c82333;
+  transform: translateY(-2px);
+}
+
+.remove-btn {
+  background: #dc3545;
+  color: white;
+  flex: 1;
+}
+
+.remove-btn:hover {
   background: #c82333;
   transform: translateY(-2px);
 }
