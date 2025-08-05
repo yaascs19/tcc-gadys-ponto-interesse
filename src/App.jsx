@@ -99,6 +99,8 @@ function App() {
           <nav className="nav">
             <img src="/gadys-logo.svg" alt="GADYS" className="logo" style={{height: '40px'}} />
             <ul className="nav-links">
+              <li><a href="#" onClick={(e) => {e.preventDefault(); setCurrentPage('home')}}>Voltar ao Início</a></li>
+              <li><a href="/adicionar-locais.html">Adicionar locais</a></li>
               <li><a href="#" onClick={(e) => {e.preventDefault(); setCurrentPage('admin')}}>Administração</a></li>
               <li><a href="#" onClick={(e) => {e.preventDefault(); handleLogout()}}>Logout</a></li>
             </ul>
@@ -152,7 +154,7 @@ function App() {
             <li><a href="/sobre.html">Sobre</a></li>
             <li><a href="/contato.html">Contato</a></li>
             {userType === 'adm' && (
-              <li><a href="#" onClick={(e) => {e.preventDefault(); setCurrentPage('admin'); window.location.reload()}}>Administração</a></li>
+              <li><a href="#" onClick={(e) => {e.preventDefault(); setCurrentPage('admin')}}>Administração</a></li>
             )}
             <li><a href="#" onClick={(e) => {e.preventDefault(); handleLogout()}}>Login</a></li>
           </ul>

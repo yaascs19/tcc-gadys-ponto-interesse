@@ -303,7 +303,7 @@
                         </div>
                     </div>
                     
-                    <div class="grid">
+                    <div class="grid" id="monumentosGrid">
                         
                         <div class="card">
                             <img src="/cristo.webp" alt="Cristo Redentor">
@@ -394,6 +394,30 @@
                 }
             }
         }
+        
+        // Carrega locais aprovados da categoria monumentos
+        document.addEventListener('DOMContentLoaded', function() {
+            const approvedLocations = JSON.parse(localStorage.getItem('approvedLocations')) || [];
+            const monumentosGrid = document.getElementById('monumentosGrid');
+            
+            // Filtra apenas locais da categoria monumentos
+            const monumentos = approvedLocations.filter(location => location.category === 'monumentos');
+            
+            monumentos.forEach(location => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <img src="${location.imagem || '/minha-imagem.jpg'}" alt="${location.name}">
+                    <div class="card-info">
+                        <h3 class="card-title">${location.name}</h3>
+                        <p class="cidade">${location.city}</p>
+                        <p class="descricao">${location.description}</p>
+                        <button class="button">Visitar</button>
+                    </div>
+                `;
+                monumentosGrid.appendChild(card);
+            });
+        });
     </script>
 </body>
 </html>

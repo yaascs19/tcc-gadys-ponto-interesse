@@ -310,7 +310,7 @@
                     <h1>Adicionar Novo Local</h1>
                     
                     <div id="successMessage" style="background: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 1rem; border-radius: 10px; margin-bottom: 2rem; text-align: center; display: none;">
-                        <strong>✅ Sucesso:</strong> Local adicionado com sucesso!
+                        Local processado com sucesso!
                     </div>
                     
                     <form id="localForm">
@@ -364,20 +364,36 @@
         document.getElementById('localForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
+            const userName = localStorage.getItem('userName') || 'Usuário Anônimo';
+            const userType = localStorage.getItem('userType');
+            
             const formData = {
                 id: Date.now(),
-                nome: document.getElementById('nome').value,
-                categoria: document.getElementById('categoria').value,
-                cidade: document.getElementById('cidade').value,
-                estado: document.getElementById('estado').value,
-                descricao: document.getElementById('descricao').value,
+                name: document.getElementById('nome').value,
+                category: document.getElementById('categoria').value,
+                city: document.getElementById('cidade').value + ', ' + document.getElementById('estado').value,
+                description: document.getElementById('descricao').value,
                 imagem: document.getElementById('imagem').value || '/minha-imagem.jpg',
-                dataAdicao: new Date().toLocaleDateString('pt-BR')
+                submittedBy: userName,
+                date: new Date().toLocaleDateString('pt-BR'),
+                coordinates: 'A definir'
             };
             
-            let locaisAdicionados = JSON.parse(localStorage.getItem('locaisAdicionados')) || [];
-            locaisAdicionados.push(formData);
-            localStorage.setItem('locaisAdicionados', JSON.stringify(locaisAdicionados));
+            if (userType === 'adm') {
+                // Administrador: local vai direto para o site (aprovado automaticamente)
+                let approvedLocations = JSON.parse(localStorage.getItem('approvedLocations')) || [];
+                approvedLocations.push(formData);
+                localStorage.setItem('approvedLocations', JSON.stringify(approvedLocations));
+                
+                document.getElementById('successMessage').innerHTML = '<strong>✅ Sucesso:</strong> Local adicionado diretamente ao site!';
+            } else {
+                // Usuário comum: local vai para aprovação
+                let pendingLocations = JSON.parse(localStorage.getItem('pendingLocations')) || [];
+                pendingLocations.push(formData);
+                localStorage.setItem('pendingLocations', JSON.stringify(pendingLocations));
+                
+                document.getElementById('successMessage').innerHTML = '<strong>✅ Sucesso:</strong> Local enviado para aprovação!';
+            }
             
             document.getElementById('successMessage').style.display = 'block';
             document.getElementById('localForm').reset();

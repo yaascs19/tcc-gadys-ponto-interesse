@@ -274,8 +274,8 @@
 
             <section class="section">
                 <div class="container">
-                    <div class="grid">
-                        
+                    <div class="grid" id="locaisGrid">
+                        <!-- Locais existentes -->
                         <div class="card">
                             <img src="https://images.unsplash.com/photo-1483729558449-99ef09a8c325?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Cristo Redentor">
                             <div class="card-info">
@@ -335,7 +335,6 @@
                                 <button class="button">Visitar</button>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </section>
@@ -345,5 +344,27 @@
             <p>&copy; 2025 GADYS. Todos os direitos reservados.</p>
         </footer>
     </div>
+    <script>
+        // Carrega locais aprovados do localStorage
+        document.addEventListener('DOMContentLoaded', function() {
+            const approvedLocations = JSON.parse(localStorage.getItem('approvedLocations')) || [];
+            const grid = document.getElementById('locaisGrid');
+            
+            approvedLocations.forEach(location => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <img src="${location.imagem || '/minha-imagem.jpg'}" alt="${location.name}">
+                    <div class="card-info">
+                        <h3 class="card-title">${location.name}</h3>
+                        <p class="cidade">${location.city}</p>
+                        <p class="descricao">${location.description}</p>
+                        <button class="button">Visitar</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        });
+    </script>
 </body>
 </html>

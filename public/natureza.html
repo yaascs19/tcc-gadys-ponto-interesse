@@ -288,7 +288,7 @@
                         </div>
                     </div>
                     
-                    <div class="grid">
+                    <div class="grid" id="naturezaGrid">
                         
                         <div class="card">
                             <img src="/cataratas.jpeg" alt="Cataratas do Iguaçu">
@@ -379,5 +379,30 @@
             <p>&copy; 2025 GADYS. Todos os direitos reservados.</p>
         </footer>
     </div>
+    <script>
+        // Carrega locais aprovados da categoria natureza
+        document.addEventListener('DOMContentLoaded', function() {
+            const approvedLocations = JSON.parse(localStorage.getItem('approvedLocations')) || [];
+            const naturezaGrid = document.getElementById('naturezaGrid');
+            
+            // Filtra apenas locais da categoria natureza
+            const natureza = approvedLocations.filter(location => location.category === 'natureza');
+            
+            natureza.forEach(location => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <img src="${location.imagem || '/minha-imagem.jpg'}" alt="${location.name}">
+                    <div class="card-info">
+                        <h3 class="card-title">${location.name}</h3>
+                        <p class="cidade">${location.city}</p>
+                        <p class="descricao">${location.description}</p>
+                        <button class="button">Explorar</button>
+                    </div>
+                `;
+                naturezaGrid.appendChild(card);
+            });
+        });
+    </script>
 </body>
 </html>

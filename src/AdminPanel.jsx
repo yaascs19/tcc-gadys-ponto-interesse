@@ -1,49 +1,65 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './AdminPanel.css'
 
 function AdminPanel() {
   const [expandedCard, setExpandedCard] = useState(null)
+  const [pendingLocations, setPendingLocations] = useState([])
   
-  // Dados mockados de locais enviados pelos usuários
-  const pendingLocations = [
-    {
-      id: 1,
-      name: 'Cachoeira Secreta',
-      city: 'Manaus, AM',
-      category: 'Natureza',
-      submittedBy: 'João Silva',
-      date: '2025-01-15',
-      description: 'Uma cachoeira escondida na floresta amazônica, com águas cristalinas e uma trilha de 2km. Local perfeito para relaxar e se conectar com a natureza.',
-      coordinates: '-3.1190, -60.0217'
-    },
-    {
-      id: 2,
-      name: 'Restaurante Típico da Vovó',
-      city: 'Parintins, AM',
-      category: 'Gastronomia',
-      submittedBy: 'Maria Santos',
-      date: '2025-01-14',
-      description: 'Restaurante familiar que serve pratos típicos da região há 30 anos. Especialidade em pirarucu assado e tucumã.',
-      coordinates: '-2.6287, -56.7356'
-    },
-    {
-      id: 3,
-      name: 'Casa de Artesanato Indígena',
-      city: 'São Gabriel da Cachoeira, AM',
-      category: 'Cultura',
-      submittedBy: 'Carlos Mendes',
-      date: '2025-01-13',
-      description: 'Centro cultural que preserva e divulga o artesanato indígena da região. Oferece oficinas e venda de peças autênticas.',
-      coordinates: '-0.1303, -67.0892'
+  useEffect(() => {
+    // Carrega locais pendentes do localStorage
+    const stored = localStorage.getItem('pendingLocations')
+    if (stored) {
+      setPendingLocations(JSON.parse(stored))
+    } else {
+      // Dados iniciais mockados
+      const initialData = [
+        {
+          id: 1,
+          name: 'Cachoeira Secreta',
+          city: 'Manaus, AM',
+          category: 'Natureza',
+          submittedBy: 'João Silva',
+          date: '2025-01-15',
+          description: 'Uma cachoeira escondida na floresta amazônica, com águas cristalinas e uma trilha de 2km. Local perfeito para relaxar e se conectar com a natureza.',
+          coordinates: '-3.1190, -60.0217'
+        },
+        {
+          id: 2,
+          name: 'Restaurante Típico da Vovó',
+          city: 'Parintins, AM',
+          category: 'Gastronomia',
+          submittedBy: 'Maria Santos',
+          date: '2025-01-14',
+          description: 'Restaurante familiar que serve pratos típicos da região há 30 anos. Especialidade em pirarucu assado e tucumã.',
+          coordinates: '-2.6287, -56.7356'
+        }
+      ]
+      setPendingLocations(initialData)
+      localStorage.setItem('pendingLocations', JSON.stringify(initialData))
     }
-  ]
+  }, [])
 
   const handleApprove = (id) => {
-    alert(`Local ${id} aprovado!`)
+    const locationToApprove = pendingLocations.find(location => location.id === id)
+    const updatedLocations = pendingLocations.filter(location => location.id !== id)
+    
+    // Move para lista de aprovados
+    let approvedLocations = JSON.parse(localStorage.getItem('approvedLocations')) || []
+    approvedLocations.push(locationToApprove)
+    localStorage.setItem('approvedLocations', JSON.stringify(approvedLocations))
+    
+    // Remove da lista de pendentes
+    setPendingLocations(updatedLocations)
+    localStorage.setItem('pendingLocations', JSON.stringify(updatedLocations))
+    
+    alert(`Local aprovado e adicionado ao site!`)
   }
 
   const handleReject = (id) => {
-    alert(`Local ${id} rejeitado!`)
+    const updatedLocations = pendingLocations.filter(location => location.id !== id)
+    setPendingLocations(updatedLocations)
+    localStorage.setItem('pendingLocations', JSON.stringify(updatedLocations))
+    alert(`Local rejeitado e removido da lista!`)
   }
 
   const toggleExpand = (id) => {
