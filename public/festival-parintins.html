@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GADYS - Festival de Parintins</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; }
+        .header { background: #1a237e; color: white; padding: 1rem 0; }
+        .nav { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo { height: 40px; }
+        .nav-links { display: flex; list-style: none; gap: 2rem; }
+        .nav-links a { color: white; text-decoration: none; padding: 0.5rem 1rem; border-radius: 5px; transition: background 0.3s; }
+        .nav-links a:hover { background: rgba(255, 255, 255, 0.1); }
+        .hero { background: linear-gradient(rgba(128, 0, 128, 0.8), rgba(75, 0, 130, 0.8)), url('/festival.jpeg'); background-size: cover; background-position: center; color: white; padding: 8rem 2rem 4rem; text-align: center; }
+        .hero h1 { font-size: 4rem; margin-bottom: 1rem; font-weight: 700; }
+        .hero p { font-size: 1.5rem; opacity: 0.9; }
+        .content { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
+        .info-section { background: white; border-radius: 15px; padding: 3rem; margin-bottom: 2rem; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); }
+        .info-section h2 { color: #800080; font-size: 2rem; margin-bottom: 1.5rem; }
+        .info-section p { font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem; }
+        .details-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem; }
+        .detail-card { background: #f8f9fa; padding: 2rem; border-radius: 10px; border-left: 4px solid #800080; }
+        .detail-card h3 { color: #800080; margin-bottom: 1rem; }
+        .back-button { background: #800080; color: white; border: none; padding: 1rem 2rem; border-radius: 25px; cursor: pointer; font-size: 1rem; text-decoration: none; display: inline-block; margin-top: 2rem; transition: background 0.3s; }
+        .back-button:hover { background: #4b0082; }
+        .footer { background: #2c3e50; color: white; text-align: center; padding: 2rem; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <img src="/gadys-logo.svg" alt="GADYS" class="logo" />
+            <ul class="nav-links">
+                <li><a href="/">Início</a></li>
+                <li><a href="/amazonas.html">Amazonas</a></li>
+                <li><a href="/amazonas-cultura.html">Cultura</a></li>
+                <li><a href="/sobre.html">Sobre</a></li>
+                <li><a href="/contato.html">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Festival de Parintins</h1>
+            <p>Maior festival folclórico do Brasil</p>
+        </section>
+
+        <div class="content">
+            <div class="info-section">
+                <h2>A Festa dos Bois-Bumbás</h2>
+                <p>O Festival de Parintins é o maior festival folclórico do Brasil, realizado anualmente na última semana de junho na cidade de Parintins, no Amazonas. O evento celebra a lenda do boi-bumbá através da disputa entre os bois Garantido (vermelho) e Caprichoso (azul).</p>
+                <p>Durante três noites, mais de 35 mil pessoas se reúnem no Bumbódromo para assistir às apresentações que misturam teatro, dança, música e alegorias grandiosas, contando histórias da Amazônia e do folclore brasileiro.</p>
+            </div>
+
+            <div class="info-section">
+                <h2>Tradição e Espetáculo</h2>
+                <p>Cada boi apresenta um espetáculo de aproximadamente 2 horas e 30 minutos, com mais de 4 mil brincantes em cena. As apresentações incluem personagens como o Pai Francisco, Mãe Catirina, o Pajé, a Cunhã-Poranga e o Levantador de Toadas.</p>
+                <p>O festival preserva tradições centenárias enquanto incorpora elementos contemporâneos, criando um espetáculo único que atrai visitantes do mundo inteiro e é considerado Patrimônio Cultural do Brasil.</p>
+            </div>
+
+            <div class="details-grid">
+                <div class="detail-card">
+                    <h3>📍 Localização</h3>
+                    <p>Parintins - AM</p>
+                </div>
+                
+                <div class="detail-card">
+                    <h3>🕐 Quando</h3>
+                    <p>Última semana de junho<br>Três noites de apresentações</p>
+                </div>
+                
+                <div class="detail-card">
+                    <h3>🎭 Bois</h3>
+                    <p>Garantido (vermelho) e Caprichoso (azul)</p>
+                </div>
+                
+                <div class="detail-card">
+                    <h3>👥 Público</h3>
+                    <p>Mais de 35 mil pessoas por noite</p>
+                </div>
+            </div>
+
+            <a href="/amazonas-cultura.html" class="back-button">← Voltar à Cultura</a>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 GADYS. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GADYS - Palácio Rio Negro</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; }
+        .header { background: #1a237e; color: white; padding: 1rem 0; }
+        .nav { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo { height: 40px; }
+        .nav-links { display: flex; list-style: none; gap: 2rem; }
+        .nav-links a { color: white; text-decoration: none; padding: 0.5rem 1rem; border-radius: 5px; transition: background 0.3s; }
+        .nav-links a:hover { background: rgba(255, 255, 255, 0.1); }
+        .hero { background: linear-gradient(rgba(139, 69, 19, 0.8), rgba(160, 82, 45, 0.8)), url('/pala.jpeg'); background-size: cover; background-position: center; color: white; padding: 8rem 2rem 4rem; text-align: center; }
+        .hero h1 { font-size: 4rem; margin-bottom: 1rem; font-weight: 700; }
+        .hero p { font-size: 1.5rem; opacity: 0.9; }
+        .content { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
+        .info-section { background: white; border-radius: 15px; padding: 3rem; margin-bottom: 2rem; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); }
+        .info-section h2 { color: #8b4513; font-size: 2rem; margin-bottom: 1.5rem; }
+        .info-section p { font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem; }
+        .details-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem; }
+        .detail-card { background: #f8f9fa; padding: 2rem; border-radius: 10px; border-left: 4px solid #8b4513; }
+        .detail-card h3 { color: #8b4513; margin-bottom: 1rem; }
+        .back-button { background: #8b4513; color: white; border: none; padding: 1rem 2rem; border-radius: 25px; cursor: pointer; font-size: 1rem; text-decoration: none; display: inline-block; margin-top: 2rem; transition: background 0.3s; }
+        .back-button:hover { background: #a0522d; }
+        .footer { background: #2c3e50; color: white; text-align: center; padding: 2rem; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <img src="/gadys-logo.svg" alt="GADYS" class="logo" />
+            <ul class="nav-links">
+                <li><a href="/">Início</a></li>
+                <li><a href="/amazonas.html">Amazonas</a></li>
+                <li><a href="/amazonas-monumentos.html">Monumentos</a></li>
+                <li><a href="/sobre.html">Sobre</a></li>
+                <li><a href="/contato.html">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Palácio Rio Negro</h1>
+            <p>Centro cultural e patrimônio histórico</p>
+        </section>
+
+        <div class="content">
+            <div class="info-section">
+                <h2>História</h2>
+                <p>O Palácio Rio Negro foi construído no início do século XX como residência oficial dos governadores do Amazonas. Durante décadas, serviu como sede do poder executivo estadual, abrigando importantes decisões políticas e eventos oficiais.</p>
+                <p>Após deixar de ser residência governamental, o palácio foi transformado em centro cultural, preservando sua importância histórica e arquitetônica para as futuras gerações.</p>
+            </div>
+
+            <div class="info-section">
+                <h2>Arquitetura e Função Atual</h2>
+                <p>O edifício apresenta arquitetura eclética típica do período republicano, com influências neoclássicas e elementos decorativos elaborados. Seus jardins e área externa complementam a beleza do conjunto arquitetônico.</p>
+                <p>Atualmente funciona como centro cultural, oferecendo exposições, eventos artísticos e atividades educativas, mantendo viva a memória histórica de Manaus e do Amazonas.</p>
+            </div>
+
+            <div class="details-grid">
+                <div class="detail-card">
+                    <h3>📍 Localização</h3>
+                    <p>Avenida Sete de Setembro - Centro, Manaus - AM</p>
+                </div>
+                
+                <div class="detail-card">
+                    <h3>🕐 Visitação</h3>
+                    <p>Terça a domingo: 9h às 17h<br>Segunda: fechado</p>
+                </div>
+                
+                <div class="detail-card">
+                    <h3>🎨 Função Atual</h3>
+                    <p>Centro cultural com exposições e eventos artísticos</p>
+                </div>
+                
+                <div class="detail-card">
+                    <h3>📅 História</h3>
+                    <p>Antiga residência dos governadores, hoje patrimônio cultural</p>
+                </div>
+            </div>
+
+            <a href="/amazonas-monumentos.html" class="back-button">← Voltar aos Monumentos</a>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 GADYS. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

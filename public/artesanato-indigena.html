@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GADYS - Artesanato Indígena</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; }
+        .header { background: #1a237e; color: white; padding: 1rem 0; }
+        .nav { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo { height: 40px; }
+        .nav-links { display: flex; list-style: none; gap: 2rem; }
+        .nav-links a { color: white; text-decoration: none; padding: 0.5rem 1rem; border-radius: 5px; transition: background 0.3s; }
+        .nav-links a:hover { background: rgba(255, 255, 255, 0.1); }
+        .hero { background: linear-gradient(rgba(128, 0, 128, 0.8), rgba(75, 0, 130, 0.8)), url('/art.jpeg'); background-size: cover; background-position: center; color: white; padding: 8rem 2rem 4rem; text-align: center; }
+        .hero h1 { font-size: 4rem; margin-bottom: 1rem; font-weight: 700; }
+        .hero p { font-size: 1.5rem; opacity: 0.9; }
+        .content { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
+        .info-section { background: white; border-radius: 15px; padding: 3rem; margin-bottom: 2rem; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); }
+        .info-section h2 { color: #800080; font-size: 2rem; margin-bottom: 1.5rem; }
+        .info-section p { font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem; }
+        .details-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem; }
+        .detail-card { background: #f8f9fa; padding: 2rem; border-radius: 10px; border-left: 4px solid #800080; }
+        .detail-card h3 { color: #800080; margin-bottom: 1rem; }
+        .back-button { background: #800080; color: white; border: none; padding: 1rem 2rem; border-radius: 25px; cursor: pointer; font-size: 1rem; text-decoration: none; display: inline-block; margin-top: 2rem; transition: background 0.3s; }
+        .back-button:hover { background: #4b0082; }
+        .footer { background: #2c3e50; color: white; text-align: center; padding: 2rem; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <img src="/gadys-logo.svg" alt="GADYS" class="logo" />
+            <ul class="nav-links">
+                <li><a href="/">Início</a></li>
+                <li><a href="/amazonas.html">Amazonas</a></li>
+                <li><a href="/amazonas-cultura.html">Cultura</a></li>
+                <li><a href="/sobre.html">Sobre</a></li>
+                <li><a href="/contato.html">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Artesanato Indígena</h1>
+            <p>Arte ancestral dos povos originários</p>
+        </section>
+
+        <div class="content">
+            <div class="info-section">
+                <h2>Saberes Ancestrais</h2>
+                <p>O artesanato indígena amazônico representa milhares de anos de conhecimento tradicional, sendo uma expressão cultural fundamental dos povos originários. Cada peça carrega significados simbólicos e técnicas passadas de geração em geração.</p>
+                <p>Os artesãos utilizam materiais naturais da floresta como cipós, sementes, penas, madeiras e fibras vegetais, criando objetos funcionais e decorativos que refletem a cosmovisão e identidade de cada etnia.</p>
+            </div>
+
+            <div class="info-section">
+                <h2>Técnicas e Materiais</h2>
+                <p>As principais técnicas incluem a tecelagem de fibras, cerâmica, entalhe em madeira, confecção de adornos com penas e sementes, e a produção de instrumentos musicais. Cada técnica requer conhecimento específico sobre os materiais e seus tempos de coleta.</p>
+                <p>Os objetos produzidos incluem cestas, redes, cerâmicas, colares, cocares, arcos, flechas, instrumentos musicais e utensílios domésticos, todos com função prática e significado cultural.</p>
+            </div>
+
+            <div class="details-grid">
+                <div class="detail-card">
+                    <h3>📍 Origem</h3>
+                    <p>Comunidades indígenas amazônicas</p>
+                </div>
+                
+                <div class="detail-card">
+                    <h3>🕐 Tradição</h3>
+                    <p>Milhares de anos<br>Transmissão oral</p>
+                </div>
+                
+                <div class="detail-card">
+                    <h3>🌿 Materiais</h3>
+                    <p>Cipós, sementes, penas, fibras naturais</p>
+                </div>
+                
+                <div class="detail-card">
+                    <h3>🎨 Produtos</h3>
+                    <p>Cestas, cerâmicas, adornos, instrumentos</p>
+                </div>
+            </div>
+
+            <a href="/amazonas-cultura.html" class="back-button">← Voltar à Cultura</a>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 GADYS. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

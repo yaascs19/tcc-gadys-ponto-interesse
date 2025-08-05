@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GADYS - Floresta Amazônica</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; }
+        .header { background: #1a237e; color: white; padding: 1rem 0; }
+        .nav { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo { height: 40px; }
+        .nav-links { display: flex; list-style: none; gap: 2rem; }
+        .nav-links a { color: white; text-decoration: none; padding: 0.5rem 1rem; border-radius: 5px; transition: background 0.3s; }
+        .nav-links a:hover { background: rgba(255, 255, 255, 0.1); }
+        .hero { background: linear-gradient(rgba(34, 139, 34, 0.8), rgba(0, 128, 0, 0.8)), url('/floresta.jpeg'); background-size: cover; background-position: center; color: white; padding: 8rem 2rem 4rem; text-align: center; }
+        .hero h1 { font-size: 4rem; margin-bottom: 1rem; font-weight: 700; }
+        .hero p { font-size: 1.5rem; opacity: 0.9; }
+        .content { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
+        .info-section { background: white; border-radius: 15px; padding: 3rem; margin-bottom: 2rem; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); }
+        .info-section h2 { color: #228b22; font-size: 2rem; margin-bottom: 1.5rem; }
+        .info-section p { font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem; }
+        .details-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem; }
+        .detail-card { background: #f8f9fa; padding: 2rem; border-radius: 10px; border-left: 4px solid #228b22; }
+        .detail-card h3 { color: #228b22; margin-bottom: 1rem; }
+        .back-button { background: #228b22; color: white; border: none; padding: 1rem 2rem; border-radius: 25px; cursor: pointer; font-size: 1rem; text-decoration: none; display: inline-block; margin-top: 2rem; transition: background 0.3s; }
+        .back-button:hover { background: #008000; }
+        .footer { background: #2c3e50; color: white; text-align: center; padding: 2rem; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <img src="/gadys-logo.svg" alt="GADYS" class="logo" />
+            <ul class="nav-links">
+                <li><a href="/">Início</a></li>
+                <li><a href="/amazonas.html">Amazonas</a></li>
+                <li><a href="/amazonas-natureza.html">Natureza</a></li>
+                <li><a href="/sobre.html">Sobre</a></li>
+                <li><a href="/contato.html">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Floresta Amazônica</h1>
+            <p>A maior floresta tropical do mundo</p>
+        </section>
+
+        <div class="content">
+            <div class="info-section">
+                <h2>Biodiversidade</h2>
+                <p>A Floresta Amazônica abriga a maior biodiversidade do planeta, com milhões de espécies de plantas, animais, insetos e microorganismos. Estima-se que muitas espécies ainda não foram descobertas pela ciência.</p>
+                <p>Esta floresta tropical é lar de mais de 40.000 espécies de plantas, 3.000 espécies de peixes, 1.300 espécies de aves e 430 espécies de mamíferos, representando um patrimônio natural inestimável para a humanidade.</p>
+            </div>
+
+            <div class="info-section">
+                <h2>Importância Ecológica</h2>
+                <p>Conhecida como "pulmão do mundo", a Floresta Amazônica desempenha papel fundamental na regulação do clima global, produzindo oxigênio e absorvendo grandes quantidades de dióxido de carbono.</p>
+                <p>Seus rios e igarapés formam a maior bacia hidrográfica do mundo, influenciando o ciclo das chuvas não apenas na região, mas em todo o continente sul-americano.</p>
+            </div>
+
+            <div class="details-grid">
+                <div class="detail-card">
+                    <h3>📍 Localização</h3>
+                    <p>Região Amazônica - Amazonas, Brasil</p>
+                </div>
+                
+                <div class="detail-card">
+                    <h3>🕐 Visitação</h3>
+                    <p>Diariamente com guias especializados<br>Turismo ecológico responsável</p>
+                </div>
+                
+                <div class="detail-card">
+                    <h3>🌿 Extensão</h3>
+                    <p>Aproximadamente 5,5 milhões de km²</p>
+                </div>
+                
+                <div class="detail-card">
+                    <h3>🦋 Biodiversidade</h3>
+                    <p>Milhões de espécies de flora e fauna</p>
+                </div>
+            </div>
+
+            <a href="/amazonas-natureza.html" class="back-button">← Voltar à Natureza</a>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 GADYS. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>
