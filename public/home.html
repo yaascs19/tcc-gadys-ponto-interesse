@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GADYS - Bem-vindo</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #1a237e, #3f51b5); min-height: 100vh; display: flex; align-items: center; justify-content: center; color: white; }
+        .welcome-container { text-align: center; max-width: 600px; padding: 3rem; }
+        .logo { height: 80px; margin-bottom: 2rem; }
+        h1 { font-size: 3rem; margin-bottom: 1rem; }
+        p { font-size: 1.2rem; margin-bottom: 3rem; opacity: 0.9; }
+        .buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .btn { padding: 1rem 2rem; border: none; border-radius: 25px; font-size: 1.1rem; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-block; }
+        .btn-primary { background: white; color: #1a237e; }
+        .btn-primary:hover { background: #f0f0f0; transform: translateY(-2px); }
+        .btn-secondary { background: rgba(255,255,255,0.2); color: white; border: 2px solid white; }
+        .btn-secondary:hover { background: rgba(255,255,255,0.3); transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+    <div class="welcome-container">
+        <img src="/gadys-logo.svg" alt="GADYS" class="logo" />
+        <h1>Bem-vindo ao GADYS</h1>
+        <p>Descubra os pontos de interesse mais incríveis do Brasil. Explore monumentos, natureza, gastronomia e cultura de cada estado.</p>
+        
+        <div class="buttons">
+            <a href="/login.html" class="btn btn-primary">Fazer Login</a>
+            <a href="/amazonas.html" class="btn btn-secondary">Pular</a>
+        </div>
+    </div>
+</body>
+</html>

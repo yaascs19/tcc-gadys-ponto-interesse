@@ -309,11 +309,11 @@
                 <div class="form-container">
                     <h1>Adicionar Novo Local</h1>
                     
-                    <div style="background: #fff3cd; border: 1px solid #ffeaa7; color: #856404; padding: 1rem; border-radius: 10px; margin-bottom: 2rem; text-align: center;">
-                        <strong>⚠️ Atenção:</strong> Para acessar esta página é necessário efetuar login.
+                    <div id="successMessage" style="background: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 1rem; border-radius: 10px; margin-bottom: 2rem; text-align: center; display: none;">
+                        <strong>✅ Sucesso:</strong> Local adicionado com sucesso!
                     </div>
                     
-                    <form>
+                    <form id="localForm">
                         <div class="form-group" data-icon="📍">
                             <label for="nome">Nome do Local:</label>
                             <input type="text" id="nome" name="nome" required>
@@ -350,7 +350,7 @@
                             <input type="url" id="imagem" name="imagem" placeholder="https://exemplo.com/imagem.jpg">
                         </div>
                         
-                        <button type="button" class="submit-btn" onclick="window.location.href='/login.html'">Adicionar Local</button>
+                        <button type="submit" class="submit-btn" id="submitBtn">Adicionar Local</button>
                     </form>
                 </div>
             </div>
@@ -360,5 +360,32 @@
             <p>&copy; 2025 GADYS. Todos os direitos reservados.</p>
         </footer>
     </div>
+    <script>
+        document.getElementById('localForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                id: Date.now(),
+                nome: document.getElementById('nome').value,
+                categoria: document.getElementById('categoria').value,
+                cidade: document.getElementById('cidade').value,
+                estado: document.getElementById('estado').value,
+                descricao: document.getElementById('descricao').value,
+                imagem: document.getElementById('imagem').value || '/minha-imagem.jpg',
+                dataAdicao: new Date().toLocaleDateString('pt-BR')
+            };
+            
+            let locaisAdicionados = JSON.parse(localStorage.getItem('locaisAdicionados')) || [];
+            locaisAdicionados.push(formData);
+            localStorage.setItem('locaisAdicionados', JSON.stringify(locaisAdicionados));
+            
+            document.getElementById('successMessage').style.display = 'block';
+            document.getElementById('localForm').reset();
+            
+            setTimeout(() => {
+                document.getElementById('successMessage').style.display = 'none';
+            }, 3000);
+        });
+    </script>
 </body>
 </html>

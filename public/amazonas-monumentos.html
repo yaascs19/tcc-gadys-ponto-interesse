@@ -338,5 +338,36 @@
             <p>&copy; 2025 GADYS. Todos os direitos reservados.</p>
         </footer>
     </div>
+
+    <script>
+        function carregarMonumentosAdicionados() {
+            const locaisAdicionados = JSON.parse(localStorage.getItem('locaisAdicionados')) || [];
+            const monumentosAmazonas = locaisAdicionados.filter(local => 
+                local.categoria === 'monumentos' && 
+                (local.estado.toLowerCase().includes('amazonas') || local.estado.toLowerCase().includes('am'))
+            );
+            
+            if (monumentosAmazonas.length > 0) {
+                const grid = document.querySelector('.grid');
+                
+                monumentosAmazonas.forEach(monumento => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `
+                        <img src="${monumento.imagem}" alt="${monumento.nome}" onerror="this.src='/minha-imagem.jpg'">
+                        <div class="card-info">
+                            <h3 class="card-title">${monumento.nome}</h3>
+                            <p class="cidade">${monumento.cidade} - ${monumento.estado}</p>
+                            <p class="descricao">${monumento.descricao}</p>
+                            <button class="button">Visitar</button>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', carregarMonumentosAdicionados);
+    </script>
 </body>
 </html>

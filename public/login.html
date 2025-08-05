@@ -117,7 +117,7 @@
         <img src="/gadys-logo.svg" alt="GADYS" class="logo" />
         <h1>Fazer Login</h1>
         
-        <form onsubmit="event.preventDefault(); sessionStorage.setItem('userLoggedIn', 'true'); window.location.href='/local-adicionado.html';">
+        <form id="loginForm">
             <div class="form-group">
                 <label for="email">E-mail:</label>
                 <input type="email" id="email" name="email" required>
@@ -128,14 +128,41 @@
                 <input type="password" id="password" name="password" required>
             </div>
             
+            <div class="form-group">
+                <label for="userType">Nível de Acesso:</label>
+                <select id="userType" name="userType" required style="width: 100%; padding: 1rem; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
+                    <option value="">Selecione o nível</option>
+                    <option value="usuario">👤 Usuário</option>
+                    <option value="admin">👑 Administrador</option>
+                </select>
+            </div>
+            
             <button type="submit" class="login-btn">Entrar</button>
         </form>
         
         <a href="#" class="forgot-password">Esqueceu sua senha?</a>
         
         <div style="margin-top: 2rem;">
-            <button class="back-btn" onclick="window.location.href='/'">Início</button>
+            <button class="back-btn" onclick="window.location.href='/home.html'">Voltar</button>
         </div>
     </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const userType = document.getElementById('userType').value;
+            
+            // Salvar dados do usuário na sessão
+            sessionStorage.setItem('userLoggedIn', 'true');
+            sessionStorage.setItem('userType', userType);
+            sessionStorage.setItem('userEmail', email);
+            
+            // Redirecionar para página principal
+            window.location.href = '/amazonas.html';
+        });
+    </script>
 </body>
 </html>

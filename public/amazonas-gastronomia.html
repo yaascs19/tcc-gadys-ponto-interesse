@@ -338,5 +338,36 @@
             <p>&copy; 2025 GADYS. Todos os direitos reservados.</p>
         </footer>
     </div>
+
+    <script>
+        function carregarGastronomiaAdicionada() {
+            const locaisAdicionados = JSON.parse(localStorage.getItem('locaisAdicionados')) || [];
+            const gastronomiaAmazonas = locaisAdicionados.filter(local => 
+                local.categoria === 'gastronomia' && 
+                (local.estado.toLowerCase().includes('amazonas') || local.estado.toLowerCase().includes('am'))
+            );
+            
+            if (gastronomiaAmazonas.length > 0) {
+                const grid = document.querySelector('.grid');
+                
+                gastronomiaAmazonas.forEach(local => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `
+                        <img src="${local.imagem}" alt="${local.nome}" onerror="this.src='/minha-imagem.jpg'">
+                        <div class="card-info">
+                            <h3 class="card-title">${local.nome}</h3>
+                            <p class="cidade">${local.cidade} - ${local.estado}</p>
+                            <p class="descricao">${local.descricao}</p>
+                            <button class="button">Experimentar</button>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', carregarGastronomiaAdicionada);
+    </script>
 </body>
 </html>
