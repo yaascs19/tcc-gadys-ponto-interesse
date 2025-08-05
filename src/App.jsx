@@ -1,23 +1,29 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import Login from './Login'
+import AdminPanel from './AdminPanel'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     return localStorage.getItem('isLoggedIn') === 'true'
   })
   const [currentPage, setCurrentPage] = useState('home')
+  const [userType, setUserType] = useState(() => {
+    return localStorage.getItem('userType') || 'usuario'
+  })
 
-  const handleLogin = (userType, userName) => {
+  const handleLogin = (loginUserType, userName) => {
     setIsLoggedIn(true)
+    setUserType(loginUserType)
     localStorage.setItem('isLoggedIn', 'true')
-    localStorage.setItem('userType', userType)
+    localStorage.setItem('userType', loginUserType)
     localStorage.setItem('userName', userName)
     setCurrentPage('home')
   }
 
   const handleLogout = () => {
     setIsLoggedIn(false)
+    setUserType('usuario')
     localStorage.removeItem('isLoggedIn')
     localStorage.removeItem('userType')
     localStorage.removeItem('userName')
@@ -86,6 +92,23 @@ function App() {
     return <Login onLogin={handleLogin} />
   }
 
+  if (currentPage === 'admin' && userType === 'adm') {
+    return (
+      <div className="app">
+        <header className="header">
+          <nav className="nav">
+            <img src="/gadys-logo.svg" alt="GADYS" className="logo" style={{height: '40px'}} />
+            <ul className="nav-links">
+              <li><a href="#" onClick={(e) => {e.preventDefault(); setCurrentPage('admin')}}>Administração</a></li>
+              <li><a href="#" onClick={(e) => {e.preventDefault(); handleLogout()}}>Logout</a></li>
+            </ul>
+          </nav>
+        </header>
+        <AdminPanel />
+      </div>
+    )
+  }
+
   return (
     <div className="app">
       <header className="header">
@@ -128,6 +151,9 @@ function App() {
             <li><a href="/adicionar-locais.html">Adicionar locais</a></li>
             <li><a href="/sobre.html">Sobre</a></li>
             <li><a href="/contato.html">Contato</a></li>
+            {userType === 'adm' && (
+              <li><a href="#" onClick={(e) => {e.preventDefault(); setCurrentPage('admin'); window.location.reload()}}>Administração</a></li>
+            )}
             <li><a href="#" onClick={(e) => {e.preventDefault(); handleLogout()}}>Login</a></li>
           </ul>
         </nav>
