@@ -197,6 +197,41 @@
             padding: 2rem;
         }
         
+        /* Modo Escuro */
+        .dark-mode {
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+        
+        .dark-mode .header {
+            background: #0d1117;
+        }
+        
+        .dark-mode .section {
+            background: #0d1117;
+        }
+        
+        .dark-mode .card {
+            background: #21262d;
+            color: #e0e0e0;
+        }
+        
+        .dark-mode .card-title {
+            color: #f0f6fc;
+        }
+        
+        .dark-mode .cidade {
+            color: #8b949e;
+        }
+        
+        .dark-mode .descricao {
+            color: #8b949e;
+        }
+        
+        .dark-mode .footer {
+            background: #0d1117;
+        }
+        
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2.5rem;
@@ -260,6 +295,7 @@
                     <li><a href="/adicionar-locais.html">Adicionar locais</a></li>
                     <li><a href="/sobre.html">Sobre</a></li>
                     <li><a href="/contato.html">Contato</a></li>
+                    <li><a href="#" onclick="toggleTheme()" id="themeToggle">🌙</a></li>
                 </ul>
             </nav>
         </header>
@@ -343,6 +379,23 @@
         
         // Auto slide every 4 seconds
         setInterval(nextSlide, 4000);
+    </script>
+    <script src="/theme-manager.js"></script>
+    <script>
+        // Atualiza o ícone do tema
+        function updateThemeIcon() {
+            const isDark = document.body.classList.contains('dark-mode');
+            document.getElementById('themeToggle').textContent = isDark ? '☀️' : '🌙';
+        }
+        
+        // Sobrescreve a função toggleTheme para atualizar o ícone
+        const originalToggle = toggleTheme;
+        toggleTheme = function() {
+            originalToggle();
+            updateThemeIcon();
+        };
+        
+        document.addEventListener('DOMContentLoaded', updateThemeIcon);
     </script>
 </body>
 </html>

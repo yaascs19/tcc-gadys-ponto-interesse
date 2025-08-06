@@ -190,6 +190,44 @@
             padding: 2rem;
         }
         
+        /* Modo Escuro */
+        .dark-mode {
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+        
+        .dark-mode .header {
+            background: #0d1117;
+        }
+        
+        .dark-mode .section {
+            background: #0d1117;
+        }
+        
+        .dark-mode .about-card h4 {
+            color: #58a6ff;
+        }
+        
+        .dark-mode .about-card p {
+            color: #8b949e;
+        }
+        
+        .dark-mode .objectives {
+            background: #21262d;
+        }
+        
+        .dark-mode .objectives h4 {
+            color: #58a6ff;
+        }
+        
+        .dark-mode .objective-item p {
+            color: #8b949e;
+        }
+        
+        .dark-mode .footer {
+            background: #0d1117;
+        }
+        
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2.5rem;
@@ -248,6 +286,7 @@
                     <li><a href="/adicionar-locais.html">Adicionar locais</a></li>
                     <li><a href="/sobre.html">Sobre</a></li>
                     <li><a href="/contato.html">Contato</a></li>
+                    <li><a href="#" onclick="toggleTheme()" id="themeToggle">🌙</a></li>
                 </ul>
             </nav>
         </header>
@@ -333,5 +372,20 @@
             <p>&copy; 2025 GADYS. Todos os direitos reservados.</p>
         </footer>
     </div>
+    <script src="/theme-manager.js"></script>
+    <script>
+        function updateThemeIcon() {
+            const isDark = document.body.classList.contains('dark-mode');
+            document.getElementById('themeToggle').textContent = isDark ? '☀️' : '🌙';
+        }
+        
+        const originalToggle = toggleTheme;
+        toggleTheme = function() {
+            originalToggle();
+            updateThemeIcon();
+        };
+        
+        document.addEventListener('DOMContentLoaded', updateThemeIcon);
+    </script>
 </body>
 </html>

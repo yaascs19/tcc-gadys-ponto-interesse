@@ -196,6 +196,41 @@
             text-align: center;
             padding: 2rem;
         }
+        
+        /* Modo Escuro */
+        .dark-mode {
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+        
+        .dark-mode .header {
+            background: #0d1117;
+        }
+        
+        .dark-mode .section {
+            background: #0d1117;
+        }
+        
+        .dark-mode .card {
+            background: #21262d;
+            color: #e0e0e0;
+        }
+        
+        .dark-mode .card-title {
+            color: #f0f6fc;
+        }
+        
+        .dark-mode .cidade {
+            color: #8b949e;
+        }
+        
+        .dark-mode .descricao {
+            color: #8b949e;
+        }
+        
+        .dark-mode .footer {
+            background: #0d1117;
+        }
     </style>
 </head>
 <body>
@@ -240,6 +275,7 @@
                     <li><a href="/adicionar-locais.html">Adicionar locais</a></li>
                     <li><a href="/sobre.html">Sobre</a></li>
                     <li><a href="/contato.html">Contato</a></li>
+                    <li><a href="#" onclick="toggleTheme()" id="themeToggle">🌙</a></li>
                 </ul>
             </nav>
         </header>
@@ -368,6 +404,21 @@
         }
         
         document.addEventListener('DOMContentLoaded', carregarCulturaAdicionada);
+    </script>
+    <script src="/theme-manager.js"></script>
+    <script>
+        function updateThemeIcon() {
+            const isDark = document.body.classList.contains('dark-mode');
+            document.getElementById('themeToggle').textContent = isDark ? '☀️' : '🌙';
+        }
+        
+        const originalToggle = toggleTheme;
+        toggleTheme = function() {
+            originalToggle();
+            updateThemeIcon();
+        };
+        
+        document.addEventListener('DOMContentLoaded', updateThemeIcon);
     </script>
 </body>
 </html>

@@ -147,6 +147,47 @@
             margin-top: 3rem;
         }
         
+        /* Modo Escuro */
+        .dark-mode {
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+        
+        .dark-mode .header {
+            background: #0d1117;
+        }
+        
+        .dark-mode .local-title {
+            color: #f0f6fc;
+        }
+        
+        .dark-mode .local-location {
+            color: #8b949e;
+        }
+        
+        .dark-mode .info-card {
+            background: #21262d;
+            color: #e0e0e0;
+            border-left: 4px solid #58a6ff;
+        }
+        
+        .dark-mode .info-card h3 {
+            color: #58a6ff;
+        }
+        
+        .dark-mode .description-section {
+            background: #21262d;
+            color: #e0e0e0;
+        }
+        
+        .dark-mode .description-section h2 {
+            color: #f0f6fc;
+        }
+        
+        .dark-mode .footer {
+            background: #0d1117;
+        }
+        
         @media (max-width: 768px) {
             .info-grid {
                 grid-template-columns: 1fr;
@@ -168,6 +209,7 @@
                 <li><a href="/adicionar-locais.html">Adicionar locais</a></li>
                 <li><a href="/sobre.html">Sobre</a></li>
                 <li><a href="/contato.html">Contato</a></li>
+                <li><a href="#" onclick="toggleTheme()" id="themeToggle">🌙</a></li>
             </ul>
         </nav>
     </header>
@@ -280,6 +322,21 @@
         }
         
         document.addEventListener('DOMContentLoaded', carregarDetalhesLocal);
+    </script>
+    <script src="/theme-manager.js"></script>
+    <script>
+        function updateThemeIcon() {
+            const isDark = document.body.classList.contains('dark-mode');
+            document.getElementById('themeToggle').textContent = isDark ? '☀️' : '🌙';
+        }
+        
+        const originalToggle = toggleTheme;
+        toggleTheme = function() {
+            originalToggle();
+            updateThemeIcon();
+        };
+        
+        document.addEventListener('DOMContentLoaded', updateThemeIcon);
     </script>
 </body>
 </html>

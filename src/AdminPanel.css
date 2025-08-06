@@ -187,6 +187,50 @@
   transform: translateY(-2px);
 }
 
+/* Modo Escuro - Admin Panel */
+.dark-mode .admin-panel {
+  background: #0d1117;
+  color: #e0e0e0;
+}
+
+.dark-mode .admin-card {
+  background: #21262d;
+  border: 1px solid #30363d;
+  color: #e0e0e0;
+}
+
+.dark-mode .card-header h3 {
+  color: #f0f6fc;
+}
+
+.dark-mode .card-info p {
+  color: #8b949e;
+}
+
+.dark-mode .card-details {
+  background: #161b22;
+  border-left: 4px solid #58a6ff;
+}
+
+.dark-mode .card-details p {
+  color: #8b949e;
+}
+
+.dark-mode .admin-header h1 {
+  color: #f0f6fc;
+}
+
+.dark-mode .tab-btn {
+  background: #21262d;
+  color: #58a6ff;
+  border: 2px solid #58a6ff;
+}
+
+.dark-mode .tab-btn.active {
+  background: #58a6ff;
+  color: #0d1117;
+}
+
 @media (max-width: 768px) {
   .admin-grid {
     grid-template-columns: 1fr;

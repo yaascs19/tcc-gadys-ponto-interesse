@@ -219,6 +219,51 @@
             padding: 2rem;
         }
         
+        /* Modo Escuro */
+        .dark-mode {
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+        
+        .dark-mode .header {
+            background: #0d1117;
+        }
+        
+        .dark-mode .section {
+            background: #0d1117;
+        }
+        
+        .dark-mode h2 {
+            color: #58a6ff;
+        }
+        
+        .dark-mode .contact-info, .dark-mode .contact-form {
+            background: #21262d;
+            border-radius: 15px;
+        }
+        
+        .dark-mode .contact-item:hover {
+            background: #30363d;
+        }
+        
+        .dark-mode input, .dark-mode textarea {
+            background: #161b22;
+            border: 2px solid #30363d;
+            color: #e0e0e0;
+        }
+        
+        .dark-mode input:focus, .dark-mode textarea:focus {
+            border-color: #58a6ff;
+        }
+        
+        .dark-mode label {
+            color: #f0f6fc;
+        }
+        
+        .dark-mode .footer {
+            background: #0d1117;
+        }
+        
         @media (max-width: 768px) {
             .container {
                 grid-template-columns: 1fr;
@@ -278,6 +323,7 @@
                     <li><a href="/adicionar-locais.html">Adicionar locais</a></li>
                     <li><a href="/sobre.html">Sobre</a></li>
                     <li><a href="/contato.html">Contato</a></li>
+                    <li><a href="#" onclick="toggleTheme()" id="themeToggle">🌙</a></li>
                 </ul>
             </nav>
         </header>
@@ -363,5 +409,20 @@
             <p>&copy; 2025 GADYS. Todos os direitos reservados.</p>
         </footer>
     </div>
+    <script src="/theme-manager.js"></script>
+    <script>
+        function updateThemeIcon() {
+            const isDark = document.body.classList.contains('dark-mode');
+            document.getElementById('themeToggle').textContent = isDark ? '☀️' : '🌙';
+        }
+        
+        const originalToggle = toggleTheme;
+        toggleTheme = function() {
+            originalToggle();
+            updateThemeIcon();
+        };
+        
+        document.addEventListener('DOMContentLoaded', updateThemeIcon);
+    </script>
 </body>
 </html>

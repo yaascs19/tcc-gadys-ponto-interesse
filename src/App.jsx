@@ -11,6 +11,9 @@ function App() {
   const [userType, setUserType] = useState(() => {
     return localStorage.getItem('userType') || 'usuario'
   })
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem('darkMode') === 'true'
+  })
 
   const handleLogin = (loginUserType, userName) => {
     setIsLoggedIn(true)
@@ -19,6 +22,12 @@ function App() {
     localStorage.setItem('userType', loginUserType)
     localStorage.setItem('userName', userName)
     setCurrentPage('home')
+  }
+
+  const toggleDarkMode = () => {
+    const newDarkMode = !darkMode
+    setDarkMode(newDarkMode)
+    localStorage.setItem('darkMode', newDarkMode.toString())
   }
 
   const handleLogout = () => {
@@ -94,7 +103,7 @@ function App() {
 
   if (currentPage === 'admin' && userType === 'adm') {
     return (
-      <div className="app">
+      <div className={`app ${darkMode ? 'dark-mode' : ''}`}>
         <header className="header">
           <nav className="nav">
             <img src="/gadys-logo.svg" alt="GADYS" className="logo" style={{height: '40px'}} />
@@ -102,6 +111,7 @@ function App() {
               <li><a href="#" onClick={(e) => {e.preventDefault(); setCurrentPage('home')}}>Voltar ao Início</a></li>
               <li><a href="/adicionar-locais.html">Adicionar locais</a></li>
               <li><a href="#" onClick={(e) => {e.preventDefault(); setCurrentPage('admin')}}>Administração</a></li>
+              <li><a href="#" onClick={(e) => {e.preventDefault(); toggleDarkMode()}}>{darkMode ? '☀️' : '🌙'}</a></li>
               <li><a href="#" onClick={(e) => {e.preventDefault(); handleLogout()}}>Logout</a></li>
             </ul>
           </nav>
@@ -112,7 +122,7 @@ function App() {
   }
 
   return (
-    <div className="app">
+    <div className={`app ${darkMode ? 'dark-mode' : ''}`}>
       <header className="header">
         <nav className="nav">
           <img src="/gadys-logo.svg" alt="GADYS" className="logo" style={{height: '40px'}} />
@@ -156,7 +166,8 @@ function App() {
             {userType === 'adm' && (
               <li><a href="#" onClick={(e) => {e.preventDefault(); setCurrentPage('admin')}}>Administração</a></li>
             )}
-            <li><a href="#" onClick={(e) => {e.preventDefault(); handleLogout()}}>Login</a></li>
+            <li><a href="#" onClick={(e) => {e.preventDefault(); toggleDarkMode()}}>{darkMode ? '☀️' : '🌙'}</a></li>
+            <li><a href="#" onClick={(e) => {e.preventDefault(); handleLogout()}}>Logout</a></li>
           </ul>
         </nav>
       </header>
@@ -167,7 +178,7 @@ function App() {
             <div className="carousel-slide active">
               <div className="hero-content">
                 <div className="welcome-box">
-                  <h3>Bem-vindo, {localStorage.getItem('userName') || 'Usuário'}! 👋</h3>
+                  <h3>Bem-vindo, {localStorage.getItem('userName') || 'Usuário'}! 🖐️</h3>
                   <p>Tipo de acesso: {localStorage.getItem('userType') === 'adm' ? 'Administrador' : 'Usuário'}</p>
                 </div>
                 <h2>Descubra Lugares Incríveis</h2>
@@ -178,7 +189,7 @@ function App() {
             <div className="carousel-slide">
               <div className="hero-content">
                 <div className="welcome-box">
-                  <h3>Bem-vindo, {localStorage.getItem('userName') || 'Usuário'}! 👋</h3>
+                  <h3>Bem-vindo, {localStorage.getItem('userName') || 'Usuário'}! 🖐️</h3>
                   <p>Tipo de acesso: {localStorage.getItem('userType') === 'adm' ? 'Administrador' : 'Usuário'}</p>
                 </div>
                 <h2>Descubra Lugares Incríveis</h2>
@@ -189,7 +200,7 @@ function App() {
             <div className="carousel-slide">
               <div className="hero-content">
                 <div className="welcome-box">
-                  <h3>Bem-vindo, {localStorage.getItem('userName') || 'Usuário'}! 👋</h3>
+                  <h3>Bem-vindo, {localStorage.getItem('userName') || 'Usuário'}! 🖐️</h3>
                   <p>Tipo de acesso: {localStorage.getItem('userType') === 'adm' ? 'Administrador' : 'Usuário'}</p>
                 </div>
                 <h2>Descubra Lugares Incríveis</h2>

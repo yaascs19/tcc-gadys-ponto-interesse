@@ -18,8 +18,17 @@
   margin: 0 auto;
   padding: 0 2rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
+  position: relative;
+}
+
+.nav .logo {
+  position: absolute;
+  top: 50%;
+  left: 2rem;
+  transform: translateY(-50%);
+  z-index: 102;
 }
 
 .logo {
@@ -409,10 +418,99 @@
   50% { transform: translateY(-5px); }
 }
 
+/* Modo Escuro */
+.app.dark-mode {
+  background: #1a1a1a;
+  color: #e0e0e0;
+}
+
+.app.dark-mode .header {
+  background: #0d1117;
+}
+
+.app.dark-mode .hero {
+  background: #161b22;
+}
+
+.app.dark-mode .carousel-slide:nth-child(1) {
+  background: linear-gradient(rgba(30, 30, 30, 0.8), rgba(50, 50, 50, 0.8)), url('https://images.unsplash.com/photo-1483729558449-99ef09a8c325?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+}
+
+.app.dark-mode .carousel-slide:nth-child(2) {
+  background: linear-gradient(rgba(30, 30, 30, 0.8), rgba(50, 50, 50, 0.8)), url('https://images.unsplash.com/photo-1539037116277-4db20889f2d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+}
+
+.app.dark-mode .carousel-slide:nth-child(3) {
+  background: linear-gradient(rgba(30, 30, 30, 0.8), rgba(50, 50, 50, 0.8)), url('https://images.unsplash.com/photo-1516306580123-e6e52b1b7b5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+}
+
+.app.dark-mode .features {
+  background: #0d1117;
+}
+
+.app.dark-mode .feature-card {
+  background: #21262d;
+  color: #e0e0e0;
+}
+
+.app.dark-mode .feature-card h4 {
+  color: #f0f6fc;
+}
+
+.app.dark-mode .feature-card p {
+  color: #8b949e;
+}
+
+.app.dark-mode .food-carousel-section {
+  background: #0d1117;
+}
+
+.app.dark-mode .food-carousel-section h3 {
+  color: #f0f6fc;
+}
+
+.app.dark-mode .food-slide {
+  background: #21262d;
+  color: #e0e0e0;
+}
+
+.app.dark-mode .food-slide h4 {
+  color: #f0f6fc;
+}
+
+.app.dark-mode .food-slide p {
+  color: #8b949e;
+}
+
+.app.dark-mode .welcome-box {
+  background: linear-gradient(135deg, rgba(33, 38, 45, 0.95), rgba(33, 38, 45, 0.85));
+  color: #e0e0e0;
+  border: 1px solid rgba(240, 246, 252, 0.1);
+}
+
+.app.dark-mode .footer {
+  background: #0d1117;
+}
+
 @media (max-width: 768px) {
   .nav {
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: 1rem;
+    justify-content: flex-end;
+  }
+  
+  .nav .logo {
+    position: absolute;
+    top: 50%;
+    left: 1rem;
+    transform: translateY(-50%);
+    z-index: 102;
+  }
+  
+  .nav-links {
+    justify-content: flex-end;
+    gap: 0.5rem;
   }
   
   .nav-links {
