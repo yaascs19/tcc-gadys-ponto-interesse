@@ -473,7 +473,7 @@
                 pendingLocations.push(formData);
                 localStorage.setItem('pendingLocations', JSON.stringify(pendingLocations));
                 
-                document.getElementById('successMessage').innerHTML = '<strong>✅ Sucesso:</strong> Local enviado para aprovação!';
+                document.getElementById('successMessage').innerHTML = '<strong>✅ Sucesso:</strong> Local enviado para análise! Aguarde a aprovação do administrador.';
             }
             
             document.getElementById('successMessage').style.display = 'block';
@@ -481,7 +481,7 @@
             
             setTimeout(() => {
                 document.getElementById('successMessage').style.display = 'none';
-            }, 3000);
+            }, 10000);
         });
     </script>
     <script src="/theme-manager.js"></script>

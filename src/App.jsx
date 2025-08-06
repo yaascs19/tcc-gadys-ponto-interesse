@@ -161,6 +161,8 @@ function App() {
               </div>
             </li>
             <li><a href="/adicionar-locais.html">Adicionar locais</a></li>
+            <li><a href="/buscar.html">Buscar</a></li>
+            <li><a href="/perfil.html">Perfil</a></li>
             <li><a href="/sobre.html">Sobre</a></li>
             <li><a href="/contato.html">Contato</a></li>
             {userType === 'adm' && (

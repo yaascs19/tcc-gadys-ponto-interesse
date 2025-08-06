@@ -122,6 +122,75 @@
             font-size: 1.8rem;
         }
         
+        .rating-summary {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .rating-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        .rating-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #f39c12;
+        }
+        
+        .stars {
+            font-size: 1.5rem;
+            color: #f39c12;
+        }
+        
+        .rating-count {
+            color: #7f8c8d;
+        }
+        
+        .user-rating {
+            border-top: 1px solid #e0e0e0;
+            padding-top: 2rem;
+        }
+        
+        .rating-input {
+            display: flex;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        
+        .star {
+            font-size: 2rem;
+            cursor: pointer;
+            color: #ddd;
+            transition: color 0.3s;
+        }
+        
+        .star:hover, .star.active {
+            color: #f39c12;
+        }
+        
+        .rating-btn {
+            background: #1a237e;
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .rating-btn:hover:not(:disabled) {
+            background: #3f51b5;
+        }
+        
+        .rating-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
         .back-btn {
             background: #1a237e;
             color: white;
@@ -182,6 +251,10 @@
         
         .dark-mode .description-section h2 {
             color: #f0f6fc;
+        }
+        
+        .dark-mode .user-rating {
+            border-top: 1px solid #30363d;
         }
         
         .dark-mode .footer {
@@ -256,6 +329,29 @@
                 <h2>ℹ️ Informações Adicionais</h2>
                 <p id="localInfoAdicional">Nenhuma informação adicional disponível.</p>
             </div>
+            
+            <div class="description-section">
+                <h2>⭐ Avaliações</h2>
+                <div class="rating-summary" id="ratingSummary">
+                    <div class="rating-display">
+                        <span class="rating-number" id="ratingNumber">0.0</span>
+                        <div class="stars" id="averageStars">☆☆☆☆☆</div>
+                        <span class="rating-count" id="ratingCount">(0 avaliações)</span>
+                    </div>
+                </div>
+                
+                <div class="user-rating">
+                    <h3>Sua Avaliação:</h3>
+                    <div class="rating-input">
+                        <span class="star" data-rating="1" onclick="setRating(1)">☆</span>
+                        <span class="star" data-rating="2" onclick="setRating(2)">☆</span>
+                        <span class="star" data-rating="3" onclick="setRating(3)">☆</span>
+                        <span class="star" data-rating="4" onclick="setRating(4)">☆</span>
+                        <span class="star" data-rating="5" onclick="setRating(5)">☆</span>
+                    </div>
+                    <button class="rating-btn" id="ratingBtn" onclick="salvarAvaliacao()" disabled>Avaliar</button>
+                </div>
+            </div>
         </div>
     </main>
 
@@ -319,6 +415,117 @@
             
             // Atualiza o título da página
             document.title = `GADYS - ${local.nome}`;
+            
+            // Carrega avaliações
+            carregarAvaliacoes(localId);
+        }
+        
+        let currentRating = 0;
+        let currentLocalId = null;
+        
+        function carregarAvaliacoes(localId) {
+            currentLocalId = localId;
+            const avaliacoes = JSON.parse(localStorage.getItem('avaliacoes')) || {};
+            const localAvaliacoes = avaliacoes[localId] || [];
+            
+            if (localAvaliacoes.length > 0) {
+                const media = localAvaliacoes.reduce((sum, rating) => sum + rating, 0) / localAvaliacoes.length;
+                document.getElementById('ratingNumber').textContent = media.toFixed(1);
+                document.getElementById('averageStars').textContent = getStarsDisplay(media);
+                document.getElementById('ratingCount').textContent = `(${localAvaliacoes.length} avaliações)`;
+            }
+            
+            // Verifica se usuário já avaliou
+            const userName = localStorage.getItem('userName');
+            const userRatings = JSON.parse(localStorage.getItem('userRatings')) || {};
+            const userKey = `${userName}_${localId}`;
+            
+            if (userRatings[userKey]) {
+                const userRating = userRatings[userKey];
+                setRating(userRating, false);
+                document.getElementById('ratingBtn').textContent = 'Atualizar Avaliação';
+            }
+        }
+        
+        function setRating(rating, enableButton = true) {
+            currentRating = rating;
+            const stars = document.querySelectorAll('.star');
+            
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add('active');
+                    star.textContent = '★';
+                } else {
+                    star.classList.remove('active');
+                    star.textContent = '☆';
+                }
+            });
+            
+            if (enableButton) {
+                document.getElementById('ratingBtn').disabled = false;
+            }
+        }
+        
+        function salvarAvaliacao() {
+            if (currentRating === 0 || !currentLocalId) return;
+            
+            const userName = localStorage.getItem('userName');
+            if (!userName) {
+                alert('Você precisa estar logado para avaliar!');
+                return;
+            }
+            
+            // Salva avaliação geral
+            let avaliacoes = JSON.parse(localStorage.getItem('avaliacoes')) || {};
+            if (!avaliacoes[currentLocalId]) {
+                avaliacoes[currentLocalId] = [];
+            }
+            
+            // Salva avaliação do usuário
+            let userRatings = JSON.parse(localStorage.getItem('userRatings')) || {};
+            const userKey = `${userName}_${currentLocalId}`;
+            
+            if (!userRatings[userKey]) {
+                avaliacoes[currentLocalId].push(currentRating);
+            } else {
+                // Atualiza avaliação existente
+                const oldRating = userRatings[userKey];
+                const index = avaliacoes[currentLocalId].indexOf(oldRating);
+                if (index > -1) {
+                    avaliacoes[currentLocalId][index] = currentRating;
+                }
+            }
+            
+            userRatings[userKey] = currentRating;
+            
+            localStorage.setItem('avaliacoes', JSON.stringify(avaliacoes));
+            localStorage.setItem('userRatings', JSON.stringify(userRatings));
+            
+            // Atualiza display
+            carregarAvaliacoes(currentLocalId);
+            document.getElementById('ratingBtn').textContent = 'Atualizar Avaliação';
+            
+            alert('Avaliação salva com sucesso!');
+        }
+        
+        function getStarsDisplay(rating) {
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 >= 0.5;
+            let stars = '';
+            
+            for (let i = 0; i < fullStars; i++) {
+                stars += '★';
+            }
+            
+            if (hasHalfStar) {
+                stars += '★';
+            }
+            
+            while (stars.length < 5) {
+                stars += '☆';
+            }
+            
+            return stars;
         }
         
         document.addEventListener('DOMContentLoaded', carregarDetalhesLocal);

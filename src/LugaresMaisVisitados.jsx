@@ -32,7 +32,7 @@ function LugaresMaisVisitados({ onBack }) {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '2rem' }}>
               
               <div style={{ background: 'white', borderRadius: '15px', overflow: 'hidden', boxShadow: '0 5px 20px rgba(0, 0, 0, 0.1)' }}>
-                <img src="https://images.unsplash.com/photo-1483729558449-99ef09a8c325?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Cristo Redentor" style={{ width: '100%', height: '250px', objectFit: 'cover' }} />
+                <img src="https://lh3.googleusercontent.com/gps-cs-s/AC9h4nrGWkkuWCzfLUA6cOSYV8QK9rJjKK9QrDsgrF3a9230ujli8HozfMt1v_VMTyrv2PpKlmMS5XavmH8ol_8m2Aw1uQgXEiL_i6RWYqColXeaAlK2FVWnyPdImor3XwEH3V3kKJLbdA=w270-h312-n-k-no" alt="Cristo Redentor" style={{ width: '100%', height: '250px', objectFit: 'cover' }} />
                 <div style={{ padding: '2rem' }}>
                   <h3 style={{ fontSize: '1.5rem', marginBottom: '0.5rem', color: '#2c3e50' }}>Cristo Redentor</h3>
                   <p style={{ color: '#7f8c8d', fontSize: '0.9rem', marginBottom: '1rem', fontWeight: 500 }}>Rio de Janeiro - RJ</p>

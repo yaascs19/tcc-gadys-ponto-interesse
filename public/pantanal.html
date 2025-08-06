@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GADYS - Pantanal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            background: #1a237e;
+            color: white;
+            padding: 1rem 0;
+        }
+        
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            position: relative;
+        }
+        
+        .nav .logo {
+            position: absolute;
+            top: 50%;
+            left: 2rem;
+            transform: translateY(-50%);
+            height: 40px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(34, 139, 34, 0.8), rgba(0, 128, 0, 0.8)), url('/pan.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 6rem 2rem 4rem;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+        
+        .section {
+            padding: 5rem 0;
+            background: #f8f9fa;
+            flex: 1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .content-section {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 3rem;
+        }
+        
+        .content-section h2 {
+            color: #228b22;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            border-bottom: 3px solid #228b22;
+            padding-bottom: 0.5rem;
+        }
+        
+        .content-section p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .info-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            border-left: 4px solid #228b22;
+        }
+        
+        .info-card h3 {
+            color: #228b22;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .info-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        /* Modo Escuro */
+        .dark-mode {
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+        
+        .dark-mode .header {
+            background: #0d1117;
+        }
+        
+        .dark-mode .section {
+            background: #0d1117;
+        }
+        
+        .dark-mode .content-section {
+            background: #21262d;
+        }
+        
+        .dark-mode .content-section h2 {
+            color: #32cd32;
+            border-bottom: 3px solid #32cd32;
+        }
+        
+        .dark-mode .content-section p {
+            color: #8b949e;
+        }
+        
+        .dark-mode .info-card {
+            background: #161b22;
+            border-left: 4px solid #32cd32;
+        }
+        
+        .dark-mode .info-card h3 {
+            color: #32cd32;
+        }
+        
+        .dark-mode .info-card p {
+            color: #8b949e;
+        }
+        
+        .dark-mode .footer {
+            background: #0d1117;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header class="header">
+            <nav class="nav">
+                <img src="/gadys-logo.svg" alt="GADYS" class="logo" />
+                <ul class="nav-links">
+                    <li><a href="/">Início</a></li>
+                    <li><a href="/lugares.html">Lugares</a></li>
+                    <li><a href="/buscar.html">Buscar</a></li>
+                    <li><a href="#" onclick="toggleTheme()" id="themeToggle">🌙</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <section class="hero">
+                <div>
+                    <h1>🌳 Pantanal</h1>
+                    <p>Maior planície alagável do mundo</p>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="container">
+                    <div class="content-section">
+                        <h2>📖 História</h2>
+                        <p>
+                            O Pantanal foi formado há milhões de anos como resultado do soerguimento da Cordilheira dos Andes, que criou uma depressão onde as águas se acumulam. Os primeiros habitantes foram os índios bororos, guatós e terenas, que desenvolveram uma cultura adaptada ao ciclo das águas.
+                        </p>
+                        <p>
+                            A colonização europeia iniciou no século XVIII com bandeirantes paulistas em busca de ouro. A pecuária se estabeleceu no século XIX, criando a cultura pantaneira única, com fazendas que se adaptaram ao ritmo das cheias e secas.
+                        </p>
+                        <p>
+                            Em 2000, foi declarado Patrimônio Mundial da Humanidade pela UNESCO e Reserva da Biosfera, reconhecendo sua importância como um dos ecossistemas mais ricos em biodiversidade do planeta.
+                        </p>
+                    </div>
+                    
+                    <div class="content-section">
+                        <h2>🏗️ Estrutura</h2>
+                        <p>
+                            O Pantanal abrange 150.000 km², sendo a maior planície alagável do mundo. Durante a época das chuvas (outubro a março), cerca de 80% da região fica submersa, criando um mosaico de rios, lagoas e campos alagados.
+                        </p>
+                        <p>
+                            A infraestrutura turística inclui fazendas-hotel, pousadas ecológicas, centros de pesquisa e trilhas para observação da fauna. O acesso é feito principalmente por Cuiabá (MT) ou Campo Grande (MS), com estradas que levam às propriedades rurais.
+                        </p>
+                        
+                        <div class="info-grid">
+                            <div class="info-card">
+                                <h3>🌍 Geografia</h3>
+                                <p>Área: 150.000 km²<br>
+                                Maior planície alagável do mundo<br>
+                                80% submerso na cheia<br>
+                                Altitude média: 100-200m</p>
+                            </div>
+                            
+                            <div class="info-card">
+                                <h3>🎯 Localização</h3>
+                                <p>Mato Grosso e Mato Grosso do Sul<br>
+                                Patrimônio Mundial UNESCO<br>
+                                Reserva da Biosfera<br>
+                                Bacia do Alto Paraguai</p>
+                            </div>
+                            
+                            <div class="info-card">
+                                <h3>🚗 Acesso</h3>
+                                <p>Via Cuiabá (MT) ou Campo Grande (MS)<br>
+                                Estrada do Parque (MT-060)<br>
+                                Transpantaneira (147 km)<br>
+                                Fazendas e pousadas</p>
+                            </div>
+                            
+                            <div class="info-card">
+                                <h3>🎫 Informações</h3>
+                                <p>Pacotes: R$ 300-800/dia<br>
+                                Melhor época: mai-set (seca)<br>
+                                Fauna: 650 espécies de aves<br>
+                                Onças, jacarés, capivaras</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2025 GADYS. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+
+    <script src="/theme-manager.js"></script>
+    <script>
+        function updateThemeIcon() {
+            const isDark = document.body.classList.contains('dark-mode');
+            document.getElementById('themeToggle').textContent = isDark ? '☀️' : '🌙';
+        }
+        
+        const originalToggle = toggleTheme;
+        toggleTheme = function() {
+            originalToggle();
+            updateThemeIcon();
+        };
+        
+        document.addEventListener('DOMContentLoaded', updateThemeIcon);
+    </script>
+</body>
+</html>

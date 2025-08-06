@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GADYS - Pelourinho</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            background: #1a237e;
+            color: white;
+            padding: 1rem 0;
+        }
+        
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            position: relative;
+        }
+        
+        .nav .logo {
+            position: absolute;
+            top: 50%;
+            left: 2rem;
+            transform: translateY(-50%);
+            height: 40px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(128, 0, 128, 0.8), rgba(75, 0, 130, 0.8)), url('/pelo.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 6rem 2rem 4rem;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+        
+        .section {
+            padding: 5rem 0;
+            background: #f8f9fa;
+            flex: 1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .content-section {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 3rem;
+        }
+        
+        .content-section h2 {
+            color: #800080;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            border-bottom: 3px solid #800080;
+            padding-bottom: 0.5rem;
+        }
+        
+        .content-section p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .info-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            border-left: 4px solid #800080;
+        }
+        
+        .info-card h3 {
+            color: #800080;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .info-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        /* Modo Escuro */
+        .dark-mode {
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+        
+        .dark-mode .header {
+            background: #0d1117;
+        }
+        
+        .dark-mode .section {
+            background: #0d1117;
+        }
+        
+        .dark-mode .content-section {
+            background: #21262d;
+        }
+        
+        .dark-mode .content-section h2 {
+            color: #4b0082;
+            border-bottom: 3px solid #4b0082;
+        }
+        
+        .dark-mode .content-section p {
+            color: #8b949e;
+        }
+        
+        .dark-mode .info-card {
+            background: #161b22;
+            border-left: 4px solid #4b0082;
+        }
+        
+        .dark-mode .info-card h3 {
+            color: #4b0082;
+        }
+        
+        .dark-mode .info-card p {
+            color: #8b949e;
+        }
+        
+        .dark-mode .footer {
+            background: #0d1117;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header class="header">
+            <nav class="nav">
+                <img src="/gadys-logo.svg" alt="GADYS" class="logo" />
+                <ul class="nav-links">
+                    <li><a href="/">Início</a></li>
+                    <li><a href="/lugares.html">Lugares</a></li>
+                    <li><a href="/buscar.html">Buscar</a></li>
+                    <li><a href="#" onclick="toggleTheme()" id="themeToggle">🌙</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <section class="hero">
+                <div>
+                    <h1>🎨 Pelourinho</h1>
+                    <p>Centro histórico de Salvador</p>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="container">
+                    <div class="content-section">
+                        <h2>📖 História</h2>
+                        <p>
+                            O Pelourinho foi fundado em 1549 junto com a cidade de Salvador, sendo o primeiro centro urbano do Brasil. Seu nome deriva do pelourinho (poste de madeira) onde eram castigados escravos e criminosos durante o período colonial.
+                        </p>
+                        <p>
+                            Durante os séculos XVI e XVII, foi o centro econômico e administrativo da colônia, concentrando o comércio de açúcar e escravos. Suas ruas abrigaram importantes figuras históricas e testemunharam momentos cruciais da formação do Brasil.
+                        </p>
+                        <p>
+                            Em 1985, foi declarado Patrimônio Mundial da Humanidade pela UNESCO, reconhecendo sua importância histórica e arquitetônica. Nas décadas de 1990 e 2000, passou por extenso processo de restauração, recuperando sua beleza original.
+                        </p>
+                    </div>
+                    
+                    <div class="content-section">
+                        <h2>🏗️ Estrutura</h2>
+                        <p>
+                            O conjunto arquitetônico do Pelourinho abrange mais de 800 imóveis dos séculos XVII ao XIX, representando o maior conjunto de arquitetura colonial da América Latina. Suas construções seguem o estilo barroco português adaptado ao clima tropical.
+                        </p>
+                        <p>
+                            As ruas de pedra pé-de-moleque, casarões coloridos, igrejas barrocas e sobrados coloniais criam um cenário único. O centro histórico abriga museus, teatros, restaurantes típicos, ateliês de artistas e espaços culturais.
+                        </p>
+                        
+                        <div class="info-grid">
+                            <div class="info-card">
+                                <h3>🏛️ Patrimônio</h3>
+                                <p>Mais de 800 imóveis históricos<br>
+                                Arquitetura dos séculos XVII-XIX<br>
+                                Patrimônio UNESCO desde 1985<br>
+                                Maior conjunto colonial da América</p>
+                            </div>
+                            
+                            <div class="info-card">
+                                <h3>🎯 Localização</h3>
+                                <p>Centro Histórico de Salvador<br>
+                                Cidade Alta - Salvador, BA<br>
+                                Elevador Lacerda próximo<br>
+                                Vista da Baía de Todos os Santos</p>
+                            </div>
+                            
+                            <div class="info-card">
+                                <h3>🎭 Atrações</h3>
+                                <p>Casa de Jorge Amado<br>
+                                Fundação Casa de Jorge Amado<br>
+                                Igreja do Rosário dos Pretos<br>
+                                Museu da Cidade</p>
+                            </div>
+                            
+                            <div class="info-card">
+                                <h3>🎫 Informações</h3>
+                                <p>Acesso: 24 horas<br>
+                                Entrada: Gratuita<br>
+                                Museus: R$ 5-15<br>
+                                Melhor horário: tarde/noite</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2025 GADYS. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+
+    <script src="/theme-manager.js"></script>
+    <script>
+        function updateThemeIcon() {
+            const isDark = document.body.classList.contains('dark-mode');
+            document.getElementById('themeToggle').textContent = isDark ? '☀️' : '🌙';
+        }
+        
+        const originalToggle = toggleTheme;
+        toggleTheme = function() {
+            originalToggle();
+            updateThemeIcon();
+        };
+        
+        document.addEventListener('DOMContentLoaded', updateThemeIcon);
+    </script>
+</body>
+</html>

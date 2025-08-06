@@ -277,62 +277,62 @@
                     <div class="grid" id="locaisGrid">
                         <!-- Locais existentes -->
                         <div class="card">
-                            <img src="https://images.unsplash.com/photo-1483729558449-99ef09a8c325?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Cristo Redentor">
+                            <img src="/cristo2.jpg" alt="Cristo Redentor">
                             <div class="card-info">
                                 <h3 class="card-title">Cristo Redentor</h3>
                                 <p class="cidade">Rio de Janeiro - RJ</p>
                                 <p class="descricao">Uma das Sete Maravilhas do Mundo Moderno</p>
-                                <button class="button">Visitar</button>
+                                <button class="button" onclick="window.location.href='/cristo-redentor.html'">Visitar</button>
                             </div>
                         </div>
 
                         <div class="card">
-                            <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pão de Açúcar">
+                            <img src="/pao.jpg" alt="Pão de Açúcar">
                             <div class="card-info">
                                 <h3 class="card-title">Pão de Açúcar</h3>
                                 <p class="cidade">Rio de Janeiro - RJ</p>
                                 <p class="descricao">Cartão postal do Rio de Janeiro</p>
-                                <button class="button">Visitar</button>
+                                <button class="button" onclick="window.location.href='/pao-acucar.html'">Visitar</button>
                             </div>
                         </div>
 
                         <div class="card">
-                            <img src="https://images.unsplash.com/photo-1516306580123-e6e52b1b7b5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Cataratas do Iguaçu">
+                            <img src="/cata.jpg" alt="Cataratas do Iguaçu">
                             <div class="card-info">
                                 <h3 class="card-title">Cataratas do Iguaçu</h3>
                                 <p class="cidade">Foz do Iguaçu - PR</p>
                                 <p class="descricao">Uma das maiores quedas d'água do mundo</p>
-                                <button class="button">Visitar</button>
+                                <button class="button" onclick="window.location.href='/cataratas-iguacu.html'">Visitar</button>
                             </div>
                         </div>
 
                         <div class="card">
-                            <img src="https://images.unsplash.com/photo-1539037116277-4db20889f2d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pelourinho">
+                            <img src="/pelo.jpg" alt="Pelourinho">
                             <div class="card-info">
                                 <h3 class="card-title">Pelourinho</h3>
                                 <p class="cidade">Salvador - BA</p>
                                 <p class="descricao">Centro histórico de Salvador</p>
-                                <button class="button">Visitar</button>
+                                <button class="button" onclick="window.location.href='/pelourinho.html'">Visitar</button>
                             </div>
                         </div>
 
                         <div class="card">
-                            <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Fernando de Noronha">
+                            <img src="/fer.jpg" alt="Fernando de Noronha">
                             <div class="card-info">
                                 <h3 class="card-title">Fernando de Noronha</h3>
                                 <p class="cidade">Pernambuco - PE</p>
                                 <p class="descricao">Paraíso ecológico brasileiro</p>
-                                <button class="button">Visitar</button>
+                                <button class="button" onclick="window.location.href='/fernando-noronha.html'">Visitar</button>
                             </div>
                         </div>
 
                         <div class="card">
-                            <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pantanal">
+                            <img src="/pan.jpg" alt="Pantanal">
                             <div class="card-info">
                                 <h3 class="card-title">Pantanal</h3>
                                 <p class="cidade">Mato Grosso - MT</p>
                                 <p class="descricao">Maior planície alagável do mundo</p>
-                                <button class="button">Visitar</button>
+                                <button class="button" onclick="window.location.href='/pantanal.html'">Visitar</button>
                             </div>
                         </div>
                     </div>
@@ -345,8 +345,107 @@
         </footer>
     </div>
     <script>
-        // Carrega locais aprovados do localStorage
+        // Dados dos locais mais visitados
+        const locaisMaisVisitados = [
+            {
+                id: 'cristo-redentor',
+                nome: 'Cristo Redentor',
+                cidade: 'Rio de Janeiro',
+                estado: 'RJ',
+                categoria: 'monumentos',
+                descricao: 'Majestosa estátua do Cristo Redentor localizada no topo do Corcovado, oferecendo uma vista panorâmica espetacular da cidade maravilhosa. Símbolo do Rio de Janeiro e uma das Sete Maravilhas do Mundo Moderno, a estátua de 38 metros de altura é um dos pontos turísticos mais visitados do Brasil.',
+                imagem: '/cristo2.jpg',
+                localizacao: 'Corcovado, Tijuca - Rio de Janeiro, RJ',
+                horario: 'Diariamente: 8h às 19h',
+                preco: 'R$ 75,00 (trem) - R$ 62,00 (van)',
+                infoAdicional: 'Localizado no topo do Corcovado, a 710 metros de altitude. Acesso por trem do Corcovado ou vans pelo Parque Nacional da Tijuca. Vista panorâmica de 360° da cidade do Rio de Janeiro.'
+            },
+            {
+                id: 'pao-acucar',
+                nome: 'Pão de Açúcar',
+                cidade: 'Rio de Janeiro',
+                estado: 'RJ',
+                categoria: 'natureza',
+                descricao: 'Complexo turístico formado por dois morros conectados por um sistema de bondinhos, oferecendo vistas deslumbrantes da Baía de Guanabara. O Pão de Açúcar é um dos cartões postais mais famosos do Rio de Janeiro, proporcionando experiências únicas ao nascer e pôr do sol.',
+                imagem: '/pao.jpg',
+                localizacao: 'Urca - Rio de Janeiro, RJ',
+                horario: 'Diariamente: 8h às 19h50',
+                preco: 'R$ 120,00 (adulto)',
+                infoAdicional: 'Complexo turístico com dois morros conectados por bondinho. Primeira parada na Urca (220m) e segunda no Pão de Açúcar (396m). Vista espetacular da Baía de Guanabara e praias cariocas.'
+            },
+            {
+                id: 'cataratas-iguacu',
+                nome: 'Cataratas do Iguaçu',
+                cidade: 'Foz do Iguaçu',
+                estado: 'PR',
+                categoria: 'natureza',
+                descricao: 'Conjunto espetacular de 275 quedas d\'água localizado na fronteira entre Brasil e Argentina. As Cataratas do Iguaçu são Patrimônio Mundial da UNESCO e oferecem uma experiência única com trilhas, passeios de barco e vistas panorâmicas de tirar o fôlego da força da natureza.',
+                imagem: '/cata.jpg',
+                localizacao: 'Parque Nacional do Iguaçu - Foz do Iguaçu, PR',
+                horario: 'Diariamente: 9h às 17h',
+                preco: 'R$ 72,00 (brasileiro) - R$ 85,00 (estrangeiro)',
+                infoAdicional: 'Patrimônio Mundial da UNESCO com 275 quedas d\'água. Trilhas, passeio de barco, helicóptero e Macuco Safari. Lado brasileiro oferece vista panorâmica, lado argentino permite proximidade das quedas.'
+            },
+            {
+                id: 'pelourinho',
+                nome: 'Pelourinho',
+                cidade: 'Salvador',
+                estado: 'BA',
+                categoria: 'cultura',
+                descricao: 'Centro histórico de Salvador com arquitetura colonial preservada, casarões coloridos e rica herança cultural afro-brasileira. O Pelourinho é Patrimônio Mundial da UNESCO, berço da capoeira e do axé, oferecendo uma imersão completa na história e cultura baiana através de suas ruas de pedra e manifestações artísticas.',
+                imagem: '/pelo.jpg',
+                localizacao: 'Centro Histórico - Salvador, BA',
+                horario: '24 horas (museus e atrações têm horários específicos)',
+                preco: 'Gratuito (taxas para museus e atrações)',
+                infoAdicional: 'Patrimônio Mundial da UNESCO desde 1985. Arquitetura colonial preservada, casarões coloridos, igrejas barrocas, museus, restaurantes típicos e apresentações culturais. Berço da capoeira e do axé.'
+            },
+            {
+                id: 'fernando-noronha',
+                nome: 'Fernando de Noronha',
+                cidade: 'Fernando de Noronha',
+                estado: 'PE',
+                categoria: 'natureza',
+                descricao: 'Arquipélago paradisíaco com águas cristalinas, vida marinha exuberante e praias de beleza incomparável. Fernando de Noronha é um santuário ecológico com acesso controlado, ideal para mergulho, observação de golfinhos e tartarugas marinhas, oferecendo uma experiência única de contato com a natureza preservada.',
+                imagem: '/fer.jpg',
+                localizacao: 'Arquipélago de Fernando de Noronha, PE',
+                horario: 'Acesso controlado - máximo 460 visitantes por dia',
+                preco: 'Taxa de Preservação: R$ 79,20/dia + Taxa de Embarque',
+                infoAdicional: 'Patrimônio Mundial da UNESCO. Águas cristalinas, vida marinha exuberante, praias paradisíacas. Ideal para mergulho, snorkeling e observação de golfinhos. Temporada seca: agosto a janeiro.'
+            },
+            {
+                id: 'pantanal',
+                nome: 'Pantanal',
+                cidade: 'Cuiabá/Corumbá',
+                estado: 'MT/MS',
+                categoria: 'natureza',
+                descricao: 'Maior planície alagável do mundo e uma das regiões com maior concentração de vida selvagem das Américas. O Pantanal oferece experiências únicas de observação da fauna brasileira, incluindo onças-pintadas, jacarés, capivaras e centenas de espécies de aves em seu habitat natural, sendo um destino imperdível para o ecoturismo.'
+                imagem: '/pan.jpg',
+                localizacao: 'Região Centro-Oeste - MT/MS',
+                horario: 'Acesso por pousadas e operadoras de turismo',
+                preco: 'Varia conforme pacote (R$ 300-800/dia)',
+                infoAdicional: 'Patrimônio Mundial da UNESCO. Maior concentração de vida selvagem das Américas. Onças, jacarés, capivaras, centenas de espécies de aves. Melhor época: maio a setembro (seca).'
+            }
+        ];
+        
+        // Salva os dados no localStorage para acesso nas páginas de detalhes
+        function salvarLocaisMaisVisitados() {
+            let locaisAdicionados = JSON.parse(localStorage.getItem('locaisAdicionados')) || [];
+            
+            locaisMaisVisitados.forEach(local => {
+                const existe = locaisAdicionados.find(l => l.id === local.id);
+                if (!existe) {
+                    locaisAdicionados.push(local);
+                }
+            });
+            
+            localStorage.setItem('locaisAdicionados', JSON.stringify(locaisAdicionados));
+        }
+        
         document.addEventListener('DOMContentLoaded', function() {
+            // Salva os locais mais visitados no localStorage
+            salvarLocaisMaisVisitados();
+            
+            // Carrega locais aprovados do localStorage
             const approvedLocations = JSON.parse(localStorage.getItem('approvedLocations')) || [];
             const grid = document.getElementById('locaisGrid');
             
