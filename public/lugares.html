@@ -6,6 +6,7 @@
     <title>GADYS - Lugares Mais Visitados</title>
     <link rel="stylesheet" href="/hamburger-nav.css">
     <link rel="stylesheet" href="/rating-styles.css">
+    <link rel="stylesheet" href="/comments-styles.css">
     <style>
         * {
             margin: 0;
@@ -200,6 +201,41 @@
             display: block;
         }
 
+        /* Modo Escuro */
+        .dark-mode {
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+        
+        .dark-mode .header {
+            background: #0d1117;
+        }
+        
+        .dark-mode .section {
+            background: #0d1117;
+        }
+        
+        .dark-mode .card {
+            background: #21262d;
+            color: #e0e0e0;
+        }
+        
+        .dark-mode .card-title {
+            color: #f0f6fc;
+        }
+        
+        .dark-mode .cidade {
+            color: #8b949e;
+        }
+        
+        .dark-mode .descricao {
+            color: #8b949e;
+        }
+        
+        .dark-mode .footer {
+            background: #0d1117;
+        }
+
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2.5rem;
@@ -224,11 +260,14 @@
     <div class="page">
         <header class="header">
             <nav class="nav">
-                <img src="/gadys-logo.svg" alt="GADYS" class="logo" />
-                <div class="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                <img src="/logo.png" alt="GADYS" class="logo" style="height: 40px; background: lightblue; border-radius: 50%; padding: 8px;" />
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <button onclick="toggleTheme()" id="themeToggle" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">🌙</button>
+                    <div class="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
                 </div>
                 <div class="nav-overlay"></div>
                 <ul class="nav-links">
@@ -305,6 +344,11 @@
                                         <span class="star" onclick="setRating('cristo', 5)">☆</span>
                                     </div>
                                 </div>
+                                <div class="comments-section">
+                                    <h4>💬 Comentários</h4>
+                                    <textarea placeholder="Compartilhe sua experiência..."></textarea>
+                                    <button class="comments-btn" onclick="addComment('cristo', this)">Comentar</button>
+                                </div>
                                 <button class="button" onclick="window.location.href='/cristo-redentor.html'">Visitar</button>
                             </div>
                         </div>
@@ -329,6 +373,11 @@
                                         <span class="star" onclick="setRating('pao', 4)">☆</span>
                                         <span class="star" onclick="setRating('pao', 5)">☆</span>
                                     </div>
+                                </div>
+                                <div class="comments-section">
+                                    <h4>💬 Comentários</h4>
+                                    <textarea placeholder="Compartilhe sua experiência..."></textarea>
+                                    <button class="comments-btn natureza" onclick="addComment('pao', this)">Comentar</button>
                                 </div>
                                 <button class="button" onclick="window.location.href='/pao-acucar.html'">Visitar</button>
                             </div>
@@ -355,6 +404,11 @@
                                         <span class="star" onclick="setRating('cataratas', 5)">☆</span>
                                     </div>
                                 </div>
+                                <div class="comments-section">
+                                    <h4>💬 Comentários</h4>
+                                    <textarea placeholder="Compartilhe sua experiência..."></textarea>
+                                    <button class="comments-btn natureza" onclick="addComment('cataratas', this)">Comentar</button>
+                                </div>
                                 <button class="button" onclick="window.location.href='/cataratas-iguacu.html'">Visitar</button>
                             </div>
                         </div>
@@ -379,6 +433,11 @@
                                         <span class="star" onclick="setRating('pelourinho', 4)">☆</span>
                                         <span class="star" onclick="setRating('pelourinho', 5)">☆</span>
                                     </div>
+                                </div>
+                                <div class="comments-section">
+                                    <h4>💬 Comentários</h4>
+                                    <textarea placeholder="Compartilhe sua experiência..."></textarea>
+                                    <button class="comments-btn" onclick="addComment('pelourinho', this)">Comentar</button>
                                 </div>
                                 <button class="button" onclick="window.location.href='/pelourinho.html'">Visitar</button>
                             </div>
@@ -405,6 +464,11 @@
                                         <span class="star" onclick="setRating('noronha', 5)">☆</span>
                                     </div>
                                 </div>
+                                <div class="comments-section">
+                                    <h4>💬 Comentários</h4>
+                                    <textarea placeholder="Compartilhe sua experiência..."></textarea>
+                                    <button class="comments-btn natureza" onclick="addComment('noronha', this)">Comentar</button>
+                                </div>
                                 <button class="button" onclick="window.location.href='/fernando-noronha.html'">Visitar</button>
                             </div>
                         </div>
@@ -429,6 +493,11 @@
                                         <span class="star" onclick="setRating('pantanal', 4)">☆</span>
                                         <span class="star" onclick="setRating('pantanal', 5)">☆</span>
                                     </div>
+                                </div>
+                                <div class="comments-section">
+                                    <h4>💬 Comentários</h4>
+                                    <textarea placeholder="Compartilhe sua experiência..."></textarea>
+                                    <button class="comments-btn natureza" onclick="addComment('pantanal', this)">Comentar</button>
                                 </div>
                                 <button class="button" onclick="window.location.href='/pantanal.html'">Visitar</button>
                             </div>
@@ -565,5 +634,21 @@
     </script>
     <script src="/hamburger-nav.js"></script>
     <script src="/rating-system.js"></script>
+    <script src="/comments-system.js"></script>
+    <script src="/theme-manager.js"></script>
+    <script>
+        function updateThemeIcon() {
+            const isDark = document.body.classList.contains('dark-mode');
+            document.getElementById('themeToggle').textContent = isDark ? '☀️' : '🌙';
+        }
+        
+        const originalToggle = toggleTheme;
+        toggleTheme = function() {
+            originalToggle();
+            updateThemeIcon();
+        };
+        
+        document.addEventListener('DOMContentLoaded', updateThemeIcon);
+    </script>
 </body>
 </html>
