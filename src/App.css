@@ -18,31 +18,70 @@
   margin: 0 auto;
   padding: 0 2rem;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   position: relative;
 }
 
 .nav .logo {
-  position: absolute;
-  top: 50%;
-  left: 2rem;
-  transform: translateY(-50%);
-  z-index: 102;
+  height: 40px;
+  z-index: 1002;
 }
 
-.logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin: 0;
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  z-index: 1002;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background: white;
+  margin: 3px 0;
+  transition: 0.3s;
 }
 
 .nav-links {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 300px;
+  height: 100vh;
+  background: #1a237e;
   display: flex;
-  list-style: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 2rem;
   margin: 0;
   padding: 0;
+  list-style: none;
+  transition: right 0.3s ease;
+  z-index: 1001;
+}
+
+.nav-links.active {
+  right: 0;
+}
+
+.nav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.nav-overlay.active {
+  opacity: 1;
+  visibility: visible;
 }
 
 .nav-links a {
@@ -494,23 +533,18 @@
 
 @media (max-width: 768px) {
   .nav {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 1rem;
     justify-content: flex-end;
   }
   
   .nav .logo {
     position: absolute;
     top: 50%;
-    left: 1rem;
+    left: -1.5rem;
     transform: translateY(-50%);
-    z-index: 102;
   }
   
   .nav-links {
-    justify-content: flex-end;
-    gap: 0.5rem;
+    gap: 1rem;
   }
   
   .nav-links {

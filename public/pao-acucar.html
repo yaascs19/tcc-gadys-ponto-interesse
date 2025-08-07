@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GADYS - Pão de Açúcar</title>
+    <link rel="stylesheet" href="/hamburger-nav.css">
     <style>
         * {
             margin: 0;
@@ -202,6 +203,12 @@
         <header class="header">
             <nav class="nav">
                 <img src="/gadys-logo.svg" alt="GADYS" class="logo" />
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="nav-overlay"></div>
                 <ul class="nav-links">
                     <li><a href="/">Início</a></li>
                     <li><a href="/lugares.html">Lugares</a></li>
@@ -286,6 +293,7 @@
         </footer>
     </div>
 
+    <script src="/hamburger-nav.js"></script>
     <script src="/theme-manager.js"></script>
     <script>
         function updateThemeIcon() {

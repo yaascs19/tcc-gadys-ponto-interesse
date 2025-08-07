@@ -126,8 +126,14 @@ function App() {
       <header className="header">
         <nav className="nav">
           <img src="/gadys-logo.svg" alt="GADYS" className="logo" style={{height: '40px'}} />
+          <div className="hamburger" onClick={() => document.querySelector('.nav-links').classList.toggle('active')}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div className="nav-overlay" onClick={() => document.querySelector('.nav-links').classList.remove('active')}></div>
           <ul className="nav-links">
-            <li><a href="#" onClick={(e) => {e.preventDefault(); setCurrentPage('home')}}>Início</a></li>
+            <li><a href="#" onClick={(e) => {e.preventDefault(); setCurrentPage('home'); document.querySelector('.nav-links').classList.remove('active')}}>Início</a></li>
             <li className="dropdown">
               <a href="#features" onClick={(e) => {e.preventDefault(); document.getElementById('features').scrollIntoView({behavior: 'smooth'})}}>Estados Brasileiros ▼</a>
               <div className="dropdown-content">
@@ -160,16 +166,14 @@ function App() {
                 <a href="#">Tocantins</a>
               </div>
             </li>
-            <li><a href="/adicionar-locais.html">Adicionar locais</a></li>
-            <li><a href="/buscar.html">Buscar</a></li>
-            <li><a href="/perfil.html">Perfil</a></li>
-            <li><a href="/sobre.html">Sobre</a></li>
-            <li><a href="/contato.html">Contato</a></li>
+            <li><a href="/adicionar-locais.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Adicionar locais</a></li>
+            <li><a href="/sobre.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Sobre</a></li>
+            <li><a href="/contato.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Contato</a></li>
             {userType === 'adm' && (
-              <li><a href="#" onClick={(e) => {e.preventDefault(); setCurrentPage('admin')}}>Administração</a></li>
+              <li><a href="#" onClick={(e) => {e.preventDefault(); setCurrentPage('admin'); document.querySelector('.nav-links').classList.remove('active')}}>Administração</a></li>
             )}
             <li><a href="#" onClick={(e) => {e.preventDefault(); toggleDarkMode()}}>{darkMode ? '☀️' : '🌙'}</a></li>
-            <li><a href="#" onClick={(e) => {e.preventDefault(); handleLogout()}}>Logout</a></li>
+            <li><a href="#" onClick={(e) => {e.preventDefault(); handleLogout(); document.querySelector('.nav-links').classList.remove('active')}}>Logout</a></li>
           </ul>
         </nav>
       </header>
