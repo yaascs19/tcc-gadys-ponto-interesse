@@ -12,11 +12,32 @@ function Login({ onLogin }) {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (isRegister) {
-      if (email && password && password === confirmPassword) {
+      if (email && password && password === confirmPassword && name) {
+        // Armazena os dados do usuário cadastrado
+        let registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || []
+        
+        // Verifica se o email já existe
+        if (registeredUsers.find(user => user.email === email)) {
+          alert('Este email já está cadastrado!')
+          return
+        }
+        
+        const newUser = {
+          name: name,
+          email: email,
+          password: password,
+          userType: userType
+        }
+        
+        registeredUsers.push(newUser)
+        localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers))
+        
         alert('Cadastro realizado com sucesso!')
         setIsRegister(false)
       } else if (password !== confirmPassword) {
         alert('Senhas não coincidem!')
+      } else {
+        alert('Preencha todos os campos!')
       }
     } else {
       if (email && password) {
@@ -38,9 +59,16 @@ function Login({ onLogin }) {
             }
           }
         } else {
-          // Usuários comuns podem entrar com qualquer credencial
-          const userName = name || email.split('@')[0]
-          onLogin(userType, userName)
+          // Verifica se é um usuário cadastrado
+          const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || []
+          const user = registeredUsers.find(user => user.email === email && user.password === password)
+          
+          if (user) {
+            onLogin(user.userType, user.name)
+          } else {
+            alert('Email ou senha incorretos!')
+            return
+          }
         }
       }
     }

@@ -6,6 +6,7 @@
     <title>GADYS - Monumentos do Amazonas</title>
     <link rel="stylesheet" href="/hamburger-nav.css">
     <link rel="stylesheet" href="/rating-styles.css">
+    <link rel="stylesheet" href="/comments-styles.css">
     <style>
         * {
             margin: 0;
@@ -42,6 +43,9 @@
         
         .logo {
             height: 40px;
+            background: lightblue;
+            border-radius: 50%;
+            padding: 8px;
         }
         
         .nav-links {
@@ -323,6 +327,11 @@
                                         <span class="star" onclick="setRating('teatro', 5)">☆</span>
                                     </div>
                                 </div>
+                                <div class="comments-section" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e0e0e0;">
+                                    <h4 style="font-size: 1rem; margin-bottom: 0.5rem; color: #333;">Comentários:</h4>
+                                    <textarea placeholder="Deixe seu comentário..." style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px; resize: vertical; min-height: 60px; font-size: 0.9rem;"></textarea>
+                                    <button style="background: #8b4513; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; margin-top: 0.5rem; cursor: pointer; font-size: 0.9rem;" onclick="addComment('teatro', this)">Comentar</button>
+                                </div>
                                 <button class="button" onclick="window.location.href='/teatro-amazonas.html'">Visitar</button>
                             </div>
                         </div>
@@ -347,6 +356,11 @@
                                         <span class="star" onclick="setRating('forte', 4)">☆</span>
                                         <span class="star" onclick="setRating('forte', 5)">☆</span>
                                     </div>
+                                </div>
+                                <div class="comments-section" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e0e0e0;">
+                                    <h4 style="font-size: 1rem; margin-bottom: 0.5rem; color: #333;">Comentários:</h4>
+                                    <textarea placeholder="Deixe seu comentário..." style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px; resize: vertical; min-height: 60px; font-size: 0.9rem;"></textarea>
+                                    <button style="background: #8b4513; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; margin-top: 0.5rem; cursor: pointer; font-size: 0.9rem;" onclick="addComment('forte', this)">Comentar</button>
                                 </div>
                                 <button class="button" onclick="window.location.href='/forte-sao-jose.html'">Visitar</button>
                             </div>
@@ -373,6 +387,11 @@
                                         <span class="star" onclick="setRating('justica', 5)">☆</span>
                                     </div>
                                 </div>
+                                <div class="comments-section" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e0e0e0;">
+                                    <h4 style="font-size: 1rem; margin-bottom: 0.5rem; color: #333;">Comentários:</h4>
+                                    <textarea placeholder="Deixe seu comentário..." style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px; resize: vertical; min-height: 60px; font-size: 0.9rem;"></textarea>
+                                    <button style="background: #8b4513; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; margin-top: 0.5rem; cursor: pointer; font-size: 0.9rem;" onclick="addComment('justica', this)">Comentar</button>
+                                </div>
                                 <button class="button" onclick="window.location.href='/palacio-justica.html'">Visitar</button>
                             </div>
                         </div>
@@ -397,6 +416,11 @@
                                         <span class="star" onclick="setRating('mercado', 4)">☆</span>
                                         <span class="star" onclick="setRating('mercado', 5)">☆</span>
                                     </div>
+                                </div>
+                                <div class="comments-section" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e0e0e0;">
+                                    <h4 style="font-size: 1rem; margin-bottom: 0.5rem; color: #333;">Comentários:</h4>
+                                    <textarea placeholder="Deixe seu comentário..." style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px; resize: vertical; min-height: 60px; font-size: 0.9rem;"></textarea>
+                                    <button style="background: #8b4513; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; margin-top: 0.5rem; cursor: pointer; font-size: 0.9rem;" onclick="addComment('mercado', this)">Comentar</button>
                                 </div>
                                 <button class="button" onclick="window.location.href='/mercado-municipal.html'">Visitar</button>
                             </div>
@@ -423,6 +447,11 @@
                                         <span class="star" onclick="setRating('igreja', 5)">☆</span>
                                     </div>
                                 </div>
+                                <div class="comments-section" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e0e0e0;">
+                                    <h4 style="font-size: 1rem; margin-bottom: 0.5rem; color: #333;">Comentários:</h4>
+                                    <textarea placeholder="Deixe seu comentário..." style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px; resize: vertical; min-height: 60px; font-size: 0.9rem;"></textarea>
+                                    <button style="background: #8b4513; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; margin-top: 0.5rem; cursor: pointer; font-size: 0.9rem;" onclick="addComment('igreja', this)">Comentar</button>
+                                </div>
                                 <button class="button" onclick="window.location.href='/igreja-sao-sebastiao.html'">Visitar</button>
                             </div>
                         </div>
@@ -447,6 +476,11 @@
                                         <span class="star" onclick="setRating('palacio', 4)">☆</span>
                                         <span class="star" onclick="setRating('palacio', 5)">☆</span>
                                     </div>
+                                </div>
+                                <div class="comments-section" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e0e0e0;">
+                                    <h4 style="font-size: 1rem; margin-bottom: 0.5rem; color: #333;">Comentários:</h4>
+                                    <textarea placeholder="Deixe seu comentário..." style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px; resize: vertical; min-height: 60px; font-size: 0.9rem;"></textarea>
+                                    <button style="background: #8b4513; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; margin-top: 0.5rem; cursor: pointer; font-size: 0.9rem;" onclick="addComment('palacio', this)">Comentar</button>
                                 </div>
                                 <button class="button" onclick="window.location.href='/palacio-rio-negro.html'">Visitar</button>
                             </div>
@@ -508,6 +542,7 @@
     </script>
     <script src="/hamburger-nav.js"></script>
     <script src="/rating-system.js"></script>
+    <script src="/comments-system.js"></script>
     <script src="/theme-manager.js"></script>
     <script>
         function updateThemeIcon() {

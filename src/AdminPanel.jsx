@@ -8,8 +8,11 @@ function AdminPanel() {
   const [activeTab, setActiveTab] = useState('pending')
   const [userAccess, setUserAccess] = useState([])
   const [rankings, setRankings] = useState([])
+  const [comments, setComments] = useState({})
   const [showAddUserModal, setShowAddUserModal] = useState(false)
   const [newUser, setNewUser] = useState({ userName: '', email: '', userType: 'usuario' })
+  const [siteLocations, setSiteLocations] = useState([])
+  const [trashedLocations, setTrashedLocations] = useState([])
   
   useEffect(() => {
     // Carrega locais pendentes do localStorage
@@ -79,6 +82,57 @@ function AdminPanel() {
       })).sort((a, b) => b.averageRating - a.averageRating)
       setRankings(rankingData)
     }
+    
+    // Carrega comentários dos lugares
+    const commentsStored = localStorage.getItem('placeComments')
+    if (commentsStored) {
+      setComments(JSON.parse(commentsStored))
+    }
+    
+    // Carrega todos os locais do site (pré-existentes + adicionados)
+    const locaisAdicionados = JSON.parse(localStorage.getItem('locaisAdicionados')) || []
+    
+    // Locais pré-existentes do site
+    const locaisPreExistentes = [
+      // Monumentos
+      { id: 'teatro', nome: 'Teatro Amazonas', categoria: 'monumentos', cidade: 'Manaus', estado: 'AM', descricao: 'Majestoso teatro construído durante o período áureo da borracha' },
+      { id: 'forte', nome: 'Forte de São José', categoria: 'monumentos', cidade: 'Manaus', estado: 'AM', descricao: 'Fortaleza histórica que marca o início da colonização de Manaus' },
+      { id: 'mercado', nome: 'Mercado Municipal', categoria: 'monumentos', cidade: 'Manaus', estado: 'AM', descricao: 'Mercado histórico inspirado no mercado Les Halles de Paris' },
+      { id: 'justica', nome: 'Palácio da Justiça', categoria: 'monumentos', cidade: 'Manaus', estado: 'AM', descricao: 'Edifício histórico com arquitetura colonial preservada' },
+      { id: 'igreja', nome: 'Igreja de São Sebastião', categoria: 'monumentos', cidade: 'Manaus', estado: 'AM', descricao: 'Igreja histórica com arquitetura colonial e importância religiosa' },
+      { id: 'palacio', nome: 'Palácio Rio Negro', categoria: 'monumentos', cidade: 'Manaus', estado: 'AM', descricao: 'Antiga residência dos governadores, hoje centro cultural' },
+      
+      // Natureza
+      { id: 'floresta', nome: 'Floresta Amazônica', categoria: 'natureza', cidade: 'Amazonas', estado: 'AM', descricao: 'A maior floresta tropical do mundo com biodiversidade única' },
+      { id: 'encontro', nome: 'Encontro das Águas', categoria: 'natureza', cidade: 'Manaus', estado: 'AM', descricao: 'Fenômeno natural onde os rios Negro e Solimões se encontram' },
+      { id: 'anavilhanas', nome: 'Parque Nacional de Anavilhanas', categoria: 'natureza', cidade: 'Novo Airão', estado: 'AM', descricao: 'Maior arquipélago fluvial do mundo com rica biodiversidade' },
+      { id: 'mamiraui', nome: 'Reserva Mamirauá', categoria: 'natureza', cidade: 'Tefé', estado: 'AM', descricao: 'Maior reserva de várzea do mundo com fauna única' },
+      { id: 'jau', nome: 'Parque Nacional do Jaú', categoria: 'natureza', cidade: 'Novo Airão', estado: 'AM', descricao: 'Uma das maiores unidades de conservação da Amazônia' },
+      { id: 'rioamazonas', nome: 'Rio Amazonas', categoria: 'natureza', cidade: 'Amazonas', estado: 'AM', descricao: 'O maior rio do mundo em volume de água e extensão' },
+      
+      // Gastronomia
+      { id: 'acai', nome: 'Açaí', categoria: 'gastronomia', cidade: 'Amazonas', estado: 'AM', descricao: 'Fruto amazônico rico em nutrientes e sabor único' },
+      { id: 'tucuma', nome: 'Tucumã', categoria: 'gastronomia', cidade: 'Amazonas', estado: 'AM', descricao: 'Fruto típico consumido com farinha de mandioca' },
+      { id: 'pirarucu', nome: 'Pirarucu', categoria: 'gastronomia', cidade: 'Amazonas', estado: 'AM', descricao: 'Peixe gigante da Amazônia preparado de diversas formas' },
+      { id: 'cupuacu', nome: 'Cupuaçu', categoria: 'gastronomia', cidade: 'Amazonas', estado: 'AM', descricao: 'Fruto amazônico usado em doces e sucos refrescantes' },
+      { id: 'tacaca', nome: 'Tacacá', categoria: 'gastronomia', cidade: 'Amazonas', estado: 'AM', descricao: 'Prato típico com tucumã, camarão seco e jambu' },
+      { id: 'farinha', nome: 'Farinha de Mandioca', categoria: 'gastronomia', cidade: 'Amazonas', estado: 'AM', descricao: 'Ingrediente essencial da culinária amazônica' },
+      
+      // Cultura
+      { id: 'festival', nome: 'Festival de Parintins', categoria: 'cultura', cidade: 'Parintins', estado: 'AM', descricao: 'Maior festival folclórico do Brasil com bois-bumbás' },
+      { id: 'lendas', nome: 'Lendas Amazônicas', categoria: 'cultura', cidade: 'Região Amazônica', estado: 'AM', descricao: 'Curupira, Boto-cor-de-rosa, Iara e outras lendas da floresta' },
+      { id: 'artesanato', nome: 'Artesanato Indígena', categoria: 'cultura', cidade: 'Comunidades Indígenas', estado: 'AM', descricao: 'Cestas, cerâmicas e objetos tradicionais dos povos originários' },
+      { id: 'ciranda', nome: 'Ciranda Amazônica', categoria: 'cultura', cidade: 'Manaus', estado: 'AM', descricao: 'Dança tradicional em roda com cantos e instrumentos regionais' },
+      { id: 'carimbo', nome: 'Carimbó', categoria: 'cultura', cidade: 'Região Norte', estado: 'AM', descricao: 'Ritmo e dança típica com tambores e movimentos sensuais' },
+      { id: 'rituais', nome: 'Rituais Xamânicos', categoria: 'cultura', cidade: 'Floresta Amazônica', estado: 'AM', descricao: 'Cerimônias ancestrais com plantas sagradas e cura espiritual' }
+    ]
+    
+    const todosLocais = [...locaisPreExistentes, ...locaisAdicionados]
+    setSiteLocations(todosLocais)
+    
+    // Carrega lixeira
+    const lixeira = JSON.parse(localStorage.getItem('trashedLocations')) || []
+    setTrashedLocations(lixeira)
   }, [])
 
   const handleApprove = (id) => {
@@ -179,6 +233,63 @@ function AdminPanel() {
     }
   }
 
+  const handleRemoveLocation = (id) => {
+    if (confirm('Tem certeza que deseja mover este local para a lixeira?')) {
+      // Encontra o local a ser movido para lixeira
+      const locationToTrash = siteLocations.find(location => location.id === id)
+      
+      // Move para lixeira
+      const updatedTrash = [...trashedLocations, {...locationToTrash, trashedAt: new Date().toLocaleString('pt-BR')}]
+      setTrashedLocations(updatedTrash)
+      localStorage.setItem('trashedLocations', JSON.stringify(updatedTrash))
+      
+      // Remove dos locais adicionados (se existir lá)
+      const locaisAdicionados = JSON.parse(localStorage.getItem('locaisAdicionados')) || []
+      const updatedAdicionados = locaisAdicionados.filter(location => location.id !== id)
+      localStorage.setItem('locaisAdicionados', JSON.stringify(updatedAdicionados))
+      
+      // Atualiza a lista completa
+      const updatedLocations = siteLocations.filter(location => location.id !== id)
+      setSiteLocations(updatedLocations)
+      
+      alert('Local movido para a lixeira!')
+    }
+  }
+
+  const handleRestoreLocation = (id) => {
+    const locationToRestore = trashedLocations.find(location => location.id === id)
+    const locaisPredefinidos = ['teatro', 'forte', 'mercado', 'justica', 'igreja', 'palacio', 'floresta', 'encontro', 'anavilhanas', 'mamiraui', 'jau', 'rioamazonas', 'acai', 'tucuma', 'pirarucu', 'cupuacu', 'tacaca', 'farinha', 'festival', 'lendas', 'artesanato', 'ciranda', 'carimbo', 'rituais']
+    
+    // Remove da lixeira
+    const updatedTrash = trashedLocations.filter(location => location.id !== id)
+    setTrashedLocations(updatedTrash)
+    localStorage.setItem('trashedLocations', JSON.stringify(updatedTrash))
+    
+    const restoredLocation = {...locationToRestore}
+    delete restoredLocation.trashedAt
+    
+    // Se não for um local predefinido, adiciona aos locais adicionados
+    if (!locaisPredefinidos.includes(id)) {
+      const locaisAdicionados = JSON.parse(localStorage.getItem('locaisAdicionados')) || []
+      locaisAdicionados.push(restoredLocation)
+      localStorage.setItem('locaisAdicionados', JSON.stringify(locaisAdicionados))
+    }
+    
+    // Atualiza a lista completa
+    setSiteLocations([...siteLocations, restoredLocation])
+    
+    alert('Local restaurado com sucesso!')
+  }
+
+  const handlePermanentDelete = (id) => {
+    if (confirm('Tem certeza que deseja excluir permanentemente este local? Esta ação não pode ser desfeita!')) {
+      const updatedTrash = trashedLocations.filter(location => location.id !== id)
+      setTrashedLocations(updatedTrash)
+      localStorage.setItem('trashedLocations', JSON.stringify(updatedTrash))
+      alert('Local excluído permanentemente!')
+    }
+  }
+
   return (
     <div className="admin-panel">
       <div className="admin-header">
@@ -207,6 +318,18 @@ function AdminPanel() {
             onClick={() => setActiveTab('ranking')}
           >
             Ranking ({rankings.length})
+          </button>
+          <button 
+            className={`tab-btn ${activeTab === 'locations' ? 'active' : ''}`}
+            onClick={() => setActiveTab('locations')}
+          >
+            Locais do Site ({siteLocations.length})
+          </button>
+          <button 
+            className={`tab-btn ${activeTab === 'trash' ? 'active' : ''}`}
+            onClick={() => setActiveTab('trash')}
+          >
+            🗑️ Lixeira ({trashedLocations.length})
           </button>
         </div>
       </div>
@@ -328,19 +451,124 @@ function AdminPanel() {
           </div>
         ))}
         
-        {activeTab === 'ranking' && rankings.map((place, index) => (
-          <div key={index} className="admin-card">
+        {activeTab === 'ranking' && rankings.map((place, index) => {
+          const placeComments = comments[place.name] || []
+          const isExpanded = expandedCard === `ranking-${index}`
+          return (
+            <div key={index} className="admin-card">
+              <div className="card-header">
+                <h3>#{index + 1} {place.name}</h3>
+                <span className={`category-badge ranking-${index < 3 ? 'top' : 'normal'}`}>
+                  ⭐ {place.averageRating.toFixed(1)}
+                </span>
+              </div>
+              
+              <div className="card-info">
+                <p><strong>Avaliação média:</strong> {place.averageRating.toFixed(2)} estrelas</p>
+                <p><strong>Total de avaliações:</strong> {place.totalRatings}</p>
+                <p><strong>Total de comentários:</strong> {placeComments.length}</p>
+                <p><strong>Posição:</strong> {index + 1}º lugar</p>
+              </div>
+              
+              {placeComments.length > 0 && (
+                <div className="card-actions">
+                  <button 
+                    className="expand-btn"
+                    onClick={() => toggleExpand(`ranking-${index}`)}
+                  >
+                    {isExpanded ? 'Ocultar Comentários' : `Ver Comentários (${placeComments.length})`}
+                  </button>
+                </div>
+              )}
+              
+              {isExpanded && placeComments.length > 0 && (
+                <div style={{marginTop: '1rem', padding: '1rem', background: '#f8f9fa', borderRadius: '8px'}}>
+                  <h4 style={{marginBottom: '0.8rem', color: '#495057', fontSize: '1rem'}}>💬 Todos os Comentários:</h4>
+                  {placeComments.map((comment, idx) => (
+                    <div key={idx} style={{marginBottom: '0.8rem', padding: '0.8rem', background: 'white', borderRadius: '8px', border: '1px solid #dee2e6'}}>
+                      <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.3rem'}}>
+                        <strong style={{color: '#495057'}}>{comment.userName}</strong>
+                        <span style={{fontSize: '0.75rem', color: '#6c757d'}}>{comment.date}</span>
+                      </div>
+                      <p style={{fontSize: '0.9rem', color: '#333', lineHeight: '1.4'}}>{comment.text}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )
+        })}
+        
+        {activeTab === 'locations' && (
+          <div style={{width: '100%'}}>
+            {['monumentos', 'natureza', 'gastronomia', 'cultura'].map(categoria => {
+              const locaisCategoria = siteLocations.filter(location => location.categoria === categoria)
+              if (locaisCategoria.length === 0) return null
+              
+              return (
+                <div key={categoria} style={{marginBottom: '3rem'}}>
+                  <h3 style={{textAlign: 'center', color: '#2c3e50', fontSize: '1.8rem', marginBottom: '2rem', textTransform: 'capitalize'}}>
+                    {categoria === 'monumentos' ? '🏦 Monumentos' : 
+                     categoria === 'natureza' ? '🌳 Natureza' :
+                     categoria === 'gastronomia' ? '🍽️ Gastronomia' : '🎨 Cultura'}
+                  </h3>
+                  <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '2rem'}}>
+                    {locaisCategoria.map((location) => (
+                      <div key={location.id} className="admin-card">
+                        <div className="card-header">
+                          <h3>{location.nome}</h3>
+                          <span className={`category-badge`}>{location.categoria}</span>
+                        </div>
+                        
+                        <div className="card-info">
+                          <p><strong>Cidade:</strong> {location.cidade} - {location.estado}</p>
+                          <p><strong>Descrição:</strong> {location.descricao}</p>
+                          <p><strong>Localização:</strong> {location.localizacao || 'N/A'}</p>
+                        </div>
+                        
+                        <div className="card-actions">
+                          <button 
+                            className="remove-btn"
+                            onClick={() => handleRemoveLocation(location.id)}
+                          >
+                            Mover para Lixeira
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        )}
+        
+        {activeTab === 'trash' && trashedLocations.map((location) => (
+          <div key={location.id} className="admin-card">
             <div className="card-header">
-              <h3>#{index + 1} {place.name}</h3>
-              <span className={`category-badge ranking-${index < 3 ? 'top' : 'normal'}`}>
-                ⭐ {place.averageRating.toFixed(1)}
-              </span>
+              <h3>{location.nome}</h3>
+              <span className={`category-badge`}>{location.categoria}</span>
             </div>
             
             <div className="card-info">
-              <p><strong>Avaliação média:</strong> {place.averageRating.toFixed(2)} estrelas</p>
-              <p><strong>Total de avaliações:</strong> {place.totalRatings}</p>
-              <p><strong>Posição:</strong> {index + 1}º lugar</p>
+              <p><strong>Cidade:</strong> {location.cidade} - {location.estado}</p>
+              <p><strong>Descrição:</strong> {location.descricao}</p>
+              <p><strong>Excluído em:</strong> {location.trashedAt}</p>
+            </div>
+            
+            <div className="card-actions">
+              <button 
+                className="approve-btn"
+                onClick={() => handleRestoreLocation(location.id)}
+              >
+                Restaurar
+              </button>
+              <button 
+                className="reject-btn"
+                onClick={() => handlePermanentDelete(location.id)}
+              >
+                Excluir Permanentemente
+              </button>
             </div>
           </div>
         ))}

@@ -26,6 +26,9 @@
 .nav .logo {
   height: 40px;
   z-index: 1002;
+  background: lightblue;
+  border-radius: 50%;
+  padding: 8px;
 }
 
 .hamburger {

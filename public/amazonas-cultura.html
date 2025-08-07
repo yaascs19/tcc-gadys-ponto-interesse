@@ -6,6 +6,7 @@
     <title>GADYS - Cultura do Amazonas</title>
     <link rel="stylesheet" href="/hamburger-nav.css">
     <link rel="stylesheet" href="/rating-styles.css">
+    <link rel="stylesheet" href="/comments-styles.css">
     <style>
         * {
             margin: 0;
@@ -42,6 +43,9 @@
         
         .logo {
             height: 40px;
+            background: lightblue;
+            border-radius: 50%;
+            padding: 8px;
         }
         
         .nav-links {
@@ -233,6 +237,79 @@
         .dark-mode .footer {
             background: #0d1117;
         }
+        
+        .comments-section {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .comments-section h4 {
+            font-size: 1rem;
+            margin-bottom: 0.8rem;
+            color: #495057;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        
+        .comments-section textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            resize: vertical;
+            min-height: 80px;
+            font-size: 0.9rem;
+            font-family: inherit;
+            transition: border-color 0.3s;
+            background: white;
+        }
+        
+        .comments-section textarea:focus {
+            outline: none;
+            border-color: #800080;
+        }
+        
+        .comments-btn {
+            background: linear-gradient(135deg, #800080, #9932cc);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            margin-top: 0.8rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            box-shadow: 0 2px 4px rgba(128,0,128,0.2);
+        }
+        
+        .comments-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(128,0,128,0.3);
+        }
+        
+        .dark-mode .comments-section {
+            background: #21262d;
+            border-color: #30363d;
+        }
+        
+        .dark-mode .comments-section h4 {
+            color: #f0f6fc;
+        }
+        
+        .dark-mode .comments-section textarea {
+            background: #161b22;
+            border-color: #30363d;
+            color: #e0e0e0;
+        }
+        
+        .dark-mode .comments-section textarea:focus {
+            border-color: #9932cc;
+        }
     </style>
 </head>
 <body>
@@ -323,6 +400,11 @@
                                         <span class="star" onclick="setRating('festival', 5)">☆</span>
                                     </div>
                                 </div>
+                                <div class="comments-section" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e0e0e0;">
+                                    <h4 style="font-size: 1rem; margin-bottom: 0.5rem; color: #333;">Comentários:</h4>
+                                    <textarea placeholder="Deixe seu comentário..." style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px; resize: vertical; min-height: 60px; font-size: 0.9rem;"></textarea>
+                                    <button style="background: #800080; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; margin-top: 0.5rem; cursor: pointer; font-size: 0.9rem;" onclick="addComment('festival', this)">Comentar</button>
+                                </div>
                                 <button class="button" onclick="window.location.href='/festival-parintins.html'">Vivenciar</button>
                             </div>
                         </div>
@@ -347,6 +429,11 @@
                                         <span class="star" onclick="setRating('lendas', 4)">☆</span>
                                         <span class="star" onclick="setRating('lendas', 5)">☆</span>
                                     </div>
+                                </div>
+                                <div class="comments-section" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e0e0e0;">
+                                    <h4 style="font-size: 1rem; margin-bottom: 0.5rem; color: #333;">Comentários:</h4>
+                                    <textarea placeholder="Deixe seu comentário..." style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px; resize: vertical; min-height: 60px; font-size: 0.9rem;"></textarea>
+                                    <button style="background: #800080; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; margin-top: 0.5rem; cursor: pointer; font-size: 0.9rem;" onclick="addComment('lendas', this)">Comentar</button>
                                 </div>
                                 <button class="button" onclick="window.location.href='/lendas-amazonicas.html'">Vivenciar</button>
                             </div>
@@ -373,6 +460,11 @@
                                         <span class="star" onclick="setRating('artesanato', 5)">☆</span>
                                     </div>
                                 </div>
+                                <div class="comments-section" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e0e0e0;">
+                                    <h4 style="font-size: 1rem; margin-bottom: 0.5rem; color: #333;">Comentários:</h4>
+                                    <textarea placeholder="Deixe seu comentário..." style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px; resize: vertical; min-height: 60px; font-size: 0.9rem;"></textarea>
+                                    <button style="background: #800080; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; margin-top: 0.5rem; cursor: pointer; font-size: 0.9rem;" onclick="addComment('artesanato', this)">Comentar</button>
+                                </div>
                                 <button class="button" onclick="window.location.href='/artesanato-indigena.html'">Vivenciar</button>
                             </div>
                         </div>
@@ -397,6 +489,11 @@
                                         <span class="star" onclick="setRating('ciranda', 4)">☆</span>
                                         <span class="star" onclick="setRating('ciranda', 5)">☆</span>
                                     </div>
+                                </div>
+                                <div class="comments-section" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e0e0e0;">
+                                    <h4 style="font-size: 1rem; margin-bottom: 0.5rem; color: #333;">Comentários:</h4>
+                                    <textarea placeholder="Deixe seu comentário..." style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px; resize: vertical; min-height: 60px; font-size: 0.9rem;"></textarea>
+                                    <button style="background: #800080; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; margin-top: 0.5rem; cursor: pointer; font-size: 0.9rem;" onclick="addComment('ciranda', this)">Comentar</button>
                                 </div>
                                 <button class="button" onclick="window.location.href='/ciranda-amazonica.html'">Vivenciar</button>
                             </div>
@@ -423,6 +520,11 @@
                                         <span class="star" onclick="setRating('carimbo', 5)">☆</span>
                                     </div>
                                 </div>
+                                <div class="comments-section" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e0e0e0;">
+                                    <h4 style="font-size: 1rem; margin-bottom: 0.5rem; color: #333;">Comentários:</h4>
+                                    <textarea placeholder="Deixe seu comentário..." style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px; resize: vertical; min-height: 60px; font-size: 0.9rem;"></textarea>
+                                    <button style="background: #800080; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; margin-top: 0.5rem; cursor: pointer; font-size: 0.9rem;" onclick="addComment('carimbo', this)">Comentar</button>
+                                </div>
                                 <button class="button" onclick="window.location.href='/carimbo.html'">Vivenciar</button>
                             </div>
                         </div>
@@ -447,6 +549,11 @@
                                         <span class="star" onclick="setRating('rituais', 4)">☆</span>
                                         <span class="star" onclick="setRating('rituais', 5)">☆</span>
                                     </div>
+                                </div>
+                                <div class="comments-section" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e0e0e0;">
+                                    <h4 style="font-size: 1rem; margin-bottom: 0.5rem; color: #333;">Comentários:</h4>
+                                    <textarea placeholder="Deixe seu comentário..." style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px; resize: vertical; min-height: 60px; font-size: 0.9rem;"></textarea>
+                                    <button style="background: #800080; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; margin-top: 0.5rem; cursor: pointer; font-size: 0.9rem;" onclick="addComment('rituais', this)">Comentar</button>
                                 </div>
                                 <button class="button" onclick="window.location.href='/rituais-xamanicos.html'">Vivenciar</button>
                             </div>
@@ -508,6 +615,7 @@
     </script>
     <script src="/hamburger-nav.js"></script>
     <script src="/rating-system.js"></script>
+    <script src="/comments-system.js"></script>
     <script src="/theme-manager.js"></script>
     <script>
         function updateThemeIcon() {

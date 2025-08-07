@@ -1,0 +1,99 @@
+.comments-section {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border: 1px solid #e9ecef;
+}
+
+.comments-section h4 {
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+    color: #495057;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+.comments-section textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #dee2e6;
+    border-radius: 8px;
+    resize: vertical;
+    min-height: 80px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    transition: border-color 0.3s;
+    background: white;
+}
+
+.comments-section textarea:focus {
+    outline: none;
+    border-color: #800080;
+}
+
+.comments-btn {
+    background: linear-gradient(135deg, #800080, #9932cc);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    margin-top: 0.8rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s;
+    box-shadow: 0 2px 4px rgba(128,0,128,0.2);
+}
+
+.comments-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(128,0,128,0.3);
+}
+
+.comments-btn.gastronomia {
+    background: linear-gradient(135deg, #ff8c00, #ffa500);
+    box-shadow: 0 2px 4px rgba(255,140,0,0.2);
+}
+
+.comments-btn.gastronomia:hover {
+    box-shadow: 0 4px 8px rgba(255,140,0,0.3);
+}
+
+.comments-btn.natureza {
+    background: linear-gradient(135deg, #228b22, #32cd32);
+    box-shadow: 0 2px 4px rgba(34,139,34,0.2);
+}
+
+.comments-btn.natureza:hover {
+    box-shadow: 0 4px 8px rgba(34,139,34,0.3);
+}
+
+.comments-btn.monumentos {
+    background: linear-gradient(135deg, #8b4513, #a0522d);
+    box-shadow: 0 2px 4px rgba(139,69,19,0.2);
+}
+
+.comments-btn.monumentos:hover {
+    box-shadow: 0 4px 8px rgba(139,69,19,0.3);
+}
+
+.dark-mode .comments-section {
+    background: #21262d;
+    border-color: #30363d;
+}
+
+.dark-mode .comments-section h4 {
+    color: #f0f6fc;
+}
+
+.dark-mode .comments-section textarea {
+    background: #161b22;
+    border-color: #30363d;
+    color: #e0e0e0;
+}
+
+.dark-mode .comments-section textarea:focus {
+    border-color: #9932cc;
+}

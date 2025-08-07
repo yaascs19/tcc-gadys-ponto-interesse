@@ -6,6 +6,7 @@
     <title>GADYS - Gastronomia do Amazonas</title>
     <link rel="stylesheet" href="/hamburger-nav.css">
     <link rel="stylesheet" href="/rating-styles.css">
+    <link rel="stylesheet" href="/comments-styles.css">
     <style>
         * {
             margin: 0;
@@ -42,6 +43,9 @@
         
         .logo {
             height: 40px;
+            background: lightblue;
+            border-radius: 50%;
+            padding: 8px;
         }
         
         .nav-links {
@@ -323,6 +327,11 @@
                                         <span class="star" onclick="setRating('acai', 5)">☆</span>
                                     </div>
                                 </div>
+                                <div class="comments-section" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e0e0e0;">
+                                    <h4 style="font-size: 1rem; margin-bottom: 0.5rem; color: #333;">Comentários:</h4>
+                                    <textarea placeholder="Deixe seu comentário..." style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px; resize: vertical; min-height: 60px; font-size: 0.9rem;"></textarea>
+                                    <button style="background: #ff8c00; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; margin-top: 0.5rem; cursor: pointer; font-size: 0.9rem;" onclick="addComment('acai', this)">Comentar</button>
+                                </div>
                                 <button class="button" onclick="window.location.href='/acai.html'">Experimentar</button>
                             </div>
                         </div>
@@ -347,6 +356,11 @@
                                         <span class="star" onclick="setRating('tucuma', 4)">☆</span>
                                         <span class="star" onclick="setRating('tucuma', 5)">☆</span>
                                     </div>
+                                </div>
+                                <div class="comments-section" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e0e0e0;">
+                                    <h4 style="font-size: 1rem; margin-bottom: 0.5rem; color: #333;">Comentários:</h4>
+                                    <textarea placeholder="Deixe seu comentário..." style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px; resize: vertical; min-height: 60px; font-size: 0.9rem;"></textarea>
+                                    <button style="background: #ff8c00; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; margin-top: 0.5rem; cursor: pointer; font-size: 0.9rem;" onclick="addComment('tucuma', this)">Comentar</button>
                                 </div>
                                 <button class="button" onclick="window.location.href='/tucuma.html'">Experimentar</button>
                             </div>
@@ -373,6 +387,11 @@
                                         <span class="star" onclick="setRating('pirarucu', 5)">☆</span>
                                     </div>
                                 </div>
+                                <div class="comments-section" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e0e0e0;">
+                                    <h4 style="font-size: 1rem; margin-bottom: 0.5rem; color: #333;">Comentários:</h4>
+                                    <textarea placeholder="Deixe seu comentário..." style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px; resize: vertical; min-height: 60px; font-size: 0.9rem;"></textarea>
+                                    <button style="background: #ff8c00; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; margin-top: 0.5rem; cursor: pointer; font-size: 0.9rem;" onclick="addComment('pirarucu', this)">Comentar</button>
+                                </div>
                                 <button class="button" onclick="window.location.href='/pirarucu.html'">Experimentar</button>
                             </div>
                         </div>
@@ -397,6 +416,11 @@
                                         <span class="star" onclick="setRating('cupuacu', 4)">☆</span>
                                         <span class="star" onclick="setRating('cupuacu', 5)">☆</span>
                                     </div>
+                                </div>
+                                <div class="comments-section" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e0e0e0;">
+                                    <h4 style="font-size: 1rem; margin-bottom: 0.5rem; color: #333;">Comentários:</h4>
+                                    <textarea placeholder="Deixe seu comentário..." style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px; resize: vertical; min-height: 60px; font-size: 0.9rem;"></textarea>
+                                    <button style="background: #ff8c00; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; margin-top: 0.5rem; cursor: pointer; font-size: 0.9rem;" onclick="addComment('cupuacu', this)">Comentar</button>
                                 </div>
                                 <button class="button" onclick="window.location.href='/cupuacu.html'">Experimentar</button>
                             </div>
@@ -423,6 +447,11 @@
                                         <span class="star" onclick="setRating('tacaca', 5)">☆</span>
                                     </div>
                                 </div>
+                                <div class="comments-section" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e0e0e0;">
+                                    <h4 style="font-size: 1rem; margin-bottom: 0.5rem; color: #333;">Comentários:</h4>
+                                    <textarea placeholder="Deixe seu comentário..." style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px; resize: vertical; min-height: 60px; font-size: 0.9rem;"></textarea>
+                                    <button style="background: #ff8c00; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; margin-top: 0.5rem; cursor: pointer; font-size: 0.9rem;" onclick="addComment('tacaca', this)">Comentar</button>
+                                </div>
                                 <button class="button" onclick="window.location.href='/tacaca.html'">Experimentar</button>
                             </div>
                         </div>
@@ -447,6 +476,11 @@
                                         <span class="star" onclick="setRating('farinha', 4)">☆</span>
                                         <span class="star" onclick="setRating('farinha', 5)">☆</span>
                                     </div>
+                                </div>
+                                <div class="comments-section" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e0e0e0;">
+                                    <h4 style="font-size: 1rem; margin-bottom: 0.5rem; color: #333;">Comentários:</h4>
+                                    <textarea placeholder="Deixe seu comentário..." style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px; resize: vertical; min-height: 60px; font-size: 0.9rem;"></textarea>
+                                    <button style="background: #ff8c00; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; margin-top: 0.5rem; cursor: pointer; font-size: 0.9rem;" onclick="addComment('farinha', this)">Comentar</button>
                                 </div>
                                 <button class="button" onclick="window.location.href='/farinha-mandioca.html'">Experimentar</button>
                             </div>
@@ -508,6 +542,7 @@
     </script>
     <script src="/hamburger-nav.js"></script>
     <script src="/rating-system.js"></script>
+    <script src="/comments-system.js"></script>
     <script src="/theme-manager.js"></script>
     <script>
         function updateThemeIcon() {
