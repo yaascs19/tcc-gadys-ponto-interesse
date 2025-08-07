@@ -20,8 +20,28 @@ function Login({ onLogin }) {
       }
     } else {
       if (email && password) {
-        const userName = name || email.split('@')[0]
-        onLogin(userType, userName)
+        // Validação específica para administrador
+        if (userType === 'adm') {
+          // Verifica se é a Yasmin (administradora principal)
+          if (email === 'yasmincunegundes25@gmail.com' && password === 'Cun*1925') {
+            onLogin(userType, 'Yasmin')
+          } else {
+            // Verifica se é um administrador cadastrado no sistema
+            const userAccess = JSON.parse(localStorage.getItem('userAccess')) || []
+            const adminUser = userAccess.find(user => user.email === email && user.userType === 'adm')
+            
+            if (adminUser) {
+              onLogin(userType, adminUser.userName)
+            } else {
+              alert('Credenciais de administrador inválidas!')
+              return
+            }
+          }
+        } else {
+          // Usuários comuns podem entrar com qualquer credencial
+          const userName = name || email.split('@')[0]
+          onLogin(userType, userName)
+        }
       }
     }
   }
@@ -29,7 +49,7 @@ function Login({ onLogin }) {
   return (
     <div className="login-container">
       <div className="login-form">
-        <img src="/gadys-logo.svg" alt="GADYS" className="login-logo" />
+        <img src="/logo.png" alt="GADYS" className="login-logo" />
         <h2>{isRegister ? 'Cadastrar' : 'Bem-vindo'}</h2>
         <form onSubmit={handleSubmit}>
           <input

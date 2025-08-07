@@ -54,6 +54,18 @@ function AdminPanel() {
     const userAccessStored = localStorage.getItem('userAccess')
     if (userAccessStored) {
       setUserAccess(JSON.parse(userAccessStored))
+    } else {
+      // Cadastra automaticamente a Yasmin como administradora
+      const initialAdmin = [{
+        userName: 'Yasmin',
+        email: 'yasmincunegundes25@gmail.com',
+        userType: 'adm',
+        lastAccess: 'Nunca acessou',
+        accessCount: 0,
+        ip: 'localhost'
+      }]
+      setUserAccess(initialAdmin)
+      localStorage.setItem('userAccess', JSON.stringify(initialAdmin))
     }
     
     // Carrega e processa rankings dos lugares

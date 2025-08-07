@@ -125,7 +125,7 @@ function App() {
       <div className={`app ${darkMode ? 'dark-mode' : ''}`}>
         <header className="header">
           <nav className="nav">
-            <img src="/gadys-logo.svg" alt="GADYS" className="logo" style={{height: '40px'}} />
+            <img src="/logo.png" alt="GADYS" className="logo" style={{height: '40px'}} />
             <div style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
               <button 
                 onClick={(e) => {e.preventDefault(); toggleDarkMode()}} 
@@ -157,7 +157,7 @@ function App() {
     <div className={`app ${darkMode ? 'dark-mode' : ''}`}>
       <header className="header">
         <nav className="nav">
-          <img src="/gadys-logo.svg" alt="GADYS" className="logo" style={{height: '40px'}} />
+          <img src="/logo.png" alt="GADYS" className="logo" style={{height: '40px'}} />
           <div style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
             <button 
               onClick={(e) => {e.preventDefault(); toggleDarkMode()}} 
