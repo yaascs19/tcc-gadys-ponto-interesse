@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GADYS - Natureza do Amazonas</title>
+    <link rel="stylesheet" href="/hamburger-nav.css">
+    <link rel="stylesheet" href="/rating-styles.css">
     <style>
         * {
             margin: 0;
@@ -238,6 +240,12 @@
         <header class="header">
             <nav class="nav">
                 <img src="/gadys-logo.svg" alt="GADYS" class="logo" />
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="nav-overlay"></div>
                 <ul class="nav-links">
                     <li><a onclick="localStorage.setItem('isLoggedIn', 'true'); window.location.href='/'" href="/">Início</a></li>
                     <li class="dropdown">
@@ -297,6 +305,21 @@
                                 <h3 class="card-title">Floresta Amazônica</h3>
                                 <p class="cidade">Amazonas - AM</p>
                                 <p class="descricao">A maior floresta tropical do mundo com biodiversidade única</p>
+                                <div class="rating-section">
+                                    <div class="rating-display">
+                                        <span class="stars" id="stars-floresta">☆☆☆☆☆</span>
+                                        <span class="rating-number" id="rating-floresta">0.0</span>
+                                        <span class="rating-count" id="count-floresta">(0)</span>
+                                    </div>
+                                    <div class="user-rating">
+                                        <span>Avaliar:</span>
+                                        <span class="star" onclick="setRating('floresta', 1)">☆</span>
+                                        <span class="star" onclick="setRating('floresta', 2)">☆</span>
+                                        <span class="star" onclick="setRating('floresta', 3)">☆</span>
+                                        <span class="star" onclick="setRating('floresta', 4)">☆</span>
+                                        <span class="star" onclick="setRating('floresta', 5)">☆</span>
+                                    </div>
+                                </div>
                                 <button class="button" onclick="window.location.href='/floresta-amazonica.html'">Explorar</button>
                             </div>
                         </div>
@@ -307,6 +330,21 @@
                                 <h3 class="card-title">Encontro das Águas</h3>
                                 <p class="cidade">Manaus - AM</p>
                                 <p class="descricao">Fenômeno natural onde os rios Negro e Solimões se encontram</p>
+                                <div class="rating-section">
+                                    <div class="rating-display">
+                                        <span class="stars" id="stars-encontro">☆☆☆☆☆</span>
+                                        <span class="rating-number" id="rating-encontro">0.0</span>
+                                        <span class="rating-count" id="count-encontro">(0)</span>
+                                    </div>
+                                    <div class="user-rating">
+                                        <span>Avaliar:</span>
+                                        <span class="star" onclick="setRating('encontro', 1)">☆</span>
+                                        <span class="star" onclick="setRating('encontro', 2)">☆</span>
+                                        <span class="star" onclick="setRating('encontro', 3)">☆</span>
+                                        <span class="star" onclick="setRating('encontro', 4)">☆</span>
+                                        <span class="star" onclick="setRating('encontro', 5)">☆</span>
+                                    </div>
+                                </div>
                                 <button class="button" onclick="window.location.href='/encontro-aguas.html'">Conhecer</button>
                             </div>
                         </div>
@@ -317,6 +355,21 @@
                                 <h3 class="card-title">Parque Nacional de Anavilhanas</h3>
                                 <p class="cidade">Novo Airão - AM</p>
                                 <p class="descricao">Maior arquipélago fluvial do mundo com rica biodiversidade</p>
+                                <div class="rating-section">
+                                    <div class="rating-display">
+                                        <span class="stars" id="stars-anavilhanas">☆☆☆☆☆</span>
+                                        <span class="rating-number" id="rating-anavilhanas">0.0</span>
+                                        <span class="rating-count" id="count-anavilhanas">(0)</span>
+                                    </div>
+                                    <div class="user-rating">
+                                        <span>Avaliar:</span>
+                                        <span class="star" onclick="setRating('anavilhanas', 1)">☆</span>
+                                        <span class="star" onclick="setRating('anavilhanas', 2)">☆</span>
+                                        <span class="star" onclick="setRating('anavilhanas', 3)">☆</span>
+                                        <span class="star" onclick="setRating('anavilhanas', 4)">☆</span>
+                                        <span class="star" onclick="setRating('anavilhanas', 5)">☆</span>
+                                    </div>
+                                </div>
                                 <button class="button" onclick="window.location.href='/parque-anavilhanas.html'">Explorar</button>
                             </div>
                         </div>
@@ -327,6 +380,21 @@
                                 <h3 class="card-title">Reserva Mamirauá</h3>
                                 <p class="cidade">Tefé - AM</p>
                                 <p class="descricao">Maior reserva de várzea do mundo com fauna única</p>
+                                <div class="rating-section">
+                                    <div class="rating-display">
+                                        <span class="stars" id="stars-mamiraui">☆☆☆☆☆</span>
+                                        <span class="rating-number" id="rating-mamiraui">0.0</span>
+                                        <span class="rating-count" id="count-mamiraui">(0)</span>
+                                    </div>
+                                    <div class="user-rating">
+                                        <span>Avaliar:</span>
+                                        <span class="star" onclick="setRating('mamiraui', 1)">☆</span>
+                                        <span class="star" onclick="setRating('mamiraui', 2)">☆</span>
+                                        <span class="star" onclick="setRating('mamiraui', 3)">☆</span>
+                                        <span class="star" onclick="setRating('mamiraui', 4)">☆</span>
+                                        <span class="star" onclick="setRating('mamiraui', 5)">☆</span>
+                                    </div>
+                                </div>
                                 <button class="button" onclick="window.location.href='/reserva-mamiraui.html'">Explorar</button>
                             </div>
                         </div>
@@ -337,6 +405,21 @@
                                 <h3 class="card-title">Parque Nacional do Jaú</h3>
                                 <p class="cidade">Novo Airão - AM</p>
                                 <p class="descricao">Uma das maiores unidades de conservação da Amazônia</p>
+                                <div class="rating-section">
+                                    <div class="rating-display">
+                                        <span class="stars" id="stars-jau">☆☆☆☆☆</span>
+                                        <span class="rating-number" id="rating-jau">0.0</span>
+                                        <span class="rating-count" id="count-jau">(0)</span>
+                                    </div>
+                                    <div class="user-rating">
+                                        <span>Avaliar:</span>
+                                        <span class="star" onclick="setRating('jau', 1)">☆</span>
+                                        <span class="star" onclick="setRating('jau', 2)">☆</span>
+                                        <span class="star" onclick="setRating('jau', 3)">☆</span>
+                                        <span class="star" onclick="setRating('jau', 4)">☆</span>
+                                        <span class="star" onclick="setRating('jau', 5)">☆</span>
+                                    </div>
+                                </div>
                                 <button class="button" onclick="window.location.href='/parque-jau.html'">Explorar</button>
                             </div>
                         </div>
@@ -347,6 +430,21 @@
                                 <h3 class="card-title">Rio Amazonas</h3>
                                 <p class="cidade">Amazonas - AM</p>
                                 <p class="descricao">O maior rio do mundo em volume de água e extensão</p>
+                                <div class="rating-section">
+                                    <div class="rating-display">
+                                        <span class="stars" id="stars-rioamazonas">☆☆☆☆☆</span>
+                                        <span class="rating-number" id="rating-rioamazonas">0.0</span>
+                                        <span class="rating-count" id="count-rioamazonas">(0)</span>
+                                    </div>
+                                    <div class="user-rating">
+                                        <span>Avaliar:</span>
+                                        <span class="star" onclick="setRating('rioamazonas', 1)">☆</span>
+                                        <span class="star" onclick="setRating('rioamazonas', 2)">☆</span>
+                                        <span class="star" onclick="setRating('rioamazonas', 3)">☆</span>
+                                        <span class="star" onclick="setRating('rioamazonas', 4)">☆</span>
+                                        <span class="star" onclick="setRating('rioamazonas', 5)">☆</span>
+                                    </div>
+                                </div>
                                 <button class="button" onclick="window.location.href='/rio-amazonas.html'">Navegar</button>
                             </div>
                         </div>
@@ -405,6 +503,8 @@
         
         document.addEventListener('DOMContentLoaded', carregarNaturezaAdicionada);
     </script>
+    <script src="/hamburger-nav.js"></script>
+    <script src="/rating-system.js"></script>
     <script src="/theme-manager.js"></script>
     <script>
         function updateThemeIcon() {

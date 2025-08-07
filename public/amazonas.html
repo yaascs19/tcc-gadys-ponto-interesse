@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GADYS - Amazonas</title>
     <link rel="stylesheet" href="/hamburger-nav.css">
+    <link rel="stylesheet" href="/rating-styles.css">
     <style>
         * {
             margin: 0;
@@ -189,6 +190,52 @@
         
         .button:hover {
             background: #006400;
+        }
+        
+        .rating-section {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .rating-display {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stars {
+            color: #f39c12;
+            font-size: 1.2rem;
+        }
+        
+        .rating-number {
+            font-weight: bold;
+            color: #f39c12;
+        }
+        
+        .rating-count {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        .user-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .star {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #ddd;
+            transition: color 0.3s;
+        }
+        
+        .star:hover, .star.active {
+            color: #f39c12;
         }
         
         .footer {
@@ -388,6 +435,7 @@
         setInterval(nextSlide, 4000);
     </script>
     <script src="/hamburger-nav.js"></script>
+    <script src="/rating-system.js"></script>
     <script src="/theme-manager.js"></script>
     <script>
         // Atualiza o ícone do tema
@@ -404,6 +452,95 @@
         };
         
         document.addEventListener('DOMContentLoaded', updateThemeIcon);
+        
+        // Sistema de avaliações
+        function setRating(localId, rating) {
+            const userName = localStorage.getItem('userName');
+            if (!userName) {
+                alert('Você precisa estar logado para avaliar!');
+                return;
+            }
+            
+            let avaliacoes = JSON.parse(localStorage.getItem('avaliacoes')) || {};
+            let userRatings = JSON.parse(localStorage.getItem('userRatings')) || {};
+            const userKey = `${userName}_${localId}`;
+            
+            if (!avaliacoes[localId]) {
+                avaliacoes[localId] = [];
+            }
+            
+            if (!userRatings[userKey]) {
+                avaliacoes[localId].push(rating);
+            } else {
+                const oldRating = userRatings[userKey];
+                const index = avaliacoes[localId].indexOf(oldRating);
+                if (index > -1) {
+                    avaliacoes[localId][index] = rating;
+                }
+            }
+            
+            userRatings[userKey] = rating;
+            
+            localStorage.setItem('avaliacoes', JSON.stringify(avaliacoes));
+            localStorage.setItem('userRatings', JSON.stringify(userRatings));
+            
+            updateRatingDisplay(localId);
+            updateUserStars(localId, rating);
+        }
+        
+        function updateRatingDisplay(localId) {
+            const avaliacoes = JSON.parse(localStorage.getItem('avaliacoes')) || {};
+            const localAvaliacoes = avaliacoes[localId] || [];
+            
+            if (localAvaliacoes.length > 0) {
+                const media = localAvaliacoes.reduce((sum, rating) => sum + rating, 0) / localAvaliacoes.length;
+                document.getElementById(`rating-${localId}`).textContent = media.toFixed(1);
+                document.getElementById(`stars-${localId}`).textContent = getStarsDisplay(media);
+                document.getElementById(`count-${localId}`).textContent = `(${localAvaliacoes.length})`;
+            }
+        }
+        
+        function updateUserStars(localId, rating) {
+            const stars = document.querySelectorAll(`[onclick*="'${localId}'"]`);
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add('active');
+                    star.textContent = '★';
+                } else {
+                    star.classList.remove('active');
+                    star.textContent = '☆';
+                }
+            });
+        }
+        
+        function getStarsDisplay(rating) {
+            const fullStars = Math.floor(rating);
+            let stars = '';
+            for (let i = 0; i < fullStars; i++) {
+                stars += '★';
+            }
+            while (stars.length < 5) {
+                stars += '☆';
+            }
+            return stars;
+        }
+        
+        function loadAllRatings() {
+            const locais = ['teatro', 'encontro', 'floresta', 'mercado', 'palacio', 'forte'];
+            locais.forEach(localId => {
+                updateRatingDisplay(localId);
+                
+                const userName = localStorage.getItem('userName');
+                const userRatings = JSON.parse(localStorage.getItem('userRatings')) || {};
+                const userKey = `${userName}_${localId}`;
+                
+                if (userRatings[userKey]) {
+                    updateUserStars(localId, userRatings[userKey]);
+                }
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', loadAllRatings);
     </script>
 </body>
 </html>

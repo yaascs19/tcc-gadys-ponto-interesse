@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GADYS - Cultura do Amazonas</title>
+    <link rel="stylesheet" href="/hamburger-nav.css">
+    <link rel="stylesheet" href="/rating-styles.css">
     <style>
         * {
             margin: 0;
@@ -238,6 +240,12 @@
         <header class="header">
             <nav class="nav">
                 <img src="/gadys-logo.svg" alt="GADYS" class="logo" />
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="nav-overlay"></div>
                 <ul class="nav-links">
                     <li><a onclick="localStorage.setItem('isLoggedIn', 'true'); window.location.href='/'" href="/">Início</a></li>
                     <li class="dropdown">
@@ -297,6 +305,21 @@
                                 <h3 class="card-title">Festival de Parintins</h3>
                                 <p class="cidade">Parintins - AM</p>
                                 <p class="descricao">Maior festival folclórico do Brasil com bois-bumbás</p>
+                                <div class="rating-section">
+                                    <div class="rating-display">
+                                        <span class="stars" id="stars-festival">☆☆☆☆☆</span>
+                                        <span class="rating-number" id="rating-festival">0.0</span>
+                                        <span class="rating-count" id="count-festival">(0)</span>
+                                    </div>
+                                    <div class="user-rating">
+                                        <span>Avaliar:</span>
+                                        <span class="star" onclick="setRating('festival', 1)">☆</span>
+                                        <span class="star" onclick="setRating('festival', 2)">☆</span>
+                                        <span class="star" onclick="setRating('festival', 3)">☆</span>
+                                        <span class="star" onclick="setRating('festival', 4)">☆</span>
+                                        <span class="star" onclick="setRating('festival', 5)">☆</span>
+                                    </div>
+                                </div>
                                 <button class="button" onclick="window.location.href='/festival-parintins.html'">Vivenciar</button>
                             </div>
                         </div>
@@ -307,6 +330,21 @@
                                 <h3 class="card-title">Lendas Amazônicas</h3>
                                 <p class="cidade">Região Amazônica - AM</p>
                                 <p class="descricao">Curupira, Boto-cor-de-rosa, Iara e outras lendas da floresta</p>
+                                <div class="rating-section">
+                                    <div class="rating-display">
+                                        <span class="stars" id="stars-lendas">☆☆☆☆☆</span>
+                                        <span class="rating-number" id="rating-lendas">0.0</span>
+                                        <span class="rating-count" id="count-lendas">(0)</span>
+                                    </div>
+                                    <div class="user-rating">
+                                        <span>Avaliar:</span>
+                                        <span class="star" onclick="setRating('lendas', 1)">☆</span>
+                                        <span class="star" onclick="setRating('lendas', 2)">☆</span>
+                                        <span class="star" onclick="setRating('lendas', 3)">☆</span>
+                                        <span class="star" onclick="setRating('lendas', 4)">☆</span>
+                                        <span class="star" onclick="setRating('lendas', 5)">☆</span>
+                                    </div>
+                                </div>
                                 <button class="button" onclick="window.location.href='/lendas-amazonicas.html'">Vivenciar</button>
                             </div>
                         </div>
@@ -317,6 +355,21 @@
                                 <h3 class="card-title">Artesanato Indígena</h3>
                                 <p class="cidade">Comunidades Indígenas - AM</p>
                                 <p class="descricao">Cestas, cerâmicas e objetos tradicionais dos povos originários</p>
+                                <div class="rating-section">
+                                    <div class="rating-display">
+                                        <span class="stars" id="stars-artesanato">☆☆☆☆☆</span>
+                                        <span class="rating-number" id="rating-artesanato">0.0</span>
+                                        <span class="rating-count" id="count-artesanato">(0)</span>
+                                    </div>
+                                    <div class="user-rating">
+                                        <span>Avaliar:</span>
+                                        <span class="star" onclick="setRating('artesanato', 1)">☆</span>
+                                        <span class="star" onclick="setRating('artesanato', 2)">☆</span>
+                                        <span class="star" onclick="setRating('artesanato', 3)">☆</span>
+                                        <span class="star" onclick="setRating('artesanato', 4)">☆</span>
+                                        <span class="star" onclick="setRating('artesanato', 5)">☆</span>
+                                    </div>
+                                </div>
                                 <button class="button" onclick="window.location.href='/artesanato-indigena.html'">Vivenciar</button>
                             </div>
                         </div>
@@ -327,6 +380,21 @@
                                 <h3 class="card-title">Ciranda Amazônica</h3>
                                 <p class="cidade">Manaus - AM</p>
                                 <p class="descricao">Dança tradicional em roda com cantos e instrumentos regionais</p>
+                                <div class="rating-section">
+                                    <div class="rating-display">
+                                        <span class="stars" id="stars-ciranda">☆☆☆☆☆</span>
+                                        <span class="rating-number" id="rating-ciranda">0.0</span>
+                                        <span class="rating-count" id="count-ciranda">(0)</span>
+                                    </div>
+                                    <div class="user-rating">
+                                        <span>Avaliar:</span>
+                                        <span class="star" onclick="setRating('ciranda', 1)">☆</span>
+                                        <span class="star" onclick="setRating('ciranda', 2)">☆</span>
+                                        <span class="star" onclick="setRating('ciranda', 3)">☆</span>
+                                        <span class="star" onclick="setRating('ciranda', 4)">☆</span>
+                                        <span class="star" onclick="setRating('ciranda', 5)">☆</span>
+                                    </div>
+                                </div>
                                 <button class="button" onclick="window.location.href='/ciranda-amazonica.html'">Vivenciar</button>
                             </div>
                         </div>
@@ -337,6 +405,21 @@
                                 <h3 class="card-title">Carimbó</h3>
                                 <p class="cidade">Região Norte - AM</p>
                                 <p class="descricao">Ritmo e dança típica com tambores e movimentos sensuais</p>
+                                <div class="rating-section">
+                                    <div class="rating-display">
+                                        <span class="stars" id="stars-carimbo">☆☆☆☆☆</span>
+                                        <span class="rating-number" id="rating-carimbo">0.0</span>
+                                        <span class="rating-count" id="count-carimbo">(0)</span>
+                                    </div>
+                                    <div class="user-rating">
+                                        <span>Avaliar:</span>
+                                        <span class="star" onclick="setRating('carimbo', 1)">☆</span>
+                                        <span class="star" onclick="setRating('carimbo', 2)">☆</span>
+                                        <span class="star" onclick="setRating('carimbo', 3)">☆</span>
+                                        <span class="star" onclick="setRating('carimbo', 4)">☆</span>
+                                        <span class="star" onclick="setRating('carimbo', 5)">☆</span>
+                                    </div>
+                                </div>
                                 <button class="button" onclick="window.location.href='/carimbo.html'">Vivenciar</button>
                             </div>
                         </div>
@@ -347,6 +430,21 @@
                                 <h3 class="card-title">Rituais Xamânicos</h3>
                                 <p class="cidade">Floresta Amazônica - AM</p>
                                 <p class="descricao">Cerimônias ancestrais com plantas sagradas e cura espiritual</p>
+                                <div class="rating-section">
+                                    <div class="rating-display">
+                                        <span class="stars" id="stars-rituais">☆☆☆☆☆</span>
+                                        <span class="rating-number" id="rating-rituais">0.0</span>
+                                        <span class="rating-count" id="count-rituais">(0)</span>
+                                    </div>
+                                    <div class="user-rating">
+                                        <span>Avaliar:</span>
+                                        <span class="star" onclick="setRating('rituais', 1)">☆</span>
+                                        <span class="star" onclick="setRating('rituais', 2)">☆</span>
+                                        <span class="star" onclick="setRating('rituais', 3)">☆</span>
+                                        <span class="star" onclick="setRating('rituais', 4)">☆</span>
+                                        <span class="star" onclick="setRating('rituais', 5)">☆</span>
+                                    </div>
+                                </div>
                                 <button class="button" onclick="window.location.href='/rituais-xamanicos.html'">Vivenciar</button>
                             </div>
                         </div>
@@ -405,6 +503,8 @@
         
         document.addEventListener('DOMContentLoaded', carregarCulturaAdicionada);
     </script>
+    <script src="/hamburger-nav.js"></script>
+    <script src="/rating-system.js"></script>
     <script src="/theme-manager.js"></script>
     <script>
         function updateThemeIcon() {

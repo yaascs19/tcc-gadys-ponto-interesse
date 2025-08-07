@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GADYS - Meu Perfil</title>
+    <link rel="stylesheet" href="/rating-styles.css">
     <style>
         * {
             margin: 0;
@@ -289,6 +290,7 @@
         </div>
     </main>
 
+    <script src="/rating-system.js"></script>
     <script src="/theme-manager.js"></script>
     <script>
         function carregarPerfil() {
@@ -352,6 +354,13 @@
                     <div class="favorite-info">
                         <h3 class="favorite-title">${local.nome}</h3>
                         <p class="favorite-location">📍 ${local.cidade} - ${local.estado}</p>
+                        <div class="rating-section">
+                            <div class="rating-display">
+                                <span class="stars" id="stars-${local.id}">☆☆☆☆☆</span>
+                                <span class="rating-number" id="rating-${local.id}">0.0</span>
+                                <span class="rating-count" id="count-${local.id}">(0)</span>
+                            </div>
+                        </div>
                         <div class="favorite-actions">
                             <button class="btn btn-primary" onclick="window.location.href='/detalhes-local.html?id=${local.id}'">Ver Detalhes</button>
                             <button class="btn btn-danger" onclick="removerFavorito('${local.id}')">Remover</button>

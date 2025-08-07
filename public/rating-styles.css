@@ -1,0 +1,50 @@
+.rating-section {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e0e0e0;
+}
+
+.rating-display {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.stars {
+    color: #f39c12;
+    font-size: 1.2rem;
+}
+
+.rating-number {
+    font-weight: bold;
+    color: #f39c12;
+}
+
+.rating-count {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+}
+
+.user-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.star {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #ddd;
+    transition: color 0.3s;
+}
+
+.star:hover, .star.active {
+    color: #f39c12;
+}
+
+/* Modo Escuro */
+.dark-mode .rating-section {
+    border-top: 1px solid #30363d;
+}

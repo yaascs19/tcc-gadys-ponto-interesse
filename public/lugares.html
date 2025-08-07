@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GADYS - Lugares Mais Visitados</title>
     <link rel="stylesheet" href="/hamburger-nav.css">
+    <link rel="stylesheet" href="/rating-styles.css">
     <style>
         * {
             margin: 0;
@@ -289,6 +290,21 @@
                                 <h3 class="card-title">Cristo Redentor</h3>
                                 <p class="cidade">Rio de Janeiro - RJ</p>
                                 <p class="descricao">Uma das Sete Maravilhas do Mundo Moderno</p>
+                                <div class="rating-section">
+                                    <div class="rating-display">
+                                        <span class="stars" id="stars-cristo">☆☆☆☆☆</span>
+                                        <span class="rating-number" id="rating-cristo">0.0</span>
+                                        <span class="rating-count" id="count-cristo">(0)</span>
+                                    </div>
+                                    <div class="user-rating">
+                                        <span>Avaliar:</span>
+                                        <span class="star" onclick="setRating('cristo', 1)">☆</span>
+                                        <span class="star" onclick="setRating('cristo', 2)">☆</span>
+                                        <span class="star" onclick="setRating('cristo', 3)">☆</span>
+                                        <span class="star" onclick="setRating('cristo', 4)">☆</span>
+                                        <span class="star" onclick="setRating('cristo', 5)">☆</span>
+                                    </div>
+                                </div>
                                 <button class="button" onclick="window.location.href='/cristo-redentor.html'">Visitar</button>
                             </div>
                         </div>
@@ -299,6 +315,21 @@
                                 <h3 class="card-title">Pão de Açúcar</h3>
                                 <p class="cidade">Rio de Janeiro - RJ</p>
                                 <p class="descricao">Cartão postal do Rio de Janeiro</p>
+                                <div class="rating-section">
+                                    <div class="rating-display">
+                                        <span class="stars" id="stars-pao">☆☆☆☆☆</span>
+                                        <span class="rating-number" id="rating-pao">0.0</span>
+                                        <span class="rating-count" id="count-pao">(0)</span>
+                                    </div>
+                                    <div class="user-rating">
+                                        <span>Avaliar:</span>
+                                        <span class="star" onclick="setRating('pao', 1)">☆</span>
+                                        <span class="star" onclick="setRating('pao', 2)">☆</span>
+                                        <span class="star" onclick="setRating('pao', 3)">☆</span>
+                                        <span class="star" onclick="setRating('pao', 4)">☆</span>
+                                        <span class="star" onclick="setRating('pao', 5)">☆</span>
+                                    </div>
+                                </div>
                                 <button class="button" onclick="window.location.href='/pao-acucar.html'">Visitar</button>
                             </div>
                         </div>
@@ -309,6 +340,21 @@
                                 <h3 class="card-title">Cataratas do Iguaçu</h3>
                                 <p class="cidade">Foz do Iguaçu - PR</p>
                                 <p class="descricao">Uma das maiores quedas d'água do mundo</p>
+                                <div class="rating-section">
+                                    <div class="rating-display">
+                                        <span class="stars" id="stars-cataratas">☆☆☆☆☆</span>
+                                        <span class="rating-number" id="rating-cataratas">0.0</span>
+                                        <span class="rating-count" id="count-cataratas">(0)</span>
+                                    </div>
+                                    <div class="user-rating">
+                                        <span>Avaliar:</span>
+                                        <span class="star" onclick="setRating('cataratas', 1)">☆</span>
+                                        <span class="star" onclick="setRating('cataratas', 2)">☆</span>
+                                        <span class="star" onclick="setRating('cataratas', 3)">☆</span>
+                                        <span class="star" onclick="setRating('cataratas', 4)">☆</span>
+                                        <span class="star" onclick="setRating('cataratas', 5)">☆</span>
+                                    </div>
+                                </div>
                                 <button class="button" onclick="window.location.href='/cataratas-iguacu.html'">Visitar</button>
                             </div>
                         </div>
@@ -319,6 +365,21 @@
                                 <h3 class="card-title">Pelourinho</h3>
                                 <p class="cidade">Salvador - BA</p>
                                 <p class="descricao">Centro histórico de Salvador</p>
+                                <div class="rating-section">
+                                    <div class="rating-display">
+                                        <span class="stars" id="stars-pelourinho">☆☆☆☆☆</span>
+                                        <span class="rating-number" id="rating-pelourinho">0.0</span>
+                                        <span class="rating-count" id="count-pelourinho">(0)</span>
+                                    </div>
+                                    <div class="user-rating">
+                                        <span>Avaliar:</span>
+                                        <span class="star" onclick="setRating('pelourinho', 1)">☆</span>
+                                        <span class="star" onclick="setRating('pelourinho', 2)">☆</span>
+                                        <span class="star" onclick="setRating('pelourinho', 3)">☆</span>
+                                        <span class="star" onclick="setRating('pelourinho', 4)">☆</span>
+                                        <span class="star" onclick="setRating('pelourinho', 5)">☆</span>
+                                    </div>
+                                </div>
                                 <button class="button" onclick="window.location.href='/pelourinho.html'">Visitar</button>
                             </div>
                         </div>
@@ -329,6 +390,21 @@
                                 <h3 class="card-title">Fernando de Noronha</h3>
                                 <p class="cidade">Pernambuco - PE</p>
                                 <p class="descricao">Paraíso ecológico brasileiro</p>
+                                <div class="rating-section">
+                                    <div class="rating-display">
+                                        <span class="stars" id="stars-noronha">☆☆☆☆☆</span>
+                                        <span class="rating-number" id="rating-noronha">0.0</span>
+                                        <span class="rating-count" id="count-noronha">(0)</span>
+                                    </div>
+                                    <div class="user-rating">
+                                        <span>Avaliar:</span>
+                                        <span class="star" onclick="setRating('noronha', 1)">☆</span>
+                                        <span class="star" onclick="setRating('noronha', 2)">☆</span>
+                                        <span class="star" onclick="setRating('noronha', 3)">☆</span>
+                                        <span class="star" onclick="setRating('noronha', 4)">☆</span>
+                                        <span class="star" onclick="setRating('noronha', 5)">☆</span>
+                                    </div>
+                                </div>
                                 <button class="button" onclick="window.location.href='/fernando-noronha.html'">Visitar</button>
                             </div>
                         </div>
@@ -339,6 +415,21 @@
                                 <h3 class="card-title">Pantanal</h3>
                                 <p class="cidade">Mato Grosso - MT</p>
                                 <p class="descricao">Maior planície alagável do mundo</p>
+                                <div class="rating-section">
+                                    <div class="rating-display">
+                                        <span class="stars" id="stars-pantanal">☆☆☆☆☆</span>
+                                        <span class="rating-number" id="rating-pantanal">0.0</span>
+                                        <span class="rating-count" id="count-pantanal">(0)</span>
+                                    </div>
+                                    <div class="user-rating">
+                                        <span>Avaliar:</span>
+                                        <span class="star" onclick="setRating('pantanal', 1)">☆</span>
+                                        <span class="star" onclick="setRating('pantanal', 2)">☆</span>
+                                        <span class="star" onclick="setRating('pantanal', 3)">☆</span>
+                                        <span class="star" onclick="setRating('pantanal', 4)">☆</span>
+                                        <span class="star" onclick="setRating('pantanal', 5)">☆</span>
+                                    </div>
+                                </div>
                                 <button class="button" onclick="window.location.href='/pantanal.html'">Visitar</button>
                             </div>
                         </div>
@@ -473,5 +564,6 @@
         });
     </script>
     <script src="/hamburger-nav.js"></script>
+    <script src="/rating-system.js"></script>
 </body>
 </html>

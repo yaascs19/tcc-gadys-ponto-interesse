@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GADYS - Gastronomia do Amazonas</title>
+    <link rel="stylesheet" href="/hamburger-nav.css">
+    <link rel="stylesheet" href="/rating-styles.css">
     <style>
         * {
             margin: 0;
@@ -238,6 +240,12 @@
         <header class="header">
             <nav class="nav">
                 <img src="/gadys-logo.svg" alt="GADYS" class="logo" />
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="nav-overlay"></div>
                 <ul class="nav-links">
                     <li><a onclick="localStorage.setItem('isLoggedIn', 'true'); window.location.href='/'" href="/">Início</a></li>
                     <li class="dropdown">
@@ -297,6 +305,21 @@
                                 <h3 class="card-title">Açaí</h3>
                                 <p class="cidade">Amazonas - AM</p>
                                 <p class="descricao">Fruto amazônico rico em nutrientes e sabor único</p>
+                                <div class="rating-section">
+                                    <div class="rating-display">
+                                        <span class="stars" id="stars-acai">☆☆☆☆☆</span>
+                                        <span class="rating-number" id="rating-acai">0.0</span>
+                                        <span class="rating-count" id="count-acai">(0)</span>
+                                    </div>
+                                    <div class="user-rating">
+                                        <span>Avaliar:</span>
+                                        <span class="star" onclick="setRating('acai', 1)">☆</span>
+                                        <span class="star" onclick="setRating('acai', 2)">☆</span>
+                                        <span class="star" onclick="setRating('acai', 3)">☆</span>
+                                        <span class="star" onclick="setRating('acai', 4)">☆</span>
+                                        <span class="star" onclick="setRating('acai', 5)">☆</span>
+                                    </div>
+                                </div>
                                 <button class="button" onclick="window.location.href='/acai.html'">Experimentar</button>
                             </div>
                         </div>
@@ -307,6 +330,21 @@
                                 <h3 class="card-title">Tucumã</h3>
                                 <p class="cidade">Amazonas - AM</p>
                                 <p class="descricao">Fruto típico consumido com farinha de mandioca</p>
+                                <div class="rating-section">
+                                    <div class="rating-display">
+                                        <span class="stars" id="stars-tucuma">☆☆☆☆☆</span>
+                                        <span class="rating-number" id="rating-tucuma">0.0</span>
+                                        <span class="rating-count" id="count-tucuma">(0)</span>
+                                    </div>
+                                    <div class="user-rating">
+                                        <span>Avaliar:</span>
+                                        <span class="star" onclick="setRating('tucuma', 1)">☆</span>
+                                        <span class="star" onclick="setRating('tucuma', 2)">☆</span>
+                                        <span class="star" onclick="setRating('tucuma', 3)">☆</span>
+                                        <span class="star" onclick="setRating('tucuma', 4)">☆</span>
+                                        <span class="star" onclick="setRating('tucuma', 5)">☆</span>
+                                    </div>
+                                </div>
                                 <button class="button" onclick="window.location.href='/tucuma.html'">Experimentar</button>
                             </div>
                         </div>
@@ -317,6 +355,21 @@
                                 <h3 class="card-title">Pirarucu</h3>
                                 <p class="cidade">Amazonas - AM</p>
                                 <p class="descricao">Peixe gigante da Amazônia preparado de diversas formas</p>
+                                <div class="rating-section">
+                                    <div class="rating-display">
+                                        <span class="stars" id="stars-pirarucu">☆☆☆☆☆</span>
+                                        <span class="rating-number" id="rating-pirarucu">0.0</span>
+                                        <span class="rating-count" id="count-pirarucu">(0)</span>
+                                    </div>
+                                    <div class="user-rating">
+                                        <span>Avaliar:</span>
+                                        <span class="star" onclick="setRating('pirarucu', 1)">☆</span>
+                                        <span class="star" onclick="setRating('pirarucu', 2)">☆</span>
+                                        <span class="star" onclick="setRating('pirarucu', 3)">☆</span>
+                                        <span class="star" onclick="setRating('pirarucu', 4)">☆</span>
+                                        <span class="star" onclick="setRating('pirarucu', 5)">☆</span>
+                                    </div>
+                                </div>
                                 <button class="button" onclick="window.location.href='/pirarucu.html'">Experimentar</button>
                             </div>
                         </div>
@@ -327,6 +380,21 @@
                                 <h3 class="card-title">Cupuaçu</h3>
                                 <p class="cidade">Amazonas - AM</p>
                                 <p class="descricao">Fruto amazônico usado em doces e sucos refrescantes</p>
+                                <div class="rating-section">
+                                    <div class="rating-display">
+                                        <span class="stars" id="stars-cupuacu">☆☆☆☆☆</span>
+                                        <span class="rating-number" id="rating-cupuacu">0.0</span>
+                                        <span class="rating-count" id="count-cupuacu">(0)</span>
+                                    </div>
+                                    <div class="user-rating">
+                                        <span>Avaliar:</span>
+                                        <span class="star" onclick="setRating('cupuacu', 1)">☆</span>
+                                        <span class="star" onclick="setRating('cupuacu', 2)">☆</span>
+                                        <span class="star" onclick="setRating('cupuacu', 3)">☆</span>
+                                        <span class="star" onclick="setRating('cupuacu', 4)">☆</span>
+                                        <span class="star" onclick="setRating('cupuacu', 5)">☆</span>
+                                    </div>
+                                </div>
                                 <button class="button" onclick="window.location.href='/cupuacu.html'">Experimentar</button>
                             </div>
                         </div>
@@ -337,6 +405,21 @@
                                 <h3 class="card-title">Tacacá</h3>
                                 <p class="cidade">Amazonas - AM</p>
                                 <p class="descricao">Prato típico com tucumã, camarão seco e jambu</p>
+                                <div class="rating-section">
+                                    <div class="rating-display">
+                                        <span class="stars" id="stars-tacaca">☆☆☆☆☆</span>
+                                        <span class="rating-number" id="rating-tacaca">0.0</span>
+                                        <span class="rating-count" id="count-tacaca">(0)</span>
+                                    </div>
+                                    <div class="user-rating">
+                                        <span>Avaliar:</span>
+                                        <span class="star" onclick="setRating('tacaca', 1)">☆</span>
+                                        <span class="star" onclick="setRating('tacaca', 2)">☆</span>
+                                        <span class="star" onclick="setRating('tacaca', 3)">☆</span>
+                                        <span class="star" onclick="setRating('tacaca', 4)">☆</span>
+                                        <span class="star" onclick="setRating('tacaca', 5)">☆</span>
+                                    </div>
+                                </div>
                                 <button class="button" onclick="window.location.href='/tacaca.html'">Experimentar</button>
                             </div>
                         </div>
@@ -347,6 +430,21 @@
                                 <h3 class="card-title">Farinha de Mandioca</h3>
                                 <p class="cidade">Amazonas - AM</p>
                                 <p class="descricao">Ingrediente essencial da culinária amazônica</p>
+                                <div class="rating-section">
+                                    <div class="rating-display">
+                                        <span class="stars" id="stars-farinha">☆☆☆☆☆</span>
+                                        <span class="rating-number" id="rating-farinha">0.0</span>
+                                        <span class="rating-count" id="count-farinha">(0)</span>
+                                    </div>
+                                    <div class="user-rating">
+                                        <span>Avaliar:</span>
+                                        <span class="star" onclick="setRating('farinha', 1)">☆</span>
+                                        <span class="star" onclick="setRating('farinha', 2)">☆</span>
+                                        <span class="star" onclick="setRating('farinha', 3)">☆</span>
+                                        <span class="star" onclick="setRating('farinha', 4)">☆</span>
+                                        <span class="star" onclick="setRating('farinha', 5)">☆</span>
+                                    </div>
+                                </div>
                                 <button class="button" onclick="window.location.href='/farinha-mandioca.html'">Experimentar</button>
                             </div>
                         </div>
@@ -405,6 +503,8 @@
         
         document.addEventListener('DOMContentLoaded', carregarGastronomiaAdicionada);
     </script>
+    <script src="/hamburger-nav.js"></script>
+    <script src="/rating-system.js"></script>
     <script src="/theme-manager.js"></script>
     <script>
         function updateThemeIcon() {

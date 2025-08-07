@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GADYS - Buscar Locais</title>
+    <link rel="stylesheet" href="/rating-styles.css">
     <style>
         * {
             margin: 0;
@@ -283,6 +284,7 @@
         </div>
     </main>
 
+    <script src="/rating-system.js"></script>
     <script src="/theme-manager.js"></script>
     <script>
         function buscarLocais() {
@@ -327,6 +329,21 @@
                             <span class="result-category">${local.categoria}</span>
                             <p style="color: #666; margin-bottom: 1rem;">${local.descricao}</p>
                             <div class="result-actions">
+                                <div class="rating-section">
+                                    <div class="rating-display">
+                                        <span class="stars" id="stars-${local.id}">☆☆☆☆☆</span>
+                                        <span class="rating-number" id="rating-${local.id}">0.0</span>
+                                        <span class="rating-count" id="count-${local.id}">(0)</span>
+                                    </div>
+                                    <div class="user-rating">
+                                        <span>Avaliar:</span>
+                                        <span class="star" onclick="setRating('${local.id}', 1)">☆</span>
+                                        <span class="star" onclick="setRating('${local.id}', 2)">☆</span>
+                                        <span class="star" onclick="setRating('${local.id}', 3)">☆</span>
+                                        <span class="star" onclick="setRating('${local.id}', 4)">☆</span>
+                                        <span class="star" onclick="setRating('${local.id}', 5)">☆</span>
+                                    </div>
+                                </div>
                                 <button class="btn btn-primary" onclick="window.location.href='/detalhes-local.html?id=${local.id}'">Ver Detalhes</button>
                                 <button class="btn btn-favorite ${isFavorito ? 'active' : ''}" onclick="toggleFavorito('${local.id}', this)">
                                     ${isFavorito ? '❤️' : '🤍'}

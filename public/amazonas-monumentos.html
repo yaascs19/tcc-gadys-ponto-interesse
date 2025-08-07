@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GADYS - Monumentos do Amazonas</title>
+    <link rel="stylesheet" href="/hamburger-nav.css">
+    <link rel="stylesheet" href="/rating-styles.css">
     <style>
         * {
             margin: 0;
@@ -238,6 +240,12 @@
         <header class="header">
             <nav class="nav">
                 <img src="/gadys-logo.svg" alt="GADYS" class="logo" />
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="nav-overlay"></div>
                 <ul class="nav-links">
                     <li><a onclick="localStorage.setItem('isLoggedIn', 'true'); window.location.href='/'" href="/">Início</a></li>
                     <li class="dropdown">
@@ -297,6 +305,21 @@
                                 <h3 class="card-title">Teatro Amazonas</h3>
                                 <p class="cidade">Manaus - AM</p>
                                 <p class="descricao">Majestoso teatro construído durante o período áureo da borracha</p>
+                                <div class="rating-section">
+                                    <div class="rating-display">
+                                        <span class="stars" id="stars-teatro">☆☆☆☆☆</span>
+                                        <span class="rating-number" id="rating-teatro">0.0</span>
+                                        <span class="rating-count" id="count-teatro">(0)</span>
+                                    </div>
+                                    <div class="user-rating">
+                                        <span>Avaliar:</span>
+                                        <span class="star" onclick="setRating('teatro', 1)">☆</span>
+                                        <span class="star" onclick="setRating('teatro', 2)">☆</span>
+                                        <span class="star" onclick="setRating('teatro', 3)">☆</span>
+                                        <span class="star" onclick="setRating('teatro', 4)">☆</span>
+                                        <span class="star" onclick="setRating('teatro', 5)">☆</span>
+                                    </div>
+                                </div>
                                 <button class="button" onclick="window.location.href='/teatro-amazonas.html'">Visitar</button>
                             </div>
                         </div>
@@ -307,6 +330,21 @@
                                 <h3 class="card-title">Forte de São José</h3>
                                 <p class="cidade">Manaus - AM</p>
                                 <p class="descricao">Fortaleza histórica que marca o início da colonização de Manaus</p>
+                                <div class="rating-section">
+                                    <div class="rating-display">
+                                        <span class="stars" id="stars-forte">☆☆☆☆☆</span>
+                                        <span class="rating-number" id="rating-forte">0.0</span>
+                                        <span class="rating-count" id="count-forte">(0)</span>
+                                    </div>
+                                    <div class="user-rating">
+                                        <span>Avaliar:</span>
+                                        <span class="star" onclick="setRating('forte', 1)">☆</span>
+                                        <span class="star" onclick="setRating('forte', 2)">☆</span>
+                                        <span class="star" onclick="setRating('forte', 3)">☆</span>
+                                        <span class="star" onclick="setRating('forte', 4)">☆</span>
+                                        <span class="star" onclick="setRating('forte', 5)">☆</span>
+                                    </div>
+                                </div>
                                 <button class="button" onclick="window.location.href='/forte-sao-jose.html'">Visitar</button>
                             </div>
                         </div>
@@ -317,6 +355,21 @@
                                 <h3 class="card-title">Palácio da Justiça</h3>
                                 <p class="cidade">Manaus - AM</p>
                                 <p class="descricao">Edifício histórico com arquitetura colonial preservada</p>
+                                <div class="rating-section">
+                                    <div class="rating-display">
+                                        <span class="stars" id="stars-justica">☆☆☆☆☆</span>
+                                        <span class="rating-number" id="rating-justica">0.0</span>
+                                        <span class="rating-count" id="count-justica">(0)</span>
+                                    </div>
+                                    <div class="user-rating">
+                                        <span>Avaliar:</span>
+                                        <span class="star" onclick="setRating('justica', 1)">☆</span>
+                                        <span class="star" onclick="setRating('justica', 2)">☆</span>
+                                        <span class="star" onclick="setRating('justica', 3)">☆</span>
+                                        <span class="star" onclick="setRating('justica', 4)">☆</span>
+                                        <span class="star" onclick="setRating('justica', 5)">☆</span>
+                                    </div>
+                                </div>
                                 <button class="button" onclick="window.location.href='/palacio-justica.html'">Visitar</button>
                             </div>
                         </div>
@@ -327,6 +380,21 @@
                                 <h3 class="card-title">Mercado Municipal</h3>
                                 <p class="cidade">Manaus - AM</p>
                                 <p class="descricao">Mercado histórico inspirado no mercado Les Halles de Paris</p>
+                                <div class="rating-section">
+                                    <div class="rating-display">
+                                        <span class="stars" id="stars-mercado">☆☆☆☆☆</span>
+                                        <span class="rating-number" id="rating-mercado">0.0</span>
+                                        <span class="rating-count" id="count-mercado">(0)</span>
+                                    </div>
+                                    <div class="user-rating">
+                                        <span>Avaliar:</span>
+                                        <span class="star" onclick="setRating('mercado', 1)">☆</span>
+                                        <span class="star" onclick="setRating('mercado', 2)">☆</span>
+                                        <span class="star" onclick="setRating('mercado', 3)">☆</span>
+                                        <span class="star" onclick="setRating('mercado', 4)">☆</span>
+                                        <span class="star" onclick="setRating('mercado', 5)">☆</span>
+                                    </div>
+                                </div>
                                 <button class="button" onclick="window.location.href='/mercado-municipal.html'">Visitar</button>
                             </div>
                         </div>
@@ -337,6 +405,21 @@
                                 <h3 class="card-title">Igreja de São Sebastião</h3>
                                 <p class="cidade">Manaus - AM</p>
                                 <p class="descricao">Igreja histórica com arquitetura colonial e importância religiosa</p>
+                                <div class="rating-section">
+                                    <div class="rating-display">
+                                        <span class="stars" id="stars-igreja">☆☆☆☆☆</span>
+                                        <span class="rating-number" id="rating-igreja">0.0</span>
+                                        <span class="rating-count" id="count-igreja">(0)</span>
+                                    </div>
+                                    <div class="user-rating">
+                                        <span>Avaliar:</span>
+                                        <span class="star" onclick="setRating('igreja', 1)">☆</span>
+                                        <span class="star" onclick="setRating('igreja', 2)">☆</span>
+                                        <span class="star" onclick="setRating('igreja', 3)">☆</span>
+                                        <span class="star" onclick="setRating('igreja', 4)">☆</span>
+                                        <span class="star" onclick="setRating('igreja', 5)">☆</span>
+                                    </div>
+                                </div>
                                 <button class="button" onclick="window.location.href='/igreja-sao-sebastiao.html'">Visitar</button>
                             </div>
                         </div>
@@ -347,6 +430,21 @@
                                 <h3 class="card-title">Palácio Rio Negro</h3>
                                 <p class="cidade">Manaus - AM</p>
                                 <p class="descricao">Antiga residência dos governadores, hoje centro cultural</p>
+                                <div class="rating-section">
+                                    <div class="rating-display">
+                                        <span class="stars" id="stars-palacio">☆☆☆☆☆</span>
+                                        <span class="rating-number" id="rating-palacio">0.0</span>
+                                        <span class="rating-count" id="count-palacio">(0)</span>
+                                    </div>
+                                    <div class="user-rating">
+                                        <span>Avaliar:</span>
+                                        <span class="star" onclick="setRating('palacio', 1)">☆</span>
+                                        <span class="star" onclick="setRating('palacio', 2)">☆</span>
+                                        <span class="star" onclick="setRating('palacio', 3)">☆</span>
+                                        <span class="star" onclick="setRating('palacio', 4)">☆</span>
+                                        <span class="star" onclick="setRating('palacio', 5)">☆</span>
+                                    </div>
+                                </div>
                                 <button class="button" onclick="window.location.href='/palacio-rio-negro.html'">Visitar</button>
                             </div>
                         </div>
@@ -405,6 +503,8 @@
         
         document.addEventListener('DOMContentLoaded', carregarMonumentosAdicionados);
     </script>
+    <script src="/hamburger-nav.js"></script>
+    <script src="/rating-system.js"></script>
     <script src="/theme-manager.js"></script>
     <script>
         function updateThemeIcon() {
