@@ -10,7 +10,7 @@ function AdminPanel() {
   const [rankings, setRankings] = useState([])
   const [comments, setComments] = useState({})
   const [showAddUserModal, setShowAddUserModal] = useState(false)
-  const [newUser, setNewUser] = useState({ userName: '', email: '', userType: 'usuario' })
+  const [newUser, setNewUser] = useState({ userName: '', email: '', senha: '', userType: 'usuario' })
   const [siteLocations, setSiteLocations] = useState([])
   const [trashedLocations, setTrashedLocations] = useState([])
   
@@ -219,6 +219,7 @@ function AdminPanel() {
       const userData = {
         userName: newUser.userName,
         email: newUser.email,
+        senha: newUser.senha,
         userType: newUser.userType,
         lastAccess: new Date().toLocaleString('pt-BR'),
         accessCount: 0,
@@ -227,7 +228,7 @@ function AdminPanel() {
       const updatedUsers = [...userAccess, userData]
       setUserAccess(updatedUsers)
       localStorage.setItem('userAccess', JSON.stringify(updatedUsers))
-      setNewUser({ userName: '', email: '', userType: 'usuario' })
+      setNewUser({ userName: '', email: '', senha: '', userType: 'usuario' })
       setShowAddUserModal(false)
       alert('Usuário cadastrado com sucesso!')
     }
@@ -595,6 +596,16 @@ function AdminPanel() {
                   type="email" 
                   value={newUser.email}
                   onChange={(e) => setNewUser({...newUser, email: e.target.value})}
+                  style={{width: '100%', padding: '0.8rem', border: '2px solid #e0e0e0', borderRadius: '8px', fontSize: '1rem'}}
+                  required
+                />
+              </div>
+              <div style={{marginBottom: '1rem'}}>
+                <label style={{display: 'block', marginBottom: '0.5rem', color: '#333'}}>Senha:</label>
+                <input 
+                  type="password" 
+                  value={newUser.senha}
+                  onChange={(e) => setNewUser({...newUser, senha: e.target.value})}
                   style={{width: '100%', padding: '0.8rem', border: '2px solid #e0e0e0', borderRadius: '8px', fontSize: '1rem'}}
                   required
                 />
