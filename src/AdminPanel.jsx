@@ -6,6 +6,10 @@ function AdminPanel() {
   const [pendingLocations, setPendingLocations] = useState([])
   const [approvedLocations, setApprovedLocations] = useState([])
   const [activeTab, setActiveTab] = useState('pending')
+  const [userAccess, setUserAccess] = useState([])
+  const [rankings, setRankings] = useState([])
+  const [showAddUserModal, setShowAddUserModal] = useState(false)
+  const [newUser, setNewUser] = useState({ userName: '', email: '', userType: 'usuario' })
   
   useEffect(() => {
     // Carrega locais pendentes do localStorage
@@ -44,6 +48,24 @@ function AdminPanel() {
     const approvedStored = localStorage.getItem('approvedLocations')
     if (approvedStored) {
       setApprovedLocations(JSON.parse(approvedStored))
+    }
+    
+    // Carrega dados de acesso dos usuários
+    const userAccessStored = localStorage.getItem('userAccess')
+    if (userAccessStored) {
+      setUserAccess(JSON.parse(userAccessStored))
+    }
+    
+    // Carrega e processa rankings dos lugares
+    const ratingsStored = localStorage.getItem('placeRatings')
+    if (ratingsStored) {
+      const ratings = JSON.parse(ratingsStored)
+      const rankingData = Object.entries(ratings).map(([placeName, data]) => ({
+        name: placeName,
+        averageRating: data.average,
+        totalRatings: data.count
+      })).sort((a, b) => b.averageRating - a.averageRating)
+      setRankings(rankingData)
     }
   }, [])
 
@@ -116,6 +138,35 @@ function AdminPanel() {
     setExpandedCard(expandedCard === id ? null : id)
   }
 
+  const handleRemoveUser = (index) => {
+    if (confirm('Tem certeza que deseja excluir este usuário?')) {
+      const updatedUsers = userAccess.filter((_, i) => i !== index)
+      setUserAccess(updatedUsers)
+      localStorage.setItem('userAccess', JSON.stringify(updatedUsers))
+      alert('Usuário excluído com sucesso!')
+    }
+  }
+
+  const handleAddUser = (e) => {
+    e.preventDefault()
+    if (newUser.userName.trim()) {
+      const userData = {
+        userName: newUser.userName,
+        email: newUser.email,
+        userType: newUser.userType,
+        lastAccess: new Date().toLocaleString('pt-BR'),
+        accessCount: 0,
+        ip: 'localhost'
+      }
+      const updatedUsers = [...userAccess, userData]
+      setUserAccess(updatedUsers)
+      localStorage.setItem('userAccess', JSON.stringify(updatedUsers))
+      setNewUser({ userName: '', email: '', userType: 'usuario' })
+      setShowAddUserModal(false)
+      alert('Usuário cadastrado com sucesso!')
+    }
+  }
+
   return (
     <div className="admin-panel">
       <div className="admin-header">
@@ -133,8 +184,31 @@ function AdminPanel() {
           >
             Aprovados ({approvedLocations.length})
           </button>
+          <button 
+            className={`tab-btn ${activeTab === 'users' ? 'active' : ''}`}
+            onClick={() => setActiveTab('users')}
+          >
+            Usuários ({userAccess.length})
+          </button>
+          <button 
+            className={`tab-btn ${activeTab === 'ranking' ? 'active' : ''}`}
+            onClick={() => setActiveTab('ranking')}
+          >
+            Ranking ({rankings.length})
+          </button>
         </div>
       </div>
+      
+      {activeTab === 'users' && (
+        <div style={{textAlign: 'center', marginBottom: '2rem'}}>
+          <button 
+            onClick={() => setShowAddUserModal(true)}
+            style={{background: '#28a745', color: 'white', border: 'none', padding: '0.8rem 1.5rem', borderRadius: '8px', cursor: 'pointer', fontSize: '1rem'}}
+          >
+            + Cadastrar Usuário
+          </button>
+        </div>
+      )}
       
       <div className="admin-grid">
         {activeTab === 'pending' && pendingLocations.map(location => (
@@ -216,7 +290,94 @@ function AdminPanel() {
             </div>
           </div>
         ))}
+        
+        {activeTab === 'users' && userAccess.map((user, index) => (
+          <div key={index} className="admin-card">
+            <div className="card-header">
+              <h3>{user.userName}</h3>
+              <span className={`category-badge ${user.userType === 'adm' ? 'admin' : 'user'}`}>{user.userType === 'adm' ? 'Admin' : 'Usuário'}</span>
+            </div>
+            
+            <div className="card-info">
+              <p><strong>Email:</strong> {user.email || 'N/A'}</p>
+              <p><strong>Último acesso:</strong> {user.lastAccess}</p>
+              <p><strong>Total de acessos:</strong> {user.accessCount}</p>
+              <p><strong>IP:</strong> {user.ip || 'N/A'}</p>
+            </div>
+            
+            <div className="card-actions">
+              <button 
+                className="remove-btn"
+                onClick={() => handleRemoveUser(index)}
+              >
+                Excluir Usuário
+              </button>
+            </div>
+          </div>
+        ))}
+        
+        {activeTab === 'ranking' && rankings.map((place, index) => (
+          <div key={index} className="admin-card">
+            <div className="card-header">
+              <h3>#{index + 1} {place.name}</h3>
+              <span className={`category-badge ranking-${index < 3 ? 'top' : 'normal'}`}>
+                ⭐ {place.averageRating.toFixed(1)}
+              </span>
+            </div>
+            
+            <div className="card-info">
+              <p><strong>Avaliação média:</strong> {place.averageRating.toFixed(2)} estrelas</p>
+              <p><strong>Total de avaliações:</strong> {place.totalRatings}</p>
+              <p><strong>Posição:</strong> {index + 1}º lugar</p>
+            </div>
+          </div>
+        ))}
       </div>
+      
+      {showAddUserModal && (
+        <div style={{position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000}}>
+          <div style={{background: 'white', padding: '2rem', borderRadius: '15px', width: '400px', maxWidth: '90%'}}>
+            <h3 style={{marginBottom: '1rem', color: '#2c3e50'}}>Cadastrar Novo Usuário</h3>
+            <form onSubmit={handleAddUser}>
+              <div style={{marginBottom: '1rem'}}>
+                <label style={{display: 'block', marginBottom: '0.5rem', color: '#333'}}>Nome do Usuário:</label>
+                <input 
+                  type="text" 
+                  value={newUser.userName}
+                  onChange={(e) => setNewUser({...newUser, userName: e.target.value})}
+                  style={{width: '100%', padding: '0.8rem', border: '2px solid #e0e0e0', borderRadius: '8px', fontSize: '1rem'}}
+                  required
+                />
+              </div>
+              <div style={{marginBottom: '1rem'}}>
+                <label style={{display: 'block', marginBottom: '0.5rem', color: '#333'}}>Email:</label>
+                <input 
+                  type="email" 
+                  value={newUser.email}
+                  onChange={(e) => setNewUser({...newUser, email: e.target.value})}
+                  style={{width: '100%', padding: '0.8rem', border: '2px solid #e0e0e0', borderRadius: '8px', fontSize: '1rem'}}
+                  required
+                />
+              </div>
+              <div style={{marginBottom: '1.5rem'}}>
+                <label style={{display: 'block', marginBottom: '0.5rem', color: '#333'}}>Tipo de Usuário:</label>
+                <select 
+                  value={newUser.userType}
+                  onChange={(e) => setNewUser({...newUser, userType: e.target.value})}
+                  style={{width: '100%', padding: '0.8rem', border: '2px solid #e0e0e0', borderRadius: '8px', fontSize: '1rem'}}
+                >
+                  <option value="usuario">Usuário</option>
+                  <option value="adm">Administrador</option>
+                </select>
+              </div>
+              <div style={{display: 'flex', gap: '1rem'}}>
+                <button type="submit" style={{flex: 1, background: '#28a745', color: 'white', border: 'none', padding: '0.8rem', borderRadius: '8px', cursor: 'pointer'}}>Cadastrar</button>
+                <button type="button" onClick={() => setShowAddUserModal(false)} style={{flex: 1, background: '#6c757d', color: 'white', border: 'none', padding: '0.8rem', borderRadius: '8px', cursor: 'pointer'}}>Cancelar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

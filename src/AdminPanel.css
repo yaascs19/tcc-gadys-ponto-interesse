@@ -103,6 +103,22 @@
   background: linear-gradient(135deg, #28a745, #20c997);
 }
 
+.category-badge.admin {
+  background: linear-gradient(135deg, #8e44ad, #9b59b6);
+}
+
+.category-badge.user {
+  background: linear-gradient(135deg, #3498db, #2980b9);
+}
+
+.category-badge.ranking-top {
+  background: linear-gradient(135deg, #f39c12, #e67e22);
+}
+
+.category-badge.ranking-normal {
+  background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+}
+
 .card-info {
   margin-bottom: 1rem;
 }

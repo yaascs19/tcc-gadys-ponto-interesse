@@ -29,6 +29,9 @@ function setRating(localId, rating) {
     localStorage.setItem('avaliacoes', JSON.stringify(avaliacoes));
     localStorage.setItem('userRatings', JSON.stringify(userRatings));
     
+    // Atualiza o formato para o painel administrativo
+    updatePlaceRatings(localId, avaliacoes[localId]);
+    
     updateRatingDisplay(localId);
     updateUserStars(localId, rating);
 }
@@ -75,6 +78,12 @@ function getStarsDisplay(rating) {
 }
 
 function loadAllRatings() {
+    // Sincroniza avaliações existentes para o formato do painel administrativo
+    const avaliacoes = JSON.parse(localStorage.getItem('avaliacoes')) || {};
+    Object.keys(avaliacoes).forEach(localId => {
+        updatePlaceRatings(localId, avaliacoes[localId]);
+    });
+    
     // Carrega avaliações para todos os elementos com rating na página
     const ratingElements = document.querySelectorAll('[id^="rating-"]');
     ratingElements.forEach(element => {
@@ -89,6 +98,22 @@ function loadAllRatings() {
             updateUserStars(localId, userRatings[userKey]);
         }
     });
+}
+
+function updatePlaceRatings(localId, ratings) {
+    let placeRatings = JSON.parse(localStorage.getItem('placeRatings')) || {};
+    
+    if (ratings.length > 0) {
+        const average = ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length;
+        placeRatings[localId] = {
+            average: average,
+            count: ratings.length
+        };
+    } else {
+        delete placeRatings[localId];
+    }
+    
+    localStorage.setItem('placeRatings', JSON.stringify(placeRatings));
 }
 
 // Carrega avaliações quando a página é carregada

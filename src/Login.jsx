@@ -19,8 +19,9 @@ function Login({ onLogin }) {
         alert('Senhas não coincidem!')
       }
     } else {
-      if (email && password && name) {
-        onLogin(userType, name)
+      if (email && password) {
+        const userName = name || email.split('@')[0]
+        onLogin(userType, userName)
       }
     }
   }

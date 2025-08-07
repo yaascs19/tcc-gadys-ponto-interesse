@@ -305,10 +305,13 @@
         <header class="header">
             <nav class="nav">
                 <img src="/gadys-logo.svg" alt="GADYS" class="logo" />
-                <div class="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <button onclick="toggleTheme()" id="themeToggle" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">🌙</button>
+                    <div class="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
                 </div>
                 <div class="nav-overlay"></div>
                 <ul class="nav-links">
@@ -349,7 +352,7 @@
                     <li><a href="/adicionar-locais.html">Adicionar locais</a></li>
                     <li><a href="/sobre.html">Sobre</a></li>
                     <li><a href="/contato.html">Contato</a></li>
-                    <li><a href="#" onclick="toggleTheme()" id="themeToggle">🌙</a></li>
+
                 </ul>
             </nav>
         </header>

@@ -21,6 +21,25 @@ function App() {
     localStorage.setItem('isLoggedIn', 'true')
     localStorage.setItem('userType', loginUserType)
     localStorage.setItem('userName', userName)
+    
+    // Registra o acesso do usuário
+    const userAccess = JSON.parse(localStorage.getItem('userAccess')) || []
+    const existingUser = userAccess.find(user => user.userName === userName)
+    
+    if (existingUser) {
+      existingUser.lastAccess = new Date().toLocaleString('pt-BR')
+      existingUser.accessCount += 1
+    } else {
+      userAccess.push({
+        userName: userName,
+        userType: loginUserType,
+        lastAccess: new Date().toLocaleString('pt-BR'),
+        accessCount: 1,
+        ip: 'localhost'
+      })
+    }
+    
+    localStorage.setItem('userAccess', JSON.stringify(userAccess))
     setCurrentPage('home')
   }
 
@@ -107,12 +126,25 @@ function App() {
         <header className="header">
           <nav className="nav">
             <img src="/gadys-logo.svg" alt="GADYS" className="logo" style={{height: '40px'}} />
+            <div style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
+              <button 
+                onClick={(e) => {e.preventDefault(); toggleDarkMode()}} 
+                style={{background: 'none', border: 'none', color: 'white', fontSize: '1.5rem', cursor: 'pointer'}}
+              >
+                {darkMode ? '☀️' : '🌙'}
+              </button>
+              <div className="hamburger" onClick={() => document.querySelector('.nav-links').classList.toggle('active')}>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+            <div className="nav-overlay" onClick={() => document.querySelector('.nav-links').classList.remove('active')}></div>
             <ul className="nav-links">
-              <li><a href="#" onClick={(e) => {e.preventDefault(); setCurrentPage('home')}}>Voltar ao Início</a></li>
-              <li><a href="/adicionar-locais.html">Adicionar locais</a></li>
-              <li><a href="#" onClick={(e) => {e.preventDefault(); setCurrentPage('admin')}}>Administração</a></li>
-              <li><a href="#" onClick={(e) => {e.preventDefault(); toggleDarkMode()}}>{darkMode ? '☀️' : '🌙'}</a></li>
-              <li><a href="#" onClick={(e) => {e.preventDefault(); handleLogout()}}>Logout</a></li>
+              <li><a href="#" onClick={(e) => {e.preventDefault(); setCurrentPage('home'); document.querySelector('.nav-links').classList.remove('active')}}>Voltar ao Início</a></li>
+              <li><a href="/adicionar-locais.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Adicionar locais</a></li>
+              <li><a href="#" onClick={(e) => {e.preventDefault(); setCurrentPage('admin'); document.querySelector('.nav-links').classList.remove('active')}}>Administração</a></li>
+              <li><a href="#" onClick={(e) => {e.preventDefault(); handleLogout(); document.querySelector('.nav-links').classList.remove('active')}}>Logout</a></li>
             </ul>
           </nav>
         </header>
@@ -126,10 +158,18 @@ function App() {
       <header className="header">
         <nav className="nav">
           <img src="/gadys-logo.svg" alt="GADYS" className="logo" style={{height: '40px'}} />
-          <div className="hamburger" onClick={() => document.querySelector('.nav-links').classList.toggle('active')}>
-            <span></span>
-            <span></span>
-            <span></span>
+          <div style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
+            <button 
+              onClick={(e) => {e.preventDefault(); toggleDarkMode()}} 
+              style={{background: 'none', border: 'none', color: 'white', fontSize: '1.5rem', cursor: 'pointer'}}
+            >
+              {darkMode ? '☀️' : '🌙'}
+            </button>
+            <div className="hamburger" onClick={() => document.querySelector('.nav-links').classList.toggle('active')}>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
           </div>
           <div className="nav-overlay" onClick={() => document.querySelector('.nav-links').classList.remove('active')}></div>
           <ul className="nav-links">
@@ -172,7 +212,6 @@ function App() {
             {userType === 'adm' && (
               <li><a href="#" onClick={(e) => {e.preventDefault(); setCurrentPage('admin'); document.querySelector('.nav-links').classList.remove('active')}}>Administração</a></li>
             )}
-            <li><a href="#" onClick={(e) => {e.preventDefault(); toggleDarkMode()}}>{darkMode ? '☀️' : '🌙'}</a></li>
             <li><a href="#" onClick={(e) => {e.preventDefault(); handleLogout(); document.querySelector('.nav-links').classList.remove('active')}}>Logout</a></li>
           </ul>
         </nav>
@@ -184,7 +223,7 @@ function App() {
             <div className="carousel-slide active">
               <div className="hero-content">
                 <div className="welcome-box">
-                  <h3>Bem-vindo, {localStorage.getItem('userName') || 'Usuário'}! 🖐️</h3>
+                  <h3>Bem-vindo, {localStorage.getItem('userName') || 'Usuário'}!</h3>
                   <p>Tipo de acesso: {localStorage.getItem('userType') === 'adm' ? 'Administrador' : 'Usuário'}</p>
                 </div>
                 <h2>Descubra Lugares Incríveis</h2>
@@ -195,7 +234,7 @@ function App() {
             <div className="carousel-slide">
               <div className="hero-content">
                 <div className="welcome-box">
-                  <h3>Bem-vindo, {localStorage.getItem('userName') || 'Usuário'}! 🖐️</h3>
+                  <h3>Bem-vindo, {localStorage.getItem('userName') || 'Usuário'}!</h3>
                   <p>Tipo de acesso: {localStorage.getItem('userType') === 'adm' ? 'Administrador' : 'Usuário'}</p>
                 </div>
                 <h2>Descubra Lugares Incríveis</h2>
@@ -206,7 +245,7 @@ function App() {
             <div className="carousel-slide">
               <div className="hero-content">
                 <div className="welcome-box">
-                  <h3>Bem-vindo, {localStorage.getItem('userName') || 'Usuário'}! 🖐️</h3>
+                  <h3>Bem-vindo, {localStorage.getItem('userName') || 'Usuário'}!</h3>
                   <p>Tipo de acesso: {localStorage.getItem('userType') === 'adm' ? 'Administrador' : 'Usuário'}</p>
                 </div>
                 <h2>Descubra Lugares Incríveis</h2>
@@ -214,13 +253,14 @@ function App() {
                 <button className="cta-button" onClick={() => window.location.href = '/lugares.html'}>Começar Exploração</button>
               </div>
             </div>
-          </div>
-          <div className="carousel-nav">
-            <button className="nav-dot active"></button>
-            <button className="nav-dot"></button>
-            <button className="nav-dot"></button>
           </div>
         </section>
+        
+        <div className="carousel-nav">
+          <button className="nav-dot active"></button>
+          <button className="nav-dot"></button>
+          <button className="nav-dot"></button>
+        </div>
 
       </main>
 

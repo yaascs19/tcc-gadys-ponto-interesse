@@ -250,10 +250,13 @@
         <header class="header">
             <nav class="nav">
                 <img src="/gadys-logo.svg" alt="GADYS" class="logo" />
-                <div class="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <button onclick="toggleTheme()" id="themeToggle" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">🌙</button>
+                    <div class="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
                 </div>
                 <div class="nav-overlay"></div>
                 <ul class="nav-links">
@@ -293,7 +296,7 @@
                     <li><a href="/adicionar-locais.html">Adicionar locais</a></li>
                     <li><a href="/sobre.html">Sobre</a></li>
                     <li><a href="/contato.html">Contato</a></li>
-                    <li><a href="#" onclick="toggleTheme()" id="themeToggle">🌙</a></li>
+
                 </ul>
             </nav>
         </header>
@@ -350,23 +353,23 @@
                         <h4 style="font-size: 1.8rem; margin-bottom: 2rem; color: #1a237e;">Nossa Equipe</h4>
                         <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
                             <div style="text-align: center;">
-                                <div style="width: 120px; height: 120px; border-radius: 50%; background: #f0f0f0; border: 3px solid #1a237e;"></div>
+                                <div style="width: 120px; height: 120px; border-radius: 50%; background-image: url('/gus.jpg'); background-size: cover; background-position: top; border: 3px solid #1a237e;"></div>
                                 <p style="margin-top: 0.5rem; font-weight: bold; color: #1a237e;">Gustavo</p>
                             </div>
                             <div style="text-align: center;">
-                                <div style="width: 120px; height: 120px; border-radius: 50%; background: #f0f0f0; border: 3px solid #1a237e;"></div>
+                                <div style="width: 120px; height: 120px; border-radius: 50%; background-image: url('/tutu.png'); background-size: cover; background-position: top; border: 3px solid #1a237e;"></div>
                                 <p style="margin-top: 0.5rem; font-weight: bold; color: #1a237e;">Arthur</p>
                             </div>
                             <div style="text-align: center;">
-                                <div style="width: 120px; height: 120px; border-radius: 50%; background: #f0f0f0; border: 3px solid #1a237e;"></div>
-                                <p style="margin-top: 0.5rem; font-weight: bold; color: #1a237e;">Davis</p>
+                                <div style="width: 120px; height: 120px; border-radius: 50%; background-image: url('/David.jpeg'); background-size: cover; background-position: center; border: 3px solid #1a237e;"></div>
+                                <p style="margin-top: 0.5rem; font-weight: bold; color: #1a237e;">David</p>
                             </div>
                             <div style="text-align: center;">
-                                <div style="width: 120px; height: 120px; border-radius: 50%; background-image: url('/linda.jpeg'); background-size: cover; background-position: center; border: 3px solid #1a237e;"></div>
+                                <div style="width: 120px; height: 120px; border-radius: 50%; background-image: url('/yas.jpeg'); background-size: cover; background-position: top; border: 3px solid #1a237e;"></div>
                                 <p style="margin-top: 0.5rem; font-weight: bold; color: #1a237e;">Yasmin</p>
                             </div>
                             <div style="text-align: center;">
-                                <div style="width: 120px; height: 120px; border-radius: 50%; background: #f0f0f0; border: 3px solid #1a237e;"></div>
+                                <div style="width: 120px; height: 120px; border-radius: 50%; background-image: url('/soph.jpeg'); background-size: cover; background-position: center; border: 3px solid #1a237e;"></div>
                                 <p style="margin-top: 0.5rem; font-weight: bold; color: #1a237e;">Sophia</p>
                             </div>
                         </div>

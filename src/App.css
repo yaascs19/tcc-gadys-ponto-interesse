@@ -212,12 +212,13 @@
 }
 
 .carousel-nav {
-  position: absolute;
-  bottom: 0.5rem;
-  left: 50%;
-  transform: translateX(-50%);
+  position: relative;
   display: flex;
+  justify-content: center;
   gap: 1rem;
+  padding: 1rem 0;
+  margin-top: 2rem;
+  background: inherit;
 }
 
 .nav-dot {
@@ -348,7 +349,7 @@
 
 .hero-content p {
   font-size: 1.2rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   opacity: 0.9;
 }
 
