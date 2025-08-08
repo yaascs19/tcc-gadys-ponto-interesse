@@ -215,7 +215,7 @@ function AdminPanel() {
 
   const handleAddUser = (e) => {
     e.preventDefault()
-    if (newUser.userName.trim()) {
+    if (newUser.userName.trim() && newUser.email.trim() && newUser.senha.trim()) {
       const userData = {
         userName: newUser.userName,
         email: newUser.email,
@@ -231,6 +231,8 @@ function AdminPanel() {
       setNewUser({ userName: '', email: '', senha: '', userType: 'usuario' })
       setShowAddUserModal(false)
       alert('Usuário cadastrado com sucesso!')
+    } else {
+      alert('Por favor, preencha todos os campos obrigatórios (Nome, Email e Senha)!')
     }
   }
 
