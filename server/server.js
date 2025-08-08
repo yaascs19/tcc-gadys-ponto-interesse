@@ -183,6 +183,40 @@ app.get('/api/comentarios/:localId', async (req, res) => {
     }
 });
 
+// Listar todos os comentários agrupados por local
+app.get('/api/comentarios/all', async (req, res) => {
+    try {
+        const result = await sql.query`
+            SELECT 
+                l.Nome as LocalNome,
+                c.Texto,
+                c.DataComentario,
+                u.Nome as Usuario
+            FROM Comentarios c
+            JOIN Usuarios u ON c.UsuarioID = u.ID
+            JOIN Locais l ON c.LocalID = l.ID
+            ORDER BY l.Nome, c.DataComentario DESC
+        `;
+        
+        // Agrupar comentários por local
+        const commentsByLocal = {};
+        result.recordset.forEach(comment => {
+            if (!commentsByLocal[comment.LocalNome]) {
+                commentsByLocal[comment.LocalNome] = [];
+            }
+            commentsByLocal[comment.LocalNome].push({
+                userName: comment.Usuario,
+                text: comment.Texto,
+                date: comment.DataComentario
+            });
+        });
+        
+        res.json(commentsByLocal);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 // Adicionar comentário
 app.post('/api/comentarios', async (req, res) => {
     try {

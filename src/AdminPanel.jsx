@@ -14,6 +14,42 @@ function AdminPanel() {
   const [siteLocations, setSiteLocations] = useState([])
   const [trashedLocations, setTrashedLocations] = useState([])
   
+  const loadUsers = async () => {
+    try {
+      const response = await fetch('http://localhost:3001/api/usuarios')
+      if (response.ok) {
+        const users = await response.json()
+        setUserAccess(users)
+      }
+    } catch (error) {
+      console.error('Erro ao carregar usuários:', error)
+    }
+  }
+
+  const loadRanking = async () => {
+    try {
+      const response = await fetch('http://localhost:3001/api/ranking')
+      if (response.ok) {
+        const ranking = await response.json()
+        setRankings(ranking)
+      }
+    } catch (error) {
+      console.error('Erro ao carregar ranking:', error)
+    }
+  }
+
+  const loadComments = async () => {
+    try {
+      const response = await fetch('http://localhost:3001/api/comentarios/all')
+      if (response.ok) {
+        const commentsData = await response.json()
+        setComments(commentsData)
+      }
+    } catch (error) {
+      console.error('Erro ao carregar comentários:', error)
+    }
+  }
+
   useEffect(() => {
     // Carrega locais pendentes do localStorage
     const stored = localStorage.getItem('pendingLocations')
@@ -53,41 +89,12 @@ function AdminPanel() {
       setApprovedLocations(JSON.parse(approvedStored))
     }
     
-    // Carrega dados de acesso dos usuários
-    const userAccessStored = localStorage.getItem('userAccess')
-    if (userAccessStored) {
-      setUserAccess(JSON.parse(userAccessStored))
-    } else {
-      // Cadastra automaticamente a Yasmin como administradora
-      const initialAdmin = [{
-        userName: 'Yasmin',
-        email: 'yasmincunegundes25@gmail.com',
-        userType: 'adm',
-        lastAccess: 'Nunca acessou',
-        accessCount: 0,
-        ip: 'localhost'
-      }]
-      setUserAccess(initialAdmin)
-      localStorage.setItem('userAccess', JSON.stringify(initialAdmin))
-    }
+    // Carrega dados da API
+    loadUsers()
+    loadRanking()
+    loadComments()
     
-    // Carrega e processa rankings dos lugares
-    const ratingsStored = localStorage.getItem('placeRatings')
-    if (ratingsStored) {
-      const ratings = JSON.parse(ratingsStored)
-      const rankingData = Object.entries(ratings).map(([placeName, data]) => ({
-        name: placeName,
-        averageRating: data.average,
-        totalRatings: data.count
-      })).sort((a, b) => b.averageRating - a.averageRating)
-      setRankings(rankingData)
-    }
-    
-    // Carrega comentários dos lugares
-    const commentsStored = localStorage.getItem('placeComments')
-    if (commentsStored) {
-      setComments(JSON.parse(commentsStored))
-    }
+
     
     // Carrega todos os locais do site (pré-existentes + adicionados)
     const locaisAdicionados = JSON.parse(localStorage.getItem('locaisAdicionados')) || []
@@ -213,24 +220,34 @@ function AdminPanel() {
     }
   }
 
-  const handleAddUser = (e) => {
+  const handleAddUser = async (e) => {
     e.preventDefault()
     if (newUser.userName.trim() && newUser.email.trim() && newUser.senha.trim()) {
-      const userData = {
-        userName: newUser.userName,
-        email: newUser.email,
-        senha: newUser.senha,
-        userType: newUser.userType,
-        lastAccess: new Date().toLocaleString('pt-BR'),
-        accessCount: 0,
-        ip: 'localhost'
+      try {
+        const response = await fetch('http://localhost:3001/api/usuarios', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            nome: newUser.userName,
+            email: newUser.email,
+            senha: newUser.senha,
+            tipoUsuario: newUser.userType
+          })
+        })
+        
+        if (response.ok) {
+          setNewUser({ userName: '', email: '', senha: '', userType: 'usuario' })
+          setShowAddUserModal(false)
+          alert('Usuário cadastrado com sucesso!')
+          // Recarregar lista de usuários
+          loadUsers()
+        } else {
+          const error = await response.json()
+          alert(error.error || 'Erro ao cadastrar usuário')
+        }
+      } catch (error) {
+        alert('Erro de conexão com o servidor')
       }
-      const updatedUsers = [...userAccess, userData]
-      setUserAccess(updatedUsers)
-      localStorage.setItem('userAccess', JSON.stringify(updatedUsers))
-      setNewUser({ userName: '', email: '', senha: '', userType: 'usuario' })
-      setShowAddUserModal(false)
-      alert('Usuário cadastrado com sucesso!')
     } else {
       alert('Por favor, preencha todos os campos obrigatórios (Nome, Email e Senha)!')
     }
