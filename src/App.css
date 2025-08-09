@@ -168,7 +168,7 @@
   color: white;
   padding: 0;
   text-align: center;
-  height: 70vh;
+  height: 80vh;
   overflow: hidden;
 }
 
@@ -215,13 +215,10 @@
 }
 
 .carousel-nav {
-  position: relative;
   display: flex;
   justify-content: center;
   gap: 1rem;
-  padding: 1rem 0;
   margin-top: 2rem;
-  background: inherit;
 }
 
 .nav-dot {
@@ -229,7 +226,7 @@
   height: 20px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.5);
-  border: 2px solid rgba(255, 255, 255, 0.8);
+  border: 2px solid white;
   cursor: pointer;
   transition: all 0.3s ease;
   padding: 0;
@@ -484,7 +481,9 @@
 }
 
 .app.dark-mode .carousel-slide:nth-child(3) {
-  background: linear-gradient(rgba(30, 30, 30, 0.8), rgba(50, 50, 50, 0.8)), url('https://images.unsplash.com/photo-1516306580123-e6e52b1b7b5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+  background: linear-gradient(rgba(30, 30, 30, 0.8), rgba(50, 50, 50, 0.8)), url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+  background-size: cover;
+  background-position: top center;
 }
 
 .app.dark-mode .features {

@@ -50,13 +50,15 @@ function AdminPanel() {
     }
   }
 
-  useEffect(() => {
-    // Carrega locais pendentes do localStorage
-    const stored = localStorage.getItem('pendingLocations')
-    if (stored) {
-      setPendingLocations(JSON.parse(stored))
-    } else {
-      // Dados iniciais mockados
+  const loadPendingLocations = async () => {
+    try {
+      const response = await fetch('http://localhost:3001/api/locais/pendentes')
+      if (response.ok) {
+        const pending = await response.json()
+        setPendingLocations(pending)
+      }
+    } catch (error) {
+      // Fallback para dados mockados
       const initialData = [
         {
           id: 1,
@@ -65,126 +67,119 @@ function AdminPanel() {
           category: 'Natureza',
           submittedBy: 'João Silva',
           date: '2025-01-15',
-          description: 'Uma cachoeira escondida na floresta amazônica, com águas cristalinas e uma trilha de 2km. Local perfeito para relaxar e se conectar com a natureza.',
+          description: 'Uma cachoeira escondida na floresta amazônica',
           coordinates: '-3.1190, -60.0217'
-        },
-        {
-          id: 2,
-          name: 'Restaurante Típico da Vovó',
-          city: 'Parintins, AM',
-          category: 'Gastronomia',
-          submittedBy: 'Maria Santos',
-          date: '2025-01-14',
-          description: 'Restaurante familiar que serve pratos típicos da região há 30 anos. Especialidade em pirarucu assado e tucumã.',
-          coordinates: '-2.6287, -56.7356'
         }
       ]
       setPendingLocations(initialData)
-      localStorage.setItem('pendingLocations', JSON.stringify(initialData))
     }
+  }
+
+  const loadApprovedLocations = async () => {
+    try {
+      const response = await fetch('http://localhost:3001/api/locais/aprovados')
+      if (response.ok) {
+        const approved = await response.json()
+        setApprovedLocations(approved)
+      }
+    } catch (error) {
+      console.error('Erro ao carregar locais aprovados:', error)
+    }
+  }
+
+
+
+  const loadSiteLocations = async () => {
+    try {
+      const response = await fetch('http://localhost:3001/api/locais')
+      if (response.ok) {
+        const locais = await response.json()
+        setSiteLocations(locais)
+      }
+    } catch (error) {
+      console.error('Erro ao carregar locais do site:', error)
+    }
+  }
+
+  const loadTrashedLocations = async () => {
+    try {
+      const response = await fetch('http://localhost:3001/api/locais/lixeira')
+      if (response.ok) {
+        const lixeira = await response.json()
+        setTrashedLocations(lixeira)
+      }
+    } catch (error) {
+      // Fallback localStorage
+      const lixeira = JSON.parse(localStorage.getItem('trashedLocations')) || []
+      setTrashedLocations(lixeira)
+    }
+  }
+
+  useEffect(() => {
+    // Carrega locais pendentes da API
+    loadPendingLocations()
     
-    // Carrega locais aprovados
-    const approvedStored = localStorage.getItem('approvedLocations')
-    if (approvedStored) {
-      setApprovedLocations(JSON.parse(approvedStored))
-    }
+    // Carrega locais aprovados da API
+    loadApprovedLocations()
     
     // Carrega dados da API
     loadUsers()
     loadRanking()
     loadComments()
     
-
-    
-    // Carrega todos os locais do site (pré-existentes + adicionados)
-    const locaisAdicionados = JSON.parse(localStorage.getItem('locaisAdicionados')) || []
-    
-    // Locais pré-existentes do site
-    const locaisPreExistentes = [
-      // Monumentos
-      { id: 'teatro', nome: 'Teatro Amazonas', categoria: 'monumentos', cidade: 'Manaus', estado: 'AM', descricao: 'Majestoso teatro construído durante o período áureo da borracha' },
-      { id: 'forte', nome: 'Forte de São José', categoria: 'monumentos', cidade: 'Manaus', estado: 'AM', descricao: 'Fortaleza histórica que marca o início da colonização de Manaus' },
-      { id: 'mercado', nome: 'Mercado Municipal', categoria: 'monumentos', cidade: 'Manaus', estado: 'AM', descricao: 'Mercado histórico inspirado no mercado Les Halles de Paris' },
-      { id: 'justica', nome: 'Palácio da Justiça', categoria: 'monumentos', cidade: 'Manaus', estado: 'AM', descricao: 'Edifício histórico com arquitetura colonial preservada' },
-      { id: 'igreja', nome: 'Igreja de São Sebastião', categoria: 'monumentos', cidade: 'Manaus', estado: 'AM', descricao: 'Igreja histórica com arquitetura colonial e importância religiosa' },
-      { id: 'palacio', nome: 'Palácio Rio Negro', categoria: 'monumentos', cidade: 'Manaus', estado: 'AM', descricao: 'Antiga residência dos governadores, hoje centro cultural' },
-      
-      // Natureza
-      { id: 'floresta', nome: 'Floresta Amazônica', categoria: 'natureza', cidade: 'Amazonas', estado: 'AM', descricao: 'A maior floresta tropical do mundo com biodiversidade única' },
-      { id: 'encontro', nome: 'Encontro das Águas', categoria: 'natureza', cidade: 'Manaus', estado: 'AM', descricao: 'Fenômeno natural onde os rios Negro e Solimões se encontram' },
-      { id: 'anavilhanas', nome: 'Parque Nacional de Anavilhanas', categoria: 'natureza', cidade: 'Novo Airão', estado: 'AM', descricao: 'Maior arquipélago fluvial do mundo com rica biodiversidade' },
-      { id: 'mamiraui', nome: 'Reserva Mamirauá', categoria: 'natureza', cidade: 'Tefé', estado: 'AM', descricao: 'Maior reserva de várzea do mundo com fauna única' },
-      { id: 'jau', nome: 'Parque Nacional do Jaú', categoria: 'natureza', cidade: 'Novo Airão', estado: 'AM', descricao: 'Uma das maiores unidades de conservação da Amazônia' },
-      { id: 'rioamazonas', nome: 'Rio Amazonas', categoria: 'natureza', cidade: 'Amazonas', estado: 'AM', descricao: 'O maior rio do mundo em volume de água e extensão' },
-      
-      // Gastronomia
-      { id: 'acai', nome: 'Açaí', categoria: 'gastronomia', cidade: 'Amazonas', estado: 'AM', descricao: 'Fruto amazônico rico em nutrientes e sabor único' },
-      { id: 'tucuma', nome: 'Tucumã', categoria: 'gastronomia', cidade: 'Amazonas', estado: 'AM', descricao: 'Fruto típico consumido com farinha de mandioca' },
-      { id: 'pirarucu', nome: 'Pirarucu', categoria: 'gastronomia', cidade: 'Amazonas', estado: 'AM', descricao: 'Peixe gigante da Amazônia preparado de diversas formas' },
-      { id: 'cupuacu', nome: 'Cupuaçu', categoria: 'gastronomia', cidade: 'Amazonas', estado: 'AM', descricao: 'Fruto amazônico usado em doces e sucos refrescantes' },
-      { id: 'tacaca', nome: 'Tacacá', categoria: 'gastronomia', cidade: 'Amazonas', estado: 'AM', descricao: 'Prato típico com tucumã, camarão seco e jambu' },
-      { id: 'farinha', nome: 'Farinha de Mandioca', categoria: 'gastronomia', cidade: 'Amazonas', estado: 'AM', descricao: 'Ingrediente essencial da culinária amazônica' },
-      
-      // Cultura
-      { id: 'festival', nome: 'Festival de Parintins', categoria: 'cultura', cidade: 'Parintins', estado: 'AM', descricao: 'Maior festival folclórico do Brasil com bois-bumbás' },
-      { id: 'lendas', nome: 'Lendas Amazônicas', categoria: 'cultura', cidade: 'Região Amazônica', estado: 'AM', descricao: 'Curupira, Boto-cor-de-rosa, Iara e outras lendas da floresta' },
-      { id: 'artesanato', nome: 'Artesanato Indígena', categoria: 'cultura', cidade: 'Comunidades Indígenas', estado: 'AM', descricao: 'Cestas, cerâmicas e objetos tradicionais dos povos originários' },
-      { id: 'ciranda', nome: 'Ciranda Amazônica', categoria: 'cultura', cidade: 'Manaus', estado: 'AM', descricao: 'Dança tradicional em roda com cantos e instrumentos regionais' },
-      { id: 'carimbo', nome: 'Carimbó', categoria: 'cultura', cidade: 'Região Norte', estado: 'AM', descricao: 'Ritmo e dança típica com tambores e movimentos sensuais' },
-      { id: 'rituais', nome: 'Rituais Xamânicos', categoria: 'cultura', cidade: 'Floresta Amazônica', estado: 'AM', descricao: 'Cerimônias ancestrais com plantas sagradas e cura espiritual' }
-    ]
-    
-    const todosLocais = [...locaisPreExistentes, ...locaisAdicionados]
-    setSiteLocations(todosLocais)
-    
-    // Carrega lixeira
-    const lixeira = JSON.parse(localStorage.getItem('trashedLocations')) || []
-    setTrashedLocations(lixeira)
+    // Carrega locais do site e lixeira da API
+    loadSiteLocations()
+    loadTrashedLocations()
   }, [])
 
-  const handleApprove = (id) => {
-    const locationToApprove = pendingLocations.find(location => location.id === id)
-    const updatedLocations = pendingLocations.filter(location => location.id !== id)
-    
-    // Move para lista de aprovados
-    let approvedLocations = JSON.parse(localStorage.getItem('approvedLocations')) || []
-    approvedLocations.push(locationToApprove)
-    localStorage.setItem('approvedLocations', JSON.stringify(approvedLocations))
-    
-    // Adiciona automaticamente às categorias do Amazonas se for do estado AM
-    if (locationToApprove.city.toLowerCase().includes('am') || locationToApprove.city.toLowerCase().includes('amazonas')) {
-      let locaisAdicionados = JSON.parse(localStorage.getItem('locaisAdicionados')) || []
+  const handleApprove = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:3001/api/locais/aprovar/${id}`, {
+        method: 'POST'
+      })
       
-      const novoLocal = {
-        nome: locationToApprove.name,
-        cidade: locationToApprove.city.split(',')[0].trim(),
-        estado: 'AM',
-        categoria: locationToApprove.category.toLowerCase(),
-        descricao: locationToApprove.description,
-        imagem: locationToApprove.imagem || '/minha-imagem.jpg',
-        localizacao: locationToApprove.localizacao || '',
-        horario: locationToApprove.horario || '',
-        preco: locationToApprove.preco || '',
-        infoAdicional: locationToApprove.infoAdicional || '',
-        id: locationToApprove.id
+      if (response.ok) {
+        alert('Local aprovado com sucesso!')
+        loadPendingLocations()
+        loadApprovedLocations()
+      } else {
+        alert('Erro ao aprovar local')
       }
+    } catch (error) {
+      // Fallback localStorage
+      const locationToApprove = pendingLocations.find(location => location.id === id)
+      const updatedLocations = pendingLocations.filter(location => location.id !== id)
       
-      locaisAdicionados.push(novoLocal)
-      localStorage.setItem('locaisAdicionados', JSON.stringify(locaisAdicionados))
+      let approvedLocations = JSON.parse(localStorage.getItem('approvedLocations')) || []
+      approvedLocations.push(locationToApprove)
+      localStorage.setItem('approvedLocations', JSON.stringify(approvedLocations))
+      
+      setPendingLocations(updatedLocations)
+      localStorage.setItem('pendingLocations', JSON.stringify(updatedLocations))
+      
+      alert('Local aprovado localmente!')
     }
-    
-    // Remove da lista de pendentes
-    setPendingLocations(updatedLocations)
-    localStorage.setItem('pendingLocations', JSON.stringify(updatedLocations))
-    
-    alert(`Local aprovado e adicionado automaticamente às categorias do Amazonas!`)
   }
 
-  const handleReject = (id) => {
-    const updatedLocations = pendingLocations.filter(location => location.id !== id)
-    setPendingLocations(updatedLocations)
-    localStorage.setItem('pendingLocations', JSON.stringify(updatedLocations))
-    alert(`Local rejeitado e removido da lista!`)
+  const handleReject = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:3001/api/locais/rejeitar/${id}`, {
+        method: 'POST'
+      })
+      
+      if (response.ok) {
+        alert('Local rejeitado!')
+        loadPendingLocations()
+      } else {
+        alert('Erro ao rejeitar local')
+      }
+    } catch (error) {
+      // Fallback localStorage
+      const updatedLocations = pendingLocations.filter(location => location.id !== id)
+      setPendingLocations(updatedLocations)
+      localStorage.setItem('pendingLocations', JSON.stringify(updatedLocations))
+      alert('Local rejeitado localmente!')
+    }
   }
 
   const handleRemove = (id) => {
@@ -211,12 +206,26 @@ function AdminPanel() {
     setExpandedCard(expandedCard === id ? null : id)
   }
 
-  const handleRemoveUser = (index) => {
+  const handleRemoveUser = async (userId, index) => {
     if (confirm('Tem certeza que deseja excluir este usuário?')) {
-      const updatedUsers = userAccess.filter((_, i) => i !== index)
-      setUserAccess(updatedUsers)
-      localStorage.setItem('userAccess', JSON.stringify(updatedUsers))
-      alert('Usuário excluído com sucesso!')
+      try {
+        const response = await fetch(`http://localhost:3001/api/usuarios/${userId}`, {
+          method: 'DELETE'
+        })
+        
+        if (response.ok) {
+          alert('Usuário excluído com sucesso!')
+          loadUsers()
+        } else {
+          alert('Erro ao excluir usuário')
+        }
+      } catch (error) {
+        // Fallback localStorage
+        const updatedUsers = userAccess.filter((_, i) => i !== index)
+        setUserAccess(updatedUsers)
+        localStorage.setItem('userAccess', JSON.stringify(updatedUsers))
+        alert('Usuário excluído localmente!')
+      }
     }
   }
 
@@ -253,52 +262,61 @@ function AdminPanel() {
     }
   }
 
-  const handleRemoveLocation = (id) => {
+  const handleRemoveLocation = async (id) => {
     if (confirm('Tem certeza que deseja mover este local para a lixeira?')) {
-      // Encontra o local a ser movido para lixeira
-      const locationToTrash = siteLocations.find(location => location.id === id)
-      
-      // Move para lixeira
-      const updatedTrash = [...trashedLocations, {...locationToTrash, trashedAt: new Date().toLocaleString('pt-BR')}]
-      setTrashedLocations(updatedTrash)
-      localStorage.setItem('trashedLocations', JSON.stringify(updatedTrash))
-      
-      // Remove dos locais adicionados (se existir lá)
-      const locaisAdicionados = JSON.parse(localStorage.getItem('locaisAdicionados')) || []
-      const updatedAdicionados = locaisAdicionados.filter(location => location.id !== id)
-      localStorage.setItem('locaisAdicionados', JSON.stringify(updatedAdicionados))
-      
-      // Atualiza a lista completa
-      const updatedLocations = siteLocations.filter(location => location.id !== id)
-      setSiteLocations(updatedLocations)
-      
-      alert('Local movido para a lixeira!')
+      try {
+        const response = await fetch(`http://localhost:3001/api/locais/excluir/${id}`, {
+          method: 'POST'
+        })
+        
+        if (response.ok) {
+          alert('Local movido para a lixeira!')
+          loadSiteLocations()
+          loadTrashedLocations()
+        } else {
+          alert('Erro ao mover local para lixeira')
+        }
+      } catch (error) {
+        // Fallback localStorage
+        const locationToTrash = siteLocations.find(location => location.id === id)
+        const updatedTrash = [...trashedLocations, {...locationToTrash, trashedAt: new Date().toLocaleString('pt-BR')}]
+        setTrashedLocations(updatedTrash)
+        localStorage.setItem('trashedLocations', JSON.stringify(updatedTrash))
+        
+        const updatedLocations = siteLocations.filter(location => location.id !== id)
+        setSiteLocations(updatedLocations)
+        
+        alert('Local movido para lixeira localmente!')
+      }
     }
   }
 
-  const handleRestoreLocation = (id) => {
-    const locationToRestore = trashedLocations.find(location => location.id === id)
-    const locaisPredefinidos = ['teatro', 'forte', 'mercado', 'justica', 'igreja', 'palacio', 'floresta', 'encontro', 'anavilhanas', 'mamiraui', 'jau', 'rioamazonas', 'acai', 'tucuma', 'pirarucu', 'cupuacu', 'tacaca', 'farinha', 'festival', 'lendas', 'artesanato', 'ciranda', 'carimbo', 'rituais']
-    
-    // Remove da lixeira
-    const updatedTrash = trashedLocations.filter(location => location.id !== id)
-    setTrashedLocations(updatedTrash)
-    localStorage.setItem('trashedLocations', JSON.stringify(updatedTrash))
-    
-    const restoredLocation = {...locationToRestore}
-    delete restoredLocation.trashedAt
-    
-    // Se não for um local predefinido, adiciona aos locais adicionados
-    if (!locaisPredefinidos.includes(id)) {
-      const locaisAdicionados = JSON.parse(localStorage.getItem('locaisAdicionados')) || []
-      locaisAdicionados.push(restoredLocation)
-      localStorage.setItem('locaisAdicionados', JSON.stringify(locaisAdicionados))
+  const handleRestoreLocation = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:3001/api/locais/restaurar/${id}`, {
+        method: 'POST'
+      })
+      
+      if (response.ok) {
+        alert('Local restaurado com sucesso!')
+        loadSiteLocations()
+        loadTrashedLocations()
+      } else {
+        alert('Erro ao restaurar local')
+      }
+    } catch (error) {
+      // Fallback localStorage
+      const locationToRestore = trashedLocations.find(location => location.id === id)
+      const updatedTrash = trashedLocations.filter(location => location.id !== id)
+      setTrashedLocations(updatedTrash)
+      localStorage.setItem('trashedLocations', JSON.stringify(updatedTrash))
+      
+      const restoredLocation = {...locationToRestore}
+      delete restoredLocation.trashedAt
+      setSiteLocations([...siteLocations, restoredLocation])
+      
+      alert('Local restaurado localmente!')
     }
-    
-    // Atualiza a lista completa
-    setSiteLocations([...siteLocations, restoredLocation])
-    
-    alert('Local restaurado com sucesso!')
   }
 
   const handlePermanentDelete = (id) => {
@@ -463,7 +481,7 @@ function AdminPanel() {
             <div className="card-actions">
               <button 
                 className="remove-btn"
-                onClick={() => handleRemoveUser(index)}
+                onClick={() => handleRemoveUser(user.ID || user.id, index)}
               >
                 Excluir Usuário
               </button>

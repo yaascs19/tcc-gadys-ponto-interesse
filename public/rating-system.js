@@ -1,39 +1,60 @@
-// Sistema de avaliações global
-function setRating(localId, rating) {
+// Sistema de avaliações global conectado com API
+async function setRating(localId, rating) {
     const userName = localStorage.getItem('userName');
     if (!userName) {
         alert('Você precisa estar logado para avaliar!');
         return;
     }
     
-    let avaliacoes = JSON.parse(localStorage.getItem('avaliacoes')) || {};
-    let userRatings = JSON.parse(localStorage.getItem('userRatings')) || {};
-    const userKey = `${userName}_${localId}`;
-    
-    if (!avaliacoes[localId]) {
-        avaliacoes[localId] = [];
-    }
-    
-    if (!userRatings[userKey]) {
-        avaliacoes[localId].push(rating);
-    } else {
-        const oldRating = userRatings[userKey];
-        const index = avaliacoes[localId].indexOf(oldRating);
-        if (index > -1) {
-            avaliacoes[localId][index] = rating;
+    try {
+        // Tentar salvar na API
+        const response = await fetch('http://localhost:3001/api/avaliacoes', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                localId: getLocalIdByName(localId),
+                usuarioId: 1, // ID padrão
+                nota: rating
+            })
+        });
+        
+        if (response.ok) {
+            alert(`Obrigado por avaliar! Você deu ${rating} estrela${rating > 1 ? 's' : ''}.`);
+            loadRatingsFromAPI();
+        } else {
+            const error = await response.json();
+            if (error.error.includes('já avaliou')) {
+                alert('Você já avaliou este local!');
+            } else {
+                throw new Error(error.error);
+            }
         }
+    } catch (error) {
+        // Fallback para localStorage
+        let avaliacoes = JSON.parse(localStorage.getItem('avaliacoes')) || {};
+        let userRatings = JSON.parse(localStorage.getItem('userRatings')) || {};
+        const userKey = `${userName}_${localId}`;
+        
+        if (userRatings[userKey]) {
+            alert('Você já avaliou este local!');
+            return;
+        }
+        
+        if (!avaliacoes[localId]) {
+            avaliacoes[localId] = [];
+        }
+        
+        avaliacoes[localId].push(rating);
+        userRatings[userKey] = rating;
+        
+        localStorage.setItem('avaliacoes', JSON.stringify(avaliacoes));
+        localStorage.setItem('userRatings', JSON.stringify(userRatings));
+        updatePlaceRatings(localId, avaliacoes[localId]);
+        updateRatingDisplay(localId);
+        updateUserStars(localId, rating);
+        
+        alert(`Avaliação salva localmente! ${rating} estrela${rating > 1 ? 's' : ''}.`);
     }
-    
-    userRatings[userKey] = rating;
-    
-    localStorage.setItem('avaliacoes', JSON.stringify(avaliacoes));
-    localStorage.setItem('userRatings', JSON.stringify(userRatings));
-    
-    // Atualiza o formato para o painel administrativo
-    updatePlaceRatings(localId, avaliacoes[localId]);
-    
-    updateRatingDisplay(localId);
-    updateUserStars(localId, rating);
 }
 
 function updateRatingDisplay(localId) {
@@ -116,5 +137,51 @@ function updatePlaceRatings(localId, ratings) {
     localStorage.setItem('placeRatings', JSON.stringify(placeRatings));
 }
 
+// Função para mapear nomes para IDs
+function getLocalIdByName(localName) {
+    const mapping = {
+        'teatro': 1, 'forte': 2, 'mercado': 3, 'justica': 4, 'igreja': 5, 'palacio': 6,
+        'floresta': 7, 'encontro': 8, 'anavilhanas': 9, 'mamiraui': 10, 'jau': 11, 'rioamazonas': 12,
+        'acai': 13, 'tucuma': 14, 'pirarucu': 15, 'cupuacu': 16, 'tacaca': 17, 'farinha': 18,
+        'festival': 19, 'lendas': 20, 'artesanato': 21, 'ciranda': 22, 'carimbo': 23, 'rituais': 24,
+        'cristo': 25, 'pao': 26, 'cataratas': 27, 'pelourinho': 28, 'noronha': 29, 'pantanal': 30
+    };
+    return mapping[localName] || 1;
+}
+
+// Carregar avaliações da API
+async function loadRatingsFromAPI() {
+    try {
+        const response = await fetch('http://localhost:3001/api/ranking');
+        if (response.ok) {
+            const rankings = await response.json();
+            rankings.forEach(item => {
+                const localName = item.Nome.toLowerCase().replace(/[^a-z]/g, '');
+                updateRatingDisplayFromAPI(localName, {
+                    average: item.MediaAvaliacoes || 0,
+                    count: item.TotalAvaliacoes || 0
+                });
+            });
+        }
+    } catch (error) {
+        console.log('API indisponível, usando dados locais');
+        loadAllRatings();
+    }
+}
+
+function updateRatingDisplayFromAPI(localId, data) {
+    const ratingElement = document.getElementById(`rating-${localId}`);
+    const starsElement = document.getElementById(`stars-${localId}`);
+    const countElement = document.getElementById(`count-${localId}`);
+    
+    if (ratingElement && starsElement && countElement) {
+        ratingElement.textContent = data.average.toFixed(1);
+        starsElement.textContent = getStarsDisplay(data.average);
+        countElement.textContent = `(${data.count})`;
+    }
+}
+
 // Carrega avaliações quando a página é carregada
-document.addEventListener('DOMContentLoaded', loadAllRatings);
+document.addEventListener('DOMContentLoaded', () => {
+    loadRatingsFromAPI();
+});

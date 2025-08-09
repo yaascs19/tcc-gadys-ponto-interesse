@@ -15,31 +15,44 @@ function App() {
     return localStorage.getItem('darkMode') === 'true'
   })
 
-  const handleLogin = (loginUserType, userName) => {
+  const handleLogin = async (loginUserType, userName) => {
     setIsLoggedIn(true)
     setUserType(loginUserType)
     localStorage.setItem('isLoggedIn', 'true')
     localStorage.setItem('userType', loginUserType)
     localStorage.setItem('userName', userName)
     
-    // Registra o acesso do usuário
-    const userAccess = JSON.parse(localStorage.getItem('userAccess')) || []
-    const existingUser = userAccess.find(user => user.userName === userName)
-    
-    if (existingUser) {
-      existingUser.lastAccess = new Date().toLocaleString('pt-BR')
-      existingUser.accessCount += 1
-    } else {
-      userAccess.push({
-        userName: userName,
-        userType: loginUserType,
-        lastAccess: new Date().toLocaleString('pt-BR'),
-        accessCount: 1,
-        ip: 'localhost'
+    try {
+      // Registra acesso na API
+      await fetch('http://localhost:3001/api/usuarios/acesso', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nome: userName,
+          tipoUsuario: loginUserType
+        })
       })
+    } catch (error) {
+      // Fallback localStorage
+      const userAccess = JSON.parse(localStorage.getItem('userAccess')) || []
+      const existingUser = userAccess.find(user => user.userName === userName)
+      
+      if (existingUser) {
+        existingUser.lastAccess = new Date().toLocaleString('pt-BR')
+        existingUser.accessCount += 1
+      } else {
+        userAccess.push({
+          userName: userName,
+          userType: loginUserType,
+          lastAccess: new Date().toLocaleString('pt-BR'),
+          accessCount: 1,
+          ip: 'localhost'
+        })
+      }
+      
+      localStorage.setItem('userAccess', JSON.stringify(userAccess))
     }
     
-    localStorage.setItem('userAccess', JSON.stringify(userAccess))
     setCurrentPage('home')
   }
 
@@ -68,14 +81,16 @@ function App() {
       let autoSlideInterval
 
       const showSlide = (index) => {
-        if (slides.length === 0 || dots.length === 0) return
+        if (slides.length === 0) return
         
         slides.forEach(slide => slide.classList.remove('active'))
-        dots.forEach(dot => dot.classList.remove('active'))
+        document.querySelectorAll('.nav-dot').forEach(dot => dot.classList.remove('active'))
         
-        if (slides[index] && dots[index]) {
+        if (slides[index]) {
           slides[index].classList.add('active')
-          dots[index].classList.add('active')
+          document.querySelectorAll(`[data-slide="${index}"]`).forEach(dot => {
+            dot.classList.add('active')
+          })
         }
       }
 
@@ -83,7 +98,7 @@ function App() {
         autoSlideInterval = setInterval(() => {
           currentSlide = (currentSlide + 1) % slides.length
           showSlide(currentSlide)
-        }, 4000)
+        }, 2000)
       }
 
       const stopAutoSlide = () => {
@@ -93,11 +108,12 @@ function App() {
       }
 
       // Add click listeners to dots
-      dots.forEach((dot, index) => {
+      document.querySelectorAll('.nav-dot').forEach(dot => {
         dot.addEventListener('click', (e) => {
           e.preventDefault()
           stopAutoSlide()
-          currentSlide = index
+          const targetSlide = parseInt(dot.getAttribute('data-slide'))
+          currentSlide = targetSlide
           showSlide(currentSlide)
           startAutoSlide()
         })
@@ -229,6 +245,11 @@ function App() {
                 <h2>Descubra Lugares Incríveis</h2>
                 <p>Explore pontos de interesse únicos e encontre experiências inesquecíveis</p>
                 <button className="cta-button" onClick={() => window.location.href = '/lugares.html'}>Começar Exploração</button>
+                <div className="carousel-nav">
+                  <button className="nav-dot active" data-slide="0"></button>
+                  <button className="nav-dot" data-slide="1"></button>
+                  <button className="nav-dot" data-slide="2"></button>
+                </div>
               </div>
             </div>
             <div className="carousel-slide">
@@ -240,6 +261,11 @@ function App() {
                 <h2>Descubra Lugares Incríveis</h2>
                 <p>Explore pontos de interesse únicos e encontre experiências inesquecíveis</p>
                 <button className="cta-button" onClick={() => window.location.href = '/lugares.html'}>Começar Exploração</button>
+                <div className="carousel-nav">
+                  <button className="nav-dot" data-slide="0"></button>
+                  <button className="nav-dot active" data-slide="1"></button>
+                  <button className="nav-dot" data-slide="2"></button>
+                </div>
               </div>
             </div>
             <div className="carousel-slide">
@@ -251,16 +277,17 @@ function App() {
                 <h2>Descubra Lugares Incríveis</h2>
                 <p>Explore pontos de interesse únicos e encontre experiências inesquecíveis</p>
                 <button className="cta-button" onClick={() => window.location.href = '/lugares.html'}>Começar Exploração</button>
+                <div className="carousel-nav">
+                  <button className="nav-dot" data-slide="0"></button>
+                  <button className="nav-dot" data-slide="1"></button>
+                  <button className="nav-dot active" data-slide="2"></button>
+                </div>
               </div>
             </div>
           </div>
         </section>
         
-        <div className="carousel-nav">
-          <button className="nav-dot active"></button>
-          <button className="nav-dot"></button>
-          <button className="nav-dot"></button>
-        </div>
+
 
       </main>
 

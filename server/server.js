@@ -72,6 +72,23 @@ app.post('/api/usuarios', async (req, res) => {
     }
 });
 
+// Registrar acesso de usuário
+app.post('/api/usuarios/acesso', async (req, res) => {
+    try {
+        const { nome, tipoUsuario } = req.body;
+        
+        await sql.query`
+            UPDATE Usuarios 
+            SET UltimoAcesso = GETDATE(), TotalAcessos = TotalAcessos + 1
+            WHERE Nome = ${nome} AND TipoUsuario = ${tipoUsuario}
+        `;
+        
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 // Login
 app.post('/api/login', async (req, res) => {
     try {
@@ -120,6 +137,25 @@ app.get('/api/locais', async (req, res) => {
     }
 });
 
+// Listar locais por categoria
+app.get('/api/locais/categoria/:categoria', async (req, res) => {
+    try {
+        const { categoria } = req.params;
+        const result = await sql.query`
+            SELECT l.*, c.Nome as Categoria, cid.Nome as Cidade, e.Sigla as EstadoSigla
+            FROM Locais l
+            JOIN Categorias c ON l.CategoriaID = c.ID
+            JOIN Cidades cid ON l.CidadeID = cid.ID
+            JOIN Estados e ON cid.EstadoID = e.ID
+            WHERE c.Nome = ${categoria} AND l.Status = 'ativo'
+            ORDER BY l.Nome
+        `;
+        res.json(result.recordset);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 // Adicionar local
 app.post('/api/locais', async (req, res) => {
     try {
@@ -131,6 +167,131 @@ app.post('/api/locais', async (req, res) => {
         `;
         
         res.json({ success: true, message: 'Local cadastrado com sucesso!' });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Listar locais pendentes
+app.get('/api/locais/pendentes', async (req, res) => {
+    try {
+        const result = await sql.query`
+            SELECT * FROM LocaisPendentes 
+            WHERE Status = 'pendente'
+            ORDER BY DataEnvio DESC
+        `;
+        res.json(result.recordset);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Listar locais aprovados
+app.get('/api/locais/aprovados', async (req, res) => {
+    try {
+        const result = await sql.query`
+            SELECT * FROM LocaisPendentes 
+            WHERE Status = 'aprovado'
+            ORDER BY DataEnvio DESC
+        `;
+        res.json(result.recordset);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Aprovar local pendente
+app.post('/api/locais/aprovar/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        
+        await sql.query`
+            UPDATE LocaisPendentes 
+            SET Status = 'aprovado'
+            WHERE ID = ${id}
+        `;
+        
+        res.json({ success: true, message: 'Local aprovado com sucesso!' });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Rejeitar local pendente
+app.post('/api/locais/rejeitar/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        
+        await sql.query`
+            UPDATE LocaisPendentes 
+            SET Status = 'rejeitado'
+            WHERE ID = ${id}
+        `;
+        
+        res.json({ success: true, message: 'Local rejeitado!' });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Excluir local (mover para lixeira)
+app.post('/api/locais/excluir/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        
+        await sql.query`
+            UPDATE Locais 
+            SET Status = 'inativo'
+            WHERE ID = ${id}
+        `;
+        
+        res.json({ success: true, message: 'Local movido para lixeira!' });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Restaurar local da lixeira
+app.post('/api/locais/restaurar/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        
+        await sql.query`
+            UPDATE Locais 
+            SET Status = 'ativo'
+            WHERE ID = ${id}
+        `;
+        
+        res.json({ success: true, message: 'Local restaurado!' });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Listar locais da lixeira
+app.get('/api/locais/lixeira', async (req, res) => {
+    try {
+        const result = await sql.query`
+            SELECT * FROM vw_LocaisCompletos 
+            WHERE Status = 'inativo'
+            ORDER BY DataCriacao DESC
+        `;
+        res.json(result.recordset);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Excluir usuário
+app.delete('/api/usuarios/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        
+        await sql.query`
+            DELETE FROM Usuarios WHERE ID = ${id}
+        `;
+        
+        res.json({ success: true, message: 'Usuário excluído!' });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

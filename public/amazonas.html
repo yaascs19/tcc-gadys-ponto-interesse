@@ -377,9 +377,9 @@
                     <p>O coração da Amazônia brasileira</p>
                 </div>
                 <div style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 0.5rem; z-index: 3;">
-                    <button class="carousel-dot" onclick="showSlide(0)" style="width: 12px; height: 12px; border-radius: 50%; border: none; background: white; cursor: pointer;"></button>
-                    <button class="carousel-dot" onclick="showSlide(1)" style="width: 12px; height: 12px; border-radius: 50%; border: none; background: rgba(255,255,255,0.5); cursor: pointer;"></button>
-                    <button class="carousel-dot" onclick="showSlide(2)" style="width: 12px; height: 12px; border-radius: 50%; border: none; background: rgba(255,255,255,0.5); cursor: pointer;"></button>
+                    <button class="carousel-dot" onclick="showSlide(0)" style="width: 12px; height: 12px; border-radius: 50%; border: 2px solid #333; background: #333; cursor: pointer;"></button>
+                    <button class="carousel-dot" onclick="showSlide(1)" style="width: 12px; height: 12px; border-radius: 50%; border: 2px solid #333; background: transparent; cursor: pointer;"></button>
+                    <button class="carousel-dot" onclick="showSlide(2)" style="width: 12px; height: 12px; border-radius: 50%; border: 2px solid #333; background: transparent; cursor: pointer;"></button>
                 </div>
             </section>
 
@@ -427,7 +427,7 @@
                 slide.style.opacity = i === index ? '1' : '0';
             });
             dots.forEach((dot, i) => {
-                dot.style.background = i === index ? 'white' : 'rgba(255,255,255,0.5)';
+                dot.style.background = i === index ? '#333' : 'transparent';
             });
             currentSlide = index;
         }
