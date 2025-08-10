@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GADYS - Roteiros Sugeridos</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f5f5f5; }
+        .header { background: #1a237e; color: white; padding: 2rem; text-align: center; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        .roteiros-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; }
+        .roteiro-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .roteiro-header { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 1.5rem; }
+        .roteiro-content { padding: 1.5rem; }
+        .dia { margin-bottom: 1.5rem; padding: 1rem; background: #f8f9fa; border-radius: 10px; border-left: 4px solid #1a237e; }
+        .local-item { display: flex; align-items: center; gap: 1rem; margin: 0.5rem 0; padding: 0.5rem; background: white; border-radius: 5px; }
+        .tempo { background: #e3f2fd; color: #1976d2; padding: 0.2rem 0.5rem; border-radius: 15px; font-size: 0.8rem; }
+        .custo { background: #e8f5e8; color: #2e7d32; padding: 0.2rem 0.5rem; border-radius: 15px; font-size: 0.8rem; }
+        .btn { background: #1a237e; color: white; border: none; padding: 1rem 2rem; border-radius: 25px; cursor: pointer; margin-top: 1rem; }
+        .clima-info { background: #fff3e0; padding: 1rem; border-radius: 10px; margin-bottom: 1rem; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🗺️ Roteiros Sugeridos</h1>
+        <p>Planeje sua viagem perfeita com nossos roteiros personalizados</p>
+    </div>
+    
+    <div class="container">
+        <div class="roteiros-grid">
+            <div class="roteiro-card">
+                <div class="roteiro-header">
+                    <h2>3 Dias no Amazonas</h2>
+                    <p>Roteiro completo para conhecer o melhor de Manaus</p>
+                    <div style="margin-top: 1rem;">
+                        <span class="custo">💰 R$ 800-1200</span>
+                        <span class="tempo">⏱️ 3 dias</span>
+                    </div>
+                </div>
+                <div class="roteiro-content">
+                    <div class="clima-info">
+                        <strong>🌤️ Melhor época:</strong> Maio a Setembro (seca)<br>
+                        <strong>🌡️ Temperatura:</strong> 26-32°C
+                    </div>
+                    
+                    <div class="dia">
+                        <h3>Dia 1 - Centro Histórico</h3>
+                        <div class="local-item">
+                            <span>🏛️</span>
+                            <div>
+                                <strong>Teatro Amazonas</strong>
+                                <div>Manhã (9h-11h) - R$ 20</div>
+                            </div>
+                        </div>
+                        <div class="local-item">
+                            <span>🏪</span>
+                            <div>
+                                <strong>Mercado Municipal</strong>
+                                <div>Tarde (14h-16h) - Gratuito</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dia">
+                        <h3>Dia 2 - Natureza</h3>
+                        <div class="local-item">
+                            <span>🌊</span>
+                            <div>
+                                <strong>Encontro das Águas</strong>
+                                <div>Manhã (8h-12h) - R$ 120</div>
+                            </div>
+                        </div>
+                        <div class="local-item">
+                            <span>🌳</span>
+                            <div>
+                                <strong>Floresta Amazônica</strong>
+                                <div>Tarde (14h-18h) - R$ 200</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dia">
+                        <h3>Dia 3 - Cultura e Gastronomia</h3>
+                        <div class="local-item">
+                            <span>🎨</span>
+                            <div>
+                                <strong>Artesanato Indígena</strong>
+                                <div>Manhã (9h-11h) - R$ 50</div>
+                            </div>
+                        </div>
+                        <div class="local-item">
+                            <span>🍽️</span>
+                            <div>
+                                <strong>Tacacá e Açaí</strong>
+                                <div>Tarde (15h-17h) - R$ 30</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn" onclick="baixarRoteiro('amazonas-3dias')">📱 Baixar Roteiro</button>
+                </div>
+            </div>
+            
+            <div class="roteiro-card">
+                <div class="roteiro-header">
+                    <h2>1 Dia em Manaus</h2>
+                    <p>O essencial da capital amazonense</p>
+                    <div style="margin-top: 1rem;">
+                        <span class="custo">💰 R$ 200-350</span>
+                        <span class="tempo">⏱️ 1 dia</span>
+                    </div>
+                </div>
+                <div class="roteiro-content">
+                    <div class="clima-info">
+                        <strong>🌤️ Ideal:</strong> Qualquer época<br>
+                        <strong>🚗 Transporte:</strong> Uber/Táxi recomendado
+                    </div>
+                    
+                    <div class="dia">
+                        <h3>Manhã (8h-12h)</h3>
+                        <div class="local-item">
+                            <span>🏛️</span>
+                            <div>
+                                <strong>Teatro Amazonas</strong>
+                                <div>Visita guiada - R$ 20</div>
+                            </div>
+                        </div>
+                        <div class="local-item">
+                            <span>🏪</span>
+                            <div>
+                                <strong>Mercado Municipal</strong>
+                                <div>Compras e lanche - R$ 30</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dia">
+                        <h3>Tarde (14h-18h)</h3>
+                        <div class="local-item">
+                            <span>🌊</span>
+                            <div>
+                                <strong>Encontro das Águas</strong>
+                                <div>Passeio de barco - R$ 120</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn" onclick="baixarRoteiro('manaus-1dia')">📱 Baixar Roteiro</button>
+                </div>
+            </div>
+            
+            <div class="roteiro-card">
+                <div class="roteiro-header">
+                    <h2>5 Dias - Aventura Amazônica</h2>
+                    <p>Experiência completa na floresta</p>
+                    <div style="margin-top: 1rem;">
+                        <span class="custo">💰 R$ 1500-2500</span>
+                        <span class="tempo">⏱️ 5 dias</span>
+                    </div>
+                </div>
+                <div class="roteiro-content">
+                    <div class="clima-info">
+                        <strong>🌤️ Melhor época:</strong> Junho a Agosto<br>
+                        <strong>🎒 Nível:</strong> Aventureiro
+                    </div>
+                    
+                    <div class="dia">
+                        <h3>Dia 1-2 - Manaus</h3>
+                        <div class="local-item">
+                            <span>🏛️</span>
+                            <div>
+                                <strong>Centro Histórico</strong>
+                                <div>Teatro, Mercado, Palácio</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dia">
+                        <h3>Dia 3-4 - Floresta</h3>
+                        <div class="local-item">
+                            <span>🏕️</span>
+                            <div>
+                                <strong>Acampamento na Floresta</strong>
+                                <div>Trilhas, observação de animais</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dia">
+                        <h3>Dia 5 - Retorno</h3>
+                        <div class="local-item">
+                            <span>🛍️</span>
+                            <div>
+                                <strong>Compras e Despedida</strong>
+                                <div>Artesanato e lembranças</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn" onclick="baixarRoteiro('aventura-5dias')">📱 Baixar Roteiro</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function baixarRoteiro(roteiro) {
+            // Simular download do roteiro
+            const roteiros = {
+                'amazonas-3dias': {
+                    nome: '3 Dias no Amazonas',
+                    conteudo: 'Roteiro detalhado com horários, preços e dicas...'
+                },
+                'manaus-1dia': {
+                    nome: '1 Dia em Manaus',
+                    conteudo: 'Roteiro rápido pelos principais pontos...'
+                },
+                'aventura-5dias': {
+                    nome: '5 Dias - Aventura Amazônica',
+                    conteudo: 'Roteiro completo de aventura na floresta...'
+                }
+            };
+            
+            const roteiroData = roteiros[roteiro];
+            const blob = new Blob([`${roteiroData.nome}\n\n${roteiroData.conteudo}`], {type: 'text/plain'});
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${roteiro}.txt`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+            
+            alert(`Roteiro "${roteiroData.nome}" baixado com sucesso!`);
+        }
+    </script>
+</body>
+</html>

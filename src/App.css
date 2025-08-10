@@ -55,14 +55,16 @@
   background: #1a237e;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
   margin: 0;
-  padding: 0;
+  padding: 2rem 0;
   list-style: none;
   transition: right 0.3s ease;
   z-index: 1001;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 
 .nav-links.active {

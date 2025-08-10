@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GADYS - Clima dos Destinos</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: linear-gradient(135deg, #74b9ff, #0984e3); min-height: 100vh; }
+        .header { color: white; padding: 2rem; text-align: center; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        .clima-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .clima-card { background: rgba(255,255,255,0.95); border-radius: 20px; padding: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .cidade-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+        .temperatura { font-size: 3rem; font-weight: bold; color: #0984e3; }
+        .condicao { font-size: 1.2rem; color: #636e72; margin-bottom: 1rem; }
+        .detalhes { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .detalhe-item { text-align: center; padding: 1rem; background: #f8f9fa; border-radius: 10px; }
+        .previsao { margin-top: 1.5rem; }
+        .previsao-item { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; border-bottom: 1px solid #eee; }
+        .melhor-epoca { background: #00b894; color: white; padding: 1rem; border-radius: 10px; margin-top: 1rem; text-align: center; }
+        .alerta { background: #e17055; color: white; padding: 0.5rem; border-radius: 5px; margin-top: 0.5rem; text-align: center; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🌤️ Clima dos Destinos</h1>
+        <p>Informações meteorológicas em tempo real para planejar sua viagem</p>
+    </div>
+    
+    <div class="container">
+        <div class="clima-grid">
+            <div class="clima-card">
+                <div class="cidade-header">
+                    <h2>Manaus, AM</h2>
+                    <span id="manaus-icon">☀️</span>
+                </div>
+                <div class="temperatura" id="manaus-temp">32°C</div>
+                <div class="condicao" id="manaus-condicao">Ensolarado</div>
+                
+                <div class="detalhes">
+                    <div class="detalhe-item">
+                        <div>💧 Umidade</div>
+                        <div id="manaus-umidade">78%</div>
+                    </div>
+                    <div class="detalhe-item">
+                        <div>💨 Vento</div>
+                        <div id="manaus-vento">12 km/h</div>
+                    </div>
+                    <div class="detalhe-item">
+                        <div>👁️ Visibilidade</div>
+                        <div id="manaus-visibilidade">10 km</div>
+                    </div>
+                    <div class="detalhe-item">
+                        <div>🌅 Nascer do Sol</div>
+                        <div>06:15</div>
+                    </div>
+                </div>
+                
+                <div class="previsao">
+                    <h3>Próximos 5 dias:</h3>
+                    <div class="previsao-item">
+                        <span>Amanhã</span>
+                        <span>🌦️ 28°/34°</span>
+                    </div>
+                    <div class="previsao-item">
+                        <span>Quinta</span>
+                        <span>⛈️ 26°/31°</span>
+                    </div>
+                    <div class="previsao-item">
+                        <span>Sexta</span>
+                        <span>🌤️ 29°/35°</span>
+                    </div>
+                    <div class="previsao-item">
+                        <span>Sábado</span>
+                        <span>☀️ 31°/36°</span>
+                    </div>
+                    <div class="previsao-item">
+                        <span>Domingo</span>
+                        <span>🌦️ 27°/33°</span>
+                    </div>
+                </div>
+                
+                <div class="melhor-epoca">
+                    <strong>Melhor época para visitar:</strong><br>
+                    Maio a Setembro (estação seca)
+                </div>
+                
+                <div class="alerta">
+                    ⚠️ Possibilidade de chuva à tarde
+                </div>
+            </div>
+            
+            <div class="clima-card">
+                <div class="cidade-header">
+                    <h2>Rio de Janeiro, RJ</h2>
+                    <span id="rio-icon">🌤️</span>
+                </div>
+                <div class="temperatura" id="rio-temp">28°C</div>
+                <div class="condicao" id="rio-condicao">Parcialmente nublado</div>
+                
+                <div class="detalhes">
+                    <div class="detalhe-item">
+                        <div>💧 Umidade</div>
+                        <div id="rio-umidade">65%</div>
+                    </div>
+                    <div class="detalhe-item">
+                        <div>💨 Vento</div>
+                        <div id="rio-vento">18 km/h</div>
+                    </div>
+                    <div class="detalhe-item">
+                        <div>👁️ Visibilidade</div>
+                        <div id="rio-visibilidade">15 km</div>
+                    </div>
+                    <div class="detalhe-item">
+                        <div>🌅 Nascer do Sol</div>
+                        <div>05:45</div>
+                    </div>
+                </div>
+                
+                <div class="previsao">
+                    <h3>Próximos 5 dias:</h3>
+                    <div class="previsao-item">
+                        <span>Amanhã</span>
+                        <span>☀️ 24°/30°</span>
+                    </div>
+                    <div class="previsao-item">
+                        <span>Quinta</span>
+                        <span>🌤️ 23°/29°</span>
+                    </div>
+                    <div class="previsao-item">
+                        <span>Sexta</span>
+                        <span>☀️ 25°/31°</span>
+                    </div>
+                    <div class="previsao-item">
+                        <span>Sábado</span>
+                        <span>🌦️ 22°/27°</span>
+                    </div>
+                    <div class="previsao-item">
+                        <span>Domingo</span>
+                        <span>☀️ 26°/32°</span>
+                    </div>
+                </div>
+                
+                <div class="melhor-epoca">
+                    <strong>Melhor época para visitar:</strong><br>
+                    Abril a Junho e Agosto a Outubro
+                </div>
+            </div>
+            
+            <div class="clima-card">
+                <div class="cidade-header">
+                    <h2>Salvador, BA</h2>
+                    <span id="salvador-icon">☀️</span>
+                </div>
+                <div class="temperatura" id="salvador-temp">30°C</div>
+                <div class="condicao" id="salvador-condicao">Ensolarado</div>
+                
+                <div class="detalhes">
+                    <div class="detalhe-item">
+                        <div>💧 Umidade</div>
+                        <div id="salvador-umidade">72%</div>
+                    </div>
+                    <div class="detalhe-item">
+                        <div>💨 Vento</div>
+                        <div id="salvador-vento">15 km/h</div>
+                    </div>
+                    <div class="detalhe-item">
+                        <div>👁️ Visibilidade</div>
+                        <div id="salvador-visibilidade">12 km</div>
+                    </div>
+                    <div class="detalhe-item">
+                        <div>🌅 Nascer do Sol</div>
+                        <div>05:30</div>
+                    </div>
+                </div>
+                
+                <div class="previsao">
+                    <h3>Próximos 5 dias:</h3>
+                    <div class="previsao-item">
+                        <span>Amanhã</span>
+                        <span>☀️ 26°/32°</span>
+                    </div>
+                    <div class="previsao-item">
+                        <span>Quinta</span>
+                        <span>🌤️ 25°/31°</span>
+                    </div>
+                    <div class="previsao-item">
+                        <span>Sexta</span>
+                        <span>☀️ 27°/33°</span>
+                    </div>
+                    <div class="previsao-item">
+                        <span>Sábado</span>
+                        <span>☀️ 28°/34°</span>
+                    </div>
+                    <div class="previsao-item">
+                        <span>Domingo</span>
+                        <span>🌤️ 26°/32°</span>
+                    </div>
+                </div>
+                
+                <div class="melhor-epoca">
+                    <strong>Melhor época para visitar:</strong><br>
+                    Setembro a Março (verão)
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Simular dados de clima em tempo real
+        function atualizarClima() {
+            const cidades = ['manaus', 'rio', 'salvador'];
+            
+            cidades.forEach(cidade => {
+                // Simular variação de temperatura
+                const tempBase = cidade === 'manaus' ? 32 : cidade === 'rio' ? 28 : 30;
+                const variacao = Math.floor(Math.random() * 6) - 3;
+                const novaTemp = tempBase + variacao;
+                
+                document.getElementById(`${cidade}-temp`).textContent = `${novaTemp}°C`;
+                
+                // Simular mudança de condições
+                const condicoes = ['Ensolarado', 'Parcialmente nublado', 'Nublado', 'Chuva leve'];
+                const icones = ['☀️', '🌤️', '☁️', '🌦️'];
+                const indice = Math.floor(Math.random() * condicoes.length);
+                
+                if (Math.random() > 0.8) { // 20% chance de mudança
+                    document.getElementById(`${cidade}-condicao`).textContent = condicoes[indice];
+                    document.getElementById(`${cidade}-icon`).textContent = icones[indice];
+                }
+            });
+        }
+        
+        // Atualizar clima a cada 30 segundos
+        setInterval(atualizarClima, 30000);
+        
+        // Mostrar última atualização
+        function mostrarUltimaAtualizacao() {
+            const agora = new Date().toLocaleTimeString('pt-BR');
+            console.log(`Clima atualizado às ${agora}`);
+        }
+        
+        setInterval(mostrarUltimaAtualizacao, 30000);
+    </script>
+</body>
+</html>

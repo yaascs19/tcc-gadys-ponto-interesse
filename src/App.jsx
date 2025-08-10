@@ -158,7 +158,6 @@ function App() {
             <div className="nav-overlay" onClick={() => document.querySelector('.nav-links').classList.remove('active')}></div>
             <ul className="nav-links">
               <li><a href="#" onClick={(e) => {e.preventDefault(); setCurrentPage('home'); document.querySelector('.nav-links').classList.remove('active')}}>Voltar ao Início</a></li>
-              <li><a href="/adicionar-locais.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Adicionar locais</a></li>
               <li><a href="#" onClick={(e) => {e.preventDefault(); setCurrentPage('admin'); document.querySelector('.nav-links').classList.remove('active')}}>Administração</a></li>
               <li><a href="#" onClick={(e) => {e.preventDefault(); handleLogout(); document.querySelector('.nav-links').classList.remove('active')}}>Logout</a></li>
             </ul>
@@ -222,7 +221,9 @@ function App() {
                 <a href="#">Tocantins</a>
               </div>
             </li>
-            <li><a href="/adicionar-locais.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Adicionar locais</a></li>
+
+            <li><a href="/perfil.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Meu Perfil</a></li>
+            <li><a href="/mapa.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>🗺️ Mapa</a></li>
             <li><a href="/sobre.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Sobre</a></li>
             <li><a href="/contato.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Contato</a></li>
             {userType === 'adm' && (

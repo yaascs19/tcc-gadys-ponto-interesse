@@ -10,7 +10,7 @@
         .header { background: #1a237e; color: white; padding: 1rem 0; }
         .nav { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
         .logo { height: 40px; }
-        .nav-links { display: flex; list-style: none; gap: 2rem; }
+        .hamburger { display: flex; flex-direction: column; cursor: pointer; z-index: 1002; } .hamburger span { width: 25px; height: 3px; background: white; margin: 3px 0; transition: 0.3s; } .nav-links { position: fixed; top: 0; right: -100%; width: 300px; height: 100vh; background: #1a237e; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; gap: 1rem; margin: 0; padding: 2rem 0; list-style: none; transition: right 0.3s ease; z-index: 1001; overflow-y: scroll; } .nav-links.active { right: 0; } .nav-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.5); z-index: 1000; opacity: 0; visibility: hidden; transition: all 0.3s ease; } .nav-overlay.active { opacity: 1; visibility: visible; }
         .nav-links a { color: white; text-decoration: none; padding: 0.5rem 1rem; border-radius: 5px; transition: background 0.3s; }
         .nav-links a:hover { background: rgba(255, 255, 255, 0.1); }
         .hero { background: linear-gradient(rgba(255, 140, 0, 0.8), rgba(255, 165, 0, 0.8)), url('/tucu.jpeg'); background-size: cover; background-position: center; color: white; padding: 8rem 2rem 4rem; text-align: center; }
@@ -31,8 +31,8 @@
 <body>
     <header class="header">
         <nav class="nav">
-            <img src="/gadys-logo.svg" alt="GADYS" class="logo" />
-            <ul class="nav-links">
+            <img src="/logo.png" alt="GADYS" class="logo" style="background: lightblue; border-radius: 50%; padding: 8px;" />
+            <div style="display: flex; align-items: center; gap: 1rem;"><div class="hamburger"><span></span><span></span><span></span></div></div><div class="nav-overlay"></div><ul class="nav-links">
                 <li><a onclick="localStorage.setItem('isLoggedIn', 'true'); window.location.href='/'" href="/">Início</a></li>
                 <li><a href="/amazonas.html">Amazonas</a></li>
                 <li><a href="/amazonas-gastronomia.html">Gastronomia</a></li>
@@ -90,5 +90,5 @@
     <footer class="footer">
         <p>&copy; 2025 GADYS. Todos os direitos reservados.</p>
     </footer>
-</body>
+<script>document.querySelector(".hamburger").addEventListener("click", () => {document.querySelector(".nav-links").classList.toggle("active");document.querySelector(".nav-overlay").classList.toggle("active");});document.querySelector(".nav-overlay").addEventListener("click", () => {document.querySelector(".nav-links").classList.remove("active");document.querySelector(".nav-overlay").classList.remove("active");});</script></body>
 </html>

@@ -13,6 +13,7 @@ function AdminPanel() {
   const [newUser, setNewUser] = useState({ userName: '', email: '', senha: '', userType: 'usuario' })
   const [siteLocations, setSiteLocations] = useState([])
   const [trashedLocations, setTrashedLocations] = useState([])
+  const [contactMessages, setContactMessages] = useState([])
   
   const loadUsers = async () => {
     try {
@@ -58,20 +59,9 @@ function AdminPanel() {
         setPendingLocations(pending)
       }
     } catch (error) {
-      // Fallback para dados mockados
-      const initialData = [
-        {
-          id: 1,
-          name: 'Cachoeira Secreta',
-          city: 'Manaus, AM',
-          category: 'Natureza',
-          submittedBy: 'João Silva',
-          date: '2025-01-15',
-          description: 'Uma cachoeira escondida na floresta amazônica',
-          coordinates: '-3.1190, -60.0217'
-        }
-      ]
-      setPendingLocations(initialData)
+      // Carrega do localStorage
+      const pendingData = JSON.parse(localStorage.getItem('pendingLocations')) || []
+      setPendingLocations(pendingData)
     }
   }
 
@@ -86,8 +76,6 @@ function AdminPanel() {
       console.error('Erro ao carregar locais aprovados:', error)
     }
   }
-
-
 
   const loadSiteLocations = async () => {
     try {
@@ -109,27 +97,25 @@ function AdminPanel() {
         setTrashedLocations(lixeira)
       }
     } catch (error) {
-      // Fallback localStorage
       const lixeira = JSON.parse(localStorage.getItem('trashedLocations')) || []
       setTrashedLocations(lixeira)
     }
   }
 
+  const loadContactMessages = () => {
+    const messages = JSON.parse(localStorage.getItem('mensagensContato')) || []
+    setContactMessages(messages)
+  }
+
   useEffect(() => {
-    // Carrega locais pendentes da API
     loadPendingLocations()
-    
-    // Carrega locais aprovados da API
     loadApprovedLocations()
-    
-    // Carrega dados da API
     loadUsers()
     loadRanking()
     loadComments()
-    
-    // Carrega locais do site e lixeira da API
     loadSiteLocations()
     loadTrashedLocations()
+    loadContactMessages()
   }, [])
 
   const handleApprove = async (id) => {
@@ -146,18 +132,40 @@ function AdminPanel() {
         alert('Erro ao aprovar local')
       }
     } catch (error) {
-      // Fallback localStorage
       const locationToApprove = pendingLocations.find(location => location.id === id)
       const updatedLocations = pendingLocations.filter(location => location.id !== id)
       
+      // Adiciona aos locais aprovados
       let approvedLocations = JSON.parse(localStorage.getItem('approvedLocations')) || []
       approvedLocations.push(locationToApprove)
       localStorage.setItem('approvedLocations', JSON.stringify(approvedLocations))
       
+      // Adiciona às categorias do Amazonas se for do AM
+      if (locationToApprove.city.toLowerCase().includes('am') || locationToApprove.city.toLowerCase().includes('amazonas')) {
+        let locaisAdicionados = JSON.parse(localStorage.getItem('locaisAdicionados')) || []
+        
+        const novoLocal = {
+          nome: locationToApprove.name,
+          cidade: locationToApprove.city.split(',')[0],
+          estado: 'AM',
+          categoria: locationToApprove.category,
+          descricao: locationToApprove.description,
+          imagem: locationToApprove.imagem || '/minha-imagem.jpg',
+          localizacao: locationToApprove.localizacao,
+          horario: locationToApprove.horario,
+          preco: locationToApprove.preco,
+          infoAdicional: locationToApprove.infoAdicional,
+          id: locationToApprove.id
+        }
+        
+        locaisAdicionados.push(novoLocal)
+        localStorage.setItem('locaisAdicionados', JSON.stringify(locaisAdicionados))
+      }
+      
       setPendingLocations(updatedLocations)
       localStorage.setItem('pendingLocations', JSON.stringify(updatedLocations))
       
-      alert('Local aprovado localmente!')
+      alert('Local aprovado e adicionado às categorias!')
     }
   }
 
@@ -174,7 +182,6 @@ function AdminPanel() {
         alert('Erro ao rejeitar local')
       }
     } catch (error) {
-      // Fallback localStorage
       const updatedLocations = pendingLocations.filter(location => location.id !== id)
       setPendingLocations(updatedLocations)
       localStorage.setItem('pendingLocations', JSON.stringify(updatedLocations))
@@ -187,11 +194,9 @@ function AdminPanel() {
       const locationToRemove = approvedLocations.find(location => location.id === id)
       const updatedApproved = approvedLocations.filter(location => location.id !== id)
       
-      // Remove da lista de aprovados
       setApprovedLocations(updatedApproved)
       localStorage.setItem('approvedLocations', JSON.stringify(updatedApproved))
       
-      // Remove das categorias do Amazonas se existir
       if (locationToRemove && (locationToRemove.city.toLowerCase().includes('am') || locationToRemove.city.toLowerCase().includes('amazonas'))) {
         let locaisAdicionados = JSON.parse(localStorage.getItem('locaisAdicionados')) || []
         locaisAdicionados = locaisAdicionados.filter(local => local.nome !== locationToRemove.name)
@@ -220,7 +225,6 @@ function AdminPanel() {
           alert('Erro ao excluir usuário')
         }
       } catch (error) {
-        // Fallback localStorage
         const updatedUsers = userAccess.filter((_, i) => i !== index)
         setUserAccess(updatedUsers)
         localStorage.setItem('userAccess', JSON.stringify(updatedUsers))
@@ -248,7 +252,6 @@ function AdminPanel() {
           setNewUser({ userName: '', email: '', senha: '', userType: 'usuario' })
           setShowAddUserModal(false)
           alert('Usuário cadastrado com sucesso!')
-          // Recarregar lista de usuários
           loadUsers()
         } else {
           const error = await response.json()
@@ -277,7 +280,6 @@ function AdminPanel() {
           alert('Erro ao mover local para lixeira')
         }
       } catch (error) {
-        // Fallback localStorage
         const locationToTrash = siteLocations.find(location => location.id === id)
         const updatedTrash = [...trashedLocations, {...locationToTrash, trashedAt: new Date().toLocaleString('pt-BR')}]
         setTrashedLocations(updatedTrash)
@@ -305,7 +307,6 @@ function AdminPanel() {
         alert('Erro ao restaurar local')
       }
     } catch (error) {
-      // Fallback localStorage
       const locationToRestore = trashedLocations.find(location => location.id === id)
       const updatedTrash = trashedLocations.filter(location => location.id !== id)
       setTrashedLocations(updatedTrash)
@@ -367,7 +368,13 @@ function AdminPanel() {
             className={`tab-btn ${activeTab === 'trash' ? 'active' : ''}`}
             onClick={() => setActiveTab('trash')}
           >
-            🗑️ Lixeira ({trashedLocations.length})
+            Lixeira ({trashedLocations.length})
+          </button>
+          <button 
+            className={`tab-btn ${activeTab === 'messages' ? 'active' : ''}`}
+            onClick={() => setActiveTab('messages')}
+          >
+            Mensagens ({contactMessages.length})
           </button>
         </div>
       </div>
@@ -427,245 +434,39 @@ function AdminPanel() {
           </div>
         ))}
         
-        {activeTab === 'approved' && approvedLocations.map(location => (
-          <div key={location.id} className={`admin-card ${expandedCard === location.id ? 'expanded' : ''}`}>
+        {activeTab === 'messages' && contactMessages.map((message) => (
+          <div key={message.id} className={`admin-card ${expandedCard === message.id ? 'expanded' : ''}`}>
             <div className="card-header">
-              <h3>{location.name}</h3>
-              <span className="category-badge approved">{location.category}</span>
+              <h3>{message.nome}</h3>
+              <span className={`category-badge ${message.status === 'nova' ? 'pending' : 'approved'}`}>{message.status}</span>
             </div>
             
             <div className="card-info">
-              <p><strong>Cidade:</strong> {location.city}</p>
-              <p><strong>Enviado por:</strong> {location.submittedBy}</p>
-              <p><strong>Data:</strong> {location.date}</p>
+              <p><strong>Email:</strong> {message.email}</p>
+              <p><strong>Assunto:</strong> {message.assunto}</p>
+              <p><strong>Data:</strong> {message.data}</p>
             </div>
 
-            {expandedCard === location.id && (
+            {expandedCard === message.id && (
               <div className="card-details">
-                <p><strong>Descrição:</strong> {location.description}</p>
-                <p><strong>Coordenadas:</strong> {location.coordinates}</p>
+                <p><strong>Mensagem:</strong></p>
+                <div style={{background: '#f8f9fa', padding: '1rem', borderRadius: '8px', marginTop: '0.5rem'}}>
+                  {message.mensagem}
+                </div>
               </div>
             )}
 
             <div className="card-actions">
               <button 
                 className="expand-btn"
-                onClick={() => toggleExpand(location.id)}
+                onClick={() => toggleExpand(message.id)}
               >
-                {expandedCard === location.id ? 'Recolher' : 'Expandir'}
-              </button>
-              <button 
-                className="remove-btn"
-                onClick={() => handleRemove(location.id)}
-              >
-                Remover
-              </button>
-            </div>
-          </div>
-        ))}
-        
-        {activeTab === 'users' && userAccess.map((user, index) => (
-          <div key={index} className="admin-card">
-            <div className="card-header">
-              <h3>{user.userName}</h3>
-              <span className={`category-badge ${user.userType === 'adm' ? 'admin' : 'user'}`}>{user.userType === 'adm' ? 'Admin' : 'Usuário'}</span>
-            </div>
-            
-            <div className="card-info">
-              <p><strong>Email:</strong> {user.email || 'N/A'}</p>
-              <p><strong>Último acesso:</strong> {user.lastAccess}</p>
-              <p><strong>Total de acessos:</strong> {user.accessCount}</p>
-              <p><strong>IP:</strong> {user.ip || 'N/A'}</p>
-            </div>
-            
-            <div className="card-actions">
-              <button 
-                className="remove-btn"
-                onClick={() => handleRemoveUser(user.ID || user.id, index)}
-              >
-                Excluir Usuário
-              </button>
-            </div>
-          </div>
-        ))}
-        
-        {activeTab === 'ranking' && rankings.map((place, index) => {
-          const placeComments = comments[place.name] || []
-          const isExpanded = expandedCard === `ranking-${index}`
-          return (
-            <div key={index} className="admin-card">
-              <div className="card-header">
-                <h3>#{index + 1} {place.name}</h3>
-                <span className={`category-badge ranking-${index < 3 ? 'top' : 'normal'}`}>
-                  ⭐ {place.averageRating.toFixed(1)}
-                </span>
-              </div>
-              
-              <div className="card-info">
-                <p><strong>Avaliação média:</strong> {place.averageRating.toFixed(2)} estrelas</p>
-                <p><strong>Total de avaliações:</strong> {place.totalRatings}</p>
-                <p><strong>Total de comentários:</strong> {placeComments.length}</p>
-                <p><strong>Posição:</strong> {index + 1}º lugar</p>
-              </div>
-              
-              {placeComments.length > 0 && (
-                <div className="card-actions">
-                  <button 
-                    className="expand-btn"
-                    onClick={() => toggleExpand(`ranking-${index}`)}
-                  >
-                    {isExpanded ? 'Ocultar Comentários' : `Ver Comentários (${placeComments.length})`}
-                  </button>
-                </div>
-              )}
-              
-              {isExpanded && placeComments.length > 0 && (
-                <div style={{marginTop: '1rem', padding: '1rem', background: '#f8f9fa', borderRadius: '8px'}}>
-                  <h4 style={{marginBottom: '0.8rem', color: '#495057', fontSize: '1rem'}}>💬 Todos os Comentários:</h4>
-                  {placeComments.map((comment, idx) => (
-                    <div key={idx} style={{marginBottom: '0.8rem', padding: '0.8rem', background: 'white', borderRadius: '8px', border: '1px solid #dee2e6'}}>
-                      <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.3rem'}}>
-                        <strong style={{color: '#495057'}}>{comment.userName}</strong>
-                        <span style={{fontSize: '0.75rem', color: '#6c757d'}}>{comment.date}</span>
-                      </div>
-                      <p style={{fontSize: '0.9rem', color: '#333', lineHeight: '1.4'}}>{comment.text}</p>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          )
-        })}
-        
-        {activeTab === 'locations' && (
-          <div style={{width: '100%'}}>
-            {['monumentos', 'natureza', 'gastronomia', 'cultura'].map(categoria => {
-              const locaisCategoria = siteLocations.filter(location => location.categoria === categoria)
-              if (locaisCategoria.length === 0) return null
-              
-              return (
-                <div key={categoria} style={{marginBottom: '3rem'}}>
-                  <h3 style={{textAlign: 'center', color: '#2c3e50', fontSize: '1.8rem', marginBottom: '2rem', textTransform: 'capitalize'}}>
-                    {categoria === 'monumentos' ? '🏦 Monumentos' : 
-                     categoria === 'natureza' ? '🌳 Natureza' :
-                     categoria === 'gastronomia' ? '🍽️ Gastronomia' : '🎨 Cultura'}
-                  </h3>
-                  <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '2rem'}}>
-                    {locaisCategoria.map((location) => (
-                      <div key={location.id} className="admin-card">
-                        <div className="card-header">
-                          <h3>{location.nome}</h3>
-                          <span className={`category-badge`}>{location.categoria}</span>
-                        </div>
-                        
-                        <div className="card-info">
-                          <p><strong>Cidade:</strong> {location.cidade} - {location.estado}</p>
-                          <p><strong>Descrição:</strong> {location.descricao}</p>
-                          <p><strong>Localização:</strong> {location.localizacao || 'N/A'}</p>
-                        </div>
-                        
-                        <div className="card-actions">
-                          <button 
-                            className="remove-btn"
-                            onClick={() => handleRemoveLocation(location.id)}
-                          >
-                            Mover para Lixeira
-                          </button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        )}
-        
-        {activeTab === 'trash' && trashedLocations.map((location) => (
-          <div key={location.id} className="admin-card">
-            <div className="card-header">
-              <h3>{location.nome}</h3>
-              <span className={`category-badge`}>{location.categoria}</span>
-            </div>
-            
-            <div className="card-info">
-              <p><strong>Cidade:</strong> {location.cidade} - {location.estado}</p>
-              <p><strong>Descrição:</strong> {location.descricao}</p>
-              <p><strong>Excluído em:</strong> {location.trashedAt}</p>
-            </div>
-            
-            <div className="card-actions">
-              <button 
-                className="approve-btn"
-                onClick={() => handleRestoreLocation(location.id)}
-              >
-                Restaurar
-              </button>
-              <button 
-                className="reject-btn"
-                onClick={() => handlePermanentDelete(location.id)}
-              >
-                Excluir Permanentemente
+                {expandedCard === message.id ? 'Recolher' : 'Ver Mensagem'}
               </button>
             </div>
           </div>
         ))}
       </div>
-      
-      {showAddUserModal && (
-        <div style={{position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000}}>
-          <div style={{background: 'white', padding: '2rem', borderRadius: '15px', width: '400px', maxWidth: '90%'}}>
-            <h3 style={{marginBottom: '1rem', color: '#2c3e50'}}>Cadastrar Novo Usuário</h3>
-            <form onSubmit={handleAddUser}>
-              <div style={{marginBottom: '1rem'}}>
-                <label style={{display: 'block', marginBottom: '0.5rem', color: '#333'}}>Nome do Usuário:</label>
-                <input 
-                  type="text" 
-                  value={newUser.userName}
-                  onChange={(e) => setNewUser({...newUser, userName: e.target.value})}
-                  style={{width: '100%', padding: '0.8rem', border: '2px solid #e0e0e0', borderRadius: '8px', fontSize: '1rem'}}
-                  required
-                />
-              </div>
-              <div style={{marginBottom: '1rem'}}>
-                <label style={{display: 'block', marginBottom: '0.5rem', color: '#333'}}>Email:</label>
-                <input 
-                  type="email" 
-                  value={newUser.email}
-                  onChange={(e) => setNewUser({...newUser, email: e.target.value})}
-                  style={{width: '100%', padding: '0.8rem', border: '2px solid #e0e0e0', borderRadius: '8px', fontSize: '1rem'}}
-                  required
-                />
-              </div>
-              <div style={{marginBottom: '1rem'}}>
-                <label style={{display: 'block', marginBottom: '0.5rem', color: '#333'}}>Senha:</label>
-                <input 
-                  type="password" 
-                  value={newUser.senha}
-                  onChange={(e) => setNewUser({...newUser, senha: e.target.value})}
-                  style={{width: '100%', padding: '0.8rem', border: '2px solid #e0e0e0', borderRadius: '8px', fontSize: '1rem'}}
-                  required
-                />
-              </div>
-              <div style={{marginBottom: '1.5rem'}}>
-                <label style={{display: 'block', marginBottom: '0.5rem', color: '#333'}}>Tipo de Usuário:</label>
-                <select 
-                  value={newUser.userType}
-                  onChange={(e) => setNewUser({...newUser, userType: e.target.value})}
-                  style={{width: '100%', padding: '0.8rem', border: '2px solid #e0e0e0', borderRadius: '8px', fontSize: '1rem'}}
-                >
-                  <option value="usuario">Usuário</option>
-                  <option value="adm">Administrador</option>
-                </select>
-              </div>
-              <div style={{display: 'flex', gap: '1rem'}}>
-                <button type="submit" style={{flex: 1, background: '#28a745', color: 'white', border: 'none', padding: '0.8rem', borderRadius: '8px', cursor: 'pointer'}}>Cadastrar</button>
-                <button type="button" onClick={() => setShowAddUserModal(false)} style={{flex: 1, background: '#6c757d', color: 'white', border: 'none', padding: '0.8rem', borderRadius: '8px', cursor: 'pointer'}}>Cancelar</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
     </div>
   )
 }
