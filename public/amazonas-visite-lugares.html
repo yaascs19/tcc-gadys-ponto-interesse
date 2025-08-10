@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GADYS - Amazonas - Visite Lugares</title>
+    <link rel="stylesheet" href="/hamburger-nav.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; }
+        .header { background: #1a237e; color: white; padding: 1rem 0; }
+        .nav { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo { height: 40px; background: lightblue; border-radius: 50%; padding: 8px; }
+        .nav-links { display: flex; list-style: none; gap: 2rem; }
+        .nav-links a { color: white; text-decoration: none; padding: 0.5rem 1rem; border-radius: 5px; transition: background 0.3s; }
+        .nav-links a:hover { background: rgba(255, 255, 255, 0.1); }
+        .hero { background: linear-gradient(rgba(34, 139, 34, 0.8), rgba(0, 100, 0, 0.8)), url('/floresta.jpeg'); background-size: cover; background-position: center; color: white; padding: 4rem 2rem; text-align: center; }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .section { padding: 3rem 0; background: #f8f9fa; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); transition: transform 0.3s; }
+        .card:hover { transform: translateY(-5px); }
+        .card img { width: 100%; height: 200px; object-fit: cover; }
+        .card-info { padding: 1.5rem; }
+        .card-title { font-size: 1.3rem; margin-bottom: 0.5rem; color: #2c3e50; }
+        .button { background: #228b22; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 25px; cursor: pointer; text-decoration: none; display: inline-block; }
+        .button:hover { background: #006400; }
+        .footer { background: #2c3e50; color: white; text-align: center; padding: 2rem; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <img src="/logo.png" alt="GADYS" class="logo" />
+            <ul class="nav-links">
+                <li><a href="/">Início</a></li>
+                <li><a href="/amazonas.html">← Voltar ao Amazonas</a></li>
+                <li><a href="/perfil.html">Meu Perfil</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>🏛️ Visite Lugares - Amazonas</h1>
+        <p>Monumentos históricos e belezas naturais para conhecer</p>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="grid">
+                <div class="card">
+                    <img src="/teatro-amazonas1.jpeg" alt="Teatro Amazonas">
+                    <div class="card-info">
+                        <h3 class="card-title">Teatro Amazonas</h3>
+                        <p>Majestoso teatro inaugurado em 1896, símbolo da Belle Époque amazônica.</p>
+                        <a href="/teatro-amazonas.html" class="button">Saiba Mais</a>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <img src="/palacio-rio-negro.html" alt="Palácio Rio Negro">
+                    <div class="card-info">
+                        <h3 class="card-title">Palácio Rio Negro</h3>
+                        <p>Residência oficial do governador, exemplo da arquitetura colonial.</p>
+                        <a href="/palacio-rio-negro.html" class="button">Saiba Mais</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <img src="/floresta.jpeg" alt="Floresta Amazônica">
+                    <div class="card-info">
+                        <h3 class="card-title">Floresta Amazônica</h3>
+                        <p>A maior floresta tropical do mundo, patrimônio natural da humanidade.</p>
+                        <a href="/floresta-amazonica.html" class="button">Saiba Mais</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <img src="/encontro.jpeg" alt="Encontro das Águas">
+                    <div class="card-info">
+                        <h3 class="card-title">Encontro das Águas</h3>
+                        <p>Fenômeno natural onde os rios Negro e Solimões se encontram.</p>
+                        <a href="/encontro-aguas.html" class="button">Saiba Mais</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2025 GADYS. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

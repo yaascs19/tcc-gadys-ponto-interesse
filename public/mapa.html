@@ -174,8 +174,6 @@
                     <option value="">Todas as categorias</option>
                     <option value="monumentos">🏛️ Monumentos</option>
                     <option value="natureza">🌳 Natureza</option>
-                    <option value="gastronomia">🍽️ Gastronomia</option>
-                    <option value="cultura">🎨 Cultura</option>
                 </select>
             </div>
             <div class="filter-group">
@@ -349,19 +347,7 @@
                 {nome: "Parque Nacional de Anavilhanas", categoria: "natureza", preco: "pago", lat: -2.3833, lng: -60.9167},
                 {nome: "Reserva Mamirauá", categoria: "natureza", preco: "pago", lat: -3.0833, lng: -64.8333},
                 {nome: "Parque Nacional do Jaú", categoria: "natureza", preco: "pago", lat: -1.9000, lng: -61.6000},
-                {nome: "Rio Amazonas", categoria: "natureza", preco: "pago", lat: -3.1319, lng: -59.9825},
-                {nome: "Açaí", categoria: "gastronomia", preco: "pago", lat: -3.1319, lng: -60.0239},
-                {nome: "Tucumã", categoria: "gastronomia", preco: "pago", lat: -3.1319, lng: -60.0239},
-                {nome: "Pirarucu", categoria: "gastronomia", preco: "pago", lat: -3.1319, lng: -60.0239},
-                {nome: "Cupuaçu", categoria: "gastronomia", preco: "pago", lat: -3.1319, lng: -60.0239},
-                {nome: "Tacacá", categoria: "gastronomia", preco: "pago", lat: -3.1319, lng: -60.0239},
-                {nome: "Farinha de Mandioca", categoria: "gastronomia", preco: "pago", lat: -3.1319, lng: -60.0239},
-                {nome: "Festival de Parintins", categoria: "cultura", preco: "pago", lat: -2.6283, lng: -56.7358},
-                {nome: "Lendas Amazônicas", categoria: "cultura", preco: "pago", lat: -3.1319, lng: -60.0239},
-                {nome: "Artesanato Indígena", categoria: "cultura", preco: "pago", lat: -3.1319, lng: -60.0239},
-                {nome: "Ciranda Amazônica", categoria: "cultura", preco: "pago", lat: -3.1319, lng: -60.0239},
-                {nome: "Carimbó", categoria: "cultura", preco: "pago", lat: -3.1319, lng: -60.0239},
-                {nome: "Rituais Xamânicos", categoria: "cultura", preco: "pago", lat: -3.0000, lng: -61.0000}
+                {nome: "Rio Amazonas", categoria: "natureza", preco: "pago", lat: -3.1319, lng: -59.9825}
             ];
             
             // Calcular distância real para cada local
@@ -383,9 +369,7 @@
             if (filtrados.length > 0) {
                 let conteudo = `<h3>🎉 Encontrados ${filtrados.length} locais!</h3><div style="margin-top: 1rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">`;
                 filtrados.forEach(local => {
-                    const icone = local.categoria === 'monumentos' ? '🏛️' : 
-                                 local.categoria === 'natureza' ? '🌳' :
-                                 local.categoria === 'gastronomia' ? '🍽️' : '🎨';
+                    const icone = local.categoria === 'monumentos' ? '🏛️' : '🌳';
                     const distanciaFormatada = local.dist < 1 ? `${(local.dist * 1000).toFixed(0)}m` : `${local.dist.toFixed(1)}km`;
                     conteudo += `<div style="background: rgba(255,255,255,0.2); padding: 0.8rem; border-radius: 10px; text-align: center;">
                                     <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">${icone}</div>
