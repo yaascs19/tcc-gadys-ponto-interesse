@@ -221,7 +221,7 @@
 </head>
 <body>
     <header class="header">
-        <nav style="max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center;">
+        <nav style="width: 100%; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center;">
             <img src="/logo.png" alt="GADYS" style="height: 40px; background: lightblue; border-radius: 50%; padding: 8px;" />
             <div class="hamburger">
                 <span></span>
@@ -580,6 +580,7 @@
                     // Obter coordenadas do endereço
                     const coordenadas = await obterCoordenadasAproximadas(endereco.trim());
                     
+                    // Atualizar mapa
                     document.getElementById('map').innerHTML = `
                         <iframe 
                             src="https://maps.google.com/maps?q=${enderecoFormatado}&output=embed" 
@@ -594,14 +595,59 @@
                     // Atualizar localização atual
                     localizacaoAtual = {lat: coordenadas.lat, lng: coordenadas.lng};
                     
+                    // Calcular distâncias automaticamente
+                    const locaisComCoordenadas = [
+                        {nome: "Teatro Amazonas", categoria: "monumentos", preco: "pago", lat: -3.1305, lng: -60.0239},
+                        {nome: "Forte de São José", categoria: "monumentos", preco: "pago", lat: -3.1365, lng: -60.0166},
+                        {nome: "Mercado Municipal", categoria: "monumentos", preco: "gratuito", lat: -3.1365, lng: -60.0166},
+                        {nome: "Palácio da Justiça", categoria: "monumentos", preco: "gratuito", lat: -3.1300, lng: -60.0250},
+                        {nome: "Igreja de São Sebastião", categoria: "monumentos", preco: "gratuito", lat: -3.1320, lng: -60.0220},
+                        {nome: "Palácio Rio Negro", categoria: "monumentos", preco: "pago", lat: -3.1290, lng: -60.0210},
+                        {nome: "Floresta Amazônica", categoria: "natureza", preco: "pago", lat: -3.4653, lng: -62.2159},
+                        {nome: "Encontro das Águas", categoria: "natureza", preco: "pago", lat: -3.1319, lng: -59.9825},
+                        {nome: "Parque Nacional de Anavilhanas", categoria: "natureza", preco: "pago", lat: -2.3833, lng: -60.9167},
+                        {nome: "Reserva Mamirauá", categoria: "natureza", preco: "pago", lat: -3.0833, lng: -64.8333},
+                        {nome: "Parque Nacional do Jaú", categoria: "natureza", preco: "pago", lat: -1.9000, lng: -61.6000},
+                        {nome: "Rio Amazonas", categoria: "natureza", preco: "pago", lat: -3.1319, lng: -59.9825}
+                    ];
+                    
+                    // Calcular distâncias
+                    const locaisComDistancia = locaisComCoordenadas.map(local => ({
+                        ...local,
+                        dist: calcularDistanciaReal(coordenadas.lat, coordenadas.lng, local.lat, local.lng)
+                    })).sort((a, b) => a.dist - b.dist);
+                    
+                    // Mostrar os 5 locais mais próximos
+                    const locaisProximos = locaisComDistancia.slice(0, 5);
+                    
                     const statsDiv = document.getElementById('stats');
                     const statsContent = document.getElementById('statsContent');
-                    statsContent.innerHTML = `
-                        <h3>🎭 Localização encontrada!</h3>
-                        <p style="font-size: 1.2rem; margin-top: 1rem;">📍 ${endereco}</p>
-                        <p style="margin-top: 1rem; opacity: 0.8;">Coordenadas: ${coordenadas.lat.toFixed(4)}, ${coordenadas.lng.toFixed(4)}</p>
-                        <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.7;">Use "Filtrar" para ver distâncias calculadas deste local</p>
+                    
+                    let conteudo = `
+                        <h3>🎭 Localização: ${endereco}</h3>
+                        <p style="margin: 1rem 0; opacity: 0.8;">📍 Coordenadas: ${coordenadas.lat.toFixed(4)}, ${coordenadas.lng.toFixed(4)}</p>
+                        <h4 style="margin: 1.5rem 0 1rem 0;">🏆 5 Locais Mais Próximos:</h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
                     `;
+                    
+                    locaisProximos.forEach((local, index) => {
+                        const icone = local.categoria === 'monumentos' ? '🏛️' : '🌳';
+                        const distanciaFormatada = local.dist < 1 ? `${(local.dist * 1000).toFixed(0)}m` : `${local.dist.toFixed(1)}km`;
+                        const medalha = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `${index + 1}º`;
+                        
+                        conteudo += `
+                            <div style="background: rgba(255,255,255,0.2); padding: 1rem; border-radius: 10px; text-align: center;">
+                                <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">${medalha} ${icone}</div>
+                                <strong>${local.nome}</strong><br>
+                                <small style="color: #e74c3c; font-weight: bold;">${distanciaFormatada}</small><br>
+                                <small style="opacity: 0.8;">${local.preco === 'gratuito' ? '🆓 Gratuito' : '💵 Pago'}</small>
+                            </div>
+                        `;
+                    });
+                    
+                    conteudo += '</div><p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.7;">Use os filtros acima para refinar a busca</p>';
+                    
+                    statsContent.innerHTML = conteudo;
                     statsDiv.style.display = 'block';
                     statsDiv.scrollIntoView({ behavior: 'smooth' });
                     

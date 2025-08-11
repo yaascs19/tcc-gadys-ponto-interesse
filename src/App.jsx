@@ -144,7 +144,71 @@ function App() {
   }
 
   if (currentPage === 'admin' && userType === 'adm') {
-    return <AdminPanel />
+    return (
+      <div className={`app ${darkMode ? 'dark-mode' : ''}`}>
+        <header className="header">
+          <nav className="nav">
+            <img src="/logo.png" alt="GADYS" className="logo" style={{height: '40px'}} />
+            <div style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
+              <button 
+                onClick={(e) => {e.preventDefault(); toggleDarkMode()}} 
+                style={{background: 'none', border: 'none', color: 'white', fontSize: '1.5rem', cursor: 'pointer'}}
+              >
+                {darkMode ? '☀️' : '🌙'}
+              </button>
+              <div className="hamburger" onClick={() => document.querySelector('.nav-links').classList.toggle('active')}>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+            <div className="nav-overlay" onClick={() => document.querySelector('.nav-links').classList.remove('active')}></div>
+            <ul className="nav-links" style={{paddingTop: '5rem', justifyContent: 'flex-start', gap: '2rem'}}>
+              <li><a href="#" onClick={(e) => {e.preventDefault(); setCurrentPage('home'); document.querySelector('.nav-links').classList.remove('active')}}>Início</a></li>
+              <li className="dropdown">
+                <a href="#features" onClick={(e) => {e.preventDefault(); document.getElementById('features')?.scrollIntoView({behavior: 'smooth'})}}>Estados Brasileiros ▼</a>
+                <div className="dropdown-content">
+                  <a href="#">Acre</a>
+                  <a href="#">Alagoas</a>
+                  <a href="#">Amapá</a>
+                  <a href="/amazonas.html">Amazonas</a>
+                  <a href="#">Bahia</a>
+                  <a href="#">Ceará</a>
+                  <a href="#">Distrito Federal</a>
+                  <a href="#">Espírito Santo</a>
+                  <a href="#">Goiás</a>
+                  <a href="#">Maranhão</a>
+                  <a href="#">Mato Grosso</a>
+                  <a href="#">Mato Grosso do Sul</a>
+                  <a href="#">Minas Gerais</a>
+                  <a href="#">Pará</a>
+                  <a href="#">Paraíba</a>
+                  <a href="#">Paraná</a>
+                  <a href="#">Pernambuco</a>
+                  <a href="#">Piauí</a>
+                  <a href="#">Rio de Janeiro</a>
+                  <a href="#">Rio Grande do Norte</a>
+                  <a href="#">Rio Grande do Sul</a>
+                  <a href="#">Rondônia</a>
+                  <a href="#">Roraima</a>
+                  <a href="#">Santa Catarina</a>
+                  <a href="#">São Paulo</a>
+                  <a href="#">Sergipe</a>
+                  <a href="#">Tocantins</a>
+                </div>
+              </li>
+              <li><a href="/perfil.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Meu Perfil</a></li>
+              <li><a href="/mapa.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Mapa</a></li>
+              <li><a href="/sobre.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Sobre</a></li>
+              <li><a href="/contato.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Contato</a></li>
+              <li><a href="#" onClick={(e) => {e.preventDefault(); setCurrentPage('admin'); document.querySelector('.nav-links').classList.remove('active')}}>Administração</a></li>
+              <li><a href="#" onClick={(e) => {e.preventDefault(); handleLogout(); document.querySelector('.nav-links').classList.remove('active')}}>Logout</a></li>
+            </ul>
+          </nav>
+        </header>
+        <AdminPanel />
+      </div>
+    )
   }
 
   return (

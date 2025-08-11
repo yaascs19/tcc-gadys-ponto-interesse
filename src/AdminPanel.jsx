@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import './AdminPanel.css'
-import AdminNavbar from './AdminNavbar'
 
 function AdminPanel() {
   const [expandedCard, setExpandedCard] = useState(null)
@@ -425,9 +424,7 @@ function AdminPanel() {
   }
 
   return (
-    <div>
-      <AdminNavbar />
-      <div className="admin-panel">
+    <div className="admin-panel">
       <div className="admin-header">
         <h1>Painel Administrativo</h1>
         <div className="admin-tabs">
@@ -488,15 +485,50 @@ function AdminPanel() {
       )}
       
       {activeTab === 'locations' && (
-        <div style={{textAlign: 'center', marginBottom: '2rem'}}>
+        <div style={{textAlign: 'center', marginBottom: '2rem', display: 'flex', gap: '1.5rem', justifyContent: 'center', flexWrap: 'wrap'}}>
           <select 
             value={locationFilter}
             onChange={(e) => setLocationFilter(e.target.value)}
-            style={{padding: '0.8rem 1.5rem', borderRadius: '8px', border: '1px solid #ddd', fontSize: '1rem', minWidth: '200px'}}
+            style={{
+              padding: '1rem 1.5rem',
+              borderRadius: '15px',
+              border: '2px solid #667eea',
+              fontSize: '1rem',
+              minWidth: '220px',
+              background: 'linear-gradient(135deg, #f8f9fa, #ffffff)',
+              color: '#2c3e50',
+              fontWeight: '500',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              boxShadow: '0 4px 15px rgba(102, 126, 234, 0.1)',
+              outline: 'none'
+            }}
+            onFocus={(e) => e.target.style.boxShadow = '0 6px 20px rgba(102, 126, 234, 0.3)'}
+            onBlur={(e) => e.target.style.boxShadow = '0 4px 15px rgba(102, 126, 234, 0.1)'}
           >
-            <option value="">Todas as categorias</option>
+            <option value="">Visite Lugares</option>
             <option value="monumentos">🏛️ Monumentos</option>
             <option value="natureza">🌳 Natureza</option>
+          </select>
+          <select 
+            style={{
+              padding: '1rem 1.5rem',
+              borderRadius: '15px',
+              border: '2px solid #28a745',
+              fontSize: '1rem',
+              minWidth: '220px',
+              background: 'linear-gradient(135deg, #f8f9fa, #ffffff)',
+              color: '#2c3e50',
+              fontWeight: '500',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              boxShadow: '0 4px 15px rgba(40, 167, 69, 0.1)',
+              outline: 'none'
+            }}
+            onFocus={(e) => e.target.style.boxShadow = '0 6px 20px rgba(40, 167, 69, 0.3)'}
+            onBlur={(e) => e.target.style.boxShadow = '0 4px 15px rgba(40, 167, 69, 0.1)'}
+          >
+            <option value="">Curiosidades</option>
             <option value="gastronomia">🍽️ Gastronomia</option>
             <option value="cultura">🎨 Cultura</option>
           </select>
@@ -771,7 +803,6 @@ function AdminPanel() {
             </div>
           </div>
         ))}
-      </div>
       </div>
     </div>
   )
