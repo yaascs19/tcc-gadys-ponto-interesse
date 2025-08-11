@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import './AdminPanel.css'
+import AdminNavbar from './AdminNavbar'
 
 function AdminPanel() {
   const [expandedCard, setExpandedCard] = useState(null)
@@ -14,6 +15,7 @@ function AdminPanel() {
   const [siteLocations, setSiteLocations] = useState([])
   const [trashedLocations, setTrashedLocations] = useState([])
   const [contactMessages, setContactMessages] = useState([])
+  const [locationFilter, setLocationFilter] = useState('')
   
   const loadUsers = async () => {
     try {
@@ -23,7 +25,9 @@ function AdminPanel() {
         setUserAccess(users)
       }
     } catch (error) {
-      console.error('Erro ao carregar usuários:', error)
+      // Carregar usuários do localStorage se não conseguir do servidor
+      const localUsers = JSON.parse(localStorage.getItem('registeredUsers')) || []
+      setUserAccess(localUsers)
     }
   }
 
@@ -73,7 +77,9 @@ function AdminPanel() {
         setApprovedLocations(approved)
       }
     } catch (error) {
-      console.error('Erro ao carregar locais aprovados:', error)
+      // Carregar locais aprovados do localStorage
+      const approved = JSON.parse(localStorage.getItem('approvedLocations')) || []
+      setApprovedLocations(approved)
     }
   }
 
@@ -85,7 +91,41 @@ function AdminPanel() {
         setSiteLocations(locais)
       }
     } catch (error) {
-      console.error('Erro ao carregar locais do site:', error)
+      // Carregar todos os locais (originais + adicionados)
+      const locaisAdicionados = JSON.parse(localStorage.getItem('locaisAdicionados')) || []
+      const approvedLocations = JSON.parse(localStorage.getItem('approvedLocations')) || []
+      
+      // Locais originais do site
+      const locaisOriginais = [
+        {id: 'teatro-amazonas', nome: 'Teatro Amazonas', categoria: 'monumentos', cidade: 'Manaus', estado: 'AM', descricao: 'Majestoso teatro construído durante o período áureo da borracha'},
+        {id: 'forte-sao-jose', nome: 'Forte de São José', categoria: 'monumentos', cidade: 'Manaus', estado: 'AM', descricao: 'Fortaleza histórica que marca o início da colonização de Manaus'},
+        {id: 'palacio-justica', nome: 'Palácio da Justiça', categoria: 'monumentos', cidade: 'Manaus', estado: 'AM', descricao: 'Edifício histórico com arquitetura colonial preservada'},
+        {id: 'mercado-municipal', nome: 'Mercado Municipal', categoria: 'monumentos', cidade: 'Manaus', estado: 'AM', descricao: 'Mercado histórico inspirado no mercado Les Halles de Paris'},
+        {id: 'igreja-sao-sebastiao', nome: 'Igreja de São Sebastião', categoria: 'monumentos', cidade: 'Manaus', estado: 'AM', descricao: 'Igreja histórica com arquitetura colonial e importância religiosa'},
+        {id: 'palacio-rio-negro', nome: 'Palácio Rio Negro', categoria: 'monumentos', cidade: 'Manaus', estado: 'AM', descricao: 'Antiga residência dos governadores, hoje centro cultural'},
+        {id: 'floresta-amazonica', nome: 'Floresta Amazônica', categoria: 'natureza', cidade: 'Amazonas', estado: 'AM', descricao: 'A maior floresta tropical do mundo com biodiversidade única'},
+        {id: 'encontro-aguas', nome: 'Encontro das Águas', categoria: 'natureza', cidade: 'Manaus', estado: 'AM', descricao: 'Fenômeno natural onde os rios Negro e Solimões se encontram'},
+        {id: 'parque-anavilhanas', nome: 'Parque Nacional de Anavilhanas', categoria: 'natureza', cidade: 'Novo Airão', estado: 'AM', descricao: 'Maior arquipélago fluvial do mundo com rica biodiversidade'},
+        {id: 'reserva-mamiraui', nome: 'Reserva Mamirauá', categoria: 'natureza', cidade: 'Tefé', estado: 'AM', descricao: 'Maior reserva de várzea do mundo com fauna única'},
+        {id: 'parque-jau', nome: 'Parque Nacional do Jaú', categoria: 'natureza', cidade: 'Novo Airão', estado: 'AM', descricao: 'Uma das maiores unidades de conservação da Amazônia'},
+        {id: 'rio-amazonas', nome: 'Rio Amazonas', categoria: 'natureza', cidade: 'Amazonas', estado: 'AM', descricao: 'O maior rio do mundo em volume de água e extensão'},
+        {id: 'acai', nome: 'Açaí', categoria: 'gastronomia', cidade: 'Amazonas', estado: 'AM', descricao: 'Fruto amazônico rico em antioxidantes e energia'},
+        {id: 'tucuma', nome: 'Tucumã', categoria: 'gastronomia', cidade: 'Amazonas', estado: 'AM', descricao: 'Fruto amazônico tradicional consumido com farinha'},
+        {id: 'pirarucu', nome: 'Pirarucu', categoria: 'gastronomia', cidade: 'Amazonas', estado: 'AM', descricao: 'Peixe gigante da Amazônia, considerado o bacalhau brasileiro'},
+        {id: 'cupuacu', nome: 'Cupuaçu', categoria: 'gastronomia', cidade: 'Amazonas', estado: 'AM', descricao: 'Fruto amazônico usado em doces e sucos'},
+        {id: 'tacaca', nome: 'Tacacá', categoria: 'gastronomia', cidade: 'Manaus', estado: 'AM', descricao: 'Prato típico amazônico com tucumã e camarão'},
+        {id: 'farinha-mandioca', nome: 'Farinha de Mandioca', categoria: 'gastronomia', cidade: 'Amazonas', estado: 'AM', descricao: 'Ingrediente básico da culinária amazônica'},
+        {id: 'festival-parintins', nome: 'Festival de Parintins', categoria: 'cultura', cidade: 'Parintins', estado: 'AM', descricao: 'Maior festival folclórico do Brasil com bois Garantido e Caprichoso'},
+        {id: 'lendas-amazonicas', nome: 'Lendas Amazônicas', categoria: 'cultura', cidade: 'Amazonas', estado: 'AM', descricao: 'Rica mitologia com Curupira, Boto, Iara e outras lendas'},
+        {id: 'artesanato-indigena', nome: 'Artesanato Indígena', categoria: 'cultura', cidade: 'Amazonas', estado: 'AM', descricao: 'Arte tradicional dos povos indígenas amazônicos'},
+        {id: 'ciranda-amazonica', nome: 'Ciranda Amazônica', categoria: 'cultura', cidade: 'Amazonas', estado: 'AM', descricao: 'Dança folclórica tradicional da região Norte'},
+        {id: 'carimbo', nome: 'Carimbó', categoria: 'cultura', cidade: 'Amazonas', estado: 'AM', descricao: 'Dança e ritmo musical típico da Amazônia'},
+        {id: 'rituais-xamanicos', nome: 'Rituais Xamânicos', categoria: 'cultura', cidade: 'Amazonas', estado: 'AM', descricao: 'Práticas espirituais tradicionais dos povos amazônicos'}
+      ]
+      
+      // Combinar todos os locais
+      const todosLocais = [...locaisOriginais, ...locaisAdicionados, ...approvedLocations]
+      setSiteLocations(todosLocais)
     }
   }
 
@@ -139,28 +179,27 @@ function AdminPanel() {
       let approvedLocations = JSON.parse(localStorage.getItem('approvedLocations')) || []
       approvedLocations.push(locationToApprove)
       localStorage.setItem('approvedLocations', JSON.stringify(approvedLocations))
+      setApprovedLocations([...approvedLocations])
       
-      // Adiciona às categorias do Amazonas se for do AM
-      if (locationToApprove.city.toLowerCase().includes('am') || locationToApprove.city.toLowerCase().includes('amazonas')) {
-        let locaisAdicionados = JSON.parse(localStorage.getItem('locaisAdicionados')) || []
-        
-        const novoLocal = {
-          nome: locationToApprove.name,
-          cidade: locationToApprove.city.split(',')[0],
-          estado: 'AM',
-          categoria: locationToApprove.category,
-          descricao: locationToApprove.description,
-          imagem: locationToApprove.imagem || '/minha-imagem.jpg',
-          localizacao: locationToApprove.localizacao,
-          horario: locationToApprove.horario,
-          preco: locationToApprove.preco,
-          infoAdicional: locationToApprove.infoAdicional,
-          id: locationToApprove.id
-        }
-        
-        locaisAdicionados.push(novoLocal)
-        localStorage.setItem('locaisAdicionados', JSON.stringify(locaisAdicionados))
+      // Adiciona às categorias correspondentes
+      let locaisAdicionados = JSON.parse(localStorage.getItem('locaisAdicionados')) || []
+      
+      const novoLocal = {
+        nome: locationToApprove.name,
+        cidade: locationToApprove.city.split(',')[0],
+        estado: locationToApprove.city.split(',')[1]?.trim() || 'BR',
+        categoria: locationToApprove.category,
+        descricao: locationToApprove.description,
+        imagem: locationToApprove.imageUrl || locationToApprove.imagem || '/minha-imagem.jpg',
+        localizacao: locationToApprove.localizacao,
+        horario: locationToApprove.horario,
+        preco: locationToApprove.preco,
+        infoAdicional: locationToApprove.infoAdicional,
+        id: locationToApprove.id
       }
+      
+      locaisAdicionados.push(novoLocal)
+      localStorage.setItem('locaisAdicionados', JSON.stringify(locaisAdicionados))
       
       setPendingLocations(updatedLocations)
       localStorage.setItem('pendingLocations', JSON.stringify(updatedLocations))
@@ -190,20 +229,26 @@ function AdminPanel() {
   }
 
   const handleRemove = (id) => {
-    if (confirm('Tem certeza que deseja remover este local?')) {
+    if (confirm('Tem certeza que deseja mover este local para a lixeira?')) {
       const locationToRemove = approvedLocations.find(location => location.id === id)
-      const updatedApproved = approvedLocations.filter(location => location.id !== id)
       
+      // Mover para lixeira
+      let currentTrash = JSON.parse(localStorage.getItem('trashedLocations')) || []
+      const updatedTrash = [...currentTrash, {...locationToRemove, trashedAt: new Date().toLocaleString('pt-BR')}]
+      setTrashedLocations(updatedTrash)
+      localStorage.setItem('trashedLocations', JSON.stringify(updatedTrash))
+      
+      // Remover de aprovados
+      const updatedApproved = approvedLocations.filter(location => location.id !== id)
       setApprovedLocations(updatedApproved)
       localStorage.setItem('approvedLocations', JSON.stringify(updatedApproved))
       
-      if (locationToRemove && (locationToRemove.city.toLowerCase().includes('am') || locationToRemove.city.toLowerCase().includes('amazonas'))) {
-        let locaisAdicionados = JSON.parse(localStorage.getItem('locaisAdicionados')) || []
-        locaisAdicionados = locaisAdicionados.filter(local => local.nome !== locationToRemove.name)
-        localStorage.setItem('locaisAdicionados', JSON.stringify(locaisAdicionados))
-      }
+      // Remover de locaisAdicionados
+      let locaisAdicionados = JSON.parse(localStorage.getItem('locaisAdicionados')) || []
+      locaisAdicionados = locaisAdicionados.filter(local => local.id !== id || local.nome !== locationToRemove.name)
+      localStorage.setItem('locaisAdicionados', JSON.stringify(locaisAdicionados))
       
-      alert('Local removido com sucesso!')
+      alert('Local movido para lixeira!')
     }
   }
 
@@ -281,42 +326,51 @@ function AdminPanel() {
         }
       } catch (error) {
         const locationToTrash = siteLocations.find(location => location.id === id)
-        const updatedTrash = [...trashedLocations, {...locationToTrash, trashedAt: new Date().toLocaleString('pt-BR')}]
+        
+        // Mover para lixeira
+        let currentTrash = JSON.parse(localStorage.getItem('trashedLocations')) || []
+        const updatedTrash = [...currentTrash, {...locationToTrash, trashedAt: new Date().toLocaleString('pt-BR')}]
         setTrashedLocations(updatedTrash)
         localStorage.setItem('trashedLocations', JSON.stringify(updatedTrash))
         
+        // Remover de locaisAdicionados
+        let locaisAdicionados = JSON.parse(localStorage.getItem('locaisAdicionados')) || []
+        locaisAdicionados = locaisAdicionados.filter(local => local.id !== id)
+        localStorage.setItem('locaisAdicionados', JSON.stringify(locaisAdicionados))
+        
+        // Remover de approvedLocations
+        let approvedLocations = JSON.parse(localStorage.getItem('approvedLocations')) || []
+        approvedLocations = approvedLocations.filter(local => local.id !== id)
+        localStorage.setItem('approvedLocations', JSON.stringify(approvedLocations))
+        
+        // Atualizar lista na tela
         const updatedLocations = siteLocations.filter(location => location.id !== id)
         setSiteLocations(updatedLocations)
         
-        alert('Local movido para lixeira localmente!')
+        alert('Local movido para lixeira!')
       }
     }
   }
 
-  const handleRestoreLocation = async (id) => {
-    try {
-      const response = await fetch(`http://localhost:3001/api/locais/restaurar/${id}`, {
-        method: 'POST'
-      })
-      
-      if (response.ok) {
-        alert('Local restaurado com sucesso!')
-        loadSiteLocations()
-        loadTrashedLocations()
-      } else {
-        alert('Erro ao restaurar local')
-      }
-    } catch (error) {
+  const handleRestoreLocation = (id) => {
+    if (confirm('Tem certeza que deseja restaurar este local?')) {
       const locationToRestore = trashedLocations.find(location => location.id === id)
+      
+      // Remover da lixeira
       const updatedTrash = trashedLocations.filter(location => location.id !== id)
       setTrashedLocations(updatedTrash)
       localStorage.setItem('trashedLocations', JSON.stringify(updatedTrash))
       
-      const restoredLocation = {...locationToRestore}
-      delete restoredLocation.trashedAt
-      setSiteLocations([...siteLocations, restoredLocation])
+      // Adicionar de volta aos locais
+      let locaisAdicionados = JSON.parse(localStorage.getItem('locaisAdicionados')) || []
+      const { trashedAt, ...cleanLocation } = locationToRestore
+      locaisAdicionados.push(cleanLocation)
+      localStorage.setItem('locaisAdicionados', JSON.stringify(locaisAdicionados))
       
-      alert('Local restaurado localmente!')
+      // Atualizar lista de locais do site
+      loadSiteLocations()
+      
+      alert('Local restaurado com sucesso!')
     }
   }
 
@@ -329,8 +383,51 @@ function AdminPanel() {
     }
   }
 
+  const responderMensagem = (id) => {
+    const resposta = prompt('Digite sua resposta:')
+    if (resposta && resposta.trim()) {
+      const mensagens = JSON.parse(localStorage.getItem('mensagensContato')) || []
+      const mensagemIndex = mensagens.findIndex(msg => msg.id === id)
+      
+      if (mensagemIndex !== -1) {
+        mensagens[mensagemIndex].resposta = resposta.trim()
+        mensagens[mensagemIndex].status = 'respondida'
+        localStorage.setItem('mensagensContato', JSON.stringify(mensagens))
+        
+        // Adicionar à lista de perguntas do usuário
+        const userName = mensagens[mensagemIndex].userName
+        let perguntasUsuario = JSON.parse(localStorage.getItem('perguntasUsuario')) || {}
+        if (!perguntasUsuario[userName]) {
+          perguntasUsuario[userName] = []
+        }
+        
+        // Atualizar pergunta existente ou adicionar nova
+        const perguntaIndex = perguntasUsuario[userName].findIndex(p => p.id === id)
+        if (perguntaIndex !== -1) {
+          perguntasUsuario[userName][perguntaIndex].resposta = resposta.trim()
+          perguntasUsuario[userName][perguntaIndex].status = 'respondida'
+        } else {
+          perguntasUsuario[userName].push({
+            pergunta: mensagens[mensagemIndex].mensagem,
+            resposta: resposta.trim(),
+            assunto: mensagens[mensagemIndex].assunto,
+            data: new Date().toLocaleString('pt-BR'),
+            status: 'respondida',
+            id: id
+          })
+        }
+        
+        localStorage.setItem('perguntasUsuario', JSON.stringify(perguntasUsuario))
+        loadContactMessages()
+        alert('Resposta enviada com sucesso!')
+      }
+    }
+  }
+
   return (
-    <div className="admin-panel">
+    <div>
+      <AdminNavbar />
+      <div className="admin-panel">
       <div className="admin-header">
         <h1>Painel Administrativo</h1>
         <div className="admin-tabs">
@@ -356,7 +453,7 @@ function AdminPanel() {
             className={`tab-btn ${activeTab === 'ranking' ? 'active' : ''}`}
             onClick={() => setActiveTab('ranking')}
           >
-            Ranking ({rankings.length})
+            Ranking de Locais
           </button>
           <button 
             className={`tab-btn ${activeTab === 'locations' ? 'active' : ''}`}
@@ -374,7 +471,7 @@ function AdminPanel() {
             className={`tab-btn ${activeTab === 'messages' ? 'active' : ''}`}
             onClick={() => setActiveTab('messages')}
           >
-            Mensagens ({contactMessages.length})
+            Mensagens ({contactMessages.filter(m => m.status === 'nova').length})
           </button>
         </div>
       </div>
@@ -390,7 +487,99 @@ function AdminPanel() {
         </div>
       )}
       
+      {activeTab === 'locations' && (
+        <div style={{textAlign: 'center', marginBottom: '2rem'}}>
+          <select 
+            value={locationFilter}
+            onChange={(e) => setLocationFilter(e.target.value)}
+            style={{padding: '0.8rem 1.5rem', borderRadius: '8px', border: '1px solid #ddd', fontSize: '1rem', minWidth: '200px'}}
+          >
+            <option value="">Todas as categorias</option>
+            <option value="monumentos">🏛️ Monumentos</option>
+            <option value="natureza">🌳 Natureza</option>
+            <option value="gastronomia">🍽️ Gastronomia</option>
+            <option value="cultura">🎨 Cultura</option>
+          </select>
+        </div>
+      )}
+      
       <div className="admin-grid">
+        {activeTab === 'ranking' && (() => {
+          // Calcular ranking dos locais mais bem avaliados
+          const avaliacoes = JSON.parse(localStorage.getItem('avaliacoes')) || {};
+          const rankingLocais = Object.entries(avaliacoes)
+            .map(([local, ratings]) => {
+              const media = ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length;
+              return {
+                nome: local,
+                media: media.toFixed(1),
+                totalAvaliacoes: ratings.length,
+                estrelas: '★'.repeat(Math.floor(media)) + '☆'.repeat(5 - Math.floor(media))
+              };
+            })
+            .filter(local => local.totalAvaliacoes > 0)
+            .sort((a, b) => b.media - a.media);
+          
+          return rankingLocais.length === 0 ? (
+            <div style={{textAlign: 'center', padding: '2rem', color: '#666'}}>
+              <p>Nenhuma avaliação encontrada ainda.</p>
+            </div>
+          ) : (
+            rankingLocais.map((local, index) => (
+              <div key={index} className="admin-card">
+                <div className="card-header">
+                  <h3>#{index + 1} {local.nome}</h3>
+                  <span className={`category-badge ${index === 0 ? 'approved' : index === 1 ? 'pending' : ''}`}>
+                    {index === 0 ? '🥇 1º Lugar' : index === 1 ? '🥈 2º Lugar' : index === 2 ? '🥉 3º Lugar' : `${index + 1}º Lugar`}
+                  </span>
+                </div>
+                
+                <div className="card-info">
+                  <p><strong>Média:</strong> {local.media} ({local.estrelas})</p>
+                  <p><strong>Total de Avaliações:</strong> {local.totalAvaliacoes}</p>
+                  <p><strong>Posição:</strong> {index + 1}º lugar no ranking</p>
+                </div>
+              </div>
+            ))
+          );
+        })()}
+        {activeTab === 'approved' && approvedLocations.map((location, index) => (
+          <div key={location.id || index} className={`admin-card ${expandedCard === `approved-${location.id}` ? 'expanded' : ''}`}>
+            <div className="card-header">
+              <h3>{location.name || location.nome}</h3>
+              <span className="category-badge approved">{location.category || location.categoria}</span>
+            </div>
+            
+            <div className="card-info">
+              <p><strong>Cidade:</strong> {location.city || location.cidade}</p>
+              <p><strong>Aprovado em:</strong> {location.approvedAt || 'N/A'}</p>
+              <p><strong>Categoria:</strong> {location.category || location.categoria}</p>
+            </div>
+
+            {expandedCard === `approved-${location.id}` && (
+              <div className="card-details">
+                <p><strong>Descrição:</strong> {location.description || location.descricao}</p>
+                <p><strong>Localização:</strong> {location.localizacao || 'N/A'}</p>
+              </div>
+            )}
+
+            <div className="card-actions">
+              <button 
+                className="expand-btn"
+                onClick={() => toggleExpand(`approved-${location.id}`)}
+              >
+                {expandedCard === `approved-${location.id}` ? 'Recolher' : 'Expandir'}
+              </button>
+              <button 
+                className="reject-btn"
+                onClick={() => handleRemove(location.id)}
+              >
+                Remover
+              </button>
+            </div>
+          </div>
+        ))}
+        
         {activeTab === 'pending' && pendingLocations.map(location => (
           <div key={location.id} className={`admin-card ${expandedCard === location.id ? 'expanded' : ''}`}>
             <div className="card-header">
@@ -434,7 +623,117 @@ function AdminPanel() {
           </div>
         ))}
         
-        {activeTab === 'messages' && contactMessages.map((message) => (
+        {activeTab === 'locations' && siteLocations
+          .filter(location => !locationFilter || (location.categoria || location.category) === locationFilter)
+          .map((location, index) => (
+          <div key={location.id || index} className={`admin-card ${expandedCard === location.id ? 'expanded' : ''}`}>
+            <div className="card-header">
+              <h3>{location.nome || location.name}</h3>
+              <span className="category-badge">{location.categoria || location.category}</span>
+            </div>
+            
+            <div className="card-info">
+              <p><strong>Cidade:</strong> {location.cidade || location.city}</p>
+              <p><strong>Estado:</strong> {location.estado}</p>
+              <p><strong>Categoria:</strong> {location.categoria || location.category}</p>
+            </div>
+
+            {expandedCard === location.id && (
+              <div className="card-details">
+                <p><strong>Descrição:</strong> {location.descricao || location.description}</p>
+                <p><strong>Localização:</strong> {location.localizacao || 'N/A'}</p>
+                <p><strong>Horário:</strong> {location.horario || 'N/A'}</p>
+                <p><strong>Preço:</strong> {location.preco || 'N/A'}</p>
+              </div>
+            )}
+
+            <div className="card-actions">
+              <button 
+                className="expand-btn"
+                onClick={() => toggleExpand(location.id)}
+              >
+                {expandedCard === location.id ? 'Recolher' : 'Expandir'}
+              </button>
+              <button 
+                className="reject-btn"
+                onClick={() => handleRemoveLocation(location.id)}
+              >
+                Excluir Local
+              </button>
+            </div>
+          </div>
+        ))}
+        
+        {activeTab === 'users' && userAccess.map((user, index) => (
+          <div key={index} className={`admin-card ${expandedCard === `user-${index}` ? 'expanded' : ''}`}>
+            <div className="card-header">
+              <h3>{user.nome || user.userName || 'Usuário'}</h3>
+              <span className={`category-badge ${user.tipoUsuario === 'adm' ? 'approved' : 'pending'}`}>
+                {user.tipoUsuario === 'adm' ? 'Admin' : 'Usuário'}
+              </span>
+            </div>
+            
+            <div className="card-info">
+              <p><strong>Email:</strong> {user.email}</p>
+              <p><strong>Tipo:</strong> {user.tipoUsuario || user.userType}</p>
+              <p><strong>Cadastrado:</strong> {user.dataCadastro || 'N/A'}</p>
+            </div>
+
+            <div className="card-actions">
+              <button 
+                className="reject-btn"
+                onClick={() => handleRemoveUser(user.id, index)}
+              >
+                Excluir
+              </button>
+            </div>
+          </div>
+        ))}
+        
+        {activeTab === 'trash' && trashedLocations.map((location, index) => (
+          <div key={location.id || index} className={`admin-card ${expandedCard === `trash-${location.id}` ? 'expanded' : ''}`}>
+            <div className="card-header">
+              <h3>{location.nome || location.name}</h3>
+              <span className="category-badge pending">{location.categoria || location.category}</span>
+            </div>
+            
+            <div className="card-info">
+              <p><strong>Cidade:</strong> {location.cidade || location.city}</p>
+              <p><strong>Excluído em:</strong> {location.trashedAt}</p>
+              <p><strong>Categoria:</strong> {location.categoria || location.category}</p>
+            </div>
+
+            {expandedCard === `trash-${location.id}` && (
+              <div className="card-details">
+                <p><strong>Descrição:</strong> {location.descricao || location.description}</p>
+                <p><strong>Localização:</strong> {location.localizacao || 'N/A'}</p>
+              </div>
+            )}
+
+            <div className="card-actions">
+              <button 
+                className="expand-btn"
+                onClick={() => toggleExpand(`trash-${location.id}`)}
+              >
+                {expandedCard === `trash-${location.id}` ? 'Recolher' : 'Expandir'}
+              </button>
+              <button 
+                className="approve-btn"
+                onClick={() => handleRestoreLocation(location.id)}
+              >
+                Restaurar
+              </button>
+              <button 
+                className="reject-btn"
+                onClick={() => handlePermanentDelete(location.id)}
+              >
+                Excluir Permanentemente
+              </button>
+            </div>
+          </div>
+        ))}
+        
+        {activeTab === 'messages' && contactMessages.filter(message => message.status === 'nova').map((message) => (
           <div key={message.id} className={`admin-card ${expandedCard === message.id ? 'expanded' : ''}`}>
             <div className="card-header">
               <h3>{message.nome}</h3>
@@ -463,9 +762,16 @@ function AdminPanel() {
               >
                 {expandedCard === message.id ? 'Recolher' : 'Ver Mensagem'}
               </button>
+              <button 
+                className="approve-btn"
+                onClick={() => responderMensagem(message.id)}
+              >
+                Responder
+              </button>
             </div>
           </div>
         ))}
+      </div>
       </div>
     </div>
   )

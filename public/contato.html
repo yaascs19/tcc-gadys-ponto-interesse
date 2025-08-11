@@ -300,7 +300,7 @@
                 </div>
                 <div class="nav-overlay"></div>
                 <ul class="nav-links">
-                    <li><a onclick="localStorage.setItem('isLoggedIn', 'true'); window.location.href='/'" href="/" onclick="window.location.href='/'">Início</a></li>
+                    <li><a href="/">Início</a></li>
                     <li class="dropdown">
                         <a href="#estados">Estados Brasileiros ▼</a>
                         <div class="dropdown-content">
@@ -333,11 +333,11 @@
                             <a href="#">Tocantins</a>
                         </div>
                     </li>
-
                     <li><a href="/perfil.html">Meu Perfil</a></li>
+                    <li><a href="/mapa.html">Mapa</a></li>
                     <li><a href="/sobre.html">Sobre</a></li>
                     <li><a href="/contato.html">Contato</a></li>
-
+                    <li><a href="/admin">Administração</a></li>
                 </ul>
             </nav>
         </header>
@@ -446,6 +446,7 @@
             const email = document.getElementById('email').value;
             const assunto = document.getElementById('assunto').value;
             const mensagem = document.getElementById('mensagem').value;
+            const userName = localStorage.getItem('userName') || nome;
             
             const novaMensagem = {
                 id: Date.now(),
@@ -454,12 +455,31 @@
                 assunto: assunto,
                 mensagem: mensagem,
                 data: new Date().toLocaleString('pt-BR'),
-                status: 'nova'
+                status: 'nova',
+                userName: userName,
+                resposta: null
             };
             
             let mensagens = JSON.parse(localStorage.getItem('mensagensContato')) || [];
             mensagens.push(novaMensagem);
             localStorage.setItem('mensagensContato', JSON.stringify(mensagens));
+            
+            // Adicionar à lista de perguntas do usuário como pendente
+            let perguntasUsuario = JSON.parse(localStorage.getItem('perguntasUsuario')) || {};
+            if (!perguntasUsuario[userName]) {
+                perguntasUsuario[userName] = [];
+            }
+            
+            perguntasUsuario[userName].push({
+                pergunta: mensagem,
+                resposta: 'Aguardando resposta...',
+                assunto: assunto,
+                data: new Date().toLocaleString('pt-BR'),
+                status: 'pendente',
+                id: novaMensagem.id
+            });
+            
+            localStorage.setItem('perguntasUsuario', JSON.stringify(perguntasUsuario));
             
             alert('Mensagem enviada com sucesso!');
             document.querySelector('form').reset();

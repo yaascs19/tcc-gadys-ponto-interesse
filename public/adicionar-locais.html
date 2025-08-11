@@ -310,44 +310,13 @@
                 </div>
                 <div class="nav-overlay"></div>
                 <ul class="nav-links">
-                    <li><a onclick="localStorage.setItem('isLoggedIn', 'true'); window.location.href='/'" href="/" onclick="window.location.href='/'">Início</a></li>
-                    <li class="dropdown">
-                        <a href="#estados">Estados Brasileiros ▼</a>
-                        <div class="dropdown-content">
-                            <a href="#">Acre</a>
-                            <a href="#">Alagoas</a>
-                            <a href="#">Amapá</a>
-                            <a href="/amazonas.html">Amazonas</a>
-                            <a href="#">Bahia</a>
-                            <a href="#">Ceará</a>
-                            <a href="#">Distrito Federal</a>
-                            <a href="#">Espírito Santo</a>
-                            <a href="#">Goiás</a>
-                            <a href="#">Maranhão</a>
-                            <a href="#">Mato Grosso</a>
-                            <a href="#">Mato Grosso do Sul</a>
-                            <a href="#">Minas Gerais</a>
-                            <a href="#">Pará</a>
-                            <a href="#">Paraíba</a>
-                            <a href="#">Paraná</a>
-                            <a href="#">Pernambuco</a>
-                            <a href="#">Piauí</a>
-                            <a href="#">Rio de Janeiro</a>
-                            <a href="#">Rio Grande do Norte</a>
-                            <a href="#">Rio Grande do Sul</a>
-                            <a href="#">Rondônia</a>
-                            <a href="#">Roraima</a>
-                            <a href="#">Santa Catarina</a>
-                            <a href="#">São Paulo</a>
-                            <a href="#">Sergipe</a>
-                            <a href="#">Tocantins</a>
-                        </div>
-                    </li>
-                    <li><a href="/perfil.html">Meu Perfil</a></li>
+                    <li><a href="/">Início</a></li>
+                    <li><a href="/amazonas.html">Amazonas</a></li>
+                    <li><a href="/mapa.html">Mapa</a></li>
+                    <li><a href="/adicionar-locais.html">Adicionar Locais</a></li>
                     <li><a href="/perfil.html">Meu Perfil</a></li>
                     <li><a href="/sobre.html">Sobre</a></li>
                     <li><a href="/contato.html">Contato</a></li>
-
                 </ul>
             </nav>
         </header>
@@ -448,7 +417,8 @@
                 infoAdicional: document.getElementById('infoAdicional').value,
                 submittedBy: userName,
                 date: new Date().toLocaleDateString('pt-BR'),
-                coordinates: 'A definir'
+                coordinates: 'A definir',
+                status: 'pendente'
             };
             
             if (userType === 'adm') {

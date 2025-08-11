@@ -155,13 +155,14 @@
             const password = document.getElementById('password').value;
             const userType = document.getElementById('userType').value;
             
-            // Salvar dados do usuário na sessão
-            sessionStorage.setItem('userLoggedIn', 'true');
-            sessionStorage.setItem('userType', userType);
-            sessionStorage.setItem('userEmail', email);
+            // Salvar dados do usuário
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('userType', userType);
+            localStorage.setItem('userEmail', email);
+            localStorage.setItem('userName', email.split('@')[0]);
             
             // Redirecionar para página principal
-            window.location.href = '/amazonas.html';
+            window.location.href = '/';
         });
     </script>
 </body>

@@ -48,9 +48,27 @@
         }
         
         .nav-links {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 300px;
+            height: 100vh;
+            background: #1a237e;
             display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 1rem;
+            margin: 0;
+            padding: 4rem 0;
             list-style: none;
-            gap: 2rem;
+            transition: right 0.3s ease;
+            z-index: 1001;
+            overflow-y: scroll;
+        }
+        
+        .nav-links.active {
+            right: 0;
         }
         
         .nav-links a {
@@ -318,7 +336,7 @@
                 </div>
                 <div class="nav-overlay"></div>
                 <ul class="nav-links">
-                    <li><a onclick="localStorage.setItem('isLoggedIn', 'true'); window.location.href='/'" href="/" onclick="localStorage.setItem('isLoggedIn', 'true'); window.location.href='/'">Início</a></li>
+                    <li><a href="/">Início</a></li>
                     <li class="dropdown">
                         <a href="#estados">Estados Brasileiros ▼</a>
                         <div class="dropdown-content">
@@ -351,12 +369,11 @@
                             <a href="#">Tocantins</a>
                         </div>
                     </li>
-
-
                     <li><a href="/perfil.html">Meu Perfil</a></li>
+                    <li><a href="/mapa.html">Mapa</a></li>
                     <li><a href="/sobre.html">Sobre</a></li>
                     <li><a href="/contato.html">Contato</a></li>
-
+                    <li><a href="/admin">Administração</a></li>
                 </ul>
             </nav>
         </header>

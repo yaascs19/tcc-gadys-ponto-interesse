@@ -137,35 +137,7 @@ function App() {
   }
 
   if (currentPage === 'admin' && userType === 'adm') {
-    return (
-      <div className={`app ${darkMode ? 'dark-mode' : ''}`}>
-        <header className="header">
-          <nav className="nav">
-            <img src="/logo.png" alt="GADYS" className="logo" style={{height: '40px'}} />
-            <div style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
-              <button 
-                onClick={(e) => {e.preventDefault(); toggleDarkMode()}} 
-                style={{background: 'none', border: 'none', color: 'white', fontSize: '1.5rem', cursor: 'pointer'}}
-              >
-                {darkMode ? '☀️' : '🌙'}
-              </button>
-              <div className="hamburger" onClick={() => document.querySelector('.nav-links').classList.toggle('active')}>
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
-            </div>
-            <div className="nav-overlay" onClick={() => document.querySelector('.nav-links').classList.remove('active')}></div>
-            <ul className="nav-links">
-              <li><a href="#" onClick={(e) => {e.preventDefault(); setCurrentPage('home'); document.querySelector('.nav-links').classList.remove('active')}}>Voltar ao Início</a></li>
-              <li><a href="#" onClick={(e) => {e.preventDefault(); setCurrentPage('admin'); document.querySelector('.nav-links').classList.remove('active')}}>Administração</a></li>
-              <li><a href="#" onClick={(e) => {e.preventDefault(); handleLogout(); document.querySelector('.nav-links').classList.remove('active')}}>Logout</a></li>
-            </ul>
-          </nav>
-        </header>
-        <AdminPanel />
-      </div>
-    )
+    return <AdminPanel />
   }
 
   return (
@@ -187,7 +159,7 @@ function App() {
             </div>
           </div>
           <div className="nav-overlay" onClick={() => document.querySelector('.nav-links').classList.remove('active')}></div>
-          <ul className="nav-links">
+          <ul className="nav-links" style={{paddingTop: '5rem', justifyContent: 'flex-start', gap: '2rem'}}>
             <li><a href="#" onClick={(e) => {e.preventDefault(); setCurrentPage('home'); document.querySelector('.nav-links').classList.remove('active')}}>Início</a></li>
             <li className="dropdown">
               <a href="#features" onClick={(e) => {e.preventDefault(); document.getElementById('features').scrollIntoView({behavior: 'smooth'})}}>Estados Brasileiros ▼</a>

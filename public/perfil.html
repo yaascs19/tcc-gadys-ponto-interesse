@@ -320,7 +320,8 @@
             <div class="nav-overlay"></div>
             <ul class="nav-links">
                 <li><a href="/">Início</a></li>
-
+                <li><a href="/amazonas.html">Amazonas</a></li>
+                <li><a href="/mapa.html">Mapa</a></li>
                 <li><a href="/perfil.html">Meu Perfil</a></li>
                 <li><a href="/sobre.html">Sobre</a></li>
                 <li><a href="/contato.html">Contato</a></li>
@@ -380,24 +381,13 @@
                     </div>
                 </div>
 
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-number" id="statComments">0</div>
-                        <div class="stat-label">Comentários</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="statRatings">0</div>
-                        <div class="stat-label">Avaliações</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="statLocations">0</div>
-                        <div class="stat-label">Locais Enviados</div>
-                    </div>
-                </div>
+
 
                 <div class="actions">
                     <button class="btn btn-secondary" onclick="editProfile()">✏️ Editar Perfil</button>
                     <a href="/adicionar-locais.html" class="btn btn-secondary">📍 Adicionar Locais</a>
+                    <button class="btn btn-secondary" onclick="showMyQuestions()">❓ Minhas Perguntas</button>
+                    <button class="btn btn-secondary" onclick="showMyRatings()">⭐ Minhas Avaliações</button>
                     <button class="btn btn-secondary" onclick="logout()">🚪 Sair</button>
                 </div>
             </div>
@@ -413,7 +403,7 @@
         function loadProfile() {
             const userName = localStorage.getItem('userName') || 'Usuário';
             const userType = localStorage.getItem('userType') || 'usuario';
-            const userEmail = localStorage.getItem('userEmail') || 'email@exemplo.com';
+            const userEmail = localStorage.getItem('userEmail') || localStorage.getItem('email') || sessionStorage.getItem('userEmail') || 'email@exemplo.com';
             
             // Informações básicas
             document.getElementById('profileName').textContent = userName;
@@ -440,9 +430,14 @@
             // Data de cadastro (simulada)
             document.getElementById('memberSince').textContent = new Date().toLocaleDateString('pt-BR');
             
-            // Último acesso
+            // Último acesso e contador de acessos
             document.getElementById('lastAccess').textContent = new Date().toLocaleString('pt-BR');
-            document.getElementById('totalAccess').textContent = Math.floor(Math.random() * 50) + 1;
+            
+            // Incrementar contador de acessos
+            let accessCount = parseInt(localStorage.getItem('userAccessCount')) || 0;
+            accessCount++;
+            localStorage.setItem('userAccessCount', accessCount);
+            document.getElementById('totalAccess').textContent = accessCount;
             
             // Estatísticas
             const comments = JSON.parse(localStorage.getItem('placeComments')) || {};
@@ -451,8 +446,14 @@
             
             const userRatings = JSON.parse(localStorage.getItem('userRatings')) || {};
             const userRatingCount = Object.keys(userRatings).filter(key => key.startsWith(userName + '_')).length;
-            document.getElementById('statRatings').textContent = userRatingCount;
             document.getElementById('avaliacoes').textContent = userRatingCount;
+            
+            // Atualizar contador global de avaliações
+            window.updateRatingCount = function() {
+                const updatedRatings = JSON.parse(localStorage.getItem('userRatings')) || {};
+                const updatedCount = Object.keys(updatedRatings).filter(key => key.startsWith(userName + '_')).length;
+                document.getElementById('avaliacoes').textContent = updatedCount;
+            };
             
             const pendingLocations = JSON.parse(localStorage.getItem('pendingLocations')) || [];
             const userLocations = pendingLocations.filter(loc => loc.submittedBy === userName);
@@ -553,6 +554,114 @@
             }
             
             alert('Perfil atualizado com sucesso!');
+        }
+        
+        function showMyQuestions() {
+            const userName = localStorage.getItem('userName');
+            const perguntasUsuario = JSON.parse(localStorage.getItem('perguntasUsuario')) || {};
+            const minhasPerguntas = perguntasUsuario[userName] || [];
+            
+            if (minhasPerguntas.length === 0) {
+                showModal('Minhas Perguntas', '<p style="text-align: center; color: #666; font-size: 1.1rem;">Você ainda não tem perguntas respondidas.</p>');
+                return;
+            }
+            
+            let content = '<div style="max-height: 400px; overflow-y: auto;">';
+            minhasPerguntas.forEach((item, index) => {
+                const statusColor = item.status === 'pendente' ? '#f39c12' : '#27ae60';
+                const statusIcon = item.status === 'pendente' ? '⏳' : '✓';
+                const statusText = item.status === 'pendente' ? 'Aguardando resposta...' : item.resposta;
+                
+                content += `
+                    <div style="background: #f8f9fa; border-left: 4px solid ${statusColor}; padding: 1.5rem; margin-bottom: 1rem; border-radius: 8px;">
+                        <h4 style="color: #1a237e; margin-bottom: 0.5rem; font-size: 1.1rem;">${index + 1}. ${item.assunto}</h4>
+                        <p style="margin-bottom: 1rem; color: #555; line-height: 1.5;"><strong>Pergunta:</strong> ${item.pergunta}</p>
+                        <div style="background: white; padding: 1rem; border-radius: 5px; margin-bottom: 0.5rem;">
+                            <p style="color: ${statusColor}; font-weight: 600;"><span style="font-size: 1.2rem;">${statusIcon}</span> ${statusText}</p>
+                        </div>
+                        <small style="color: #888; font-size: 0.9rem;">${item.data}</small>
+                    </div>
+                `;
+            });
+            content += '</div>';
+            
+            showModal('Minhas Perguntas', content);
+        }
+        
+        function showModal(title, content) {
+            const modal = document.createElement('div');
+            modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10000; display: flex; align-items: center; justify-content: center;';
+            
+            modal.innerHTML = `
+                <div style="background: white; border-radius: 15px; padding: 2rem; max-width: 600px; width: 90%; max-height: 80%; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.3);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 2px solid #f0f0f0;">
+                        <h2 style="color: #1a237e; margin: 0; font-size: 1.5rem;">${title}</h2>
+                        <button onclick="this.closest('div').parentElement.remove()" style="background: #e74c3c; color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; font-size: 1.2rem;">×</button>
+                    </div>
+                    ${content}
+                </div>
+            `;
+            
+            modal.onclick = (e) => { if (e.target === modal) modal.remove(); };
+            document.body.appendChild(modal);
+        }
+        
+        function showMyRatings() {
+            const userName = localStorage.getItem('userName');
+            const userRatings = JSON.parse(localStorage.getItem('userRatings')) || {};
+            const myRatings = Object.entries(userRatings).filter(([key, rating]) => key.startsWith(userName + '_'));
+            
+            if (myRatings.length === 0) {
+                showModal('Minhas Avaliações', '<p style="text-align: center; color: #666; font-size: 1.1rem;">Você ainda não fez nenhuma avaliação.</p>');
+                return;
+            }
+            
+            let content = '<div style="max-height: 400px; overflow-y: auto;">';
+            myRatings.forEach(([key, rating], index) => {
+                const userName = localStorage.getItem('userName');
+                let localName = key.replace(userName + '_', '');
+                
+                // Mapear IDs antigos para nomes completos
+                const nameMap = {
+                    'teatro': 'Teatro Amazonas',
+                    'forte': 'Forte de São José',
+                    'justica': 'Palácio da Justiça',
+                    'mercado': 'Mercado Municipal',
+                    'igreja': 'Igreja de São Sebastião',
+                    'palacio': 'Palácio Rio Negro'
+                };
+                
+                localName = nameMap[localName] || localName;
+                const stars = '★'.repeat(rating) + '☆'.repeat(5 - rating);
+                const ratingColor = rating >= 4 ? '#27ae60' : rating >= 3 ? '#f39c12' : '#e74c3c';
+                
+                // Buscar comentário do usuário para este local
+                const comments = JSON.parse(localStorage.getItem('placeComments')) || {};
+                const localComments = comments[localName] || [];
+                const userComment = localComments.find(c => c.userName === userName);
+                const commentText = userComment ? userComment.comment : 'Nenhum comentário';
+                
+                content += `
+                    <div style="background: #f8f9fa; border-left: 4px solid ${ratingColor}; padding: 1.5rem; margin-bottom: 1rem; border-radius: 8px;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                            <div>
+                                <h4 style="color: #1a237e; margin-bottom: 0.5rem; font-size: 1.1rem;">${localName}</h4>
+                                <div style="font-size: 1.3rem; color: ${ratingColor};">${stars}</div>
+                            </div>
+                            <div style="text-align: center; background: ${ratingColor}; color: white; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem;">
+                                ${rating}
+                            </div>
+                        </div>
+                        <div style="background: white; padding: 1rem; border-radius: 5px; border-left: 3px solid ${ratingColor};">
+                            <strong style="color: #666; font-size: 0.9rem;">Seu comentário:</strong>
+                            <p style="margin-top: 0.5rem; color: #555; font-style: ${userComment ? 'normal' : 'italic'};">${commentText}</p>
+                        </div>
+                    </div>
+                `;
+            });
+            content += '</div>';
+            
+            showModal('Minhas Avaliações', content);
         }
         
         function logout() {
