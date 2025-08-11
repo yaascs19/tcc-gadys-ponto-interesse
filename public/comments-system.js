@@ -28,6 +28,9 @@ async function addComment(localId, buttonElement) {
         if (response.ok) {
             textarea.value = '';
             alert('✅ Comentário adicionado com sucesso! Obrigado por compartilhar sua experiência.');
+            
+            // Disparar evento para atualizar contador no perfil
+            window.dispatchEvent(new CustomEvent('commentAdded'));
         } else {
             throw new Error('Erro na API');
         }
@@ -49,6 +52,9 @@ async function addComment(localId, buttonElement) {
         localStorage.setItem('placeComments', JSON.stringify(placeComments));
         
         textarea.value = '';
-        alert('✅ Comentário salvo localmente! (Servidor indisponível)');
+        alert('✅ Comentário adicionado com sucesso!');
+        
+        // Disparar evento para atualizar contador no perfil
+        window.dispatchEvent(new CustomEvent('commentAdded'));
     }
 }

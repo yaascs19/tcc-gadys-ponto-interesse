@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GADYS - Monumentos do Amazonas</title>
-    <link rel="stylesheet" href="/hamburger-nav.css">
+    <link rel="stylesheet" href="/hamburger-nav-padronizado.css">
     <link rel="stylesheet" href="/rating-styles.css">
     <link rel="stylesheet" href="/comments-styles.css">
     <style>
@@ -289,6 +289,62 @@
         .dark-mode .footer {
             background: #0d1117;
         }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 200px;
+            max-height: 300px;
+            overflow-y: auto;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1000;
+            border-radius: 5px;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .dropdown-content a {
+            color: #333 !important;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+            color: #1a237e !important;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -343,7 +399,7 @@
                     <li><a href="/mapa.html">Mapa</a></li>
                     <li><a href="/sobre.html">Sobre</a></li>
                     <li><a href="/contato.html">Contato</a></li>
-                    <li><a href="/admin">Administração</a></li>
+
                 </ul>
             </nav>
         </header>

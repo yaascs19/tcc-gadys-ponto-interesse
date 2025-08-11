@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GADYS - Meu Perfil</title>
-    <link rel="stylesheet" href="/hamburger-nav.css">
+    <link rel="stylesheet" href="/hamburger-nav-padronizado.css">
     <style>
         * {
             margin: 0;
@@ -170,6 +170,8 @@
         .info-value {
             color: #333;
             font-weight: 500;
+            word-break: break-all;
+            overflow-wrap: break-word;
         }
         
         .stats-grid {
@@ -290,6 +292,44 @@
             background: #0d1117;
         }
         
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-content {
+            display: none !important;
+            position: absolute !important;
+            background-color: white !important;
+            min-width: 200px !important;
+            max-height: 300px !important;
+            overflow-y: auto !important;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2) !important;
+            z-index: 1000 !important;
+            border-radius: 5px !important;
+            top: 100% !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+        }
+        
+        .dropdown-content a {
+            color: #333 !important;
+            padding: 12px 16px !important;
+            text-decoration: none !important;
+            display: block !important;
+            transition: background-color 0.3s !important;
+            text-align: center !important;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+            color: #1a237e !important;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
         @media (max-width: 768px) {
             .profile-info {
                 grid-template-columns: 1fr;
@@ -320,11 +360,43 @@
             <div class="nav-overlay"></div>
             <ul class="nav-links">
                 <li><a href="/">Início</a></li>
-                <li><a href="/amazonas.html">Amazonas</a></li>
-                <li><a href="/mapa.html">Mapa</a></li>
+                <li class="dropdown">
+                    <a href="#estados">Estados Brasileiros ▼</a>
+                    <div class="dropdown-content">
+                        <a href="#">Acre</a>
+                        <a href="#">Alagoas</a>
+                        <a href="#">Amapá</a>
+                        <a href="/amazonas.html">Amazonas</a>
+                        <a href="#">Bahia</a>
+                        <a href="#">Ceará</a>
+                        <a href="#">Distrito Federal</a>
+                        <a href="#">Espírito Santo</a>
+                        <a href="#">Goiás</a>
+                        <a href="#">Maranhão</a>
+                        <a href="#">Mato Grosso</a>
+                        <a href="#">Mato Grosso do Sul</a>
+                        <a href="#">Minas Gerais</a>
+                        <a href="#">Pará</a>
+                        <a href="#">Paraíba</a>
+                        <a href="#">Paraná</a>
+                        <a href="#">Pernambuco</a>
+                        <a href="#">Piauí</a>
+                        <a href="#">Rio de Janeiro</a>
+                        <a href="#">Rio Grande do Norte</a>
+                        <a href="#">Rio Grande do Sul</a>
+                        <a href="#">Rondônia</a>
+                        <a href="#">Roraima</a>
+                        <a href="#">Santa Catarina</a>
+                        <a href="#">São Paulo</a>
+                        <a href="#">Sergipe</a>
+                        <a href="#">Tocantins</a>
+                    </div>
+                </li>
                 <li><a href="/perfil.html">Meu Perfil</a></li>
+                <li><a href="/mapa.html">Mapa</a></li>
                 <li><a href="/sobre.html">Sobre</a></li>
                 <li><a href="/contato.html">Contato</a></li>
+
                 <li><a href="#" onclick="logout()">Sair</a></li>
             </ul>
         </nav>
@@ -378,6 +450,10 @@
                             <span class="info-label">Avaliações Feitas:</span>
                             <span class="info-value" id="avaliacoes">0</span>
                         </div>
+                        <div class="info-item">
+                            <span class="info-label">Comentários Feitos:</span>
+                            <span class="info-value" id="comentarios">0</span>
+                        </div>
                     </div>
                 </div>
 
@@ -387,7 +463,7 @@
                     <button class="btn btn-secondary" onclick="editProfile()">✏️ Editar Perfil</button>
                     <a href="/adicionar-locais.html" class="btn btn-secondary">📍 Adicionar Locais</a>
                     <button class="btn btn-secondary" onclick="showMyQuestions()">❓ Minhas Perguntas</button>
-                    <button class="btn btn-secondary" onclick="showMyRatings()">⭐ Minhas Avaliações</button>
+                    <button class="btn btn-secondary" onclick="showMyRatings()">⭐ Avaliações e Comentários</button>
                     <button class="btn btn-secondary" onclick="logout()">🚪 Sair</button>
                 </div>
             </div>
@@ -403,7 +479,7 @@
         function loadProfile() {
             const userName = localStorage.getItem('userName') || 'Usuário';
             const userType = localStorage.getItem('userType') || 'usuario';
-            const userEmail = localStorage.getItem('userEmail') || localStorage.getItem('email') || sessionStorage.getItem('userEmail') || 'email@exemplo.com';
+            const userEmail = localStorage.getItem('userEmail') || 'email@exemplo.com';
             
             // Informações básicas
             document.getElementById('profileName').textContent = userName;
@@ -442,7 +518,14 @@
             // Estatísticas
             const comments = JSON.parse(localStorage.getItem('placeComments')) || {};
             const userComments = Object.values(comments).flat().filter(c => c.userName === userName);
-            document.getElementById('statComments').textContent = userComments.length;
+            document.getElementById('comentarios').textContent = userComments.length;
+            
+            // Função para atualizar contador de comentários
+            window.updateCommentCount = function() {
+                const updatedComments = JSON.parse(localStorage.getItem('placeComments')) || {};
+                const updatedUserComments = Object.values(updatedComments).flat().filter(c => c.userName === userName);
+                document.getElementById('comentarios').textContent = updatedUserComments.length;
+            };
             
             const userRatings = JSON.parse(localStorage.getItem('userRatings')) || {};
             const userRatingCount = Object.keys(userRatings).filter(key => key.startsWith(userName + '_')).length;
@@ -456,9 +539,21 @@
             };
             
             const pendingLocations = JSON.parse(localStorage.getItem('pendingLocations')) || [];
-            const userLocations = pendingLocations.filter(loc => loc.submittedBy === userName);
-            document.getElementById('statLocations').textContent = userLocations.length;
-            document.getElementById('locaisAdicionados').textContent = userLocations.length;
+            const approvedLocations = JSON.parse(localStorage.getItem('approvedLocations')) || [];
+            const userPendingLocations = pendingLocations.filter(loc => loc.submittedBy === userName);
+            const userApprovedLocations = approvedLocations.filter(loc => loc.submittedBy === userName);
+            const totalUserLocations = userPendingLocations.length + userApprovedLocations.length;
+            document.getElementById('locaisAdicionados').textContent = totalUserLocations;
+            
+            // Função para atualizar contador
+            window.updateLocationCount = function() {
+                const updatedPending = JSON.parse(localStorage.getItem('pendingLocations')) || [];
+                const updatedApproved = JSON.parse(localStorage.getItem('approvedLocations')) || [];
+                const updatedUserPending = updatedPending.filter(loc => loc.submittedBy === userName);
+                const updatedUserApproved = updatedApproved.filter(loc => loc.submittedBy === userName);
+                const updatedTotal = updatedUserPending.length + updatedUserApproved.length;
+                document.getElementById('locaisAdicionados').textContent = updatedTotal;
+            };
         }
         
         function changeProfilePhoto() {
@@ -540,20 +635,89 @@
             const userName = localStorage.getItem('userName') || 'Usuário';
             const userEmail = localStorage.getItem('userEmail') || 'email@exemplo.com';
             
-            const newName = prompt('Digite o novo nome:', userName);
-            if (newName && newName.trim() !== '') {
-                localStorage.setItem('userName', newName.trim());
-                document.getElementById('profileName').textContent = newName.trim();
-                document.getElementById('userName').textContent = newName.trim();
+            const modalContent = `
+                <div style="max-width: 500px; margin: 0 auto;">
+                    <div style="margin-bottom: 2rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; color: #1a237e; font-weight: 600;">📝 Nome:</label>
+                        <input type="text" id="editName" value="${userName}" style="width: 100%; padding: 1rem; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem; transition: all 0.3s;" onkeyup="this.style.borderColor = this.value.trim() ? '#1a237e' : '#e74c3c'">
+                    </div>
+                    <div style="margin-bottom: 2rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; color: #1a237e; font-weight: 600;">📧 Email:</label>
+                        <input type="email" id="editEmail" value="${userEmail}" style="width: 100%; padding: 1rem; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem; transition: all 0.3s;" onkeyup="this.style.borderColor = this.value.includes('@') ? '#1a237e' : '#e74c3c'">
+                    </div>
+                    <div style="display: flex; gap: 1rem; justify-content: center;">
+                        <button onclick="saveProfile()" style="background: linear-gradient(135deg, #1a237e, #3f51b5); color: white; border: none; padding: 1rem 2rem; border-radius: 10px; font-weight: 600; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(26,35,126,0.3);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(26,35,126,0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(26,35,126,0.3)'">✅ Salvar</button>
+                        <button onclick="document.querySelector('.modal-overlay').remove()" style="background: #e74c3c; color: white; border: none; padding: 1rem 2rem; border-radius: 10px; font-weight: 600; cursor: pointer; transition: all 0.3s;" onmouseover="this.style.background='#c0392b'" onmouseout="this.style.background='#e74c3c'">❌ Cancelar</button>
+                    </div>
+                </div>
+            `;
+            
+            showEditModal('✏️ Editar Perfil', modalContent);
+        }
+        
+        function showEditModal(title, content) {
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 10000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(5px);';
+            
+            modal.innerHTML = `
+                <div style="background: white; border-radius: 20px; padding: 2.5rem; max-width: 600px; width: 90%; max-height: 80%; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.3); animation: modalSlideIn 0.3s ease-out;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid #f0f0f0;">
+                        <h2 style="color: #1a237e; margin: 0; font-size: 1.8rem; font-weight: 700;">${title}</h2>
+                        <button onclick="this.closest('.modal-overlay').remove()" style="background: #e74c3c; color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 1.5rem; transition: all 0.3s; display: flex; align-items: center; justify-content: center;" onmouseover="this.style.transform='rotate(90deg)'; this.style.background='#c0392b'" onmouseout="this.style.transform='rotate(0deg)'; this.style.background='#e74c3c'">×</button>
+                    </div>
+                    ${content}
+                </div>
+                <style>
+                    @keyframes modalSlideIn {
+                        from { opacity: 0; transform: scale(0.8) translateY(-50px); }
+                        to { opacity: 1; transform: scale(1) translateY(0); }
+                    }
+                </style>
+            `;
+            
+            modal.onclick = (e) => { if (e.target === modal) modal.remove(); };
+            document.body.appendChild(modal);
+        }
+        
+        function saveProfile() {
+            const newName = document.getElementById('editName').value.trim();
+            const newEmail = document.getElementById('editEmail').value.trim();
+            
+            if (!newName) {
+                alert('❌ Nome não pode estar vazio!');
+                return;
             }
             
-            const newEmail = prompt('Digite o novo email:', userEmail);
-            if (newEmail && newEmail.trim() !== '' && newEmail.includes('@')) {
-                localStorage.setItem('userEmail', newEmail.trim());
-                document.getElementById('userEmail').textContent = newEmail.trim();
+            if (!newEmail || !newEmail.includes('@')) {
+                alert('❌ Email inválido!');
+                return;
             }
             
-            alert('Perfil atualizado com sucesso!');
+            localStorage.setItem('userName', newName);
+            localStorage.setItem('userEmail', newEmail);
+            
+            document.getElementById('profileName').textContent = newName;
+            document.getElementById('userName').textContent = newName;
+            document.getElementById('userEmail').textContent = newEmail;
+            
+            document.querySelector('.modal-overlay').remove();
+            
+            // Mostrar mensagem de sucesso estilizada
+            const successMsg = document.createElement('div');
+            successMsg.style.cssText = 'position: fixed; top: 20px; right: 20px; background: linear-gradient(135deg, #27ae60, #2ecc71); color: white; padding: 1rem 2rem; border-radius: 10px; box-shadow: 0 10px 30px rgba(39,174,96,0.3); z-index: 10001; animation: slideInRight 0.5s ease-out;';
+            successMsg.innerHTML = '✅ Perfil atualizado com sucesso!';
+            
+            const style = document.createElement('style');
+            style.textContent = '@keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }';
+            document.head.appendChild(style);
+            
+            document.body.appendChild(successMsg);
+            
+            setTimeout(() => {
+                successMsg.remove();
+                style.remove();
+            }, 3000);
         }
         
         function showMyQuestions() {
@@ -609,16 +773,32 @@
         function showMyRatings() {
             const userName = localStorage.getItem('userName');
             const userRatings = JSON.parse(localStorage.getItem('userRatings')) || {};
+            const comments = JSON.parse(localStorage.getItem('placeComments')) || {};
+            
+            // Buscar todas as avaliações do usuário
             const myRatings = Object.entries(userRatings).filter(([key, rating]) => key.startsWith(userName + '_'));
             
-            if (myRatings.length === 0) {
-                showModal('Minhas Avaliações', '<p style="text-align: center; color: #666; font-size: 1.1rem;">Você ainda não fez nenhuma avaliação.</p>');
+            // Buscar todos os comentários do usuário
+            const allUserComments = [];
+            Object.entries(comments).forEach(([localName, localComments]) => {
+                const userComment = localComments.find(c => c.userName === userName);
+                if (userComment) {
+                    allUserComments.push({ localName, comment: userComment });
+                }
+            });
+            
+            if (myRatings.length === 0 && allUserComments.length === 0) {
+                showModal('Minhas Avaliações e Comentários', '<p style="text-align: center; color: #666; font-size: 1.1rem;">Você ainda não fez nenhuma avaliação ou comentário.</p>');
                 return;
             }
             
             let content = '<div style="max-height: 400px; overflow-y: auto;">';
-            myRatings.forEach(([key, rating], index) => {
-                const userName = localStorage.getItem('userName');
+            
+            // Criar um mapa de todos os locais com avaliações e comentários
+            const localsMap = new Map();
+            
+            // Adicionar avaliações
+            myRatings.forEach(([key, rating]) => {
                 let localName = key.replace(userName + '_', '');
                 
                 // Mapear IDs antigos para nomes completos
@@ -628,40 +808,75 @@
                     'justica': 'Palácio da Justiça',
                     'mercado': 'Mercado Municipal',
                     'igreja': 'Igreja de São Sebastião',
-                    'palacio': 'Palácio Rio Negro'
+                    'palacio': 'Palácio Rio Negro',
+                    'festival': 'Festival de Parintins',
+                    'lendas': 'Lendas Amazônicas',
+                    'artesanato': 'Artesanato Indígena',
+                    'ciranda': 'Ciranda Amazônica',
+                    'carimbo': 'Carimbó',
+                    'rituais': 'Rituais Xamânicos',
+                    'floresta': 'Floresta Amazônica',
+                    'encontro': 'Encontro das Águas',
+                    'anavilhanas': 'Parque Anavilhanas',
+                    'mamiraui': 'Reserva Mamirauá',
+                    'jau': 'Parque Jaú',
+                    'rio': 'Rio Amazonas',
+                    'pirarucu': 'Pirarucu',
+                    'acai': 'Açaí',
+                    'cupuacu': 'Cupuaçu',
+                    'tucuma': 'Tucumã',
+                    'tacaca': 'Tacacá',
+                    'farinha': 'Farinha de Mandioca'
                 };
                 
                 localName = nameMap[localName] || localName;
-                const stars = '★'.repeat(rating) + '☆'.repeat(5 - rating);
-                const ratingColor = rating >= 4 ? '#27ae60' : rating >= 3 ? '#f39c12' : '#e74c3c';
                 
-                // Buscar comentário do usuário para este local
-                const comments = JSON.parse(localStorage.getItem('placeComments')) || {};
-                const localComments = comments[localName] || [];
-                const userComment = localComments.find(c => c.userName === userName);
-                const commentText = userComment ? userComment.comment : 'Nenhum comentário';
+                if (!localsMap.has(localName)) {
+                    localsMap.set(localName, { rating: null, comment: null });
+                }
+                localsMap.get(localName).rating = rating;
+            });
+            
+            // Adicionar comentários
+            allUserComments.forEach(({ localName, comment }) => {
+                if (!localsMap.has(localName)) {
+                    localsMap.set(localName, { rating: null, comment: null });
+                }
+                localsMap.get(localName).comment = comment;
+            });
+            
+            // Gerar conteúdo para cada local
+            localsMap.forEach((data, localName) => {
+                const { rating, comment } = data;
+                const hasRating = rating !== null;
+                const hasComment = comment !== null;
+                
+                const ratingColor = hasRating ? (rating >= 4 ? '#27ae60' : rating >= 3 ? '#f39c12' : '#e74c3c') : '#666';
+                const stars = hasRating ? '★'.repeat(rating) + '☆'.repeat(5 - rating) : 'Sem avaliação';
+                const commentText = hasComment ? comment.text : 'Nenhum comentário';
+                const commentDate = hasComment ? comment.date : '';
                 
                 content += `
                     <div style="background: #f8f9fa; border-left: 4px solid ${ratingColor}; padding: 1.5rem; margin-bottom: 1rem; border-radius: 8px;">
                         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
-                            <div>
+                            <div style="flex: 1;">
                                 <h4 style="color: #1a237e; margin-bottom: 0.5rem; font-size: 1.1rem;">${localName}</h4>
-                                <div style="font-size: 1.3rem; color: ${ratingColor};">${stars}</div>
+                                ${hasRating ? `<div style="font-size: 1.3rem; color: ${ratingColor}; margin-bottom: 0.5rem;">${stars}</div>` : '<div style="color: #666; font-style: italic;">Sem avaliação</div>'}
+                                ${hasComment ? `<small style="color: #888;">Comentado em: ${commentDate}</small>` : ''}
                             </div>
-                            <div style="text-align: center; background: ${ratingColor}; color: white; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem;">
-                                ${rating}
-                            </div>
+                            ${hasRating ? `<div style="text-align: center; background: ${ratingColor}; color: white; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem;">${rating}</div>` : ''}
                         </div>
                         <div style="background: white; padding: 1rem; border-radius: 5px; border-left: 3px solid ${ratingColor};">
                             <strong style="color: #666; font-size: 0.9rem;">Seu comentário:</strong>
-                            <p style="margin-top: 0.5rem; color: #555; font-style: ${userComment ? 'normal' : 'italic'};">${commentText}</p>
+                            <p style="margin-top: 0.5rem; color: #555; font-style: ${hasComment ? 'normal' : 'italic'}; line-height: 1.5;">${commentText}</p>
                         </div>
                     </div>
                 `;
             });
+            
             content += '</div>';
             
-            showModal('Minhas Avaliações', content);
+            showModal('Minhas Avaliações e Comentários', content);
         }
         
         function logout() {
@@ -681,7 +896,32 @@
         
         // Carregar perfil ao carregar a página
         document.addEventListener('DOMContentLoaded', loadProfile);
+        
+
+        
+        // Escutar evento de local adicionado
+        window.addEventListener('locationAdded', function() {
+            if (window.updateLocationCount) {
+                window.updateLocationCount();
+            }
+        });
+        
+        // Escutar evento de avaliação feita
+        window.addEventListener('ratingAdded', function() {
+            if (window.updateRatingCount) {
+                window.updateRatingCount();
+            }
+        });
+        
+        // Escutar evento de comentário feito
+        window.addEventListener('commentAdded', function() {
+            if (window.updateCommentCount) {
+                window.updateCommentCount();
+            }
+        });
     </script>
+    <script src="/react-integration.js"></script>
+    <script src="/navbar-padronizada.js"></script>
     <script src="/hamburger-nav.js"></script>
     <script src="/theme-manager.js"></script>
     <script>

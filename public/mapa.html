@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GADYS - Mapa Interativo</title>
+    <link rel="stylesheet" href="/hamburger-nav-padronizado.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
@@ -145,6 +146,62 @@
             font-weight: 600;
             box-shadow: 0 4px 15px rgba(0, 184, 148, 0.3);
         }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 200px;
+            max-height: 300px;
+            overflow-y: auto;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1000;
+            border-radius: 5px;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .dropdown-content a {
+            color: #333 !important;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+            color: #1a237e !important;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
         @media (max-width: 768px) {
             .filters {
                 flex-direction: column;
@@ -166,20 +223,50 @@
     <header class="header">
         <nav style="max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center;">
             <img src="/logo.png" alt="GADYS" style="height: 40px; background: lightblue; border-radius: 50%; padding: 8px;" />
-            <div class="hamburger" style="display: flex; flex-direction: column; cursor: pointer; z-index: 1002;">
-                <span style="width: 25px; height: 3px; background: white; margin: 3px 0; transition: 0.3s;"></span>
-                <span style="width: 25px; height: 3px; background: white; margin: 3px 0; transition: 0.3s;"></span>
-                <span style="width: 25px; height: 3px; background: white; margin: 3px 0; transition: 0.3s;"></span>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
-            <div class="nav-overlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.5); z-index: 1000; opacity: 0; visibility: hidden; transition: all 0.3s ease;"></div>
-            <ul class="nav-links" style="position: fixed; top: 0; right: -100%; width: 300px; height: 100vh; background: #1a237e; display: flex; flex-direction: column; justify-content: space-evenly; align-items: center; gap: 2rem; margin: 0; padding: 3rem 0; list-style: none; transition: right 0.3s ease; z-index: 1001; overflow-y: scroll;">
-                <li><a href="/" style="color: white; text-decoration: none; padding: 0.5rem 1rem; border-radius: 5px; transition: background 0.3s;">Início</a></li>
-                <li><a href="/amazonas.html" style="color: white; text-decoration: none; padding: 0.5rem 1rem; border-radius: 5px; transition: background 0.3s;">Amazonas</a></li>
-                <li><a href="/mapa.html" style="color: white; text-decoration: none; padding: 0.5rem 1rem; border-radius: 5px; transition: background 0.3s;">Mapa</a></li>
-                <li><a href="/adicionar-locais.html" style="color: white; text-decoration: none; padding: 0.5rem 1rem; border-radius: 5px; transition: background 0.3s;">Adicionar Locais</a></li>
-                <li><a href="/perfil.html" style="color: white; text-decoration: none; padding: 0.5rem 1rem; border-radius: 5px; transition: background 0.3s;">Meu Perfil</a></li>
-                <li><a href="/sobre.html" style="color: white; text-decoration: none; padding: 0.5rem 1rem; border-radius: 5px; transition: background 0.3s;">Sobre</a></li>
-                <li><a href="/contato.html" style="color: white; text-decoration: none; padding: 0.5rem 1rem; border-radius: 5px; transition: background 0.3s;">Contato</a></li>
+            <div class="nav-overlay"></div>
+            <ul class="nav-links">
+                <li><a href="/">Início</a></li>
+                <li class="dropdown">
+                    <a href="#estados">Estados Brasileiros ▼</a>
+                    <div class="dropdown-content">
+                        <a href="#">Acre</a>
+                        <a href="#">Alagoas</a>
+                        <a href="#">Amapá</a>
+                        <a href="/amazonas.html">Amazonas</a>
+                        <a href="#">Bahia</a>
+                        <a href="#">Ceará</a>
+                        <a href="#">Distrito Federal</a>
+                        <a href="#">Espírito Santo</a>
+                        <a href="#">Goiás</a>
+                        <a href="#">Maranhão</a>
+                        <a href="#">Mato Grosso</a>
+                        <a href="#">Mato Grosso do Sul</a>
+                        <a href="#">Minas Gerais</a>
+                        <a href="#">Pará</a>
+                        <a href="#">Paraíba</a>
+                        <a href="#">Paraná</a>
+                        <a href="#">Pernambuco</a>
+                        <a href="#">Piauí</a>
+                        <a href="#">Rio de Janeiro</a>
+                        <a href="#">Rio Grande do Norte</a>
+                        <a href="#">Rio Grande do Sul</a>
+                        <a href="#">Rondônia</a>
+                        <a href="#">Roraima</a>
+                        <a href="#">Santa Catarina</a>
+                        <a href="#">São Paulo</a>
+                        <a href="#">Sergipe</a>
+                        <a href="#">Tocantins</a>
+                    </div>
+                </li>
+                <li><a href="/perfil.html">Meu Perfil</a></li>
+                <li><a href="/mapa.html">Mapa</a></li>
+                <li><a href="/sobre.html">Sobre</a></li>
+                <li><a href="/contato.html">Contato</a></li>
             </ul>
         </nav>
         <div style="text-align: center; padding: 2rem 0; background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); margin-top: 1rem; border-radius: 15px;">
@@ -575,28 +662,13 @@
         });
         
         document.addEventListener('DOMContentLoaded', initMap);
+    </script>
+    <script src="/react-integration.js"></script>
+    <script src="/navbar-padronizada.js"></script>
+    <script src="/hamburger-nav.js"></script>
+    <script>
         
-        // Menu hambúrguer
-        document.querySelector('.hamburger').addEventListener('click', function() {
-            const navLinks = document.querySelector('.nav-links');
-            const navOverlay = document.querySelector('.nav-overlay');
-            
-            if (navLinks.style.right === '0px') {
-                navLinks.style.right = '-100%';
-                navOverlay.style.opacity = '0';
-                navOverlay.style.visibility = 'hidden';
-            } else {
-                navLinks.style.right = '0px';
-                navOverlay.style.opacity = '1';
-                navOverlay.style.visibility = 'visible';
-            }
-        });
-        
-        document.querySelector('.nav-overlay').addEventListener('click', function() {
-            document.querySelector('.nav-links').style.right = '-100%';
-            this.style.opacity = '0';
-            this.style.visibility = 'hidden';
-        });
+
     </script>
 </body>
 </html>

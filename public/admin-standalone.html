@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GADYS - Painel Administrativo</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .admin-header {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .admin-header h1 {
+            color: #1a237e;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .admin-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        .admin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .admin-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .admin-card h3 {
+            color: #1a237e;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        .btn {
+            background: linear-gradient(135deg, #1a237e, #3f51b5);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(26,35,126,0.3);
+        }
+        .btn.danger {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+        .btn.success {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+        }
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.9);
+            color: #1a237e;
+            border: none;
+            padding: 1rem;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        .back-btn:hover {
+            background: white;
+            transform: scale(1.1);
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, #1a237e, #3f51b5);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .pending-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .pending-item {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #f39c12;
+        }
+        .pending-item h4 {
+            color: #1a237e;
+            margin-bottom: 0.5rem;
+        }
+        .pending-item p {
+            color: #666;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="history.back()" title="Voltar">←</button>
+    
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1>🛠️ Painel Administrativo</h1>
+            <p>Gerencie locais, usuários e conteúdo do sistema</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalUsers">0</div>
+                <div>Usuários Cadastrados</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="pendingLocations">0</div>
+                <div>Locais Pendentes</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="approvedLocations">0</div>
+                <div>Locais Aprovados</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalComments">0</div>
+                <div>Comentários</div>
+            </div>
+        </div>
+
+        <div class="admin-grid">
+            <div class="admin-card">
+                <h3>📍 Gerenciar Locais</h3>
+                <p>Aprovar ou rejeitar locais enviados pelos usuários</p>
+                <div class="pending-list" id="pendingList">
+                    <!-- Locais pendentes serão carregados aqui -->
+                </div>
+            </div>
+
+            <div class="admin-card">
+                <h3>👥 Gerenciar Usuários</h3>
+                <p>Visualizar e gerenciar usuários do sistema</p>
+                <button class="btn" onclick="showUsers()">Ver Usuários</button>
+                <button class="btn" onclick="showUserStats()">Estatísticas</button>
+            </div>
+
+            <div class="admin-card">
+                <h3>💬 Gerenciar Comentários</h3>
+                <p>Moderar comentários e avaliações</p>
+                <button class="btn" onclick="showComments()">Ver Comentários</button>
+                <button class="btn danger" onclick="clearComments()">Limpar Todos</button>
+            </div>
+
+            <div class="admin-card">
+                <h3>⚙️ Configurações</h3>
+                <p>Configurações gerais do sistema</p>
+                <button class="btn" onclick="exportData()">Exportar Dados</button>
+                <button class="btn" onclick="clearCache()">Limpar Cache</button>
+                <button class="btn danger" onclick="resetSystem()">Reset Sistema</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Verificar se é admin
+        if (localStorage.getItem('userType') !== 'adm') {
+            alert('Acesso negado! Apenas administradores podem acessar esta página.');
+            window.location.href = '/';
+        }
+
+        // Carregar estatísticas
+        function loadStats() {
+            const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+            const pendingLocations = JSON.parse(localStorage.getItem('pendingLocations')) || [];
+            const approvedLocations = JSON.parse(localStorage.getItem('approvedLocations')) || [];
+            const comments = JSON.parse(localStorage.getItem('placeComments')) || {};
+            
+            document.getElementById('totalUsers').textContent = registeredUsers.length;
+            document.getElementById('pendingLocations').textContent = pendingLocations.length;
+            document.getElementById('approvedLocations').textContent = approvedLocations.length;
+            document.getElementById('totalComments').textContent = Object.values(comments).flat().length;
+        }
+
+        // Carregar locais pendentes
+        function loadPendingLocations() {
+            const pendingLocations = JSON.parse(localStorage.getItem('pendingLocations')) || [];
+            const pendingList = document.getElementById('pendingList');
+            
+            if (pendingLocations.length === 0) {
+                pendingList.innerHTML = '<p style="text-align: center; color: #666;">Nenhum local pendente</p>';
+                return;
+            }
+
+            pendingList.innerHTML = pendingLocations.map((local, index) => `
+                <div class="pending-item">
+                    <h4>${local.name}</h4>
+                    <p><strong>Categoria:</strong> ${local.category}</p>
+                    <p><strong>Cidade:</strong> ${local.city}</p>
+                    <p><strong>Descrição:</strong> ${local.description}</p>
+                    <p><strong>Enviado por:</strong> ${local.submittedBy}</p>
+                    <p><strong>Data:</strong> ${local.date}</p>
+                    <button class="btn success" onclick="approveLocation(${index})">✅ Aprovar</button>
+                    <button class="btn danger" onclick="rejectLocation(${index})">❌ Rejeitar</button>
+                </div>
+            `).join('');
+        }
+
+        // Aprovar local
+        function approveLocation(index) {
+            const pendingLocations = JSON.parse(localStorage.getItem('pendingLocations')) || [];
+            const approvedLocations = JSON.parse(localStorage.getItem('approvedLocations')) || [];
+            
+            const local = pendingLocations[index];
+            local.status = 'aprovado';
+            
+            approvedLocations.push(local);
+            pendingLocations.splice(index, 1);
+            
+            localStorage.setItem('pendingLocations', JSON.stringify(pendingLocations));
+            localStorage.setItem('approvedLocations', JSON.stringify(approvedLocations));
+            
+            alert(`Local "${local.name}" aprovado com sucesso!`);
+            loadStats();
+            loadPendingLocations();
+        }
+
+        // Rejeitar local
+        function rejectLocation(index) {
+            if (confirm('Tem certeza que deseja rejeitar este local?')) {
+                const pendingLocations = JSON.parse(localStorage.getItem('pendingLocations')) || [];
+                const local = pendingLocations[index];
+                
+                pendingLocations.splice(index, 1);
+                localStorage.setItem('pendingLocations', JSON.stringify(pendingLocations));
+                
+                alert(`Local "${local.name}" rejeitado.`);
+                loadStats();
+                loadPendingLocations();
+            }
+        }
+
+        // Outras funções
+        function showUsers() {
+            const users = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+            alert(`Usuários cadastrados: ${users.length}\n\n${users.map(u => `${u.name} (${u.email})`).join('\n')}`);
+        }
+
+        function showUserStats() {
+            const userAccess = JSON.parse(localStorage.getItem('userAccess')) || [];
+            alert(`Estatísticas de acesso:\n\n${userAccess.map(u => `${u.userName}: ${u.accessCount} acessos`).join('\n')}`);
+        }
+
+        function showComments() {
+            const comments = JSON.parse(localStorage.getItem('placeComments')) || {};
+            const allComments = Object.values(comments).flat();
+            alert(`Total de comentários: ${allComments.length}`);
+        }
+
+        function clearComments() {
+            if (confirm('Tem certeza que deseja limpar todos os comentários?')) {
+                localStorage.removeItem('placeComments');
+                alert('Comentários limpos!');
+                loadStats();
+            }
+        }
+
+        function exportData() {
+            const data = {
+                users: JSON.parse(localStorage.getItem('registeredUsers')) || [],
+                pendingLocations: JSON.parse(localStorage.getItem('pendingLocations')) || [],
+                approvedLocations: JSON.parse(localStorage.getItem('approvedLocations')) || [],
+                comments: JSON.parse(localStorage.getItem('placeComments')) || {}
+            };
+            
+            const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'gadys-data.json';
+            a.click();
+        }
+
+        function clearCache() {
+            if (confirm('Limpar cache do sistema?')) {
+                localStorage.removeItem('userAccess');
+                alert('Cache limpo!');
+            }
+        }
+
+        function resetSystem() {
+            if (confirm('ATENÇÃO: Isso irá apagar TODOS os dados do sistema. Continuar?')) {
+                if (confirm('Tem CERTEZA ABSOLUTA? Esta ação não pode ser desfeita!')) {
+                    localStorage.clear();
+                    alert('Sistema resetado! Você será redirecionado para o login.');
+                    window.location.href = '/';
+                }
+            }
+        }
+
+        // Carregar dados ao iniciar
+        document.addEventListener('DOMContentLoaded', function() {
+            loadStats();
+            loadPendingLocations();
+        });
+    </script>
+</body>
+</html>

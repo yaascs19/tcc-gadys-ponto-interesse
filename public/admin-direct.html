@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GADYS - Painel Admin</title>
+</head>
+<body>
+    <script>
+        // Verificar se é admin
+        if (localStorage.getItem('userType') !== 'adm') {
+            alert('Acesso negado! Apenas administradores podem acessar esta página.');
+            window.location.href = '/';
+        } else {
+            // Redirecionar para página inicial com parâmetro admin
+            window.location.href = '/?admin=true';
+        }
+    </script>
+</body>
+</html>

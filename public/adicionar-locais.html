@@ -372,6 +372,12 @@
                             <input type="text" id="localizacao" name="localizacao" placeholder="Endereço completo ou ponto de referência">
                         </div>
                         
+                        <div class="form-group" data-icon="🌐">
+                            <label for="coordenadas">Coordenadas (Latitude, Longitude):</label>
+                            <input type="text" id="coordenadas" name="coordenadas" placeholder="Ex: -3.1190, -60.0217" pattern="^-?\d+\.\d+,\s*-?\d+\.\d+$">
+                            <small style="color: #666; font-size: 0.9rem; margin-top: 0.5rem; display: block;">💡 Dica: Use o Google Maps para obter as coordenadas exatas</small>
+                        </div>
+                        
                         <div class="form-group" data-icon="🕒">
                             <label for="horario">Horário de Funcionamento:</label>
                             <input type="text" id="horario" name="horario" placeholder="Ex: Segunda a Sexta: 8h às 18h">
@@ -417,7 +423,7 @@
                 infoAdicional: document.getElementById('infoAdicional').value,
                 submittedBy: userName,
                 date: new Date().toLocaleDateString('pt-BR'),
-                coordinates: 'A definir',
+                coordinates: document.getElementById('coordenadas').value || 'A definir',
                 status: 'pendente'
             };
             
@@ -462,6 +468,9 @@
             
             document.getElementById('successMessage').style.display = 'block';
             document.getElementById('localForm').reset();
+            
+            // Disparar evento para atualizar contador no perfil
+            window.dispatchEvent(new CustomEvent('locationAdded'));
             
             setTimeout(() => {
                 document.getElementById('successMessage').style.display = 'none';

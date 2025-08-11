@@ -72,6 +72,13 @@ function App() {
   }
 
   useEffect(() => {
+    // Verificar se deve abrir admin automaticamente
+    if (sessionStorage.getItem('openAdmin') === 'true' && userType === 'adm') {
+      sessionStorage.removeItem('openAdmin');
+      setCurrentPage('admin');
+      return;
+    }
+    
     if (!isLoggedIn || currentPage === 'login') return
 
     const timer = setTimeout(() => {
@@ -195,7 +202,7 @@ function App() {
             </li>
 
             <li><a href="/perfil.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Meu Perfil</a></li>
-            <li><a href="/mapa.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>🗺️ Mapa</a></li>
+            <li><a href="/mapa.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Mapa</a></li>
             <li><a href="/sobre.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Sobre</a></li>
             <li><a href="/contato.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Contato</a></li>
             {userType === 'adm' && (

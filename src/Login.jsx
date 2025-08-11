@@ -22,7 +22,7 @@ function Login({ onLogin }) {
               nome: name,
               email: email,
               senha: password,
-              tipoUsuario: userType
+              tipoUsuario: 'usuario'
             })
           })
           
@@ -40,7 +40,7 @@ function Login({ onLogin }) {
             alert('Este email já está cadastrado!')
             return
           }
-          registeredUsers.push({ name, email, password, userType })
+          registeredUsers.push({ name, email, password, userType: 'usuario' })
           localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers))
           alert('Cadastro realizado localmente!')
           setIsRegister(false)
@@ -66,6 +66,7 @@ function Login({ onLogin }) {
           const result = await response.json()
           
           if (response.ok && result.success) {
+            localStorage.setItem('userEmail', email)
             onLogin(result.user.TipoUsuario, result.user.Nome)
           } else {
             alert(result.error || 'Credenciais inválidas!')
@@ -73,11 +74,13 @@ function Login({ onLogin }) {
         } catch (error) {
           // Fallback para login offline
           if (email === 'yasmincunegundes25@gmail.com' && password === 'Cun*1925' && userType === 'adm') {
+            localStorage.setItem('userEmail', email)
             onLogin('adm', 'Yasmin')
           } else {
             const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || []
             const user = registeredUsers.find(user => user.email === email && user.password === password && user.userType === userType)
             if (user) {
+              localStorage.setItem('userEmail', email)
               onLogin(user.userType, user.name)
             } else {
               alert('Servidor indisponível ou credenciais inválidas!')
@@ -124,14 +127,16 @@ function Login({ onLogin }) {
               required
             />
           )}
-          <select
-            value={userType}
-            onChange={(e) => setUserType(e.target.value)}
-            className="user-type-select"
-          >
-            <option value="usuario">Usuário</option>
-            <option value="adm">Administrador</option>
-          </select>
+          {!isRegister && (
+            <select
+              value={userType}
+              onChange={(e) => setUserType(e.target.value)}
+              className="user-type-select"
+            >
+              <option value="usuario">Usuário</option>
+              <option value="adm">Administrador</option>
+            </select>
+          )}
           <button type="submit">{isRegister ? 'Cadastrar' : 'Entrar'}</button>
         </form>
         <p className="toggle-form">

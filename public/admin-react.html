@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GADYS - Painel Admin</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        .admin-panel {
+          padding: 2rem;
+          background: #f8f9fa;
+          min-height: 100vh;
+        }
+        .admin-header {
+          text-align: center;
+          margin-bottom: 3rem;
+        }
+        .admin-header h1 {
+          color: #2c3e50;
+          font-size: 2.5rem;
+          margin-bottom: 0.5rem;
+        }
+        .admin-tabs {
+          display: flex;
+          justify-content: center;
+          gap: 1rem;
+          margin-top: 1rem;
+          flex-wrap: wrap;
+        }
+        .tab-btn {
+          padding: 0.8rem 1.5rem;
+          border: 2px solid #667eea;
+          background: white;
+          color: #667eea;
+          border-radius: 25px;
+          cursor: pointer;
+          font-weight: 500;
+          transition: all 0.3s ease;
+        }
+        .tab-btn.active {
+          background: #667eea;
+          color: white;
+        }
+        .admin-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+          gap: 2rem;
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+        .admin-card {
+          background: white;
+          border-radius: 15px;
+          padding: 1.5rem;
+          box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+          transition: all 0.3s ease;
+        }
+        .card-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 1rem;
+          padding-bottom: 1rem;
+          border-bottom: 1px solid #e9ecef;
+        }
+        .card-header h3 {
+          color: #2c3e50;
+          margin: 0;
+          font-size: 1.3rem;
+        }
+        .category-badge {
+          background: linear-gradient(135deg, #667eea, #764ba2);
+          color: white;
+          padding: 0.3rem 0.8rem;
+          border-radius: 20px;
+          font-size: 0.8rem;
+          font-weight: 500;
+        }
+        .category-badge.approved {
+          background: linear-gradient(135deg, #28a745, #20c997);
+        }
+        .card-info p {
+          margin: 0.5rem 0;
+          color: #555;
+          font-size: 0.9rem;
+        }
+        .card-actions {
+          display: flex;
+          gap: 0.5rem;
+          margin-top: 1rem;
+        }
+        .card-actions button {
+          padding: 0.5rem 1rem;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          font-size: 0.9rem;
+          font-weight: 500;
+          transition: all 0.3s ease;
+          flex: 1;
+        }
+        .approve-btn {
+          background: #28a745;
+          color: white;
+        }
+        .reject-btn {
+          background: #dc3545;
+          color: white;
+        }
+        .back-btn {
+          position: fixed;
+          top: 20px;
+          left: 20px;
+          background: #667eea;
+          color: white;
+          border: none;
+          padding: 1rem;
+          border-radius: 50%;
+          cursor: pointer;
+          font-size: 1.2rem;
+          z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="history.back()">←</button>
+    <div id="admin-root"></div>
+    
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        const AdminPanel = () => {
+            const [activeTab, setActiveTab] = useState('pending');
+            const [pendingLocations, setPendingLocations] = useState([]);
+            const [approvedLocations, setApprovedLocations] = useState([]);
+            const [userAccess, setUserAccess] = useState([]);
+
+            useEffect(() => {
+                // Verificar se é admin
+                if (localStorage.getItem('userType') !== 'adm') {
+                    alert('Acesso negado! Apenas administradores podem acessar esta página.');
+                    window.location.href = '/';
+                    return;
+                }
+
+                // Carregar dados
+                const pending = JSON.parse(localStorage.getItem('pendingLocations')) || [];
+                const approved = JSON.parse(localStorage.getItem('approvedLocations')) || [];
+                const users = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+                
+                setPendingLocations(pending);
+                setApprovedLocations(approved);
+                setUserAccess(users);
+            }, []);
+
+            const handleApprove = (id) => {
+                const locationToApprove = pendingLocations.find(location => location.id === id);
+                const updatedPending = pendingLocations.filter(location => location.id !== id);
+                
+                // Adicionar aos aprovados
+                const updatedApproved = [...approvedLocations, locationToApprove];
+                setApprovedLocations(updatedApproved);
+                setPendingLocations(updatedPending);
+                
+                localStorage.setItem('approvedLocations', JSON.stringify(updatedApproved));
+                localStorage.setItem('pendingLocations', JSON.stringify(updatedPending));
+                
+                // Adicionar às categorias
+                let locaisAdicionados = JSON.parse(localStorage.getItem('locaisAdicionados')) || [];
+                const novoLocal = {
+                    nome: locationToApprove.name,
+                    cidade: locationToApprove.city.split(',')[0],
+                    estado: locationToApprove.city.split(',')[1]?.trim() || 'BR',
+                    categoria: locationToApprove.category,
+                    descricao: locationToApprove.description,
+                    imagem: locationToApprove.imagem || '/minha-imagem.jpg',
+                    id: locationToApprove.id
+                };
+                
+                locaisAdicionados.push(novoLocal);
+                localStorage.setItem('locaisAdicionados', JSON.stringify(locaisAdicionados));
+                
+                alert('Local aprovado com sucesso!');
+            };
+
+            const handleReject = (id) => {
+                const updatedPending = pendingLocations.filter(location => location.id !== id);
+                setPendingLocations(updatedPending);
+                localStorage.setItem('pendingLocations', JSON.stringify(updatedPending));
+                alert('Local rejeitado!');
+            };
+
+            return (
+                <div className="admin-panel">
+                    <div className="admin-header">
+                        <h1>🛠️ Painel Administrativo</h1>
+                        <div className="admin-tabs">
+                            <button 
+                                className={`tab-btn ${activeTab === 'pending' ? 'active' : ''}`}
+                                onClick={() => setActiveTab('pending')}
+                            >
+                                Pendentes ({pendingLocations.length})
+                            </button>
+                            <button 
+                                className={`tab-btn ${activeTab === 'approved' ? 'active' : ''}`}
+                                onClick={() => setActiveTab('approved')}
+                            >
+                                Aprovados ({approvedLocations.length})
+                            </button>
+                            <button 
+                                className={`tab-btn ${activeTab === 'users' ? 'active' : ''}`}
+                                onClick={() => setActiveTab('users')}
+                            >
+                                Usuários ({userAccess.length})
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className="admin-grid">
+                        {activeTab === 'pending' && pendingLocations.map(location => (
+                            <div key={location.id} className="admin-card">
+                                <div className="card-header">
+                                    <h3>{location.name}</h3>
+                                    <span className="category-badge">{location.category}</span>
+                                </div>
+                                
+                                <div className="card-info">
+                                    <p><strong>Cidade:</strong> {location.city}</p>
+                                    <p><strong>Enviado por:</strong> {location.submittedBy}</p>
+                                    <p><strong>Data:</strong> {location.date}</p>
+                                    <p><strong>Descrição:</strong> {location.description}</p>
+                                </div>
+
+                                <div className="card-actions">
+                                    <button 
+                                        className="approve-btn"
+                                        onClick={() => handleApprove(location.id)}
+                                    >
+                                        ✅ Aprovar
+                                    </button>
+                                    <button 
+                                        className="reject-btn"
+                                        onClick={() => handleReject(location.id)}
+                                    >
+                                        ❌ Rejeitar
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+
+                        {activeTab === 'approved' && approvedLocations.map(location => (
+                            <div key={location.id} className="admin-card">
+                                <div className="card-header">
+                                    <h3>{location.name}</h3>
+                                    <span className="category-badge approved">{location.category}</span>
+                                </div>
+                                
+                                <div className="card-info">
+                                    <p><strong>Cidade:</strong> {location.city}</p>
+                                    <p><strong>Aprovado por:</strong> Admin</p>
+                                    <p><strong>Status:</strong> Ativo no site</p>
+                                </div>
+                            </div>
+                        ))}
+
+                        {activeTab === 'users' && userAccess.map((user, index) => (
+                            <div key={index} className="admin-card">
+                                <div className="card-header">
+                                    <h3>{user.name}</h3>
+                                    <span className={`category-badge ${user.userType === 'adm' ? 'approved' : ''}`}>
+                                        {user.userType === 'adm' ? 'Admin' : 'Usuário'}
+                                    </span>
+                                </div>
+                                
+                                <div className="card-info">
+                                    <p><strong>Email:</strong> {user.email}</p>
+                                    <p><strong>Tipo:</strong> {user.userType}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<AdminPanel />, document.getElementById('admin-root'));
+    </script>
+</body>
+</html>

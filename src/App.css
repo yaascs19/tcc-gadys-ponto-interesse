@@ -145,6 +145,7 @@
   text-decoration: none;
   display: block;
   transition: background-color 0.3s;
+  text-align: center;
 }
 
 .dropdown-content a::before {

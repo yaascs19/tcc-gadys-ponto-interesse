@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GADYS - Painel Admin</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        .admin-panel {
+          padding: 2rem;
+          background: #f8f9fa;
+          min-height: 100vh;
+        }
+        .admin-header {
+          text-align: center;
+          margin-bottom: 3rem;
+        }
+        .admin-header h1 {
+          color: #2c3e50;
+          font-size: 2.5rem;
+          margin-bottom: 0.5rem;
+        }
+        .admin-header p {
+          color: #7f8c8d;
+          font-size: 1.1rem;
+        }
+        .admin-tabs {
+          display: flex;
+          justify-content: center;
+          gap: 1rem;
+          margin-top: 1rem;
+          flex-wrap: wrap;
+        }
+        .tab-btn {
+          padding: 0.8rem 1.5rem;
+          border: 2px solid #667eea;
+          background: white;
+          color: #667eea;
+          border-radius: 25px;
+          cursor: pointer;
+          font-weight: 500;
+          transition: all 0.3s ease;
+        }
+        .tab-btn.active {
+          background: #667eea;
+          color: white;
+        }
+        .tab-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+        .admin-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+          gap: 2rem;
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+        .admin-card {
+          background: white;
+          border-radius: 15px;
+          padding: 1.5rem;
+          box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+          transition: all 0.3s ease;
+          border: 1px solid #e9ecef;
+        }
+        .admin-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        .admin-card.expanded {
+          transform: scale(1.02);
+          box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+        .card-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 1rem;
+          padding-bottom: 1rem;
+          border-bottom: 1px solid #e9ecef;
+        }
+        .card-header h3 {
+          color: #2c3e50;
+          margin: 0;
+          font-size: 1.3rem;
+        }
+        .category-badge {
+          background: linear-gradient(135deg, #667eea, #764ba2);
+          color: white;
+          padding: 0.3rem 0.8rem;
+          border-radius: 20px;
+          font-size: 0.8rem;
+          font-weight: 500;
+        }
+        .category-badge.approved {
+          background: linear-gradient(135deg, #28a745, #20c997);
+        }
+        .category-badge.admin {
+          background: linear-gradient(135deg, #8e44ad, #9b59b6);
+        }
+        .category-badge.user {
+          background: linear-gradient(135deg, #3498db, #2980b9);
+        }
+        .card-info {
+          margin-bottom: 1rem;
+        }
+        .card-info p {
+          margin: 0.5rem 0;
+          color: #555;
+          font-size: 0.9rem;
+        }
+        .card-details {
+          background: #f8f9fa;
+          padding: 1rem;
+          border-radius: 8px;
+          margin: 1rem 0;
+          border-left: 4px solid #667eea;
+        }
+        .card-details p {
+          margin: 0.5rem 0;
+          color: #555;
+          line-height: 1.5;
+        }
+        .card-actions {
+          display: flex;
+          gap: 0.5rem;
+          margin-top: 1rem;
+        }
+        .card-actions button {
+          padding: 0.5rem 1rem;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          font-size: 0.9rem;
+          font-weight: 500;
+          transition: all 0.3s ease;
+        }
+        .expand-btn {
+          background: #6c757d;
+          color: white;
+          flex: 1;
+        }
+        .expand-btn:hover {
+          background: #5a6268;
+          transform: translateY(-2px);
+        }
+        .approve-btn {
+          background: #28a745;
+          color: white;
+          flex: 1;
+        }
+        .approve-btn:hover {
+          background: #218838;
+          transform: translateY(-2px);
+        }
+        .reject-btn {
+          background: #dc3545;
+          color: white;
+          flex: 1;
+        }
+        .reject-btn:hover {
+          background: #c82333;
+          transform: translateY(-2px);
+        }
+        .back-btn {
+          position: fixed;
+          top: 20px;
+          left: 20px;
+          background: #667eea;
+          color: white;
+          border: none;
+          padding: 1rem;
+          border-radius: 50%;
+          cursor: pointer;
+          font-size: 1.2rem;
+          z-index: 1000;
+          transition: all 0.3s;
+        }
+        .back-btn:hover {
+          transform: scale(1.1);
+          box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        @media (max-width: 768px) {
+          .admin-grid {
+            grid-template-columns: 1fr;
+          }
+          .admin-panel {
+            padding: 1rem;
+          }
+          .card-actions {
+            flex-direction: column;
+          }
+        }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="history.back()" title="Voltar">←</button>
+    <div id="admin-root"></div>
+    
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        const AdminPanel = () => {
+            const [expandedCard, setExpandedCard] = useState(null);
+            const [pendingLocations, setPendingLocations] = useState([]);
+            const [approvedLocations, setApprovedLocations] = useState([]);
+            const [activeTab, setActiveTab] = useState('pending');
+            const [userAccess, setUserAccess] = useState([]);
+            const [rankings, setRankings] = useState([]);
+            const [comments, setComments] = useState({});
+            const [siteLocations, setSiteLocations] = useState([]);
+            const [trashedLocations, setTrashedLocations] = useState([]);
+            const [contactMessages, setContactMessages] = useState([]);
+            const [locationFilter, setLocationFilter] = useState('');
+
+            useEffect(() => {
+                // Verificar se é admin
+                if (localStorage.getItem('userType') !== 'adm') {
+                    alert('Acesso negado! Apenas administradores podem acessar esta página.');
+                    window.location.href = '/';
+                    return;
+                }
+
+                loadPendingLocations();
+                loadApprovedLocations();
+                loadUsers();
+                loadRanking();
+                loadComments();
+                loadSiteLocations();
+                loadTrashedLocations();
+                loadContactMessages();
+            }, []);
+
+            const loadPendingLocations = () => {
+                const pendingData = JSON.parse(localStorage.getItem('pendingLocations')) || [];
+                setPendingLocations(pendingData);
+            };
+
+            const loadApprovedLocations = () => {
+                const approved = JSON.parse(localStorage.getItem('approvedLocations')) || [];
+                setApprovedLocations(approved);
+            };
+
+            const loadUsers = () => {
+                const localUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+                setUserAccess(localUsers);
+            };
+
+            const loadRanking = () => {
+                // Calcular ranking dos locais mais bem avaliados
+                const avaliacoes = JSON.parse(localStorage.getItem('avaliacoes')) || {};
+                const rankingLocais = Object.entries(avaliacoes)
+                    .map(([local, ratings]) => {
+                        const media = ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length;
+                        return {
+                            nome: local,
+                            media: media.toFixed(1),
+                            totalAvaliacoes: ratings.length,
+                            estrelas: '★'.repeat(Math.floor(media)) + '☆'.repeat(5 - Math.floor(media))
+                        };
+                    })
+                    .filter(local => local.totalAvaliacoes > 0)
+                    .sort((a, b) => b.media - a.media);
+                setRankings(rankingLocais);
+            };
+
+            const loadComments = () => {
+                const commentsData = JSON.parse(localStorage.getItem('placeComments')) || {};
+                setComments(commentsData);
+            };
+
+            const loadSiteLocations = () => {
+                const locaisAdicionados = JSON.parse(localStorage.getItem('locaisAdicionados')) || [];
+                const approvedLocations = JSON.parse(localStorage.getItem('approvedLocations')) || [];
+                
+                const locaisOriginais = [
+                    {id: 'teatro-amazonas', nome: 'Teatro Amazonas', categoria: 'monumentos', cidade: 'Manaus', estado: 'AM'},
+                    {id: 'forte-sao-jose', nome: 'Forte de São José', categoria: 'monumentos', cidade: 'Manaus', estado: 'AM'},
+                    {id: 'palacio-justica', nome: 'Palácio da Justiça', categoria: 'monumentos', cidade: 'Manaus', estado: 'AM'},
+                    {id: 'mercado-municipal', nome: 'Mercado Municipal', categoria: 'monumentos', cidade: 'Manaus', estado: 'AM'},
+                    {id: 'igreja-sao-sebastiao', nome: 'Igreja de São Sebastião', categoria: 'monumentos', cidade: 'Manaus', estado: 'AM'},
+                    {id: 'palacio-rio-negro', nome: 'Palácio Rio Negro', categoria: 'monumentos', cidade: 'Manaus', estado: 'AM'},
+                    {id: 'floresta-amazonica', nome: 'Floresta Amazônica', categoria: 'natureza', cidade: 'Amazonas', estado: 'AM'},
+                    {id: 'encontro-aguas', nome: 'Encontro das Águas', categoria: 'natureza', cidade: 'Manaus', estado: 'AM'},
+                    {id: 'parque-anavilhanas', nome: 'Parque Nacional de Anavilhanas', categoria: 'natureza', cidade: 'Novo Airão', estado: 'AM'},
+                    {id: 'reserva-mamiraui', nome: 'Reserva Mamirauá', categoria: 'natureza', cidade: 'Tefé', estado: 'AM'},
+                    {id: 'parque-jau', nome: 'Parque Nacional do Jaú', categoria: 'natureza', cidade: 'Novo Airão', estado: 'AM'},
+                    {id: 'rio-amazonas', nome: 'Rio Amazonas', categoria: 'natureza', cidade: 'Amazonas', estado: 'AM'},
+                    {id: 'acai', nome: 'Açaí', categoria: 'gastronomia', cidade: 'Amazonas', estado: 'AM'},
+                    {id: 'tucuma', nome: 'Tucumã', categoria: 'gastronomia', cidade: 'Amazonas', estado: 'AM'},
+                    {id: 'pirarucu', nome: 'Pirarucu', categoria: 'gastronomia', cidade: 'Amazonas', estado: 'AM'},
+                    {id: 'cupuacu', nome: 'Cupuaçu', categoria: 'gastronomia', cidade: 'Amazonas', estado: 'AM'},
+                    {id: 'tacaca', nome: 'Tacacá', categoria: 'gastronomia', cidade: 'Manaus', estado: 'AM'},
+                    {id: 'farinha-mandioca', nome: 'Farinha de Mandioca', categoria: 'gastronomia', cidade: 'Amazonas', estado: 'AM'},
+                    {id: 'festival-parintins', nome: 'Festival de Parintins', categoria: 'cultura', cidade: 'Parintins', estado: 'AM'},
+                    {id: 'lendas-amazonicas', nome: 'Lendas Amazônicas', categoria: 'cultura', cidade: 'Amazonas', estado: 'AM'},
+                    {id: 'artesanato-indigena', nome: 'Artesanato Indígena', categoria: 'cultura', cidade: 'Amazonas', estado: 'AM'},
+                    {id: 'ciranda-amazonica', nome: 'Ciranda Amazônica', categoria: 'cultura', cidade: 'Amazonas', estado: 'AM'},
+                    {id: 'carimbo', nome: 'Carimbó', categoria: 'cultura', cidade: 'Amazonas', estado: 'AM'},
+                    {id: 'rituais-xamanicos', nome: 'Rituais Xamânicos', categoria: 'cultura', cidade: 'Amazonas', estado: 'AM'}
+                ];
+                
+                const todosLocais = [...locaisOriginais, ...locaisAdicionados, ...approvedLocations];
+                setSiteLocations(todosLocais);
+            };
+
+            const loadTrashedLocations = () => {
+                const lixeira = JSON.parse(localStorage.getItem('trashedLocations')) || [];
+                setTrashedLocations(lixeira);
+            };
+
+            const loadContactMessages = () => {
+                const messages = JSON.parse(localStorage.getItem('mensagensContato')) || [];
+                setContactMessages(messages);
+            };
+
+            const handleApprove = (id) => {
+                const locationToApprove = pendingLocations.find(location => location.id === id);
+                const updatedLocations = pendingLocations.filter(location => location.id !== id);
+                
+                let approvedLocations = JSON.parse(localStorage.getItem('approvedLocations')) || [];
+                approvedLocations.push(locationToApprove);
+                localStorage.setItem('approvedLocations', JSON.stringify(approvedLocations));
+                setApprovedLocations([...approvedLocations]);
+                
+                let locaisAdicionados = JSON.parse(localStorage.getItem('locaisAdicionados')) || [];
+                
+                const novoLocal = {
+                    nome: locationToApprove.name,
+                    cidade: locationToApprove.city.split(',')[0],
+                    estado: locationToApprove.city.split(',')[1]?.trim() || 'BR',
+                    categoria: locationToApprove.category,
+                    descricao: locationToApprove.description,
+                    imagem: locationToApprove.imageUrl || locationToApprove.imagem || '/minha-imagem.jpg',
+                    localizacao: locationToApprove.localizacao,
+                    horario: locationToApprove.horario,
+                    preco: locationToApprove.preco,
+                    infoAdicional: locationToApprove.infoAdicional,
+                    id: locationToApprove.id
+                };
+                
+                locaisAdicionados.push(novoLocal);
+                localStorage.setItem('locaisAdicionados', JSON.stringify(locaisAdicionados));
+                
+                setPendingLocations(updatedLocations);
+                localStorage.setItem('pendingLocations', JSON.stringify(updatedLocations));
+                
+                alert('Local aprovado e adicionado às categorias!');
+            };
+
+            const handleReject = (id) => {
+                const updatedLocations = pendingLocations.filter(location => location.id !== id);
+                setPendingLocations(updatedLocations);
+                localStorage.setItem('pendingLocations', JSON.stringify(updatedLocations));
+                alert('Local rejeitado localmente!');
+            };
+
+            const toggleExpand = (id) => {
+                setExpandedCard(expandedCard === id ? null : id);
+            };
+
+            return (
+                <div>
+                    <div className="admin-panel">
+                        <div className="admin-header">
+                            <h1>Painel Administrativo</h1>
+                            <div className="admin-tabs">
+                                <button 
+                                    className={`tab-btn ${activeTab === 'pending' ? 'active' : ''}`}
+                                    onClick={() => setActiveTab('pending')}
+                                >
+                                    Pendentes ({pendingLocations.length})
+                                </button>
+                                <button 
+                                    className={`tab-btn ${activeTab === 'approved' ? 'active' : ''}`}
+                                    onClick={() => setActiveTab('approved')}
+                                >
+                                    Aprovados ({approvedLocations.length})
+                                </button>
+                                <button 
+                                    className={`tab-btn ${activeTab === 'users' ? 'active' : ''}`}
+                                    onClick={() => setActiveTab('users')}
+                                >
+                                    Usuários ({userAccess.length})
+                                </button>
+                                <button 
+                                    className={`tab-btn ${activeTab === 'ranking' ? 'active' : ''}`}
+                                    onClick={() => setActiveTab('ranking')}
+                                >
+                                    Ranking de Locais
+                                </button>
+                                <button 
+                                    className={`tab-btn ${activeTab === 'locations' ? 'active' : ''}`}
+                                    onClick={() => setActiveTab('locations')}
+                                >
+                                    Locais do Site ({siteLocations.length})
+                                </button>
+                                <button 
+                                    className={`tab-btn ${activeTab === 'trash' ? 'active' : ''}`}
+                                    onClick={() => setActiveTab('trash')}
+                                >
+                                    Lixeira ({trashedLocations.length})
+                                </button>
+                                <button 
+                                    className={`tab-btn ${activeTab === 'messages' ? 'active' : ''}`}
+                                    onClick={() => setActiveTab('messages')}
+                                >
+                                    Mensagens ({contactMessages.filter(m => m.status === 'nova').length})
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="admin-grid">
+                            {activeTab === 'pending' && pendingLocations.map(location => (
+                                <div key={location.id} className={`admin-card ${expandedCard === location.id ? 'expanded' : ''}`}>
+                                    <div className="card-header">
+                                        <h3>{location.name}</h3>
+                                        <span className="category-badge">{location.category}</span>
+                                    </div>
+                                    
+                                    <div className="card-info">
+                                        <p><strong>Cidade:</strong> {location.city}</p>
+                                        <p><strong>Enviado por:</strong> {location.submittedBy}</p>
+                                        <p><strong>Data:</strong> {location.date}</p>
+                                    </div>
+
+                                    {expandedCard === location.id && (
+                                        <div className="card-details">
+                                            <p><strong>Descrição:</strong> {location.description}</p>
+                                            <p><strong>Coordenadas:</strong> {location.coordinates}</p>
+                                        </div>
+                                    )}
+
+                                    <div className="card-actions">
+                                        <button 
+                                            className="expand-btn"
+                                            onClick={() => toggleExpand(location.id)}
+                                        >
+                                            {expandedCard === location.id ? 'Recolher' : 'Expandir'}
+                                        </button>
+                                        <button 
+                                            className="approve-btn"
+                                            onClick={() => handleApprove(location.id)}
+                                        >
+                                            Aprovar
+                                        </button>
+                                        <button 
+                                            className="reject-btn"
+                                            onClick={() => handleReject(location.id)}
+                                        >
+                                            Rejeitar
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
+
+                            {activeTab === 'approved' && approvedLocations.map((location, index) => (
+                                <div key={location.id || index} className="admin-card">
+                                    <div className="card-header">
+                                        <h3>{location.name || location.nome}</h3>
+                                        <span className="category-badge approved">{location.category || location.categoria}</span>
+                                    </div>
+                                    
+                                    <div className="card-info">
+                                        <p><strong>Cidade:</strong> {location.city || location.cidade}</p>
+                                        <p><strong>Aprovado em:</strong> {location.approvedAt || 'N/A'}</p>
+                                        <p><strong>Categoria:</strong> {location.category || location.categoria}</p>
+                                    </div>
+                                </div>
+                            ))}
+
+                            {activeTab === 'users' && userAccess.map((user, index) => (
+                                <div key={index} className="admin-card">
+                                    <div className="card-header">
+                                        <h3>{user.nome || user.userName || 'Usuário'}</h3>
+                                        <span className={`category-badge ${user.tipoUsuario === 'adm' ? 'admin' : 'user'}`}>
+                                            {user.tipoUsuario === 'adm' ? 'Admin' : 'Usuário'}
+                                        </span>
+                                    </div>
+                                    
+                                    <div className="card-info">
+                                        <p><strong>Email:</strong> {user.email}</p>
+                                        <p><strong>Tipo:</strong> {user.tipoUsuario || user.userType}</p>
+                                        <p><strong>Cadastrado:</strong> {user.dataCadastro || 'N/A'}</p>
+                                    </div>
+                                </div>
+                            ))}
+
+                            {activeTab === 'ranking' && rankings.map((local, index) => (
+                                <div key={index} className="admin-card">
+                                    <div className="card-header">
+                                        <h3>#{index + 1} {local.nome}</h3>
+                                        <span className={`category-badge ${index === 0 ? 'approved' : ''}`}>
+                                            {index === 0 ? '🥇 1º Lugar' : index === 1 ? '🥈 2º Lugar' : index === 2 ? '🥉 3º Lugar' : `${index + 1}º Lugar`}
+                                        </span>
+                                    </div>
+                                    
+                                    <div className="card-info">
+                                        <p><strong>Média:</strong> {local.media} ({local.estrelas})</p>
+                                        <p><strong>Total de Avaliações:</strong> {local.totalAvaliacoes}</p>
+                                        <p><strong>Posição:</strong> {index + 1}º lugar no ranking</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<AdminPanel />, document.getElementById('admin-root'));
+    </script>
+</body>
+</html>

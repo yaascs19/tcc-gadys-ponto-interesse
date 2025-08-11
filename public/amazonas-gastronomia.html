@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GADYS - Gastronomia do Amazonas</title>
-    <link rel="stylesheet" href="/hamburger-nav.css">
+    <link rel="stylesheet" href="/hamburger-nav-padronizado.css">
     <link rel="stylesheet" href="/rating-styles.css">
     <link rel="stylesheet" href="/comments-styles.css">
     <style>
@@ -237,6 +237,62 @@
         .dark-mode .footer {
             background: #0d1117;
         }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 200px;
+            max-height: 300px;
+            overflow-y: auto;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1000;
+            border-radius: 5px;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .dropdown-content a {
+            color: #333 !important;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+            color: #1a237e !important;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -291,7 +347,7 @@
                     <li><a href="/mapa.html">Mapa</a></li>
                     <li><a href="/sobre.html">Sobre</a></li>
                     <li><a href="/contato.html">Contato</a></li>
-                    <li><a href="/admin">Administração</a></li>
+
                 </ul>
             </nav>
         </header>
@@ -492,13 +548,20 @@
                         <h3 style="margin-bottom: 0.5rem; font-size: 1.3rem;">🌟 Explore o Amazonas por Categoria</h3>
                         <p style="opacity: 0.9; font-size: 1rem; margin-bottom: 1.5rem;">Descubra os tesouros do Amazonas! Escolha uma categoria abaixo e mergulhe nas maravilhas deste estado único.</p>
                         
-                        <div class="dropdown" style="display: inline-block;">
-                            <button style="background: rgba(255,255,255,0.2); color: white; border: 2px solid white; padding: 1rem 2rem; border-radius: 10px; font-size: 1.1rem; cursor: pointer; transition: all 0.3s;">Categorias ▼</button>
-                            <div class="dropdown-content" style="position: absolute; left: 50%; transform: translateX(-50%);">
-                                <a href="/amazonas-monumentos.html">🏛️ Monumentos</a>
-                                <a href="/amazonas-natureza.html">🌳 Natureza</a>
-                                <a href="/amazonas-gastronomia.html">🍽️ Gastronomia</a>
-                                <a href="/amazonas-cultura.html">🎨 Cultura</a>
+                        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                            <div class="dropdown" style="display: inline-block;">
+                                <button style="background: rgba(255,255,255,0.2); color: white; border: 2px solid white; padding: 1rem 2rem; border-radius: 10px; font-size: 1.1rem; cursor: pointer; transition: all 0.3s;">Visitar Locais ▼</button>
+                                <div class="dropdown-content" style="position: absolute; left: 50%; transform: translateX(-50%);">
+                                    <a href="/amazonas-monumentos.html">🏛️ Monumentos</a>
+                                    <a href="/amazonas-natureza.html">🌳 Natureza</a>
+                                </div>
+                            </div>
+                            <div class="dropdown" style="display: inline-block;">
+                                <button style="background: rgba(255,255,255,0.2); color: white; border: 2px solid white; padding: 1rem 2rem; border-radius: 10px; font-size: 1.1rem; cursor: pointer; transition: all 0.3s;">Curiosidades ▼</button>
+                                <div class="dropdown-content" style="position: absolute; left: 50%; transform: translateX(-50%);">
+                                    <a href="/amazonas-gastronomia.html">🍽️ Gastronomia</a>
+                                    <a href="/amazonas-cultura.html">🎨 Cultura</a>
+                                </div>
                             </div>
                         </div>
                     </div>
