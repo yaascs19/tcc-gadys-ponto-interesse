@@ -38,6 +38,7 @@
                 <li><a href="/amazonas-cultura.html">Cultura</a></li>
                 <li><a href="/sobre.html">Sobre</a></li>
                 <li><a href="/contato.html">Contato</a></li>
+                <li id="adminLink" style="display: none;"><a href="#" onclick="sessionStorage.setItem('openAdmin', 'true'); window.location.href='/'">Administração</a></li>
             </ul>
         </nav>
     </header>
@@ -91,5 +92,12 @@
         <p>&copy; 2025 GADYS. Todos os direitos reservados.</p>
     </footer>
 <script src="/navbar-padronizada.js"></script>
-<script>document.querySelector(".hamburger").addEventListener("click", () => {document.querySelector(".nav-links").classList.toggle("active");document.querySelector(".nav-overlay").classList.toggle("active");});document.querySelector(".nav-overlay").addEventListener("click", () => {document.querySelector(".nav-links").classList.remove("active");document.querySelector(".nav-overlay").classList.remove("active");});</script></body>
+<script>document.querySelector(".hamburger").addEventListener("click", () => {document.querySelector(".nav-links").classList.toggle("active");document.querySelector(".nav-overlay").classList.toggle("active");});document.querySelector(".nav-overlay").addEventListener("click", () => {document.querySelector(".nav-links").classList.remove("active");document.querySelector(".nav-overlay").classList.remove("active");});document.addEventListener('DOMContentLoaded', function() {
+    const userType = localStorage.getItem('userType');
+    if (userType === 'adm') {
+        const adminLink = document.getElementById('adminLink');
+        if (adminLink) adminLink.style.display = 'block';
+    }
+});
+</script></body>
 </html>

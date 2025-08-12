@@ -346,7 +346,7 @@
                     <li><a href="/mapa.html">Mapa</a></li>
                     <li><a href="/sobre.html">Sobre</a></li>
                     <li><a href="/contato.html">Contato</a></li>
-                    <li><a href="#" onclick="sessionStorage.setItem('openAdmin', 'true'); window.location.href='/'">Administração</a></li>
+                    <li id="adminLink" style="display: none;"><a href="#" onclick="sessionStorage.setItem('openAdmin', 'true'); window.location.href='/'">Administração</a></li>
                 </ul>
             </nav>
         </header>
@@ -585,7 +585,15 @@
             }
         }
         
-        document.addEventListener('DOMContentLoaded', carregarNaturezaAdicionada);
+        document.addEventListener('DOMContentLoaded', function() {
+            carregarNaturezaAdicionada();
+            
+            // Mostrar link admin apenas para administradores
+            const userType = localStorage.getItem('userType');
+            if (userType === 'adm') {
+                document.getElementById('adminLink').style.display = 'block';
+            }
+        });
     </script>
     <script src="/hamburger-nav.js"></script>
     <script src="/rating-system.js"></script>
