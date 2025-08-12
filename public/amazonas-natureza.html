@@ -33,8 +33,7 @@
         }
         
         .nav {
-            max-width: 1200px;
-            margin: 0 auto;
+            width: 100%;
             padding: 0 2rem;
             display: flex;
             justify-content: space-between;
@@ -347,7 +346,7 @@
                     <li><a href="/mapa.html">Mapa</a></li>
                     <li><a href="/sobre.html">Sobre</a></li>
                     <li><a href="/contato.html">Contato</a></li>
-
+                    <li><a href="#" onclick="sessionStorage.setItem('openAdmin', 'true'); window.location.href='/'">Administração</a></li>
                 </ul>
             </nav>
         </header>
@@ -419,7 +418,7 @@
                                     <textarea placeholder="Deixe seu comentário..." style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px; resize: vertical; min-height: 60px; font-size: 0.9rem;"></textarea>
                                     <button style="background: #228b22; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; margin-top: 0.5rem; cursor: pointer; font-size: 0.9rem;" onclick="addComment('encontro', this)">Comentar</button>
                                 </div>
-                                <button class="button" onclick="window.location.href='/encontro-aguas.html'">Conhecer</button>
+                                <button class="button" onclick="window.location.href='/encontro-aguas.html'">Explorar</button>
                             </div>
                         </div>
                         
@@ -539,7 +538,7 @@
                                     <textarea placeholder="Deixe seu comentário..." style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px; resize: vertical; min-height: 60px; font-size: 0.9rem;"></textarea>
                                     <button style="background: #228b22; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; margin-top: 0.5rem; cursor: pointer; font-size: 0.9rem;" onclick="addComment('rioamazonas', this)">Comentar</button>
                                 </div>
-                                <button class="button" onclick="window.location.href='/rio-amazonas.html'">Navegar</button>
+                                <button class="button" onclick="window.location.href='/rio-amazonas.html'">Explorar</button>
                             </div>
                         </div>
                     </div>

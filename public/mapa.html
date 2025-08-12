@@ -221,7 +221,7 @@
 </head>
 <body>
     <header class="header">
-        <nav style="width: 100%; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center;">
+        <nav style="width: 100% !important; max-width: none !important; margin: 0 !important; padding: 0 1rem; display: flex; justify-content: space-between; align-items: center;">
             <img src="/logo.png" alt="GADYS" style="height: 40px; background: lightblue; border-radius: 50%; padding: 8px;" />
             <div class="hamburger">
                 <span></span>
@@ -444,6 +444,8 @@
             const preco = document.getElementById('preco').value;
             const distancia = document.getElementById('distancia').value;
             
+            console.log('Filtros aplicados:', { categoria, preco, distancia });
+            
             const locaisComCoordenadas = [
                 {nome: "Teatro Amazonas", categoria: "monumentos", preco: "pago", lat: -3.1305, lng: -60.0239},
                 {nome: "Forte de São José", categoria: "monumentos", preco: "pago", lat: -3.1365, lng: -60.0166},
@@ -465,12 +467,19 @@
                 dist: calcularDistanciaReal(localizacaoAtual.lat, localizacaoAtual.lng, local.lat, local.lng)
             }));
             
+            console.log('Locais antes do filtro:', locais.map(l => ({ nome: l.nome, categoria: l.categoria })));
+            
             const filtrados = locais.filter(local => {
                 const passaCategoria = !categoria || local.categoria === categoria;
                 const passaPreco = !preco || local.preco === preco;
                 const passaDistancia = local.dist <= distancia;
+                
+                console.log(`${local.nome}: categoria=${local.categoria}, passa=${passaCategoria}`);
+                
                 return passaCategoria && passaPreco && passaDistancia;
             });
+            
+            console.log('Locais filtrados:', filtrados.map(l => ({ nome: l.nome, categoria: l.categoria })));
             
             const statsDiv = document.getElementById('stats');
             const statsContent = document.getElementById('statsContent');

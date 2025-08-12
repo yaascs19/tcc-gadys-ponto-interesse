@@ -7,10 +7,19 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     return localStorage.getItem('isLoggedIn') === 'true'
   })
-  const [currentPage, setCurrentPage] = useState('home')
+  
+  // Verificar admin ANTES de definir página inicial
+  const shouldOpenAdmin = sessionStorage.getItem('openAdmin') === 'true' && localStorage.getItem('userType') === 'adm'
+  const [currentPage, setCurrentPage] = useState(shouldOpenAdmin ? 'admin' : 'home')
+  
   const [userType, setUserType] = useState(() => {
     return localStorage.getItem('userType') || 'usuario'
   })
+  
+  // Limpar flag se foi usada
+  if (shouldOpenAdmin) {
+    sessionStorage.removeItem('openAdmin')
+  }
   const [darkMode, setDarkMode] = useState(() => {
     return localStorage.getItem('darkMode') === 'true'
   })
@@ -72,7 +81,7 @@ function App() {
   }
 
   useEffect(() => {
-    // Verificar se deve abrir admin automaticamente
+    // Verificar se deve abrir admin automaticamente - IMEDIATO
     if (sessionStorage.getItem('openAdmin') === 'true' && userType === 'adm') {
       sessionStorage.removeItem('openAdmin');
       setCurrentPage('admin');
