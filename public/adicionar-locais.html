@@ -337,13 +337,18 @@
                         </div>
                         
                         <div class="form-group" data-icon="📋">
-                            <label for="categoria">Categoria:</label>
-                            <select id="categoria" name="categoria" required>
+                            <label for="categoria">Categoria Principal:</label>
+                            <select id="categoria" name="categoria" required onchange="showSubcategory()">
                                 <option value="">Selecione uma categoria</option>
-                                <option value="monumentos">🏛️ Monumentos</option>
-                                <option value="natureza">🌳 Natureza</option>
-                                <option value="gastronomia">🍽️ Gastronomia</option>
-                                <option value="cultura">🎨 Cultura</option>
+                                <option value="visite-locais">Visite Locais</option>
+                                <option value="curiosidades">Curiosidades</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group" data-icon="🏷️" id="subcategoriaGroup" style="display: none;">
+                            <label for="subcategoria">Subcategoria:</label>
+                            <select id="subcategoria" name="subcategoria">
+                                <option value="">Selecione uma subcategoria</option>
                             </select>
                         </div>
                         
@@ -367,23 +372,23 @@
                             <input type="url" id="imagem" name="imagem" placeholder="https://exemplo.com/imagem.jpg">
                         </div>
                         
-                        <div class="form-group" data-icon="📍">
+                        <div class="form-group" data-icon="📍" id="localizacaoGroup">
                             <label for="localizacao">Localização/Endereço:</label>
                             <input type="text" id="localizacao" name="localizacao" placeholder="Endereço completo ou ponto de referência">
                         </div>
                         
-                        <div class="form-group" data-icon="🌐">
+                        <div class="form-group" data-icon="🌐" id="coordenadasGroup">
                             <label for="coordenadas">Coordenadas (Latitude, Longitude):</label>
                             <input type="text" id="coordenadas" name="coordenadas" placeholder="Ex: -3.1190, -60.0217" pattern="^-?\d+\.\d+,\s*-?\d+\.\d+$">
                             <small style="color: #666; font-size: 0.9rem; margin-top: 0.5rem; display: block;">💡 Dica: Use o Google Maps para obter as coordenadas exatas</small>
                         </div>
                         
-                        <div class="form-group" data-icon="🕒">
+                        <div class="form-group" data-icon="🕒" id="horarioGroup">
                             <label for="horario">Horário de Funcionamento:</label>
                             <input type="text" id="horario" name="horario" placeholder="Ex: Segunda a Sexta: 8h às 18h">
                         </div>
                         
-                        <div class="form-group" data-icon="💰">
+                        <div class="form-group" data-icon="💰" id="precoGroup">
                             <label for="preco">Preço/Entrada:</label>
                             <input type="text" id="preco" name="preco" placeholder="Ex: Gratuito, R$ 10,00, Varia">
                         </div>
@@ -413,7 +418,7 @@
             const formData = {
                 id: Date.now(),
                 name: document.getElementById('nome').value,
-                category: document.getElementById('categoria').value,
+                category: document.getElementById('subcategoria').value,
                 city: document.getElementById('cidade').value + ', ' + document.getElementById('estado').value,
                 description: document.getElementById('descricao').value,
                 imagem: document.getElementById('imagem').value || '/minha-imagem.jpg',
@@ -492,6 +497,59 @@
         };
         
         document.addEventListener('DOMContentLoaded', updateThemeIcon);
+        
+        function showSubcategory() {
+            const categoria = document.getElementById('categoria').value;
+            const subcategoriaGroup = document.getElementById('subcategoriaGroup');
+            const subcategoriaSelect = document.getElementById('subcategoria');
+            
+            // Campos que devem ser ocultados para curiosidades
+            const localizacaoGroup = document.getElementById('localizacaoGroup');
+            const coordenadasGroup = document.getElementById('coordenadasGroup');
+            const horarioGroup = document.getElementById('horarioGroup');
+            const precoGroup = document.getElementById('precoGroup');
+            
+            if (categoria === 'visite-locais') {
+                subcategoriaSelect.innerHTML = `
+                    <option value="">Selecione uma subcategoria</option>
+                    <option value="monumentos">🏛️ Monumentos</option>
+                    <option value="natureza">🌳 Natureza</option>
+                `;
+                subcategoriaGroup.style.display = 'block';
+                subcategoriaSelect.required = true;
+                
+                // Mostrar campos de localização
+                if (localizacaoGroup) localizacaoGroup.style.display = 'block';
+                if (coordenadasGroup) coordenadasGroup.style.display = 'block';
+                if (horarioGroup) horarioGroup.style.display = 'block';
+                if (precoGroup) precoGroup.style.display = 'block';
+                
+            } else if (categoria === 'curiosidades') {
+                subcategoriaSelect.innerHTML = `
+                    <option value="">Selecione uma subcategoria</option>
+                    <option value="gastronomia">🍽️ Gastronomia</option>
+                    <option value="cultura">🎨 Cultura</option>
+                `;
+                subcategoriaGroup.style.display = 'block';
+                subcategoriaSelect.required = true;
+                
+                // Ocultar campos de localização
+                if (localizacaoGroup) localizacaoGroup.style.display = 'none';
+                if (coordenadasGroup) coordenadasGroup.style.display = 'none';
+                if (horarioGroup) horarioGroup.style.display = 'none';
+                if (precoGroup) precoGroup.style.display = 'none';
+                
+            } else {
+                subcategoriaGroup.style.display = 'none';
+                subcategoriaSelect.required = false;
+                
+                // Mostrar todos os campos por padrão
+                if (localizacaoGroup) localizacaoGroup.style.display = 'block';
+                if (coordenadasGroup) coordenadasGroup.style.display = 'block';
+                if (horarioGroup) horarioGroup.style.display = 'block';
+                if (precoGroup) precoGroup.style.display = 'block';
+            }
+        }
     </script>
 </body>
 </html>
