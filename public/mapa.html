@@ -223,10 +223,13 @@
     <header class="header">
         <nav style="width: 100% !important; max-width: none !important; margin: 0 !important; padding: 0 1rem; display: flex; justify-content: space-between; align-items: center;">
             <img src="/logo.png" alt="GADYS" style="height: 40px; background: lightblue; border-radius: 50%; padding: 8px;" />
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <button onclick="toggleTheme()" id="themeToggle" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">🌙</button>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
             </div>
             <div class="nav-overlay"></div>
             <ul class="nav-links">
@@ -721,9 +724,20 @@
     <script src="/react-integration.js"></script>
     <script src="/navbar-padronizada.js"></script>
     <script src="/hamburger-nav.js"></script>
+    <script src="/theme-manager.js"></script>
     <script>
+        function updateThemeIcon() {
+            const isDark = document.body.classList.contains('dark-mode');
+            document.getElementById('themeToggle').textContent = isDark ? '☀️' : '🌙';
+        }
         
-
+        const originalToggle = toggleTheme;
+        toggleTheme = function() {
+            originalToggle();
+            updateThemeIcon();
+        };
+        
+        document.addEventListener('DOMContentLoaded', updateThemeIcon);
     </script>
 </body>
 </html>
