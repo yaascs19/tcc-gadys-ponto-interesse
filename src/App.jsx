@@ -292,7 +292,7 @@ function App() {
             <div className="carousel-slide active">
               <div className="hero-content">
                 <div className="welcome-box">
-                  <h3>Bem-vindo, {localStorage.getItem('userName') || 'Usuário'}!</h3>
+                  <h3>Bem-vindo(a), {localStorage.getItem('userName') || 'Usuário'}!</h3>
                   <p>Tipo de acesso: {localStorage.getItem('userType') === 'adm' ? 'Administrador' : 'Usuário'}</p>
                 </div>
                 <h2>Descubra Lugares Incríveis</h2>
@@ -308,7 +308,7 @@ function App() {
             <div className="carousel-slide">
               <div className="hero-content">
                 <div className="welcome-box">
-                  <h3>Bem-vindo, {localStorage.getItem('userName') || 'Usuário'}!</h3>
+                  <h3>Bem-vindo(a), {localStorage.getItem('userName') || 'Usuário'}!</h3>
                   <p>Tipo de acesso: {localStorage.getItem('userType') === 'adm' ? 'Administrador' : 'Usuário'}</p>
                 </div>
                 <h2>Descubra Lugares Incríveis</h2>
@@ -324,7 +324,7 @@ function App() {
             <div className="carousel-slide">
               <div className="hero-content">
                 <div className="welcome-box">
-                  <h3>Bem-vindo, {localStorage.getItem('userName') || 'Usuário'}!</h3>
+                  <h3>Bem-vindo(a), {localStorage.getItem('userName') || 'Usuário'}!</h3>
                   <p>Tipo de acesso: {localStorage.getItem('userType') === 'adm' ? 'Administrador' : 'Usuário'}</p>
                 </div>
                 <h2>Descubra Lugares Incríveis</h2>

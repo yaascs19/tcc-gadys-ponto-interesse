@@ -145,6 +145,18 @@ function Login({ onLogin }) {
             {isRegister ? ' Entrar' : ' Cadastrar-se'}
           </span>
         </p>
+        {!isRegister && (
+          <p className="forgot-password" onClick={() => {
+            const email = prompt('Digite seu e-mail para recuperar a senha:');
+            if (email && email.includes('@')) {
+              alert('📧 Instruções de recuperação enviadas para: ' + email);
+            } else if (email) {
+              alert('❌ E-mail inválido!');
+            }
+          }}>
+            Esqueceu sua senha?
+          </p>
+        )}
       </div>
     </div>
   )

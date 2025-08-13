@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GADYS - Login</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #1a237e; color: white; padding: 50px; text-align: center; }
+        .container { background: white; color: black; padding: 30px; border-radius: 10px; max-width: 400px; margin: 0 auto; }
+        input, select { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
+        button { width: 100%; padding: 10px; background: #1a237e; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 5px 0; }
+        .forgot { color: blue; cursor: pointer; text-decoration: underline; margin: 10px 0; display: block; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Login GADYS</h1>
+        <form id="loginForm">
+            <input type="email" id="email" placeholder="E-mail" required>
+            <input type="password" id="password" placeholder="Senha" required>
+            <select id="userType" required>
+                <option value="">Selecione o nível</option>
+                <option value="usuario">Usuário</option>
+                <option value="admin">Administrador</option>
+            </select>
+            <button type="submit">Entrar</button>
+        </form>
+        <h2 style="background: red; color: yellow; padding: 20px;">ESQUECEU SUA SENHA? CLIQUE AQUI</h2>
+        <script>alert('PÁGINA CARREGOU!');</script>
+        <button onclick="window.location.href='/home.html'">Voltar</button>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const userType = document.getElementById('userType').value;
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('userType', userType);
+            localStorage.setItem('userEmail', email);
+            localStorage.setItem('userName', email.split('@')[0]);
+            window.location.href = '/';
+        });
+
+        function esqueceuSenha() {
+            const email = prompt('Digite seu e-mail:');
+            if (email && email.includes('@')) {
+                alert('E-mail de recuperação enviado para: ' + email);
+            } else if (email) {
+                alert('E-mail inválido!');
+            }
+        }
+    </script>
+</body>
+</html>

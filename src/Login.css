@@ -144,3 +144,16 @@
   color: #5a6fd8;
   text-decoration: underline;
 }
+
+.forgot-password {
+  margin-top: 1rem;
+  color: #667eea;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.forgot-password:hover {
+  color: #5a6fd8;
+  text-decoration: underline;
+}

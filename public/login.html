@@ -104,8 +104,10 @@
             color: #1a237e;
             text-decoration: none;
             font-size: 0.9rem;
-            margin-top: 1rem;
-            display: inline-block;
+            margin: 1rem 0;
+            display: block;
+            cursor: pointer;
+            transition: all 0.3s;
         }
         
         .forgot-password:hover {
@@ -116,7 +118,7 @@
 <body>
     <div class="login-container">
         <img src="/logo.png" alt="GADYS" class="logo" style="background: lightblue; border-radius: 50%; padding: 8px;" />
-        <h1>Fazer Login</h1>
+        <h1>Fazer Login - VERSÃO ATUALIZADA</h1>
         
         <form id="loginForm">
             <div class="form-group">
@@ -139,9 +141,10 @@
             </div>
             
             <button type="submit" class="login-btn">Entrar</button>
+            <button onclick="recuperarSenha()" style="background: none; border: none; color: #1a237e; text-decoration: underline; cursor: pointer; font-size: 14px; margin: 10px 0; width: 100%;">Esqueceu sua senha?</button>
         </form>
         
-        <a href="#" class="forgot-password">Esqueceu sua senha?</a>
+
         
         <div style="margin-top: 2rem;">
             <button class="back-btn" onclick="window.location.href='/home.html'">Voltar</button>
@@ -165,6 +168,15 @@
             // Redirecionar para página principal
             window.location.href = '/';
         });
+        
+        function recuperarSenha() {
+            const email = prompt('Digite seu e-mail para recuperar a senha:');
+            if (email && email.includes('@')) {
+                alert('E-mail de recuperação enviado para: ' + email);
+            } else if (email) {
+                alert('E-mail inválido!');
+            }
+        }
     </script>
 </body>
 </html>
