@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GADYS - Lugares Mais Visitados</title>
 
-    <link rel="stylesheet" href="/hamburger-nav.css">
-    <link rel="stylesheet" href="/rating-styles.css">
-    <link rel="stylesheet" href="/comments-styles.css">
     <style>
         * {
             margin: 0;
@@ -47,9 +44,60 @@
         }
         
         .nav-links {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 300px;
+            height: 100vh;
+            background: #1a237e;
             display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 1rem;
+            margin: 0;
+            padding: 2rem 0;
             list-style: none;
-            gap: 2rem;
+            transition: right 0.3s ease;
+            z-index: 1001;
+            overflow-y: scroll;
+        }
+        
+        .nav-links.active {
+            right: 0;
+        }
+        
+        .nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            z-index: 1002;
+        }
+        
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 3px 0;
+            transition: 0.3s;
         }
         
         .nav-links a {
@@ -255,6 +303,9 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="/hamburger-nav-padronizado.css">
+    <link rel="stylesheet" href="/rating-styles.css">
+    <link rel="stylesheet" href="/comments-styles.css">
 </head>
 <body>
     <div class="page">
@@ -263,15 +314,15 @@
                 <img src="/logo.png" alt="GADYS" class="logo" style="height: 40px; background: lightblue; border-radius: 50%; padding: 8px;" />
                 <div style="display: flex; align-items: center; gap: 1rem;">
                     <button onclick="toggleTheme()" id="themeToggle" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">🌙</button>
-                    <div class="hamburger">
+                    <div class="hamburger" onclick="toggleMenu()">
                         <span></span>
                         <span></span>
                         <span></span>
                     </div>
                 </div>
-                <div class="nav-overlay"></div>
+                <div class="nav-overlay" onclick="closeMenu()"></div>
                 <ul class="nav-links">
-                    <li><a onclick="localStorage.setItem('isLoggedIn', 'true'); window.location.href='/'" href="/" onclick="window.location.href='/'">Início</a></li>
+                    <li><a onclick="localStorage.setItem('isLoggedIn', 'true'); window.location.href='/'" href="/">Início</a></li>
                     <li class="dropdown">
                         <a href="#estados">Estados Brasileiros ▼</a>
                         <div class="dropdown-content">
@@ -305,8 +356,10 @@
                         </div>
                     </li>
                     <li><a href="/perfil.html">Meu Perfil</a></li>
+                    <li><a href="/mapa.html">Mapa</a></li>
                     <li><a href="/sobre.html">Sobre</a></li>
                     <li><a href="/contato.html">Contato</a></li>
+                    <li id="adminLink" style="display: none;"><a href="#" onclick="sessionStorage.setItem('openAdmin', 'true'); window.location.href='/'">Administração</a></li>
                 </ul>
             </nav>
         </header>
@@ -632,7 +685,7 @@
             });
         });
     </script>
-    <script src="/hamburger-nav.js"></script>
+
     <script src="/rating-system.js"></script>
     <script src="/comments-system.js"></script>
     <script src="/api-loader.js"></script>
@@ -649,7 +702,26 @@
             updateThemeIcon();
         };
         
-        document.addEventListener('DOMContentLoaded', updateThemeIcon);
+        document.addEventListener('DOMContentLoaded', function() {
+            updateThemeIcon();
+            
+            // Mostrar link admin apenas para administradores
+            const userType = localStorage.getItem('userType');
+            if (userType === 'adm') {
+                const adminLink = document.getElementById('adminLink');
+                if (adminLink) adminLink.style.display = 'block';
+            }
+        });
+        
+        function toggleMenu() {
+            document.querySelector('.nav-links').classList.toggle('active');
+            document.querySelector('.nav-overlay').classList.toggle('active');
+        }
+        
+        function closeMenu() {
+            document.querySelector('.nav-links').classList.remove('active');
+            document.querySelector('.nav-overlay').classList.remove('active');
+        }
     </script>
 </body>
 </html>

@@ -357,6 +357,43 @@
             display: block;
         }
         
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .carousel-dot:hover {
+            transform: scale(1.3) !important;
+            background: rgba(255,255,255,1) !important;
+        }
+        
+        button[onclick*="Slide"]:hover {
+            background: rgba(255,255,255,0.4) !important;
+            transform: translateY(-50%) scale(1.1) !important;
+        }
+        
+        .hero .dropdown:hover .dropdown-content {
+            display: block !important;
+        }
+        
+        .hero .dropdown-content:hover {
+            display: block !important;
+        }
+        
+        .hero {
+            overflow: visible !important;
+        }
+        
+        .hero .dropdown-content a:hover {
+            background-color: #f1f1f1 !important;
+        }
+        
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2.5rem;
@@ -435,25 +472,50 @@
         </header>
 
         <main>
-            <section class="hero" style="position: relative; overflow: hidden; background: none;">
-                <div class="carousel-slide" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 1; transition: opacity 0.5s; z-index: 1;">
-                    <img src="/teatro-amazonas1.jpeg" alt="Teatro Amazonas" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+            <section class="hero" style="position: relative; overflow: hidden; background: none; height: 80vh; border-radius: 0 0 30px 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                <div class="carousel-slide" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 1; transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1; transform: scale(1);">
+                    <img src="/teatro-amazonas1.jpeg" alt="Teatro Amazonas" style="width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.8) contrast(1.1);">
                 </div>
-                <div class="carousel-slide" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.5s; z-index: 1;">
-                    <img src="/floresta.jpeg" alt="Floresta Amazônica" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                <div class="carousel-slide" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1; transform: scale(1);">
+                    <img src="/floresta.jpeg" alt="Floresta Amazônica" style="width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.8) contrast(1.1);">
                 </div>
-                <div class="carousel-slide" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.5s; z-index: 1;">
-                    <img src="/pantanal.jpeg" alt="Encontro das Águas" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                <div class="carousel-slide" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1; transform: scale(1);">
+                    <img src="/pantanal.jpeg" alt="Encontro das Águas" style="width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.8) contrast(1.1);">
                 </div>
-                <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(34, 139, 34, 0.6); z-index: 2;"></div>
-                <div style="position: relative; z-index: 3; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; text-align: center;">
-                    <h1>Amazonas</h1>
-                    <p>O coração da Amazônia brasileira</p>
+                <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(45deg, rgba(34, 139, 34, 0.7), rgba(0, 100, 0, 0.5)); z-index: 2;"></div>
+                <div style="position: absolute; top: 20px; right: 20px; z-index: 4; background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); padding: 0.5rem 1rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.3);">
+                    <span style="color: white; font-size: 0.9rem; font-weight: 500;">🌿 Amazônia Brasileira</span>
                 </div>
-                <div style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 0.5rem; z-index: 3;">
-                    <button class="carousel-dot" onclick="showSlide(0)" style="width: 12px; height: 12px; border-radius: 50%; border: 2px solid #333; background: #333; cursor: pointer;"></button>
-                    <button class="carousel-dot" onclick="showSlide(1)" style="width: 12px; height: 12px; border-radius: 50%; border: 2px solid #333; background: transparent; cursor: pointer;"></button>
-                    <button class="carousel-dot" onclick="showSlide(2)" style="width: 12px; height: 12px; border-radius: 50%; border: 2px solid #333; background: transparent; cursor: pointer;"></button>
+                <div style="position: relative; z-index: 3; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; text-align: center; animation: fadeInUp 1s ease-out;">
+                    <h1 style="font-size: 4rem; margin-bottom: 1rem; text-shadow: 2px 2px 8px rgba(0,0,0,0.5); background: linear-gradient(45deg, #fff, #e8f5e8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Amazonas</h1>
+                    <p style="font-size: 1.5rem; text-shadow: 1px 1px 4px rgba(0,0,0,0.7); margin-bottom: 2rem;">O coração da Amazônia brasileira</p>
+                    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                        <div class="dropdown" style="position: relative; display: inline-block;">
+                            <div style="background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); padding: 0.8rem 1.5rem; border-radius: 25px; border: 1px solid rgba(255,255,255,0.3); cursor: pointer;">
+                                <span style="color: white; font-size: 0.9rem; font-weight: 500;">Visite Lugares ▼</span>
+                            </div>
+                            <div class="dropdown-content" style="display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: white; min-width: 160px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); z-index: 9999; border-radius: 5px;">
+                                <a href="/amazonas-monumentos.html" style="color: #333 !important; padding: 12px 16px; text-decoration: none; display: block; transition: background-color 0.3s;">🏛️ Monumentos</a>
+                                <a href="/amazonas-natureza.html" style="color: #333 !important; padding: 12px 16px; text-decoration: none; display: block; transition: background-color 0.3s;">🌳 Natureza</a>
+                            </div>
+                        </div>
+                        <div class="dropdown" style="position: relative; display: inline-block;">
+                            <div style="background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); padding: 0.8rem 1.5rem; border-radius: 25px; border: 1px solid rgba(255,255,255,0.3); cursor: pointer;">
+                                <span style="color: white; font-size: 0.9rem; font-weight: 500;">Curiosidades ▼</span>
+                            </div>
+                            <div class="dropdown-content" style="display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: white; min-width: 160px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); z-index: 9999; border-radius: 5px;">
+                                <a href="/amazonas-gastronomia.html" style="color: #333 !important; padding: 12px 16px; text-decoration: none; display: block; transition: background-color 0.3s;">🍽️ Gastronomia</a>
+                                <a href="/amazonas-cultura.html" style="color: #333 !important; padding: 12px 16px; text-decoration: none; display: block; transition: background-color 0.3s;">🎨 Cultura</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="position: absolute; top: 50%; left: 20px; transform: translateY(-50%); z-index: 4;">
+                    <button onclick="prevSlide()" style="background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); border: 2px solid rgba(255,255,255,0.3); color: white; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; font-size: 1.5rem; transition: all 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">‹</button>
+                </div>
+                <div style="position: absolute; top: 50%; right: 20px; transform: translateY(-50%); z-index: 4;">
+                    <button onclick="nextSlide()" style="background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); border: 2px solid rgba(255,255,255,0.3); color: white; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; font-size: 1.5rem; transition: all 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">›</button>
                 </div>
             </section>
 
@@ -468,28 +530,7 @@
                     
 
                     
-                    <div style="text-align: center; margin-bottom: 2rem; padding: 1.5rem; background: linear-gradient(135deg, #228b22, #32cd32); color: white; border-radius: 15px; box-shadow: 0 5px 15px rgba(34, 139, 34, 0.3);">
-                        <h3 style="margin-bottom: 0.5rem; font-size: 1.3rem;">🌟 Explore o Amazonas por Categoria</h3>
-                        <p style="opacity: 0.9; font-size: 1rem; margin-bottom: 1.5rem;">Descubra os tesouros do Amazonas! Escolha uma categoria abaixo e mergulhe nas maravilhas deste estado único.</p>
-                        
-                        <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
-                            <div class="dropdown" style="display: inline-block;">
-                                <button style="background: rgba(255,255,255,0.2); color: white; border: 2px solid white; padding: 1rem 2rem; border-radius: 10px; font-size: 1.1rem; cursor: pointer; transition: all 0.3s;">Visite Lugares ▼</button>
-                                <div class="dropdown-content" style="position: absolute; left: 50%; transform: translateX(-50%);">
-                                    <a href="/amazonas-monumentos.html">🏛️ Monumentos</a>
-                                    <a href="/amazonas-natureza.html">🌳 Natureza</a>
-                                </div>
-                            </div>
-                            
-                            <div class="dropdown" style="display: inline-block;">
-                                <button style="background: rgba(255,255,255,0.2); color: white; border: 2px solid white; padding: 1rem 2rem; border-radius: 10px; font-size: 1.1rem; cursor: pointer; transition: all 0.3s;">Curiosidades ▼</button>
-                                <div class="dropdown-content" style="position: absolute; left: 50%; transform: translateX(-50%);">
-                                    <a href="/amazonas-gastronomia.html">🍽️ Gastronomia</a>
-                                    <a href="/amazonas-cultura.html">🎨 Cultura</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
 
                 </div>
             </section>
@@ -507,15 +548,18 @@
         function showSlide(index) {
             slides.forEach((slide, i) => {
                 slide.style.opacity = i === index ? '1' : '0';
-            });
-            dots.forEach((dot, i) => {
-                dot.style.background = i === index ? '#333' : 'transparent';
+                slide.style.transform = 'scale(1)';
             });
             currentSlide = index;
         }
         
         function nextSlide() {
             currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+        
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
             showSlide(currentSlide);
         }
         

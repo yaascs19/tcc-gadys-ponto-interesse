@@ -202,6 +202,40 @@
             display: block;
         }
         
+        /* Modo Escuro */
+        .dark-mode {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+        }
+        
+        .dark-mode .header {
+            background: linear-gradient(135deg, #0d1117, #21262d);
+        }
+        
+        .dark-mode .filters {
+            background: rgba(33, 38, 45, 0.95);
+            color: #e0e0e0;
+        }
+        
+        .dark-mode .filter-group label {
+            color: #f0f6fc;
+        }
+        
+        .dark-mode .filter-group select,
+        .dark-mode .filter-group input {
+            background: #161b22;
+            border-color: #30363d;
+            color: #e0e0e0;
+        }
+        
+        .dark-mode .distance-display {
+            background: #21262d;
+            color: #58a6ff;
+        }
+        
+        .dark-mode .filter-stats {
+            background: linear-gradient(135deg, #0d1117, #21262d);
+        }
+        
         @media (max-width: 768px) {
             .filters {
                 flex-direction: column;
