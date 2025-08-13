@@ -397,8 +397,13 @@
                         </div>
                         
                         <div class="form-group" data-icon="🖼️">
-                            <label for="imagem">URL da Imagem:</label>
-                            <input type="url" id="imagem" name="imagem" placeholder="https://exemplo.com/imagem.jpg">
+                            <label for="imagem">Imagem do Local:</label>
+                            <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                                <button type="button" onclick="escolherTipoImagem('url')" id="btnUrl" style="flex: 1; padding: 0.8rem; background: #1a237e; color: white; border: none; border-radius: 8px; cursor: pointer;">📎 URL da Imagem</button>
+                                <button type="button" onclick="escolherTipoImagem('arquivo')" id="btnArquivo" style="flex: 1; padding: 0.8rem; background: #666; color: white; border: none; border-radius: 8px; cursor: pointer;">📁 Do Computador</button>
+                            </div>
+                            <input type="url" id="imagem" name="imagem" placeholder="https://exemplo.com/imagem.jpg" style="display: block;">
+                            <input type="file" id="imagemArquivo" name="imagemArquivo" accept="image/*" style="display: none;">
                         </div>
                         
                         <div class="form-group" data-icon="📍" id="localizacaoGroup">
@@ -438,7 +443,21 @@
         </footer>
     </div>
     <script>
-        document.getElementById('localForm').addEventListener('submit', function(e) {
+        async function obterImagem() {
+            const inputUrl = document.getElementById('imagem');
+            const inputArquivo = document.getElementById('imagemArquivo');
+            
+            if (inputArquivo.style.display !== 'none' && inputArquivo.files[0]) {
+                return new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => resolve(e.target.result);
+                    reader.readAsDataURL(inputArquivo.files[0]);
+                });
+            }
+            return inputUrl.value || '/minha-imagem.jpg';
+        }
+        
+        document.getElementById('localForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const userName = localStorage.getItem('userName') || 'Usuário Anônimo';
@@ -450,7 +469,7 @@
                 category: document.getElementById('subcategoria').value,
                 city: document.getElementById('cidade').value + ', ' + document.getElementById('estado').value,
                 description: document.getElementById('descricao').value,
-                imagem: document.getElementById('imagem').value || '/minha-imagem.jpg',
+                imagem: await obterImagem(),
                 localizacao: document.getElementById('localizacao').value,
                 horario: document.getElementById('horario').value,
                 preco: document.getElementById('preco').value,
@@ -478,7 +497,7 @@
                         estado: 'AM',
                         categoria: formData.category,
                         descricao: formData.description,
-                        imagem: document.getElementById('imagem').value || '/minha-imagem.jpg',
+                        imagem: await obterImagem(),
                         localizacao: formData.localizacao,
                         horario: formData.horario,
                         preco: formData.preco,
@@ -527,6 +546,29 @@
         };
         
         document.addEventListener('DOMContentLoaded', updateThemeIcon);
+        
+        function escolherTipoImagem(tipo) {
+            const btnUrl = document.getElementById('btnUrl');
+            const btnArquivo = document.getElementById('btnArquivo');
+            const inputUrl = document.getElementById('imagem');
+            const inputArquivo = document.getElementById('imagemArquivo');
+            
+            if (tipo === 'url') {
+                btnUrl.style.background = '#1a237e';
+                btnArquivo.style.background = '#666';
+                inputUrl.style.display = 'block';
+                inputArquivo.style.display = 'none';
+                inputUrl.required = false;
+                inputArquivo.required = false;
+            } else {
+                btnUrl.style.background = '#666';
+                btnArquivo.style.background = '#1a237e';
+                inputUrl.style.display = 'none';
+                inputArquivo.style.display = 'block';
+                inputUrl.required = false;
+                inputArquivo.required = false;
+            }
+        }
         
         function showSubcategory() {
             const categoria = document.getElementById('categoria').value;

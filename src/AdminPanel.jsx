@@ -15,6 +15,8 @@ function AdminPanel() {
   const [trashedLocations, setTrashedLocations] = useState([])
   const [contactMessages, setContactMessages] = useState([])
   const [locationFilter, setLocationFilter] = useState('')
+  const [editingLocation, setEditingLocation] = useState(null)
+  const [showEditModal, setShowEditModal] = useState(false)
   
   const loadUsers = async () => {
     try {
@@ -174,31 +176,14 @@ function AdminPanel() {
       const locationToApprove = pendingLocations.find(location => location.id === id)
       const updatedLocations = pendingLocations.filter(location => location.id !== id)
       
-      // Adiciona aos locais aprovados
+      // Adiciona apenas aos locais aprovados (não duplicar)
       let approvedLocations = JSON.parse(localStorage.getItem('approvedLocations')) || []
       approvedLocations.push(locationToApprove)
       localStorage.setItem('approvedLocations', JSON.stringify(approvedLocations))
       setApprovedLocations([...approvedLocations])
       
-      // Adiciona às categorias correspondentes
-      let locaisAdicionados = JSON.parse(localStorage.getItem('locaisAdicionados')) || []
-      
-      const novoLocal = {
-        nome: locationToApprove.name,
-        cidade: locationToApprove.city.split(',')[0],
-        estado: locationToApprove.city.split(',')[1]?.trim() || 'BR',
-        categoria: locationToApprove.category,
-        descricao: locationToApprove.description,
-        imagem: locationToApprove.imageUrl || locationToApprove.imagem || '/minha-imagem.jpg',
-        localizacao: locationToApprove.localizacao,
-        horario: locationToApprove.horario,
-        preco: locationToApprove.preco,
-        infoAdicional: locationToApprove.infoAdicional,
-        id: locationToApprove.id
-      }
-      
-      locaisAdicionados.push(novoLocal)
-      localStorage.setItem('locaisAdicionados', JSON.stringify(locaisAdicionados))
+      // Recarregar locais do site para mostrar o novo local
+      loadSiteLocations()
       
       setPendingLocations(updatedLocations)
       localStorage.setItem('pendingLocations', JSON.stringify(updatedLocations))
@@ -379,6 +364,27 @@ function AdminPanel() {
       setTrashedLocations(updatedTrash)
       localStorage.setItem('trashedLocations', JSON.stringify(updatedTrash))
       alert('Local excluído permanentemente!')
+    }
+  }
+
+  const handleEdit = (id) => {
+    const locationToEdit = pendingLocations.find(location => location.id === id)
+    setEditingLocation({...locationToEdit})
+    setShowEditModal(true)
+  }
+
+  const handleSaveEdit = () => {
+    if (editingLocation) {
+      // Atualizar local na lista de pendentes
+      const updatedPending = pendingLocations.map(location => 
+        location.id === editingLocation.id ? editingLocation : location
+      )
+      setPendingLocations(updatedPending)
+      localStorage.setItem('pendingLocations', JSON.stringify(updatedPending))
+      
+      setShowEditModal(false)
+      setEditingLocation(null)
+      alert('Local editado com sucesso!')
     }
   }
 
@@ -640,6 +646,12 @@ function AdminPanel() {
                 {expandedCard === location.id ? 'Recolher' : 'Expandir'}
               </button>
               <button 
+                className="expand-btn"
+                onClick={() => handleEdit(location.id)}
+              >
+                Editar
+              </button>
+              <button 
                 className="approve-btn"
                 onClick={() => handleApprove(location.id)}
               >
@@ -804,6 +816,67 @@ function AdminPanel() {
           </div>
         ))}
       </div>
+      
+      {showEditModal && editingLocation && (
+        <div className="modal-overlay" onClick={() => setShowEditModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h2>Editar Local</h2>
+            <div className="edit-form">
+              <div className="form-group">
+                <label>Nome:</label>
+                <input 
+                  type="text" 
+                  value={editingLocation.name} 
+                  onChange={(e) => setEditingLocation({...editingLocation, name: e.target.value})}
+                />
+              </div>
+              <div className="form-group">
+                <label>Cidade:</label>
+                <input 
+                  type="text" 
+                  value={editingLocation.city} 
+                  onChange={(e) => setEditingLocation({...editingLocation, city: e.target.value})}
+                />
+              </div>
+              <div className="form-group">
+                <label>Categoria:</label>
+                <select 
+                  value={editingLocation.category} 
+                  onChange={(e) => setEditingLocation({...editingLocation, category: e.target.value})}
+                >
+                  <option value="monumentos">Monumentos</option>
+                  <option value="natureza">Natureza</option>
+                  <option value="gastronomia">Gastronomia</option>
+                  <option value="cultura">Cultura</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label>Descrição:</label>
+                <textarea 
+                  value={editingLocation.description} 
+                  onChange={(e) => setEditingLocation({...editingLocation, description: e.target.value})}
+                  rows="4"
+                />
+              </div>
+              <div className="form-group">
+                <label>Localização:</label>
+                <input 
+                  type="text" 
+                  value={editingLocation.localizacao || ''} 
+                  onChange={(e) => setEditingLocation({...editingLocation, localizacao: e.target.value})}
+                />
+              </div>
+              <div className="modal-actions">
+                <button className="approve-btn" onClick={() => {
+                  handleSaveEdit()
+                  handleApprove(editingLocation.id)
+                }}>Salvar e Aprovar</button>
+                <button className="reject-btn" onClick={() => setShowEditModal(false)}>Cancelar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
