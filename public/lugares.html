@@ -284,6 +284,22 @@
             background: #0d1117;
         }
 
+        /* Corrigir problema das estrelas no botão comentar */
+        .comments-btn {
+            font-size: 0.9rem !important;
+        }
+        
+        .user-rating .star {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #ddd;
+            transition: color 0.3s;
+        }
+        
+        .user-rating .star:hover, .user-rating .star.active {
+            color: #f39c12;
+        }
+        
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2.5rem;

@@ -33,14 +33,14 @@
     margin-top: 0.5rem;
 }
 
-.star {
+.user-rating .star {
     font-size: 1.5rem;
     cursor: pointer;
     color: #ddd;
     transition: color 0.3s;
 }
 
-.star:hover, .star.active {
+.user-rating .star:hover, .user-rating .star.active {
     color: #f39c12;
 }
 

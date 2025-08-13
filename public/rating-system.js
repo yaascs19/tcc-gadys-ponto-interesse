@@ -74,7 +74,7 @@ function updateRatingDisplay(localId) {
 }
 
 function updateUserStars(localId, rating) {
-    const stars = document.querySelectorAll(`[onclick*="'${localId}'"]`);
+    const stars = document.querySelectorAll(`.user-rating [onclick*="'${localId}'"]`);
     stars.forEach((star, index) => {
         if (index < rating) {
             star.classList.add('active');
