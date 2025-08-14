@@ -839,6 +839,9 @@
                     'pantanal': 'Pantanal'
                 };
                 
+                // Se não encontrar no mapa, usar o nome original (que já pode ser o nome completo)
+                localName = nameMap[localName] || localName;
+                
                 localName = nameMap[localName] || localName;
                 
                 if (!localsMap.has(localName)) {
@@ -849,10 +852,12 @@
             
             // Adicionar comentários
             allUserComments.forEach(({ localName, comment }) => {
-                if (!localsMap.has(localName)) {
-                    localsMap.set(localName, { rating: null, comment: null });
+                // Usar nome completo salvo no comentário se disponível
+                const displayName = comment.localFullName || localName;
+                if (!localsMap.has(displayName)) {
+                    localsMap.set(displayName, { rating: null, comment: null });
                 }
-                localsMap.get(localName).comment = comment;
+                localsMap.get(displayName).comment = comment;
             });
             
             // Gerar conteúdo para cada local

@@ -42,10 +42,14 @@ async function addComment(localId, buttonElement) {
             placeComments[localId] = [];
         }
         
+        // Obter nome completo do local
+        const localFullName = getLocalFullName(localId);
+        
         const newComment = {
             userName: userName,
             text: commentText,
-            date: new Date().toLocaleString('pt-BR')
+            date: new Date().toLocaleString('pt-BR'),
+            localFullName: localFullName
         };
         
         placeComments[localId].push(newComment);
@@ -57,4 +61,51 @@ async function addComment(localId, buttonElement) {
         // Disparar evento para atualizar contador no perfil
         window.dispatchEvent(new CustomEvent('commentAdded'));
     }
+}
+
+function getLocalFullName(localId) {
+    const nameMap = {
+        'teatro': 'Teatro Amazonas',
+        'forte': 'Forte de São José',
+        'justica': 'Palácio da Justiça',
+        'mercado': 'Mercado Municipal',
+        'igreja': 'Igreja de São Sebastião',
+        'palacio': 'Palácio Rio Negro',
+        'festival': 'Festival de Parintins',
+        'lendas': 'Lendas Amazônicas',
+        'artesanato': 'Artesanato Indígena',
+        'ciranda': 'Ciranda Amazônica',
+        'carimbo': 'Carimbó',
+        'rituais': 'Rituais Xamânicos',
+        'floresta': 'Floresta Amazônica',
+        'encontro': 'Encontro das Águas',
+        'anavilhanas': 'Parque Nacional de Anavilhanas',
+        'mamiraui': 'Reserva Mamirauá',
+        'jau': 'Parque Nacional do Jaú',
+        'rioamazonas': 'Rio Amazonas',
+        'pirarucu': 'Pirarucu',
+        'acai': 'Açaí',
+        'cupuacu': 'Cupuaçu',
+        'tucuma': 'Tucumã',
+        'tacaca': 'Tacacá',
+        'farinha': 'Farinha de Mandioca'
+    };
+    
+    // Tentar encontrar pelo título da página
+    const pageTitle = document.title;
+    if (pageTitle.includes(' - ')) {
+        const titlePart = pageTitle.split(' - ')[1];
+        if (titlePart && titlePart !== 'GADYS') {
+            return titlePart;
+        }
+    }
+    
+    // Tentar encontrar pelo h1 da página
+    const h1 = document.querySelector('h1');
+    if (h1 && h1.textContent.trim()) {
+        return h1.textContent.replace(/🍽️|🎨|🏛️|🌳/g, '').trim();
+    }
+    
+    // Usar mapeamento como fallback
+    return nameMap[localId] || localId;
 }

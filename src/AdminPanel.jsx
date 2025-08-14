@@ -517,6 +517,8 @@ function AdminPanel() {
             <option value="natureza">🌳 Natureza</option>
           </select>
           <select 
+            value={locationFilter}
+            onChange={(e) => setLocationFilter(e.target.value)}
             style={{
               padding: '1rem 1.5rem',
               borderRadius: '15px',
@@ -668,7 +670,11 @@ function AdminPanel() {
         ))}
         
         {activeTab === 'locations' && siteLocations
-          .filter(location => !locationFilter || (location.categoria || location.category) === locationFilter)
+          .filter(location => {
+            if (!locationFilter) return true;
+            const categoria = location.categoria || location.category;
+            return categoria === locationFilter;
+          })
           .map((location, index) => (
           <div key={location.id || index} className={`admin-card ${expandedCard === location.id ? 'expanded' : ''}`}>
             <div className="card-header">

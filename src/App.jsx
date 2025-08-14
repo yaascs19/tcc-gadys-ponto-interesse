@@ -211,7 +211,6 @@ function App() {
               <li><a href="/sobre.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Sobre</a></li>
               <li><a href="/contato.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Contato</a></li>
               <li><a href="#" onClick={(e) => {e.preventDefault(); setCurrentPage('admin'); document.querySelector('.nav-links').classList.remove('active')}}>Administração</a></li>
-              <li><a href="#" onClick={(e) => {e.preventDefault(); handleLogout(); document.querySelector('.nav-links').classList.remove('active')}}>Logout</a></li>
             </ul>
           </nav>
         </header>
@@ -281,7 +280,6 @@ function App() {
             {userType === 'adm' && (
               <li><a href="#" onClick={(e) => {e.preventDefault(); setCurrentPage('admin'); document.querySelector('.nav-links').classList.remove('active')}}>Administração</a></li>
             )}
-            <li><a href="#" onClick={(e) => {e.preventDefault(); handleLogout(); document.querySelector('.nav-links').classList.remove('active')}}>Logout</a></li>
           </ul>
         </nav>
       </header>
