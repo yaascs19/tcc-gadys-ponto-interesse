@@ -73,9 +73,11 @@ function Login({ onLogin }) {
           }
         } catch (error) {
           // Fallback para login offline
-          if (email === 'yasmincunegundes25@gmail.com' && password === 'Cun*1925' && userType === 'adm') {
+          if ((email === 'yasmincunegundes25@gmail.com' && password === 'Cun*1925' && userType === 'adm') ||
+              (email === 'alvesdavid.1705@gmail.com' && password === 'David43356' && userType === 'adm')) {
+            const adminName = email === 'yasmincunegundes25@gmail.com' ? 'Yasmin' : 'David'
             localStorage.setItem('userEmail', email)
-            onLogin('adm', 'Yasmin')
+            onLogin('adm', adminName)
           } else {
             const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || []
             const user = registeredUsers.find(user => user.email === email && user.password === password && user.userType === userType)

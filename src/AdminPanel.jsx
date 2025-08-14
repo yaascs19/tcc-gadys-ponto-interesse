@@ -456,7 +456,7 @@ function AdminPanel() {
             className={`tab-btn ${activeTab === 'ranking' ? 'active' : ''}`}
             onClick={() => setActiveTab('ranking')}
           >
-            Ranking de Locais
+            Ranking
           </button>
           <button 
             className={`tab-btn ${activeTab === 'locations' ? 'active' : ''}`}
