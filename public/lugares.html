@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -255,7 +255,8 @@
             <nav class="nav">
                 <img src="/logo.png" alt="GADYS" class="logo" />
                 <div style="display: flex; align-items: center; gap: 1rem;">
-                    <button onclick="toggleTheme()" id="themeToggle" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">🌙</button>
+                    <div id="google_translate_element" style="display: inline-block;"></div>
+                <button onclick="toggleTheme()" id="themeToggle" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">🌙</button>
                     <div class="hamburger">
                         <span></span>
                         <span></span>
@@ -308,8 +309,8 @@
         <main>
             <section class="hero">
                 <div>
-                    <h1>Lugares Mais Visitados do Brasil</h1>
-                    <p>Descubra os destinos mais procurados pelos turistas</p>
+                    <h1 data-translate="lugares-mais-visitados">Lugares Mais Visitados do Brasil</h1>
+                    <p data-translate="destinos-procurados">Descubra os destinos mais procurados pelos turistas</p>
                 </div>
             </section>
 
@@ -627,6 +628,12 @@
         });
     </script>
 
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'pt', includedLanguages: 'en,es,fr'}, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <script src="/hamburger-nav.js"></script>
     <script src="/rating-system.js"></script>
     <script src="/comments-system.js"></script>
