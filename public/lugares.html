@@ -291,6 +291,7 @@
         }
     </style>
 
+    <link rel="stylesheet" href="/hamburger-nav-padronizado.css">
     <link rel="stylesheet" href="/rating-styles.css">
     <link rel="stylesheet" href="/comments-styles.css">
 </head>
@@ -299,21 +300,61 @@
         <header class="header">
             <nav class="nav">
                 <img src="/logo.png" alt="GADYS" class="logo" />
-                <div style="display: flex; align-items: center; gap: 1rem; position: relative;">
+                <div style="display: flex; align-items: center; gap: 1rem;">
                     <button onclick="toggleTheme()" id="themeToggle" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">🌙</button>
                     <div id="google_translate_element" style="display: none;"></div>
-
-                    <button onclick="document.getElementById('navMenu').style.display = document.getElementById('navMenu').style.display === 'block' ? 'none' : 'block'" style="background: none; border: none; color: white; cursor: pointer; font-size: 1.5rem;">
-                        ☰
-                    </button>
-                    <ul id="navMenu" style="display: none; position: absolute; top: 50px; right: 0; width: 250px; background: #1a237e; padding: 15px 0; list-style: none; border-radius: 8px; z-index: 9999; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
-                        <li><a href="/amazonas.html" style="color: white; text-decoration: none; padding: 12px 20px; display: block; font-size: 1rem;">Estados Brasileiros</a></li>
-                        <li><a href="/mapa.html" style="color: white; text-decoration: none; padding: 12px 20px; display: block; font-size: 1rem;">Mapa</a></li>
-                        <li><a href="/perfil.html" style="color: white; text-decoration: none; padding: 12px 20px; display: block; font-size: 1rem;">Meu Perfil</a></li>
-                        <li><a href="/sobre.html" style="color: white; text-decoration: none; padding: 12px 20px; display: block; font-size: 1rem;">Sobre Nós</a></li>
-                        <li><a href="/contato.html" style="color: white; text-decoration: none; padding: 12px 20px; display: block; font-size: 1rem;">Contato</a></li>
-                    </ul>
+                    <select onchange="translatePage(this.value)" style="background: white; padding: 5px; border-radius: 5px; margin-right: 10px; border: 1px solid #ccc;">
+                        <option value="pt">🇧🇷 PT</option>
+                        <option value="en">🇺🇸 EN</option>
+                        <option value="es">🇪🇸 ES</option>
+                        <option value="fr">🇫🇷 FR</option>
+                    </select>
+                    <div class="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
                 </div>
+                <div class="nav-overlay"></div>
+                <ul class="nav-links">
+                    <li><a href="/">Início</a></li>
+                    <li class="dropdown">
+                        <a href="#estados">Estados Brasileiros ▼</a>
+                        <div class="dropdown-content">
+                            <a href="#">Acre</a>
+                            <a href="#">Alagoas</a>
+                            <a href="#">Amapá</a>
+                            <a href="/amazonas.html">Amazonas</a>
+                            <a href="#">Bahia</a>
+                            <a href="#">Ceará</a>
+                            <a href="#">Distrito Federal</a>
+                            <a href="#">Espírito Santo</a>
+                            <a href="#">Goiás</a>
+                            <a href="#">Maranhão</a>
+                            <a href="#">Mato Grosso</a>
+                            <a href="#">Mato Grosso do Sul</a>
+                            <a href="#">Minas Gerais</a>
+                            <a href="#">Pará</a>
+                            <a href="#">Paraíba</a>
+                            <a href="#">Paraná</a>
+                            <a href="#">Pernambuco</a>
+                            <a href="#">Piauí</a>
+                            <a href="#">Rio de Janeiro</a>
+                            <a href="#">Rio Grande do Norte</a>
+                            <a href="#">Rio Grande do Sul</a>
+                            <a href="#">Rondônia</a>
+                            <a href="#">Roraima</a>
+                            <a href="#">Santa Catarina</a>
+                            <a href="#">São Paulo</a>
+                            <a href="#">Sergipe</a>
+                            <a href="#">Tocantins</a>
+                        </div>
+                    </li>
+                    <li><a href="/perfil.html">Meu Perfil</a></li>
+                    <li><a href="/mapa.html">Mapa</a></li>
+                    <li><a href="/sobre.html">Sobre</a></li>
+                    <li><a href="/contato.html">Contato</a></li>
+                </ul>
 
 
 
@@ -664,26 +705,7 @@
             }
         });
         
-        document.addEventListener('DOMContentLoaded', function() {
-            const hamburger = document.querySelector('.hamburger');
-            const menu = document.getElementById('navMenu');
-            
-            hamburger.addEventListener('click', function() {
-                if (menu.style.display === 'block') {
-                    menu.style.display = 'none';
-                } else {
-                    menu.style.display = 'block';
-                }
-            });
-        });
-        
-        document.addEventListener('click', function(e) {
-            const menu = document.querySelector('.nav-links');
-            const hamburger = document.querySelector('.hamburger');
-            if (!hamburger.contains(e.target) && !menu.contains(e.target)) {
-                menu.style.display = 'none';
-            }
-        });
+
     </script>
 <script type="text/javascript">
 function googleTranslateElementInit() {
@@ -702,5 +724,6 @@ function translatePage(lang) {
 }
 </script>
 <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script src="/hamburger-nav.js"></script>
 </body>
 </html>
