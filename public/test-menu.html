@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Menu</title>
+</head>
+<body>
+    <div style="background: #1a237e; padding: 20px;">
+        <div onclick="toggleMenu()" style="cursor: pointer; color: white;">
+            ☰ MENU
+        </div>
+        <ul id="navMenu" style="display: none; background: white; margin-top: 10px; padding: 0; list-style: none;">
+            <li><a href="/" style="display: block; padding: 10px; color: black;">Início</a></li>
+            <li><a href="/amazonas.html" style="display: block; padding: 10px; color: black;">Estados Brasileiros</a></li>
+            <li><a href="/mapa.html" style="display: block; padding: 10px; color: black;">Mapa</a></li>
+            <li><a href="/perfil.html" style="display: block; padding: 10px; color: black;">Meu Perfil</a></li>
+            <li><a href="/sobre.html" style="display: block; padding: 10px; color: black;">Sobre Nós</a></li>
+            <li><a href="/contato.html" style="display: block; padding: 10px; color: black;">Contato</a></li>
+        </ul>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('navMenu');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        }
+    </script>
+</body>
+</html>

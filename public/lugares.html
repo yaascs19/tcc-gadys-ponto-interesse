@@ -70,6 +70,51 @@
             right: 0 !important;
         }
         
+        .nav-links a {
+            color: white !important;
+            text-decoration: none !important;
+            padding: 0.5rem 1rem !important;
+            border-radius: 5px !important;
+            transition: background 0.3s !important;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1) !important;
+        }
+        
+        .nav-overlay {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            background: rgba(0, 0, 0, 0.5) !important;
+            z-index: 1000 !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            transition: all 0.3s ease !important;
+        }
+        
+        .nav-overlay.active {
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+        
+        .hamburger {
+            display: flex !important;
+            flex-direction: column !important;
+            cursor: pointer !important;
+            z-index: 1002 !important;
+        }
+        
+        .hamburger span {
+            width: 25px !important;
+            height: 3px !important;
+            background: white !important;
+            margin: 3px 0 !important;
+            transition: 0.3s !important;
+        }
+        
         .hero {
             background: linear-gradient(rgba(26, 35, 126, 0.8), rgba(26, 35, 126, 0.8)), url('https://images.unsplash.com/photo-1483729558449-99ef09a8c325?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
@@ -245,7 +290,7 @@
             }
         }
     </style>
-    <link rel="stylesheet" href="/hamburger-nav-padronizado.css">
+
     <link rel="stylesheet" href="/rating-styles.css">
     <link rel="stylesheet" href="/comments-styles.css">
 </head>
@@ -254,55 +299,24 @@
         <header class="header">
             <nav class="nav">
                 <img src="/logo.png" alt="GADYS" class="logo" />
-                <div style="display: flex; align-items: center; gap: 1rem;">
-                    <div id="google_translate_element" style="display: inline-block;"></div>
-                <button onclick="toggleTheme()" id="themeToggle" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">🌙</button>
-                    <div class="hamburger">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
+                <div style="display: flex; align-items: center; gap: 1rem; position: relative;">
+                    <button onclick="toggleTheme()" id="themeToggle" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">🌙</button>
+                    <div id="google_translate_element" style="display: none;"></div>
+
+                    <button onclick="document.getElementById('navMenu').style.display = document.getElementById('navMenu').style.display === 'block' ? 'none' : 'block'" style="background: none; border: none; color: white; cursor: pointer;">
+                        ☰
+                    </button>
+                    <ul id="navMenu" style="display: none; position: absolute; top: 50px; right: 0; width: 200px; background: #1a237e; padding: 10px 0; list-style: none; border-radius: 5px; z-index: 9999;">
+                        <li><a href="/amazonas.html" style="color: white; text-decoration: none; padding: 8px 16px; display: block;">Estados Brasileiros</a></li>
+                        <li><a href="/mapa.html" style="color: white; text-decoration: none; padding: 8px 16px; display: block;">Mapa</a></li>
+                        <li><a href="/perfil.html" style="color: white; text-decoration: none; padding: 8px 16px; display: block;">Meu Perfil</a></li>
+                        <li><a href="/sobre.html" style="color: white; text-decoration: none; padding: 8px 16px; display: block;">Sobre Nós</a></li>
+                        <li><a href="/contato.html" style="color: white; text-decoration: none; padding: 8px 16px; display: block;">Contato</a></li>
+                    </ul>
                 </div>
-                <div class="nav-overlay"></div>
-                <ul class="nav-links">
-                    <li><a href="/">Início</a></li>
-                    <li class="dropdown">
-                        <a href="#estados">Estados Brasileiros ▼</a>
-                        <div class="dropdown-content">
-                            <a href="#">Acre</a>
-                            <a href="#">Alagoas</a>
-                            <a href="#">Amapá</a>
-                            <a href="/amazonas.html">Amazonas</a>
-                            <a href="#">Bahia</a>
-                            <a href="#">Ceará</a>
-                            <a href="#">Distrito Federal</a>
-                            <a href="#">Espírito Santo</a>
-                            <a href="#">Goiás</a>
-                            <a href="#">Maranhão</a>
-                            <a href="#">Mato Grosso</a>
-                            <a href="#">Mato Grosso do Sul</a>
-                            <a href="#">Minas Gerais</a>
-                            <a href="#">Pará</a>
-                            <a href="#">Paraíba</a>
-                            <a href="#">Paraná</a>
-                            <a href="#">Pernambuco</a>
-                            <a href="#">Piauí</a>
-                            <a href="#">Rio de Janeiro</a>
-                            <a href="#">Rio Grande do Norte</a>
-                            <a href="#">Rio Grande do Sul</a>
-                            <a href="#">Rondônia</a>
-                            <a href="#">Roraima</a>
-                            <a href="#">Santa Catarina</a>
-                            <a href="#">São Paulo</a>
-                            <a href="#">Sergipe</a>
-                            <a href="#">Tocantins</a>
-                        </div>
-                    </li>
-                    <li><a href="/perfil.html">Meu Perfil</a></li>
-                    <li><a href="/mapa.html">Mapa</a></li>
-                    <li><a href="/sobre.html">Sobre</a></li>
-                    <li><a href="/contato.html">Contato</a></li>
-                </ul>
+
+
+
             </nav>
         </header>
 
@@ -629,18 +643,6 @@
     </script>
 
     <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({pageLanguage: 'pt', includedLanguages: 'en,es,fr'}, 'google_translate_element');
-        }
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    <script src="/hamburger-nav.js"></script>
-    <script src="/rating-system.js"></script>
-    <script src="/comments-system.js"></script>
-    <script src="/api-loader.js"></script>
-    <script src="/theme-manager.js"></script>
-    <script>
-        function updateThemeIcon() {
             const isDark = document.body.classList.contains('dark-mode');
             document.getElementById('themeToggle').textContent = isDark ? '☀️' : '🌙';
         }
@@ -662,7 +664,43 @@
             }
         });
         
-        /* Funções de menu removidas - usando hamburger-nav.js */
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.querySelector('.hamburger');
+            const menu = document.getElementById('navMenu');
+            
+            hamburger.addEventListener('click', function() {
+                if (menu.style.display === 'block') {
+                    menu.style.display = 'none';
+                } else {
+                    menu.style.display = 'block';
+                }
+            });
+        });
+        
+        document.addEventListener('click', function(e) {
+            const menu = document.querySelector('.nav-links');
+            const hamburger = document.querySelector('.hamburger');
+            if (!hamburger.contains(e.target) && !menu.contains(e.target)) {
+                menu.style.display = 'none';
+            }
+        });
     </script>
+<script type="text/javascript">
+function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+        pageLanguage: 'pt',
+        autoDisplay: false
+    }, 'google_translate_element');
+}
+
+function translatePage(lang) {
+    var selectField = document.querySelector('.goog-te-combo');
+    if (selectField) {
+        selectField.value = lang;
+        selectField.dispatchEvent(new Event('change'));
+    }
+}
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>

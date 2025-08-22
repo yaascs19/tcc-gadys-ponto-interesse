@@ -354,8 +354,17 @@
         <nav class="nav">
             <img src="/logo.png" alt="GADYS" class="logo" style="background: lightblue; border-radius: 50%; padding: 8px;" />
             <div style="display: flex; align-items: center; gap: 1rem;">
+                
                 <button onclick="toggleTheme()" id="themeToggle" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">🌙</button>
-                <div class="hamburger">
+                
+                <div id="google_translate_element" style="display: none;"></div>
+                    <select onchange="translatePage(this.value)" style="background: white; padding: 5px; border-radius: 5px; margin-right: 10px; border: 1px solid #ccc;">
+                        <option value="pt">🇧🇷 PT</option>
+                        <option value="en">🇺🇸 EN</option>
+                        <option value="es">🇪🇸 ES</option>
+                        <option value="fr">🇫🇷 FR</option>
+                    </select>
+                    <div class="hamburger">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -1020,5 +1029,4 @@
         
         document.addEventListener('DOMContentLoaded', updateThemeIcon);
     </script>
-</body>
-</html>
+    <script type="text/javascript">
