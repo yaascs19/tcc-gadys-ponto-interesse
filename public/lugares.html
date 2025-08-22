@@ -40,77 +40,34 @@
         }
         
         .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
+            height: 40px;
+            background: lightblue;
+            border-radius: 50%;
+            padding: 8px;
         }
         
         .nav-links {
-            position: fixed;
-            top: 0;
-            right: -100%;
-            width: 300px;
-            height: 100vh;
-            background: #1a237e;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            gap: 1rem;
-            margin: 0;
-            padding: 2rem 0;
-            list-style: none;
-            transition: right 0.3s ease;
-            z-index: 1001;
-            overflow-y: scroll;
+            position: fixed !important;
+            top: 0 !important;
+            right: -100% !important;
+            width: 300px !important;
+            height: 100vh !important;
+            background: #1a237e !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: flex-start !important;
+            align-items: center !important;
+            gap: 2rem !important;
+            margin: 0 !important;
+            padding: 4rem 0 !important;
+            list-style: none !important;
+            transition: right 0.3s ease !important;
+            z-index: 1001 !important;
+            overflow-y: scroll !important;
         }
         
         .nav-links.active {
-            right: 0;
-        }
-        
-        .nav-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-        
-        .nav-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        .hamburger {
-            display: flex;
-            flex-direction: column;
-            cursor: pointer;
-            z-index: 1002;
-        }
-        
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background: white;
-            margin: 3px 0;
-            transition: 0.3s;
-        }
-        
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            transition: background 0.3s;
-        }
-        
-        .nav-links a:hover {
-            background: rgba(255, 255, 255, 0.1);
+            right: 0 !important;
         }
         
         .hero {
@@ -207,43 +164,7 @@
             background: #c0392b;
         }
         
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-        
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: white;
-            min-width: 200px;
-            max-height: 300px;
-            overflow-y: auto;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1000;
-            border-radius: 5px;
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        
-        .dropdown-content a {
-            color: #333 !important;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            transition: background-color 0.3s;
-            text-align: center;
-        }
-        
-        .dropdown-content a:hover {
-            background-color: #f1f1f1;
-            color: #1a237e !important;
-        }
-        
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
+        /* CSS do dropdown removido - usando hamburger-nav-padronizado.css */
         
         .footer {
             background: #2c3e50;
@@ -332,18 +253,18 @@
     <div class="page">
         <header class="header">
             <nav class="nav">
-                <img src="/logo.png" alt="GADYS" class="logo" style="height: 40px; background: lightblue; border-radius: 50%; padding: 8px;" />
+                <img src="/logo.png" alt="GADYS" class="logo" />
                 <div style="display: flex; align-items: center; gap: 1rem;">
                     <button onclick="toggleTheme()" id="themeToggle" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">🌙</button>
-                    <div class="hamburger" onclick="toggleMenu()">
+                    <div class="hamburger">
                         <span></span>
                         <span></span>
                         <span></span>
                     </div>
                 </div>
-                <div class="nav-overlay" onclick="closeMenu()"></div>
+                <div class="nav-overlay"></div>
                 <ul class="nav-links">
-                    <li><a onclick="localStorage.setItem('isLoggedIn', 'true'); window.location.href='/'" href="/">Início</a></li>
+                    <li><a href="/">Início</a></li>
                     <li class="dropdown">
                         <a href="#estados">Estados Brasileiros ▼</a>
                         <div class="dropdown-content">
@@ -706,6 +627,7 @@
         });
     </script>
 
+    <script src="/hamburger-nav.js"></script>
     <script src="/rating-system.js"></script>
     <script src="/comments-system.js"></script>
     <script src="/api-loader.js"></script>
@@ -733,15 +655,7 @@
             }
         });
         
-        function toggleMenu() {
-            document.querySelector('.nav-links').classList.toggle('active');
-            document.querySelector('.nav-overlay').classList.toggle('active');
-        }
-        
-        function closeMenu() {
-            document.querySelector('.nav-links').classList.remove('active');
-            document.querySelector('.nav-overlay').classList.remove('active');
-        }
+        /* Funções de menu removidas - usando hamburger-nav.js */
     </script>
 </body>
 </html>
