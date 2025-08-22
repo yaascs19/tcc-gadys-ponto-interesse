@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import './Login.css'
 
-function Login({ onLogin }) {
+function Login({ onLogin, isAdminAccess = false }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [userType, setUserType] = useState('usuario')
+  const [userType, setUserType] = useState(isAdminAccess ? 'adm' : 'usuario')
   const [isRegister, setIsRegister] = useState(false)
   const [confirmPassword, setConfirmPassword] = useState('')
   const [name, setName] = useState('')
@@ -73,11 +73,9 @@ function Login({ onLogin }) {
           }
         } catch (error) {
           // Fallback para login offline
-          if ((email === 'yasmincunegundes25@gmail.com' && password === 'Cun*1925' && userType === 'adm') ||
-              (email === 'alvesdavid.1705@gmail.com' && password === 'David43356' && userType === 'adm')) {
-            const adminName = email === 'yasmincunegundes25@gmail.com' ? 'Yasmin' : 'David'
+          if (email === 'yasmincunegundes25@gmail.com' && password === 'Cun*1925' && userType === 'adm') {
             localStorage.setItem('userEmail', email)
-            onLogin('adm', adminName)
+            onLogin('adm', 'Yasmin')
           } else {
             const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || []
             const user = registeredUsers.find(user => user.email === email && user.password === password && user.userType === userType)
@@ -135,18 +133,20 @@ function Login({ onLogin }) {
               onChange={(e) => setUserType(e.target.value)}
               className="user-type-select"
             >
-              <option value="usuario">Usuário</option>
+              {!isAdminAccess && <option value="usuario">Usuário</option>}
               <option value="adm">Administrador</option>
             </select>
           )}
           <button type="submit">{isRegister ? 'Cadastrar' : 'Entrar'}</button>
         </form>
-        <p className="toggle-form">
-          {isRegister ? 'Já tem conta?' : 'Não tem conta?'}
-          <span onClick={() => setIsRegister(!isRegister)}>
-            {isRegister ? ' Entrar' : ' Cadastrar-se'}
-          </span>
-        </p>
+        {!isAdminAccess && (
+          <p className="toggle-form">
+            {isRegister ? 'Já tem conta?' : 'Não tem conta?'}
+            <span onClick={() => setIsRegister(!isRegister)}>
+              {isRegister ? ' Entrar' : ' Cadastrar-se'}
+            </span>
+          </p>
+        )}
         {!isRegister && (
           <p className="forgot-password" onClick={() => {
             const email = prompt('Digite seu e-mail para recuperar a senha:');

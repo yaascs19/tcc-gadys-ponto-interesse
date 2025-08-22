@@ -8,6 +8,8 @@ function App() {
     return localStorage.getItem('isLoggedIn') === 'true'
   })
   
+
+  
   // Verificar admin ANTES de definir página inicial
   const shouldOpenAdmin = sessionStorage.getItem('openAdmin') === 'true' && localStorage.getItem('userType') === 'adm'
   const [currentPage, setCurrentPage] = useState(shouldOpenAdmin ? 'admin' : 'home')
@@ -88,7 +90,7 @@ function App() {
       return;
     }
     
-    if (!isLoggedIn || currentPage === 'login') return
+    if (currentPage === 'login') return
 
     const timer = setTimeout(() => {
       const slides = document.querySelectorAll('.carousel-slide')
@@ -146,10 +148,14 @@ function App() {
     }, 100)
 
     return () => clearTimeout(timer)
-  }, [isLoggedIn, currentPage])
+  }, [isLoggedIn, currentPage, userType])
 
-  if (!isLoggedIn || currentPage === 'login') {
+  if (currentPage === 'login') {
     return <Login onLogin={handleLogin} />
+  }
+  
+  if (currentPage === 'adminLogin') {
+    return <Login onLogin={handleLogin} isAdminAccess={true} />
   }
 
   if (currentPage === 'admin' && userType === 'adm') {
@@ -210,7 +216,7 @@ function App() {
               <li><a href="/mapa.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Mapa</a></li>
               <li><a href="/sobre.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Sobre</a></li>
               <li><a href="/contato.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Contato</a></li>
-              <li><a href="#" onClick={(e) => {e.preventDefault(); setCurrentPage('admin'); document.querySelector('.nav-links').classList.remove('active')}}>Administração</a></li>
+
             </ul>
           </nav>
         </header>
@@ -241,7 +247,7 @@ function App() {
           <ul className="nav-links" style={{paddingTop: '5rem', justifyContent: 'flex-start', gap: '2rem'}}>
             <li><a href="#" onClick={(e) => {e.preventDefault(); setCurrentPage('home'); document.querySelector('.nav-links').classList.remove('active')}}>Início</a></li>
             <li className="dropdown">
-              <a href="#features" onClick={(e) => {e.preventDefault(); document.getElementById('features').scrollIntoView({behavior: 'smooth'})}}>Estados Brasileiros ▼</a>
+              <a href="#features" onClick={(e) => {e.preventDefault(); document.getElementById('features')?.scrollIntoView({behavior: 'smooth'})}}>Estados Brasileiros ▼</a>
               <div className="dropdown-content">
                 <a href="#">Acre</a>
                 <a href="#">Alagoas</a>
@@ -273,13 +279,13 @@ function App() {
               </div>
             </li>
 
-            <li><a href="/perfil.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Meu Perfil</a></li>
             <li><a href="/mapa.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Mapa</a></li>
+            <li><a href="#" onClick={(e) => {e.preventDefault(); if (!localStorage.getItem('isLoggedIn')) setCurrentPage('login'); else window.location.href='/adicionar-locais.html'; document.querySelector('.nav-links').classList.remove('active')}}>Adicionar Local</a></li>
+            <li><a href="#" onClick={(e) => {e.preventDefault(); if (!isLoggedIn) setCurrentPage('login'); else window.location.href='/perfil.html'; document.querySelector('.nav-links').classList.remove('active')}}>Meu Perfil</a></li>
             <li><a href="/sobre.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Sobre</a></li>
             <li><a href="/contato.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Contato</a></li>
-            {userType === 'adm' && (
-              <li><a href="#" onClick={(e) => {e.preventDefault(); setCurrentPage('admin'); document.querySelector('.nav-links').classList.remove('active')}}>Administração</a></li>
-            )}
+
+
           </ul>
         </nav>
       </header>
@@ -289,49 +295,55 @@ function App() {
           <div className="carousel">
             <div className="carousel-slide active">
               <div className="hero-content">
-                <div className="welcome-box">
-                  <h3>Bem-vindo(a), {localStorage.getItem('userName') || 'Usuário'}!</h3>
-                  <p>Tipo de acesso: {localStorage.getItem('userType') === 'adm' ? 'Administrador' : 'Usuário'}</p>
-                </div>
+                {isLoggedIn && localStorage.getItem('userName') && (
+                  <div className="welcome-box">
+                    <h3>Bem-vindo(a), {localStorage.getItem('userName') || 'Usuário'}!</h3>
+                    <p>Tipo de acesso: {localStorage.getItem('userType') === 'adm' ? 'Administrador' : 'Usuário'}</p>
+                  </div>
+                )}
                 <h2>Descubra Lugares Incríveis</h2>
                 <p>Explore pontos de interesse únicos e encontre experiências inesquecíveis</p>
                 <button className="cta-button" onClick={() => window.location.href = '/lugares.html'}>Começar Exploração</button>
                 <div className="carousel-nav">
-                  <button className="nav-dot active" data-slide="0"></button>
-                  <button className="nav-dot" data-slide="1"></button>
-                  <button className="nav-dot" data-slide="2"></button>
+                  <span className="nav-dot active" data-slide="0" onClick={(e) => {e.preventDefault(); e.stopPropagation(); document.querySelectorAll('.carousel-slide').forEach((slide, i) => slide.classList.toggle('active', i === 0)); document.querySelectorAll('.nav-dot').forEach((dot, i) => dot.classList.toggle('active', i === 0));}}></span>
+                  <span className="nav-dot" data-slide="1" onClick={(e) => {e.preventDefault(); e.stopPropagation(); document.querySelectorAll('.carousel-slide').forEach((slide, i) => slide.classList.toggle('active', i === 1)); document.querySelectorAll('.nav-dot').forEach((dot, i) => dot.classList.toggle('active', i === 1));}}></span>
+                  <span className="nav-dot" data-slide="2" onClick={(e) => {e.preventDefault(); e.stopPropagation(); document.querySelectorAll('.carousel-slide').forEach((slide, i) => slide.classList.toggle('active', i === 2)); document.querySelectorAll('.nav-dot').forEach((dot, i) => dot.classList.toggle('active', i === 2));}}></span>
                 </div>
               </div>
             </div>
             <div className="carousel-slide">
               <div className="hero-content">
-                <div className="welcome-box">
-                  <h3>Bem-vindo(a), {localStorage.getItem('userName') || 'Usuário'}!</h3>
-                  <p>Tipo de acesso: {localStorage.getItem('userType') === 'adm' ? 'Administrador' : 'Usuário'}</p>
-                </div>
+                {isLoggedIn && localStorage.getItem('userName') && (
+                  <div className="welcome-box">
+                    <h3>Bem-vindo(a), {localStorage.getItem('userName') || 'Usuário'}!</h3>
+                    <p>Tipo de acesso: {localStorage.getItem('userType') === 'adm' ? 'Administrador' : 'Usuário'}</p>
+                  </div>
+                )}
                 <h2>Descubra Lugares Incríveis</h2>
                 <p>Explore pontos de interesse únicos e encontre experiências inesquecíveis</p>
                 <button className="cta-button" onClick={() => window.location.href = '/lugares.html'}>Começar Exploração</button>
                 <div className="carousel-nav">
-                  <button className="nav-dot" data-slide="0"></button>
-                  <button className="nav-dot active" data-slide="1"></button>
-                  <button className="nav-dot" data-slide="2"></button>
+                  <span className="nav-dot" data-slide="0" onClick={(e) => {e.preventDefault(); e.stopPropagation();}}></span>
+                  <span className="nav-dot active" data-slide="1" onClick={(e) => {e.preventDefault(); e.stopPropagation();}}></span>
+                  <span className="nav-dot" data-slide="2" onClick={(e) => {e.preventDefault(); e.stopPropagation();}}></span>
                 </div>
               </div>
             </div>
             <div className="carousel-slide">
               <div className="hero-content">
-                <div className="welcome-box">
-                  <h3>Bem-vindo(a), {localStorage.getItem('userName') || 'Usuário'}!</h3>
-                  <p>Tipo de acesso: {localStorage.getItem('userType') === 'adm' ? 'Administrador' : 'Usuário'}</p>
-                </div>
+                {isLoggedIn && localStorage.getItem('userName') && (
+                  <div className="welcome-box">
+                    <h3>Bem-vindo(a), {localStorage.getItem('userName') || 'Usuário'}!</h3>
+                    <p>Tipo de acesso: {localStorage.getItem('userType') === 'adm' ? 'Administrador' : 'Usuário'}</p>
+                  </div>
+                )}
                 <h2>Descubra Lugares Incríveis</h2>
                 <p>Explore pontos de interesse únicos e encontre experiências inesquecíveis</p>
                 <button className="cta-button" onClick={() => window.location.href = '/lugares.html'}>Começar Exploração</button>
                 <div className="carousel-nav">
-                  <button className="nav-dot" data-slide="0"></button>
-                  <button className="nav-dot" data-slide="1"></button>
-                  <button className="nav-dot active" data-slide="2"></button>
+                  <span className="nav-dot" data-slide="0" onClick={(e) => {e.preventDefault(); e.stopPropagation();}}></span>
+                  <span className="nav-dot" data-slide="1" onClick={(e) => {e.preventDefault(); e.stopPropagation();}}></span>
+                  <span className="nav-dot active" data-slide="2" onClick={(e) => {e.preventDefault(); e.stopPropagation();}}></span>
                 </div>
               </div>
             </div>

@@ -41,7 +41,7 @@ function padronizarNavbar() {
         ${(function() {
             const userType = localStorage.getItem('userType');
             console.log('UserType na navbar:', userType);
-            return userType === 'adm' ? '<li><a href="/" onclick="sessionStorage.setItem(\'openAdmin\', \'true\');">Administração</a></li>' : '';
+            return '';
         })()}
     `;
     

@@ -456,7 +456,13 @@ function AdminPanel() {
             className={`tab-btn ${activeTab === 'ranking' ? 'active' : ''}`}
             onClick={() => setActiveTab('ranking')}
           >
-            Ranking
+            Ranking de Locais
+          </button>
+          <button 
+            className={`tab-btn ${activeTab === 'addLocal' ? 'active' : ''}`}
+            onClick={() => setActiveTab('addLocal')}
+          >
+            Adicionar Local
           </button>
           <button 
             className={`tab-btn ${activeTab === 'locations' ? 'active' : ''}`}
@@ -544,6 +550,17 @@ function AdminPanel() {
       )}
       
       <div className="admin-grid">
+        {activeTab === 'addLocal' && (
+          <div style={{textAlign: 'center', marginBottom: '2rem'}}>
+            <button 
+              onClick={() => window.open('/adicionar-locais.html', '_blank')}
+              style={{background: '#28a745', color: 'white', border: 'none', padding: '0.8rem 1.5rem', borderRadius: '8px', cursor: 'pointer', fontSize: '1rem'}}
+            >
+              + Adicionar Local
+            </button>
+          </div>
+        )}
+        
         {activeTab === 'ranking' && (() => {
           // Calcular ranking dos locais mais bem avaliados
           const avaliacoes = JSON.parse(localStorage.getItem('avaliacoes')) || {};
