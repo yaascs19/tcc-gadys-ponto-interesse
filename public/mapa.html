@@ -313,8 +313,8 @@
                         <a href="#">Tocantins</a>
                     </div>
                 </li>
-                <li><a href="/perfil.html">Meu Perfil</a></li>
-                <li><a href="/mapa.html">Mapa</a></li>
+                <li><a href="#" onclick="if(localStorage.getItem('isLoggedIn')) window.location.href='/perfil.html'; else { alert('Faça login primeiro!'); window.location.href='/'; }">Meu Perfil</a></li>
+                <li><a href="#" style="color: #ccc; cursor: not-allowed;">Mapa (atual)</a></li>
                 <li><a href="/sobre.html">Sobre</a></li>
                 <li><a href="/contato.html">Contato</a></li>
             </ul>
@@ -782,6 +782,17 @@
     
     <script src="/hamburger-nav.js"></script>
     <script src="/theme-manager.js"></script>
+    <script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'pt',
+            includedLanguages: 'pt,en,es,fr',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        }, 'google_translate_element');
+    }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script src="/translation.js"></script>
     <script>
         function updateThemeIcon() {
             const isDark = document.body.classList.contains('dark-mode');

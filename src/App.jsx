@@ -150,7 +150,7 @@ function App() {
     return () => clearTimeout(timer)
   }, [isLoggedIn, currentPage, userType])
 
-  if (currentPage === 'login') {
+  if (!isLoggedIn || currentPage === 'login') {
     return <Login onLogin={handleLogin} />
   }
   
@@ -171,6 +171,22 @@ function App() {
               >
                 {darkMode ? '☀️' : '🌙'}
               </button>
+              <select onChange={(e) => {
+                const lang = e.target.value;
+                if (lang === 'pt') {
+                  window.location.reload();
+                } else {
+                  const iframe = document.createElement('iframe');
+                  iframe.src = `https://translate.google.com/translate?sl=pt&tl=${lang}&u=${encodeURIComponent(window.location.href)}`;
+                  iframe.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;z-index:999999;border:none';
+                  document.body.appendChild(iframe);
+                }
+              }} style={{background: 'white', padding: '5px', borderRadius: '5px', marginRight: '10px', border: '1px solid #ccc'}}>
+                <option value="pt">🇧🇷 PT</option>
+                <option value="en">🇺🇸 EN</option>
+                <option value="es">🇪🇸 ES</option>
+                <option value="fr">🇫🇷 FR</option>
+              </select>
               <div className="hamburger" onClick={() => document.querySelector('.nav-links').classList.toggle('active')}>
                 <span></span>
                 <span></span>
@@ -179,7 +195,7 @@ function App() {
             </div>
             <div className="nav-overlay" onClick={() => document.querySelector('.nav-links').classList.remove('active')}></div>
             <ul className="nav-links" style={{paddingTop: '5rem', justifyContent: 'flex-start', gap: '2rem'}}>
-              <li><a href="#" onClick={(e) => {e.preventDefault(); setCurrentPage('home'); document.querySelector('.nav-links').classList.remove('active')}}>Início</a></li>
+              <li><a href="#" style={{color: '#ccc', cursor: 'not-allowed'}} onClick={(e) => e.preventDefault()}>Início (atual)</a></li>
               <li className="dropdown">
                 <a href="#features" onClick={(e) => {e.preventDefault(); document.getElementById('features')?.scrollIntoView({behavior: 'smooth'})}}>Estados Brasileiros ▼</a>
                 <div className="dropdown-content">
@@ -237,6 +253,21 @@ function App() {
             >
               {darkMode ? '☀️' : '🌙'}
             </button>
+            <select onChange={(e) => {
+              const lang = e.target.value;
+              setTimeout(() => {
+                const combo = document.querySelector('.goog-te-combo');
+                if (combo) {
+                  combo.value = lang;
+                  combo.dispatchEvent(new Event('change'));
+                }
+              }, 1000);
+            }} style={{background: 'white', padding: '5px', borderRadius: '5px', marginRight: '10px', border: '1px solid #ccc'}}>
+              <option value="pt">🇧🇷 PT</option>
+              <option value="en">🇺🇸 EN</option>
+              <option value="es">🇪🇸 ES</option>
+              <option value="fr">🇫🇷 FR</option>
+            </select>
             <div className="hamburger" onClick={() => document.querySelector('.nav-links').classList.toggle('active')}>
               <span></span>
               <span></span>
@@ -245,7 +276,7 @@ function App() {
           </div>
           <div className="nav-overlay" onClick={() => document.querySelector('.nav-links').classList.remove('active')}></div>
           <ul className="nav-links" style={{paddingTop: '5rem', justifyContent: 'flex-start', gap: '2rem'}}>
-            <li><a href="#" onClick={(e) => {e.preventDefault(); setCurrentPage('home'); document.querySelector('.nav-links').classList.remove('active')}}>Início</a></li>
+            <li><a href="#" style={{color: '#ccc', cursor: 'not-allowed'}} onClick={(e) => e.preventDefault()}>Início (atual)</a></li>
             <li className="dropdown">
               <a href="#features" onClick={(e) => {e.preventDefault(); document.getElementById('features')?.scrollIntoView({behavior: 'smooth'})}}>Estados Brasileiros ▼</a>
               <div className="dropdown-content">
@@ -290,6 +321,7 @@ function App() {
         </nav>
       </header>
 
+      <div id="google_translate_element" style={{display: 'none'}}></div>
       <main className="main">
         <section className="hero">
           <div className="carousel">
@@ -359,6 +391,35 @@ function App() {
       </footer>
     </div>
   )
+}
+
+// Adicionar Google Translate
+if (typeof window !== 'undefined') {
+  setTimeout(() => {
+    window.googleTranslateElementInit = function() {
+      new window.google.translate.TranslateElement({
+        pageLanguage: 'pt',
+        autoDisplay: false
+      }, 'google_translate_element');
+    };
+    
+    window.translatePage = function(lang) {
+      setTimeout(() => {
+        var selectField = document.querySelector('.goog-te-combo');
+        if (selectField) {
+          selectField.value = lang;
+          selectField.dispatchEvent(new Event('change'));
+        }
+      }, 500);
+    };
+    
+    // Carregar script do Google Translate
+    if (!document.querySelector('script[src*="translate.google.com"]')) {
+      const script = document.createElement('script');
+      script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+      document.head.appendChild(script);
+    }
+  }, 1000);
 }
 
 export default App

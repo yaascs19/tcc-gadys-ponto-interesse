@@ -303,7 +303,7 @@
                 <div style="display: flex; align-items: center; gap: 1rem;">
                     <button onclick="toggleTheme()" id="themeToggle" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">🌙</button>
                     <div id="google_translate_element" style="display: none;"></div>
-                    <select onchange="translatePage(this.value)" style="background: white; padding: 5px; border-radius: 5px; margin-right: 10px; border: 1px solid #ccc;">
+                    <select onchange="setTimeout(() => translatePage(this.value), 100)" style="background: white; padding: 5px; border-radius: 5px; margin-right: 10px; border: 1px solid #ccc;">
                         <option value="pt">🇧🇷 PT</option>
                         <option value="en">🇺🇸 EN</option>
                         <option value="es">🇪🇸 ES</option>
@@ -350,7 +350,7 @@
                             <a href="#">Tocantins</a>
                         </div>
                     </li>
-                    <li><a href="/perfil.html">Meu Perfil</a></li>
+                    <li><a href="#" onclick="if(localStorage.getItem('isLoggedIn')) window.location.href='/perfil.html'; else { alert('Faça login primeiro!'); window.location.href='/'; }">Meu Perfil</a></li>
                     <li><a href="/mapa.html">Mapa</a></li>
                     <li><a href="/sobre.html">Sobre</a></li>
                     <li><a href="/contato.html">Contato</a></li>
@@ -725,5 +725,6 @@ function translatePage(lang) {
 </script>
 <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <script src="/hamburger-nav.js"></script>
+    <script src="/theme-manager.js"></script>
 </body>
 </html>

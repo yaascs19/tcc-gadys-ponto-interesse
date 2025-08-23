@@ -136,7 +136,7 @@
         .profile-info {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            gap: 4rem;
             margin-bottom: 3rem;
         }
         
@@ -410,7 +410,6 @@
                 <li><a href="/sobre.html">Sobre</a></li>
                 <li><a href="/contato.html">Contato</a></li>
 
-                <li><a href="#" onclick="logout()">Sair</a></li>
             </ul>
         </nav>
     </header>
@@ -978,6 +977,12 @@
                 localStorage.removeItem('userEmail');
                 window.location.href = '/';
             }
+        }
+        
+        // Verificar se está logado
+        if (!localStorage.getItem('isLoggedIn')) {
+            alert('Você precisa fazer login para acessar seu perfil!');
+            window.location.href = '/';
         }
         
 
