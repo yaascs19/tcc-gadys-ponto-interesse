@@ -405,7 +405,7 @@
                         <a href="#">Tocantins</a>
                     </div>
                 </li>
-                <li><a href="/perfil.html">Meu Perfil</a></li>
+                <li><a href="#" style="color: #ccc; cursor: not-allowed;">Meu Perfil (atual)</a></li>
                 <li><a href="/mapa.html">Mapa</a></li>
                 <li><a href="/sobre.html">Sobre</a></li>
                 <li><a href="/contato.html">Contato</a></li>
@@ -980,10 +980,23 @@
             }
         }
         
-        // Verificar se está logado
-        if (!localStorage.getItem('isLoggedIn')) {
-            window.location.href = '/';
-        }
+
+        
+        // Prevenir redirecionamentos duplos
+        let redirecting = false;
+        window.addEventListener('beforeunload', function() {
+            redirecting = true;
+        });
+        
+        // Interceptar cliques em links de perfil para evitar loops
+        document.addEventListener('click', function(e) {
+            if (e.target.tagName === 'A' && e.target.href && e.target.href.includes('perfil.html') && !redirecting) {
+                if (window.location.pathname.includes('perfil.html')) {
+                    e.preventDefault();
+                    return false;
+                }
+            }
+        });
         
         // Carregar perfil ao carregar a página
         document.addEventListener('DOMContentLoaded', loadProfile);
@@ -1012,7 +1025,7 @@
         });
     </script>
     <script src="/react-integration.js"></script>
-    <script src="/navbar-padronizada.js"></script>
+
     <script src="/hamburger-nav.js"></script>
     <script src="/theme-manager.js"></script>
     <script>

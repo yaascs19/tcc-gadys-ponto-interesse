@@ -1,5 +1,22 @@
 // Script para padronizar navbar das páginas específicas
 function padronizarNavbar() {
+    // Verificar se usuário está logado
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    
+    // Detectar se está na página de perfil
+    const isPerfilPage = window.location.pathname.includes('perfil.html');
+    
+    let perfilLink = '';
+    if (isLoggedIn) {
+        if (isPerfilPage) {
+            perfilLink = '<li><a href="#" style="color: #ccc; cursor: not-allowed;">Meu Perfil (atual)</a></li>';
+        } else {
+            perfilLink = '<li><a href="/perfil.html" onclick="if(!localStorage.getItem(\'isLoggedIn\')) { alert(\'Faça login primeiro!\'); return false; }">Meu Perfil</a></li>';
+        }
+    } else {
+        perfilLink = '<li><a href="#" onclick="alert(\'Faça login primeiro!\'); return false;" style="color: #ccc;">Meu Perfil</a></li>';
+    }
+    
     const navbarHTML = `
         <li><a href="/">Início</a></li>
         <li class="dropdown">
@@ -34,7 +51,7 @@ function padronizarNavbar() {
                 <a href="#">Tocantins</a>
             </div>
         </li>
-        <li><a href="/perfil.html">Meu Perfil</a></li>
+        ${perfilLink}
         <li><a href="/mapa.html">Mapa</a></li>
         <li><a href="/sobre.html">Sobre</a></li>
         <li><a href="/contato.html">Contato</a></li>
@@ -115,7 +132,5 @@ const style = document.createElement('style');
 style.textContent = dropdownCSS;
 document.head.appendChild(style);
 
-// Executar quando página carregar
-document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(padronizarNavbar, 100);
-});
+// Função disponível para chamada manual, não executa automaticamente
+// Para usar: chame padronizarNavbar() manualmente na página que precisar

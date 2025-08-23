@@ -281,7 +281,7 @@ function App() {
 
             <li><a href="/mapa.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Mapa</a></li>
             <li><a href="#" onClick={(e) => {e.preventDefault(); if (!localStorage.getItem('isLoggedIn')) setCurrentPage('login'); else window.location.href='/adicionar-locais.html'; document.querySelector('.nav-links').classList.remove('active')}}>Adicionar Local</a></li>
-            <li><a href="#" onClick={(e) => {e.preventDefault(); if (!isLoggedIn) setCurrentPage('login'); else window.location.href='/perfil.html'; document.querySelector('.nav-links').classList.remove('active')}}>Meu Perfil</a></li>
+            <li><a href="/perfil.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Meu Perfil</a></li>
             <li><a href="/sobre.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Sobre</a></li>
             <li><a href="/contato.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Contato</a></li>
 

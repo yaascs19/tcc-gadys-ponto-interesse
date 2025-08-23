@@ -1,4 +1,17 @@
 function LugaresMaisVisitados({ onBack }) {
+  // Prevenir redirecionamentos automáticos
+  React.useEffect(() => {
+    const handleClick = (e) => {
+      if (e.target.tagName === 'A' && e.target.href && e.target.href.includes('perfil.html')) {
+        // Permitir navegação normal para perfil
+        return true;
+      }
+    };
+    
+    document.addEventListener('click', handleClick);
+    return () => document.removeEventListener('click', handleClick);
+  }, []);
+  
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <header style={{ background: '#1a237e', color: 'white', padding: '1rem 0' }}>
