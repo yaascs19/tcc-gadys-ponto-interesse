@@ -265,13 +265,7 @@
                 <button onclick="toggleTheme()" id="themeToggle" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">🌙</button>
                 
                 
-                <div id="google_translate_element" style="display: none;"></div>
-                    <select onchange="translatePage(this.value)" style="background: white; padding: 5px; border-radius: 5px; margin-right: 10px; border: 1px solid #ccc;">
-                        <option value="pt">🇧🇷 PT</option>
-                        <option value="en">🇺🇸 EN</option>
-                        <option value="es">🇪🇸 ES</option>
-                        <option value="fr">🇫🇷 FR</option>
-                    </select>
+
                     <div class="hamburger">
                     <span></span>
                     <span></span>
@@ -777,22 +771,22 @@
         });
         
         document.addEventListener('DOMContentLoaded', initMap);
+        
+        // Fechar dropdown ao clicar fora
+        document.addEventListener('click', (e) => {
+            const dropdowns = document.querySelectorAll('[style*="position: absolute"][style*="background: white"]');
+            dropdowns.forEach(dropdown => {
+                if (!dropdown.parentElement.contains(e.target)) {
+                    dropdown.style.display = 'none';
+                }
+            });
+        });
     </script>
     <script src="/react-integration.js"></script>
     
     <script src="/hamburger-nav.js"></script>
     <script src="/theme-manager.js"></script>
-    <script type="text/javascript">
-    function googleTranslateElementInit() {
-        new google.translate.TranslateElement({
-            pageLanguage: 'pt',
-            includedLanguages: 'pt,en,es,fr',
-            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-        }, 'google_translate_element');
-    }
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    <script src="/translation.js"></script>
+
     <script>
         function updateThemeIcon() {
             const isDark = document.body.classList.contains('dark-mode');

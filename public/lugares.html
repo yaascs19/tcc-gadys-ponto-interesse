@@ -302,13 +302,7 @@
                 <img src="/logo.png" alt="GADYS" class="logo" />
                 <div style="display: flex; align-items: center; gap: 1rem;">
                     <button onclick="toggleTheme()" id="themeToggle" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">🌙</button>
-                    <div id="google_translate_element" style="display: none;"></div>
-                    <select onchange="setTimeout(() => translatePage(this.value), 100)" style="background: white; padding: 5px; border-radius: 5px; margin-right: 10px; border: 1px solid #ccc;">
-                        <option value="pt">🇧🇷 PT</option>
-                        <option value="en">🇺🇸 EN</option>
-                        <option value="es">🇪🇸 ES</option>
-                        <option value="fr">🇫🇷 FR</option>
-                    </select>
+                    <script>document.write(createTranslationWidget());</script>
                     <div class="hamburger">
                         <span></span>
                         <span></span>
@@ -724,6 +718,7 @@ function translatePage(lang) {
 }
 </script>
 <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script src="/translation-widget.js"></script>
     <script src="/hamburger-nav.js"></script>
     <script src="/theme-manager.js"></script>
 </body>

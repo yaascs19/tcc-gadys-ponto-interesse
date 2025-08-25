@@ -357,13 +357,7 @@
                 
                 <button onclick="toggleTheme()" id="themeToggle" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">🌙</button>
                 
-                <div id="google_translate_element" style="display: none;"></div>
-                    <select onchange="translatePage(this.value)" style="background: white; padding: 5px; border-radius: 5px; margin-right: 10px; border: 1px solid #ccc;">
-                        <option value="pt">🇧🇷 PT</option>
-                        <option value="en">🇺🇸 EN</option>
-                        <option value="es">🇪🇸 ES</option>
-                        <option value="fr">🇫🇷 FR</option>
-                    </select>
+
                     <div class="hamburger">
                     <span></span>
                     <span></span>
@@ -981,8 +975,11 @@
         
         // Verificar se está logado
         if (!localStorage.getItem('isLoggedIn')) {
-            alert('Você precisa fazer login para acessar seu perfil!');
-            window.location.href = '/';
+            if (confirm('Você precisa fazer login para acessar seu perfil!')) {
+                window.location.href = '/?login=true';
+            } else {
+                window.location.href = '/';
+            }
         }
         
 
@@ -1045,6 +1042,10 @@
             updateThemeIcon();
         };
         
-        document.addEventListener('DOMContentLoaded', updateThemeIcon);
+        document.addEventListener('DOMContentLoaded', function() {
+            updateThemeIcon();
+        });
+        
+
     </script>
-    <script type="text/javascript">
+

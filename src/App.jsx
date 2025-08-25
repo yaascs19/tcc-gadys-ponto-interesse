@@ -8,11 +8,12 @@ function App() {
     return localStorage.getItem('isLoggedIn') === 'true'
   })
   
-
+  // Verificar se deve abrir login
+  const shouldOpenLogin = new URLSearchParams(window.location.search).get('login') === 'true'
   
   // Verificar admin ANTES de definir página inicial
   const shouldOpenAdmin = sessionStorage.getItem('openAdmin') === 'true' && localStorage.getItem('userType') === 'adm'
-  const [currentPage, setCurrentPage] = useState(shouldOpenAdmin ? 'admin' : 'home')
+  const [currentPage, setCurrentPage] = useState(shouldOpenLogin ? 'login' : shouldOpenAdmin ? 'admin' : 'home')
   
   const [userType, setUserType] = useState(() => {
     return localStorage.getItem('userType') || 'usuario'
@@ -150,7 +151,7 @@ function App() {
     return () => clearTimeout(timer)
   }, [isLoggedIn, currentPage, userType])
 
-  if (!isLoggedIn || currentPage === 'login') {
+  if (currentPage === 'login') {
     return <Login onLogin={handleLogin} />
   }
   
@@ -171,22 +172,7 @@ function App() {
               >
                 {darkMode ? '☀️' : '🌙'}
               </button>
-              <select onChange={(e) => {
-                const lang = e.target.value;
-                if (lang === 'pt') {
-                  window.location.reload();
-                } else {
-                  const iframe = document.createElement('iframe');
-                  iframe.src = `https://translate.google.com/translate?sl=pt&tl=${lang}&u=${encodeURIComponent(window.location.href)}`;
-                  iframe.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;z-index:999999;border:none';
-                  document.body.appendChild(iframe);
-                }
-              }} style={{background: 'white', padding: '5px', borderRadius: '5px', marginRight: '10px', border: '1px solid #ccc'}}>
-                <option value="pt">🇧🇷 PT</option>
-                <option value="en">🇺🇸 EN</option>
-                <option value="es">🇪🇸 ES</option>
-                <option value="fr">🇫🇷 FR</option>
-              </select>
+
               <div className="hamburger" onClick={() => document.querySelector('.nav-links').classList.toggle('active')}>
                 <span></span>
                 <span></span>
@@ -253,21 +239,7 @@ function App() {
             >
               {darkMode ? '☀️' : '🌙'}
             </button>
-            <select onChange={(e) => {
-              const lang = e.target.value;
-              setTimeout(() => {
-                const combo = document.querySelector('.goog-te-combo');
-                if (combo) {
-                  combo.value = lang;
-                  combo.dispatchEvent(new Event('change'));
-                }
-              }, 1000);
-            }} style={{background: 'white', padding: '5px', borderRadius: '5px', marginRight: '10px', border: '1px solid #ccc'}}>
-              <option value="pt">🇧🇷 PT</option>
-              <option value="en">🇺🇸 EN</option>
-              <option value="es">🇪🇸 ES</option>
-              <option value="fr">🇫🇷 FR</option>
-            </select>
+
             <div className="hamburger" onClick={() => document.querySelector('.nav-links').classList.toggle('active')}>
               <span></span>
               <span></span>
@@ -321,7 +293,6 @@ function App() {
         </nav>
       </header>
 
-      <div id="google_translate_element" style={{display: 'none'}}></div>
       <main className="main">
         <section className="hero">
           <div className="carousel">
@@ -393,33 +364,6 @@ function App() {
   )
 }
 
-// Adicionar Google Translate
-if (typeof window !== 'undefined') {
-  setTimeout(() => {
-    window.googleTranslateElementInit = function() {
-      new window.google.translate.TranslateElement({
-        pageLanguage: 'pt',
-        autoDisplay: false
-      }, 'google_translate_element');
-    };
-    
-    window.translatePage = function(lang) {
-      setTimeout(() => {
-        var selectField = document.querySelector('.goog-te-combo');
-        if (selectField) {
-          selectField.value = lang;
-          selectField.dispatchEvent(new Event('change'));
-        }
-      }, 500);
-    };
-    
-    // Carregar script do Google Translate
-    if (!document.querySelector('script[src*="translate.google.com"]')) {
-      const script = document.createElement('script');
-      script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-      document.head.appendChild(script);
-    }
-  }, 1000);
-}
+
 
 export default App
