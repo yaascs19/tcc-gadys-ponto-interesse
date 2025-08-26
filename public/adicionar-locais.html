@@ -323,13 +323,6 @@
                     
                 <button onclick="toggleTheme()" id="themeToggle" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">🌙</button>
                     
-                <div id="google_translate_element" style="display: none;"></div>
-                    <select onchange="translatePage(this.value)" style="background: white; padding: 5px; border-radius: 5px; margin-right: 10px; border: 1px solid #ccc;">
-                        <option value="pt">🇧🇷 PT</option>
-                        <option value="en">🇺🇸 EN</option>
-                        <option value="es">🇪🇸 ES</option>
-                        <option value="fr">🇫🇷 FR</option>
-                    </select>
                     <div class="hamburger">
                         <span></span>
                         <span></span>
@@ -440,7 +433,6 @@
                             <input type="text" id="localizacao" name="localizacao" placeholder="Endereço completo ou ponto de referência">
                         </div>
                         
-                        <div class="form-group" data-icon="🌐" id="coordenadasGroup">
                             <label for="coordenadas">Coordenadas (Latitude, Longitude):</label>
                             <input type="text" id="coordenadas" name="coordenadas" placeholder="Ex: -3.1190, -60.0217" pattern="^-?\d+\.\d+,\s*-?\d+\.\d+$" onblur="preencherCamposAutomaticamente()">
                             <small style="color: #666; font-size: 0.9rem; margin-top: 0.5rem; display: block;">💡 Dica: Use o Google Maps para obter as coordenadas exatas. Os campos serão preenchidos automaticamente!</small>

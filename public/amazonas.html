@@ -420,17 +420,9 @@
             <nav class="nav">
                 <img src="/logo.png" alt="GADYS" class="logo" style="background: lightblue; border-radius: 50%; padding: 8px;" />
                 <div style="display: flex; align-items: center; gap: 1rem;">
-                    <button onclick="toggleLanguage()" id="languageToggle" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">🇺🇸</button>
-                    
+
                 <button onclick="toggleTheme()" id="themeToggle" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">🌙</button>
                     
-                <div id="google_translate_element" style="display: none;"></div>
-                    <select onchange="translatePage(this.value)" style="background: white; padding: 5px; border-radius: 5px; margin-right: 10px; border: 1px solid #ccc;">
-                        <option value="pt">🇧🇷 PT</option>
-                        <option value="en">🇺🇸 EN</option>
-                        <option value="es">🇪🇸 ES</option>
-                        <option value="fr">🇫🇷 FR</option>
-                    </select>
                     <div class="hamburger">
                         <span></span>
                         <span></span>
@@ -439,9 +431,9 @@
                 </div>
                 <div class="nav-overlay"></div>
                 <ul class="nav-links">
-                    <li><a href="/" data-translate="inicio">Início</a></li>
+                    <li><a href="/">Início</a></li>
                     <li class="dropdown">
-                        <a href="#estados" data-translate="estados-brasileiros">Estados Brasileiros ▼</a>
+                        <a href="#estados">Estados Brasileiros ▼</a>
                         <div class="dropdown-content">
                             <a href="#">Acre</a>
                             <a href="#">Alagoas</a>
@@ -472,10 +464,10 @@
                             <a href="#">Tocantins</a>
                         </div>
                     </li>
-                    <li><a href="/perfil.html" data-translate="meu-perfil">Meu Perfil</a></li>
-                    <li><a href="/mapa.html" data-translate="mapa">Mapa</a></li>
-                    <li><a href="/sobre.html" data-translate="sobre">Sobre</a></li>
-                    <li><a href="/contato.html" data-translate="contato">Contato</a></li>
+                    <li><a href="/perfil.html">Meu Perfil</a></li>
+                    <li><a href="/mapa.html">Mapa</a></li>
+                    <li><a href="/sobre.html">Sobre</a></li>
+                    <li><a href="/contato.html">Contato</a></li>
                 </ul>
             </nav>
         </header>
@@ -496,12 +488,12 @@
                     <span style="color: white; font-size: 0.9rem; font-weight: 500;">🌿 Amazônia Brasileira</span>
                 </div>
                 <div style="position: relative; z-index: 3; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; text-align: center; animation: fadeInUp 1s ease-out;">
-                    <h1 style="font-size: 4rem; margin-bottom: 1rem; text-shadow: 2px 2px 8px rgba(0,0,0,0.5); background: linear-gradient(45deg, #fff, #e8f5e8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;" data-translate="amazonas">Amazonas</h1>
-                    <p style="font-size: 1.5rem; text-shadow: 1px 1px 4px rgba(0,0,0,0.7); margin-bottom: 2rem;" data-translate="coracao-amazonia">O coração da Amazônia brasileira</p>
+                    <h1 style="font-size: 4rem; margin-bottom: 1rem; text-shadow: 2px 2px 8px rgba(0,0,0,0.5); background: linear-gradient(45deg, #fff, #e8f5e8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Amazonas</h1>
+                    <p style="font-size: 1.5rem; text-shadow: 1px 1px 4px rgba(0,0,0,0.7); margin-bottom: 2rem;">O coração da Amazônia brasileira</p>
                     <div style="display: flex; gap: 1rem; margin-top: 1rem;">
                         <div class="dropdown" style="position: relative; display: inline-block;">
                             <div style="background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); padding: 0.8rem 1.5rem; border-radius: 25px; border: 1px solid rgba(255,255,255,0.3); cursor: pointer;">
-                                <span style="color: white; font-size: 0.9rem; font-weight: 500;" data-translate="visite-lugares">Visite Lugares ▼</span>
+                                <span style="color: white; font-size: 0.9rem; font-weight: 500;">Visite Lugares ▼</span>
                             </div>
                             <div class="dropdown-content" style="display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: white; min-width: 160px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); z-index: 9999; border-radius: 5px;">
                                 <a href="/amazonas-monumentos.html" style="color: #333 !important; padding: 12px 16px; text-decoration: none; display: block; transition: background-color 0.3s;">🏛️ Monumentos</a>
@@ -510,7 +502,7 @@
                         </div>
                         <div class="dropdown" style="position: relative; display: inline-block;">
                             <div style="background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); padding: 0.8rem 1.5rem; border-radius: 25px; border: 1px solid rgba(255,255,255,0.3); cursor: pointer;">
-                                <span style="color: white; font-size: 0.9rem; font-weight: 500;" data-translate="curiosidades">Curiosidades ▼</span>
+                                <span style="color: white; font-size: 0.9rem; font-weight: 500;">Curiosidades ▼</span>
                             </div>
                             <div class="dropdown-content" style="display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: white; min-width: 160px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); z-index: 9999; border-radius: 5px;">
                                 <a href="/amazonas-gastronomia.html" style="color: #333 !important; padding: 12px 16px; text-decoration: none; display: block; transition: background-color 0.3s;">🍽️ Gastronomia</a>

@@ -302,7 +302,7 @@
                 <img src="/logo.png" alt="GADYS" class="logo" />
                 <div style="display: flex; align-items: center; gap: 1rem;">
                     <button onclick="toggleTheme()" id="themeToggle" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">🌙</button>
-                    <script>document.write(createTranslationWidget());</script>
+
                     <div class="hamburger">
                         <span></span>
                         <span></span>
@@ -358,8 +358,8 @@
         <main>
             <section class="hero">
                 <div>
-                    <h1 data-translate="lugares-mais-visitados">Lugares Mais Visitados do Brasil</h1>
-                    <p data-translate="destinos-procurados">Descubra os destinos mais procurados pelos turistas</p>
+                    <h1>Lugares Mais Visitados do Brasil</h1>
+                    <p>Descubra os destinos mais procurados pelos turistas</p>
                 </div>
             </section>
 
@@ -702,23 +702,9 @@
 
     </script>
 <script type="text/javascript">
-function googleTranslateElementInit() {
-    new google.translate.TranslateElement({
-        pageLanguage: 'pt',
-        autoDisplay: false
-    }, 'google_translate_element');
-}
 
-function translatePage(lang) {
-    var selectField = document.querySelector('.goog-te-combo');
-    if (selectField) {
-        selectField.value = lang;
-        selectField.dispatchEvent(new Event('change'));
-    }
-}
 </script>
-<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    <script src="/translation-widget.js"></script>
+
     <script src="/hamburger-nav.js"></script>
     <script src="/theme-manager.js"></script>
 </body>
