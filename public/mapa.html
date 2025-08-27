@@ -264,9 +264,7 @@
             <div style="display: flex; align-items: center; gap: 1rem;">
                 <button onclick="toggleTheme()" id="themeToggle" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">🌙</button>
                 
-                
-
-                    <div class="hamburger">
+                <div class="hamburger">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -357,116 +355,6 @@
     </div>
     
     <script>
-        let map, userLocation;
-        const locais = [
-            {nome: "Teatro Amazonas", lat: -3.1305, lng: -60.0239, categoria: "monumentos", preco: "pago", info: "Teatro histórico de Manaus"},
-            {nome: "Encontro das Águas", lat: -3.1319, lng: -59.9825, categoria: "natureza", preco: "pago", info: "Fenômeno natural único"},
-            {nome: "Mercado Municipal", lat: -3.1365, lng: -60.0166, categoria: "gastronomia", preco: "gratuito", info: "Mercado tradicional"},
-            {nome: "Floresta Amazônica", lat: -3.4653, lng: -62.2159, categoria: "natureza", preco: "pago", info: "Maior floresta tropical do mundo"}
-        ];
-
-        function initMap() {
-            map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 10,
-                center: {lat: -3.1319, lng: -60.0239}
-            });
-            
-            adicionarMarcadores();
-        }
-
-        function adicionarMarcadores() {
-            locais.forEach(local => {
-                const marker = new google.maps.Marker({
-                    position: {lat: local.lat, lng: local.lng},
-                    map: map,
-                    title: local.nome,
-                    icon: getIconeCategoria(local.categoria)
-                });
-
-                const infoWindow = new google.maps.InfoWindow({
-                    content: `
-                        <div style="padding: 10px;">
-                            <h3>${local.nome}</h3>
-                            <p>${local.info}</p>
-                            <p><strong>Categoria:</strong> ${local.categoria}</p>
-                            <p><strong>Preço:</strong> ${local.preco}</p>
-                            <button onclick="verDetalhes('${local.nome}')" style="background: #1a237e; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">Ver Detalhes</button>
-                        </div>
-                    `
-                });
-
-                marker.addListener('click', () => {
-                    infoWindow.open(map, marker);
-                });
-            });
-        }
-
-        function getIconeCategoria(categoria) {
-            const icones = {
-                monumentos: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png',
-                natureza: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png',
-                gastronomia: 'https://maps.google.com/mapfiles/ms/icons/orange-dot.png',
-                cultura: 'https://maps.google.com/mapfiles/ms/icons/purple-dot.png'
-            };
-            return icones[categoria] || 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png';
-        }
-
-        function minhaLocalizacao() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(position => {
-                    userLocation = {
-                        lat: position.coords.latitude,
-                        lng: position.coords.longitude
-                    };
-                    
-                    map.setCenter(userLocation);
-                    map.setZoom(12);
-                    
-                    new google.maps.Marker({
-                        position: userLocation,
-                        map: map,
-                        title: "Sua localização",
-                        icon: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png'
-                    });
-                    
-                    calcularDistancias();
-                });
-            }
-        }
-
-        function calcularDistancias() {
-            if (!userLocation) return;
-            
-            locais.forEach(local => {
-                const distancia = calcularDistancia(userLocation.lat, userLocation.lng, local.lat, local.lng);
-                local.distancia = distancia;
-            });
-        }
-
-        function calcularDistancia(lat1, lng1, lat2, lng2) {
-            const R = 6371;
-            const dLat = (lat2 - lat1) * Math.PI / 180;
-            const dLng = (lng2 - lng1) * Math.PI / 180;
-            const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng/2) * Math.sin(dLng/2);
-            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-            return R * c;
-        }
-
-        function filtrarLocais() {
-            // Implementar filtros
-            alert('Filtros aplicados!');
-        }
-
-        function verDetalhes(nome) {
-            alert(`Ver detalhes de: ${nome}`);
-        }
-
-        document.getElementById('distancia').addEventListener('input', function() {
-            document.getElementById('distanciaValue').textContent = this.value + 'km';
-        });
-    </script>
-
-    <script>
         function initMap() {
             document.getElementById('map').innerHTML = `
                 <iframe 
@@ -488,44 +376,47 @@
             const preco = document.getElementById('preco').value;
             const distancia = document.getElementById('distancia').value;
             
-            console.log('Filtros aplicados:', { categoria, preco, distancia });
-            
             const locaisComCoordenadas = [
+                // Amazonas - Monumentos
                 {nome: "Teatro Amazonas", categoria: "monumentos", preco: "pago", lat: -3.1305, lng: -60.0239},
                 {nome: "Forte de São José", categoria: "monumentos", preco: "pago", lat: -3.1365, lng: -60.0166},
                 {nome: "Mercado Municipal", categoria: "monumentos", preco: "gratuito", lat: -3.1365, lng: -60.0166},
                 {nome: "Palácio da Justiça", categoria: "monumentos", preco: "gratuito", lat: -3.1300, lng: -60.0250},
                 {nome: "Igreja de São Sebastião", categoria: "monumentos", preco: "gratuito", lat: -3.1320, lng: -60.0220},
                 {nome: "Palácio Rio Negro", categoria: "monumentos", preco: "pago", lat: -3.1290, lng: -60.0210},
+                
+                // Amazonas - Natureza
                 {nome: "Floresta Amazônica", categoria: "natureza", preco: "pago", lat: -3.4653, lng: -62.2159},
                 {nome: "Encontro das Águas", categoria: "natureza", preco: "pago", lat: -3.1319, lng: -59.9825},
                 {nome: "Parque Nacional de Anavilhanas", categoria: "natureza", preco: "pago", lat: -2.3833, lng: -60.9167},
                 {nome: "Reserva Mamirauá", categoria: "natureza", preco: "pago", lat: -3.0833, lng: -64.8333},
                 {nome: "Parque Nacional do Jaú", categoria: "natureza", preco: "pago", lat: -1.9000, lng: -61.6000},
-                {nome: "Rio Amazonas", categoria: "natureza", preco: "pago", lat: -3.1319, lng: -59.9825}
+                {nome: "Rio Amazonas", categoria: "natureza", preco: "pago", lat: -3.1319, lng: -59.9825},
+                
+                // Brasil - Monumentos
+                {nome: "Cristo Redentor", categoria: "monumentos", preco: "pago", lat: -22.9519, lng: -43.2105},
+                {nome: "Pão de Açúcar", categoria: "monumentos", preco: "pago", lat: -22.9486, lng: -43.1566},
+                {nome: "Pelourinho", categoria: "monumentos", preco: "gratuito", lat: -12.9714, lng: -38.5014},
+                
+                // Brasil - Natureza
+                {nome: "Cataratas do Iguaçu", categoria: "natureza", preco: "pago", lat: -25.6953, lng: -54.4367},
+                {nome: "Fernando de Noronha", categoria: "natureza", preco: "pago", lat: -3.8549, lng: -32.4229},
+                {nome: "Pantanal", categoria: "natureza", preco: "pago", lat: -19.0208, lng: -57.6531}
             ];
             
-            // Calcular distância real para cada local
             const locais = locaisComCoordenadas.map(local => ({
                 ...local,
                 dist: calcularDistanciaReal(localizacaoAtual.lat, localizacaoAtual.lng, local.lat, local.lng)
             }));
             
-            console.log('Locais antes do filtro:', locais.map(l => ({ nome: l.nome, categoria: l.categoria })));
-            
             const filtrados = locais.filter(local => {
                 const passaCategoria = !categoria || local.categoria === categoria;
                 const passaPreco = !preco || local.preco === preco;
-                const passaDistancia = local.dist <= distancia;
-                
-                console.log(`${local.nome}: categoria=${local.categoria}, passa=${passaCategoria}`);
+                const passaDistancia = local.dist <= parseInt(distancia);
                 
                 return passaCategoria && passaPreco && passaDistancia;
             });
             
-            console.log('Locais filtrados:', filtrados.map(l => ({ nome: l.nome, categoria: l.categoria })));
-            
-            // SEMPRE ordenar por distância
             const filtradosOrdenados = filtrados.sort((a, b) => a.dist - b.dist);
             
             const statsDiv = document.getElementById('stats');
@@ -535,7 +426,7 @@
                 let conteudo = `<h3>🏆 Ranking dos ${filtradosOrdenados.length} locais mais próximos:</h3><div style="margin-top: 1rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">`;
                 filtradosOrdenados.forEach((local, index) => {
                     const posicaoTexto = `${index + 1}º`;
-                    const categoriaTexto = local.categoria === 'monumentos' ? 'Monumentos' : 'Natureza';
+                    const categoriaTexto = local.categoria === 'monumentos' ? 'MONUMENTOS' : 'NATUREZA';
                     const distanciaFormatada = local.dist < 1 ? `${(local.dist * 1000).toFixed(0)}m` : `${local.dist.toFixed(1)}km`;
                     conteudo += `<div style="background: rgba(255,255,255,0.2); padding: 0.8rem; border-radius: 10px; text-align: center;">
                                     <div style="margin-bottom: 0.5rem;">
@@ -566,7 +457,6 @@
                     const lat = position.coords.latitude;
                     const lng = position.coords.longitude;
                     
-                    // Atualizar mapa para sua localização
                     const novoMapa = `https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15000!2d${lng}!3d${lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt!2sbr!4v1234567890123`;
                     document.getElementById('map').innerHTML = `
                         <iframe 
@@ -579,9 +469,7 @@
                         </iframe>
                     `;
                     
-                    // Atualizar localização atual e recalcular distâncias
                     localizacaoAtual = {lat: lat, lng: lng};
-                    recalcularDistancias(lat, lng);
                     
                     btn.innerHTML = '✅ Localizado!';
                     setTimeout(() => {
@@ -601,22 +489,8 @@
             }
         }
         
-        function recalcularDistancias(userLat, userLng) {
-            // Recalcular distâncias baseado na sua localização real
-            const locaisComDistancia = [
-                {nome: "Teatro Amazonas", lat: -3.1305, lng: -60.0239},
-                {nome: "Encontro das Águas", lat: -3.1319, lng: -59.9825},
-                {nome: "Mercado Municipal", lat: -3.1365, lng: -60.0166}
-            ];
-            
-            locaisComDistancia.forEach(local => {
-                const dist = calcularDistanciaReal(userLat, userLng, local.lat, local.lng);
-                console.log(`${local.nome}: ${dist.toFixed(1)}km de você`);
-            });
-        }
-        
         function calcularDistanciaReal(lat1, lng1, lat2, lng2) {
-            const R = 6371; // Raio da Terra em km
+            const R = 6371;
             const dLat = (lat2 - lat1) * Math.PI / 180;
             const dLng = (lng2 - lng1) * Math.PI / 180;
             const a = Math.sin(dLat/2) * Math.sin(dLat/2) + 
@@ -627,7 +501,7 @@
         }
         
         async function simularLocalizacao() {
-            const endereco = prompt("Digite o endereço ou local que deseja simular:\n\nExemplos:\n- Rua Augusta, São Paulo\n- Avenida Atlântica, Rio de Janeiro\n- Setor Hoteleiro Norte, Brasília\n- Qualquer endereço do mundo!");
+            const endereco = prompt("Digite o endereço ou local que deseja simular:");
             
             if (endereco && endereco.trim()) {
                 const btn = document.querySelector('button[onclick="simularLocalizacao()"]');
@@ -636,11 +510,8 @@
                 
                 try {
                     const enderecoFormatado = encodeURIComponent(endereco.trim());
-                    
-                    // Obter coordenadas do endereço
                     const coordenadas = await obterCoordenadasAproximadas(endereco.trim());
                     
-                    // Atualizar mapa
                     document.getElementById('map').innerHTML = `
                         <iframe 
                             src="https://maps.google.com/maps?q=${enderecoFormatado}&output=embed" 
@@ -652,72 +523,12 @@
                         </iframe>
                     `;
                     
-                    // Atualizar localização atual
                     localizacaoAtual = {lat: coordenadas.lat, lng: coordenadas.lng};
-                    
-                    // Calcular distâncias automaticamente
-                    const locaisComCoordenadas = [
-                        {nome: "Teatro Amazonas", categoria: "monumentos", preco: "pago", lat: -3.1305, lng: -60.0239},
-                        {nome: "Forte de São José", categoria: "monumentos", preco: "pago", lat: -3.1365, lng: -60.0166},
-                        {nome: "Mercado Municipal", categoria: "monumentos", preco: "gratuito", lat: -3.1365, lng: -60.0166},
-                        {nome: "Palácio da Justiça", categoria: "monumentos", preco: "gratuito", lat: -3.1300, lng: -60.0250},
-                        {nome: "Igreja de São Sebastião", categoria: "monumentos", preco: "gratuito", lat: -3.1320, lng: -60.0220},
-                        {nome: "Palácio Rio Negro", categoria: "monumentos", preco: "pago", lat: -3.1290, lng: -60.0210},
-                        {nome: "Floresta Amazônica", categoria: "natureza", preco: "pago", lat: -3.4653, lng: -62.2159},
-                        {nome: "Encontro das Águas", categoria: "natureza", preco: "pago", lat: -3.1319, lng: -59.9825},
-                        {nome: "Parque Nacional de Anavilhanas", categoria: "natureza", preco: "pago", lat: -2.3833, lng: -60.9167},
-                        {nome: "Reserva Mamirauá", categoria: "natureza", preco: "pago", lat: -3.0833, lng: -64.8333},
-                        {nome: "Parque Nacional do Jaú", categoria: "natureza", preco: "pago", lat: -1.9000, lng: -61.6000},
-                        {nome: "Rio Amazonas", categoria: "natureza", preco: "pago", lat: -3.1319, lng: -59.9825}
-                    ];
-                    
-                    // Calcular distâncias
-                    const locaisComDistancia = locaisComCoordenadas.map(local => ({
-                        ...local,
-                        dist: calcularDistanciaReal(coordenadas.lat, coordenadas.lng, local.lat, local.lng)
-                    })).sort((a, b) => a.dist - b.dist);
-                    
-                    // Mostrar os 5 locais mais próximos
-                    const locaisProximos = locaisComDistancia.slice(0, 5);
-                    
-                    const statsDiv = document.getElementById('stats');
-                    const statsContent = document.getElementById('statsContent');
-                    
-                    let conteudo = `
-                        <h3>🎭 Localização: ${endereco}</h3>
-                        <p style="margin: 1rem 0; opacity: 0.8;">📍 Coordenadas: ${coordenadas.lat.toFixed(4)}, ${coordenadas.lng.toFixed(4)}</p>
-                        <h4 style="margin: 1.5rem 0 1rem 0;">🏆 5 Locais Mais Próximos:</h4>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-                    `;
-                    
-                    locaisProximos.forEach((local, index) => {
-                        const categoriaTexto = local.categoria === 'monumentos' ? 'MONUMENTOS' : 'NATUREZA';
-                        const distanciaFormatada = local.dist < 1 ? `${(local.dist * 1000).toFixed(0)}m` : `${local.dist.toFixed(1)}km`;
-                        const medalha = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `${index + 1}º`;
-                        
-                        conteudo += `
-                            <div style="background: rgba(255,255,255,0.2); padding: 1rem; border-radius: 10px; text-align: center;">
-                                <div style="margin-bottom: 0.5rem;">
-                                    <span style="font-weight: bold; color: #1a237e;">${medalha}</span><br>
-                                    <span style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 0.2rem 0.6rem; border-radius: 15px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">${categoriaTexto}</span>
-                                </div>
-                                <strong>${local.nome}</strong><br>
-                                <small style="color: #e74c3c; font-weight: bold;">${distanciaFormatada}</small><br>
-                                <small style="opacity: 0.8;">${local.preco === 'gratuito' ? '🆓 Gratuito' : '💵 Pago'}</small>
-                            </div>
-                        `;
-                    });
-                    
-                    conteudo += '</div><p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.7;">Use os filtros acima para refinar a busca</p>';
-                    
-                    statsContent.innerHTML = conteudo;
-                    statsDiv.style.display = 'block';
-                    statsDiv.scrollIntoView({ behavior: 'smooth' });
                     
                     btn.innerHTML = '✅ Encontrado!';
                 } catch (error) {
                     btn.innerHTML = '❌ Erro';
-                    alert('Não foi possível encontrar este endereço. Tente um local mais conhecido.');
+                    alert('Não foi possível encontrar este endereço.');
                 }
                 
                 setTimeout(() => {
@@ -728,15 +539,11 @@
         }
         
         async function obterCoordenadasAproximadas(endereco) {
-            // Primeiro tentar locais conhecidos
             const locaisConhecidos = {
                 'manaus': {lat: -3.1319, lng: -60.0239},
                 'sao paulo': {lat: -23.5505, lng: -46.6333},
                 'rio de janeiro': {lat: -22.9068, lng: -43.1729},
-                'brasilia': {lat: -15.7942, lng: -47.8822},
-                'copacabana': {lat: -22.9711, lng: -43.1822},
-                'ipanema': {lat: -22.9838, lng: -43.2096},
-                'avenida paulista': {lat: -23.5613, lng: -46.6565}
+                'brasilia': {lat: -15.7942, lng: -47.8822}
             };
             
             const enderecoLower = endereco.toLowerCase();
@@ -747,22 +554,6 @@
                 }
             }
             
-            // Tentar API de geocodificação gratuita
-            try {
-                const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(endereco)}&limit=1`);
-                const data = await response.json();
-                
-                if (data && data.length > 0) {
-                    return {
-                        lat: parseFloat(data[0].lat),
-                        lng: parseFloat(data[0].lon)
-                    };
-                }
-            } catch (error) {
-                console.log('Erro na geocodificação:', error);
-            }
-            
-            // Se não encontrar, usar Manaus como padrão
             return {lat: -3.1319, lng: -60.0239};
         }
         
@@ -771,18 +562,7 @@
         });
         
         document.addEventListener('DOMContentLoaded', initMap);
-        
-        // Fechar dropdown ao clicar fora
-        document.addEventListener('click', (e) => {
-            const dropdowns = document.querySelectorAll('[style*="position: absolute"][style*="background: white"]');
-            dropdowns.forEach(dropdown => {
-                if (!dropdown.parentElement.contains(e.target)) {
-                    dropdown.style.display = 'none';
-                }
-            });
-        });
     </script>
-    <script src="/react-integration.js"></script>
     
     <script src="/hamburger-nav.js"></script>
     <script src="/theme-manager.js"></script>
@@ -801,4 +581,5 @@
         
         document.addEventListener('DOMContentLoaded', updateThemeIcon);
     </script>
-<script type="text/javascript">
+</body>
+</html>
