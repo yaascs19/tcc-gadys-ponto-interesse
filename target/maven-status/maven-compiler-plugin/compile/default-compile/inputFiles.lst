@@ -1,0 +1,13 @@
+/workspaces/tcc-gadys-ponto-interesse/src/main/java/com/gadys/model/TipoUsuario.java
+/workspaces/tcc-gadys-ponto-interesse/src/main/java/com/gadys/repository/LocalRepository.java
+/workspaces/tcc-gadys-ponto-interesse/src/main/java/com/gadys/model/Categoria.java
+/workspaces/tcc-gadys-ponto-interesse/src/main/java/com/gadys/model/Cidade.java
+/workspaces/tcc-gadys-ponto-interesse/src/main/java/com/gadys/model/Avaliacao.java
+/workspaces/tcc-gadys-ponto-interesse/src/main/java/com/gadys/repository/UsuarioRepository.java
+/workspaces/tcc-gadys-ponto-interesse/src/main/java/com/gadys/model/Comentario.java
+/workspaces/tcc-gadys-ponto-interesse/src/main/java/com/gadys/GadysApplication.java
+/workspaces/tcc-gadys-ponto-interesse/src/main/java/com/gadys/model/Estado.java
+/workspaces/tcc-gadys-ponto-interesse/src/main/java/com/gadys/model/Local.java
+/workspaces/tcc-gadys-ponto-interesse/src/main/java/com/gadys/service/LocalService.java
+/workspaces/tcc-gadys-ponto-interesse/src/main/java/com/gadys/model/StatusLocal.java
+/workspaces/tcc-gadys-ponto-interesse/src/main/java/com/gadys/model/Usuario.java

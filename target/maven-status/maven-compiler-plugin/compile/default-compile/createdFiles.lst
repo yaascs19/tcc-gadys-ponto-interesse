@@ -1,0 +1,13 @@
+com/gadys/model/StatusLocal.class
+com/gadys/repository/UsuarioRepository.class
+com/gadys/repository/LocalRepository.class
+com/gadys/service/LocalService.class
+com/gadys/model/TipoUsuario.class
+com/gadys/model/Estado.class
+com/gadys/model/Local.class
+com/gadys/model/Usuario.class
+com/gadys/GadysApplication.class
+com/gadys/model/Cidade.class
+com/gadys/model/Avaliacao.class
+com/gadys/model/Categoria.class
+com/gadys/model/Comentario.class
