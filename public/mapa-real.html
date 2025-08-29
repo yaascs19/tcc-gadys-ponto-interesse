@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GADYS - Mapa com Coordenadas Reais</title>
+    <style>
+        #map { height: 70vh; width: 100%; }
+        .filters { padding: 20px; background: #f5f5f5; margin-bottom: 20px; }
+        .filter-group { display: inline-block; margin-right: 20px; }
+        .btn { padding: 10px 20px; background: #1a237e; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="filters">
+        <div class="filter-group">
+            <label>Categoria:</label>
+            <select id="categoria">
+                <option value="">Todas</option>
+                <option value="monumentos">Monumentos</option>
+                <option value="natureza">Natureza</option>
+            </select>
+        </div>
+        <button class="btn" onclick="filtrarLocais()">Filtrar</button>
+    </div>
+    
+    <div id="map"></div>
+
+    <script>
+        let map;
+        let markers = [];
+        
+        // Locais com coordenadas REAIS
+        const locais = [
+            // AMAZONAS - MONUMENTOS
+            {nome: "Teatro Amazonas", categoria: "monumentos", lat: -3.1305, lng: -60.0239, cor: "#8b4513"},
+            {nome: "Forte de São José", categoria: "monumentos", lat: -3.1365, lng: -60.0166, cor: "#8b4513"},
+            {nome: "Mercado Municipal", categoria: "monumentos", lat: -3.1365, lng: -60.0166, cor: "#8b4513"},
+            {nome: "Palácio da Justiça", categoria: "monumentos", lat: -3.1300, lng: -60.0250, cor: "#8b4513"},
+            {nome: "Igreja São Sebastião", categoria: "monumentos", lat: -3.1320, lng: -60.0220, cor: "#8b4513"},
+            {nome: "Palácio Rio Negro", categoria: "monumentos", lat: -3.1290, lng: -60.0210, cor: "#8b4513"},
+            
+            // AMAZONAS - NATUREZA  
+            {nome: "Floresta Amazônica", categoria: "natureza", lat: -3.4653, lng: -62.2159, cor: "#228b22"},
+            {nome: "Encontro das Águas", categoria: "natureza", lat: -3.1319, lng: -59.9825, cor: "#228b22"},
+            {nome: "Parque Anavilhanas", categoria: "natureza", lat: -2.3833, lng: -60.9167, cor: "#228b22"},
+            {nome: "Reserva Mamirauá", categoria: "natureza", lat: -3.0833, lng: -64.8333, cor: "#228b22"},
+            {nome: "Parque do Jaú", categoria: "natureza", lat: -1.9000, lng: -61.6000, cor: "#228b22"},
+            {nome: "Rio Amazonas", categoria: "natureza", lat: -3.1319, lng: -59.9825, cor: "#228b22"},
+            
+            // BRASIL - MONUMENTOS
+            {nome: "Cristo Redentor", categoria: "monumentos", lat: -22.9519, lng: -43.2105, cor: "#8b4513"},
+            {nome: "Pão de Açúcar", categoria: "monumentos", lat: -22.9486, lng: -43.1566, cor: "#8b4513"},
+            {nome: "Pelourinho", categoria: "monumentos", lat: -12.9714, lng: -38.5014, cor: "#8b4513"},
+            
+            // BRASIL - NATUREZA
+            {nome: "Cataratas do Iguaçu", categoria: "natureza", lat: -25.6953, lng: -54.4367, cor: "#228b22"},
+            {nome: "Fernando de Noronha", categoria: "natureza", lat: -3.8549, lng: -32.4229, cor: "#228b22"},
+            {nome: "Pantanal", categoria: "natureza", lat: -19.0208, lng: -57.6531, cor: "#228b22"}
+        ];
+
+        function initMap() {
+            // Criar mapa centrado no Brasil
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 5,
+                center: {lat: -14.2350, lng: -51.9253}, // Centro do Brasil
+                mapTypeId: 'roadmap'
+            });
+            
+            // Adicionar todos os marcadores
+            adicionarMarcadores(locais);
+        }
+
+        function adicionarMarcadores(locaisParaMostrar) {
+            // Limpar marcadores existentes
+            markers.forEach(marker => marker.setMap(null));
+            markers = [];
+            
+            // Criar novos marcadores
+            locaisParaMostrar.forEach(local => {
+                const marker = new google.maps.Marker({
+                    position: {lat: local.lat, lng: local.lng},
+                    map: map,
+                    title: local.nome,
+                    icon: {
+                        path: google.maps.SymbolPath.CIRCLE,
+                        scale: 8,
+                        fillColor: local.cor,
+                        fillOpacity: 1,
+                        strokeColor: 'white',
+                        strokeWeight: 2
+                    }
+                });
+                
+                // InfoWindow com detalhes
+                const infoWindow = new google.maps.InfoWindow({
+                    content: `
+                        <div>
+                            <h3>${local.nome}</h3>
+                            <p>Categoria: ${local.categoria}</p>
+                            <p>Coordenadas: ${local.lat.toFixed(4)}, ${local.lng.toFixed(4)}</p>
+                        </div>
+                    `
+                });
+                
+                marker.addListener('click', () => {
+                    infoWindow.open(map, marker);
+                });
+                
+                markers.push(marker);
+            });
+            
+            // Ajustar zoom para mostrar todos os marcadores
+            if (locaisParaMostrar.length > 0) {
+                const bounds = new google.maps.LatLngBounds();
+                locaisParaMostrar.forEach(local => {
+                    bounds.extend(new google.maps.LatLng(local.lat, local.lng));
+                });
+                map.fitBounds(bounds);
+            }
+        }
+
+        function filtrarLocais() {
+            const categoria = document.getElementById('categoria').value;
+            
+            const locaisFiltrados = locais.filter(local => {
+                return !categoria || local.categoria === categoria;
+            });
+            
+            adicionarMarcadores(locaisFiltrados);
+        }
+    </script>
+    
+    <!-- SUBSTITUA SUA_CHAVE_API pela chave real do Google Maps -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=SUA_CHAVE_API&callback=initMap"></script>
+</body>
+</html>
