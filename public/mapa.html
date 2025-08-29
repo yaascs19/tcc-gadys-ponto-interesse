@@ -34,6 +34,46 @@
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             overflow: hidden;
+            position: relative;
+        }
+        
+        .marcador {
+            position: absolute;
+            background: #ff4444;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            transform: translate(-50%, -100%);
+            white-space: nowrap;
+            border: 2px solid white;
+        }
+        
+        .marcador.monumentos {
+            background: #8b4513;
+        }
+        
+        .marcador.natureza {
+            background: #228b22;
+        }
+        
+        .marcador::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: inherit;
+        }
+        
+        .marcador:hover {
+            transform: translate(-50%, -100%) scale(1.1);
+            z-index: 1001;
         }
         .container {
             max-width: 1200px;
@@ -355,7 +395,10 @@
     </div>
     
     <script>
+        let marcadoresVisiveis = [];
+        
         function initMap() {
+            // Carregar mapa básico
             document.getElementById('map').innerHTML = `
                 <iframe 
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127572.72!2d-60.0239!3d-3.1319!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x926c05173c0b0f5b%3A0x2ec5c8c93a2c7e0!2sManaus%2C%20AM!5e0!3m2!1spt!2sbr!4v1234567890123" 
@@ -363,84 +406,61 @@
                     height="100%" 
                     style="border:0;" 
                     allowfullscreen="" 
-                    loading="lazy" 
-                    referrerpolicy="no-referrer-when-downgrade">
+                    loading="lazy">
                 </iframe>
             `;
+            
+            // Adicionar marcadores iniciais
+            setTimeout(() => adicionarMarcadores([]), 1000);
         }
         
-        let localizacaoAtual = {lat: -3.1319, lng: -60.0239}; // Manaus por padrão
+
         
         function filtrarLocais() {
             const categoria = document.getElementById('categoria').value;
             const preco = document.getElementById('preco').value;
-            const distancia = document.getElementById('distancia').value;
+            const distancia = parseInt(document.getElementById('distancia').value);
             
-            const locaisComCoordenadas = [
-                // Amazonas - Monumentos
-                {nome: "Teatro Amazonas", categoria: "monumentos", preco: "pago", lat: -3.1305, lng: -60.0239},
-                {nome: "Forte de São José", categoria: "monumentos", preco: "pago", lat: -3.1365, lng: -60.0166},
-                {nome: "Mercado Municipal", categoria: "monumentos", preco: "gratuito", lat: -3.1365, lng: -60.0166},
-                {nome: "Palácio da Justiça", categoria: "monumentos", preco: "gratuito", lat: -3.1300, lng: -60.0250},
-                {nome: "Igreja de São Sebastião", categoria: "monumentos", preco: "gratuito", lat: -3.1320, lng: -60.0220},
-                {nome: "Palácio Rio Negro", categoria: "monumentos", preco: "pago", lat: -3.1290, lng: -60.0210},
-                
-                // Amazonas - Natureza
-                {nome: "Floresta Amazônica", categoria: "natureza", preco: "pago", lat: -3.4653, lng: -62.2159},
-                {nome: "Encontro das Águas", categoria: "natureza", preco: "pago", lat: -3.1319, lng: -59.9825},
-                {nome: "Parque Nacional de Anavilhanas", categoria: "natureza", preco: "pago", lat: -2.3833, lng: -60.9167},
-                {nome: "Reserva Mamirauá", categoria: "natureza", preco: "pago", lat: -3.0833, lng: -64.8333},
-                {nome: "Parque Nacional do Jaú", categoria: "natureza", preco: "pago", lat: -1.9000, lng: -61.6000},
-                {nome: "Rio Amazonas", categoria: "natureza", preco: "pago", lat: -3.1319, lng: -59.9825},
-                
-                // Brasil - Monumentos
-                {nome: "Cristo Redentor", categoria: "monumentos", preco: "pago", lat: -22.9519, lng: -43.2105},
-                {nome: "Pão de Açúcar", categoria: "monumentos", preco: "pago", lat: -22.9486, lng: -43.1566},
-                {nome: "Pelourinho", categoria: "monumentos", preco: "gratuito", lat: -12.9714, lng: -38.5014},
-                
-                // Brasil - Natureza
-                {nome: "Cataratas do Iguaçu", categoria: "natureza", preco: "pago", lat: -25.6953, lng: -54.4367},
-                {nome: "Fernando de Noronha", categoria: "natureza", preco: "pago", lat: -3.8549, lng: -32.4229},
-                {nome: "Pantanal", categoria: "natureza", preco: "pago", lat: -19.0208, lng: -57.6531}
-            ];
+            // Filtrar locais e atualizar marcadores
+            const locaisFiltrados = simularFiltros(categoria, preco, distancia);
+            adicionarMarcadores(locaisFiltrados);
             
-            const locais = locaisComCoordenadas.map(local => ({
+            // Calcular distâncias e ordenar
+            const locaisComDistancia = locaisFiltrados.map(local => ({
                 ...local,
-                dist: calcularDistanciaReal(localizacaoAtual.lat, localizacaoAtual.lng, local.lat, local.lng)
-            }));
+                dist: calcularDistanciaSimples(localizacaoAtual.lat, localizacaoAtual.lng, local.lat, local.lng)
+            })).sort((a, b) => a.dist - b.dist);
             
-            const filtrados = locais.filter(local => {
-                const passaCategoria = !categoria || local.categoria === categoria;
-                const passaPreco = !preco || local.preco === preco;
-                const passaDistancia = local.dist <= parseInt(distancia);
-                
-                return passaCategoria && passaPreco && passaDistancia;
-            });
-            
-            const filtradosOrdenados = filtrados.sort((a, b) => a.dist - b.dist);
-            
+            // Mostrar estatísticas
             const statsDiv = document.getElementById('stats');
             const statsContent = document.getElementById('statsContent');
             
-            if (filtradosOrdenados.length > 0) {
-                let conteudo = `<h3>🏆 Ranking dos ${filtradosOrdenados.length} locais mais próximos:</h3><div style="margin-top: 1rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">`;
-                filtradosOrdenados.forEach((local, index) => {
+            if (locaisComDistancia.length > 0) {
+                const textoLocal = locaisComDistancia.length === 1 ? 'local encontrado' : 'locais encontrados';
+                let conteudo = `<h3>🏆 ${locaisComDistancia.length} ${textoLocal} perto de você!</h3><div style="margin-top: 1rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">`;
+                
+                locaisComDistancia.forEach((local, index) => {
                     const posicaoTexto = `${index + 1}º`;
-                    const categoriaTexto = local.categoria === 'monumentos' ? 'MONUMENTOS' : 'NATUREZA';
+                    const categoriaTexto = local.categoria === 'monumentos' ? '🏛️ MONUMENTOS' : '🌳 NATUREZA';
                     const distanciaFormatada = local.dist < 1 ? `${(local.dist * 1000).toFixed(0)}m` : `${local.dist.toFixed(1)}km`;
-                    conteudo += `<div style="background: rgba(255,255,255,0.2); padding: 0.8rem; border-radius: 10px; text-align: center;">
-                                    <div style="margin-bottom: 0.5rem;">
-                                        <span class="posicao-numero" style="font-weight: bold; color: #1a237e;">(${posicaoTexto})</span><br>
-                                        <span style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 0.2rem 0.6rem; border-radius: 15px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">${categoriaTexto}</span>
-                                    </div>
-                                    <strong>${local.nome}</strong><br>
-                                    <small style="color: #e74c3c; font-weight: bold;">${distanciaFormatada} de distância</small>
-                                 </div>`;
+                    
+                    conteudo += `
+                        <div style="background: rgba(255,255,255,0.2); padding: 1rem; border-radius: 12px; text-align: center; border: 2px solid rgba(255,255,255,0.3);">
+                            <div style="margin-bottom: 0.8rem;">
+                                <span class="posicao-numero" style="font-weight: bold; color: #1a237e; font-size: 1.2rem;">${posicaoTexto}</span><br>
+                                <span style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">${categoriaTexto}</span>
+                            </div>
+                            <strong style="font-size: 1.1rem; display: block; margin-bottom: 0.5rem;">${local.nome}</strong>
+                            <div style="color: #e74c3c; font-weight: bold; margin-bottom: 0.5rem;">${distanciaFormatada} de distância</div>
+                            <div style="color: #27ae60; font-weight: bold; font-size: 0.9rem;">${local.valor}</div>
+                            <a href="${local.link}" style="display: inline-block; margin-top: 0.5rem; background: linear-gradient(135deg, #1a237e, #3f51b5); color: white; text-decoration: none; padding: 0.4rem 0.8rem; border-radius: 8px; font-size: 0.8rem; font-weight: bold;">Ver Detalhes</a>
+                        </div>
+                    `;
                 });
                 conteudo += '</div>';
                 statsContent.innerHTML = conteudo;
             } else {
-                statsContent.innerHTML = '<h3>😔 Nenhum local encontrado com esses filtros</h3><p>Tente ajustar os critérios de busca</p>';
+                statsContent.innerHTML = '<h3>😔 Nenhum local encontrado perto de você!</h3><p>Tente ajustar os critérios de busca ou aumentar a distância</p>';
             }
             
             statsDiv.style.display = 'block';
@@ -457,19 +477,16 @@
                     const lat = position.coords.latitude;
                     const lng = position.coords.longitude;
                     
-                    const novoMapa = `https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15000!2d${lng}!3d${lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt!2sbr!4v1234567890123`;
-                    document.getElementById('map').innerHTML = `
-                        <iframe 
-                            src="${novoMapa}" 
-                            width="100%" 
-                            height="100%" 
-                            style="border:0;" 
-                            allowfullscreen="" 
-                            loading="lazy">
-                        </iframe>
-                    `;
-                    
+                    // Atualizar localização atual
                     localizacaoAtual = {lat: lat, lng: lng};
+                    
+                    // Atualizar mapa para nova localização
+                    const novoMapa = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15000!2d${lng}!3d${lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt!2sbr!4v1234567890123`;
+                    document.getElementById('map').innerHTML = `
+                        <iframe src="${novoMapa}" width="100%" height="100%" style="border:0;" allowfullscreen loading="lazy"></iframe>
+                    `;
+                    // Recriar marcadores
+                    setTimeout(() => adicionarMarcadores([]), 1000);
                     
                     btn.innerHTML = '✅ Localizado!';
                     setTimeout(() => {
@@ -489,16 +506,7 @@
             }
         }
         
-        function calcularDistanciaReal(lat1, lng1, lat2, lng2) {
-            const R = 6371;
-            const dLat = (lat2 - lat1) * Math.PI / 180;
-            const dLng = (lng2 - lng1) * Math.PI / 180;
-            const a = Math.sin(dLat/2) * Math.sin(dLat/2) + 
-                     Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
-                     Math.sin(dLng/2) * Math.sin(dLng/2);
-            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-            return R * c;
-        }
+
         
         async function simularLocalizacao() {
             const endereco = prompt("Digite o endereço ou local que deseja simular:");
@@ -509,21 +517,18 @@
                 btn.disabled = true;
                 
                 try {
-                    const enderecoFormatado = encodeURIComponent(endereco.trim());
                     const coordenadas = await obterCoordenadasAproximadas(endereco.trim());
                     
-                    document.getElementById('map').innerHTML = `
-                        <iframe 
-                            src="https://maps.google.com/maps?q=${enderecoFormatado}&output=embed" 
-                            width="100%" 
-                            height="100%" 
-                            style="border:0;" 
-                            allowfullscreen="" 
-                            loading="lazy">
-                        </iframe>
-                    `;
-                    
+                    // Atualizar localização atual
                     localizacaoAtual = {lat: coordenadas.lat, lng: coordenadas.lng};
+                    
+                    // Atualizar mapa para nova localização
+                    const novoMapa = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d50000!2d${coordenadas.lng}!3d${coordenadas.lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt!2sbr!4v1234567890123`;
+                    document.getElementById('map').innerHTML = `
+                        <iframe src="${novoMapa}" width="100%" height="100%" style="border:0;" allowfullscreen loading="lazy"></iframe>
+                    `;
+                    // Recriar marcadores
+                    setTimeout(() => adicionarMarcadores([]), 1000);
                     
                     btn.innerHTML = '✅ Encontrado!';
                 } catch (error) {
@@ -557,13 +562,106 @@
             return {lat: -3.1319, lng: -60.0239};
         }
         
+        // Funções auxiliares
+        let localizacaoAtual = {lat: -3.1319, lng: -60.0239}; // Manaus padrão
+        
+        function simularFiltros(categoria, preco, distanciaMax) {
+            const todosLocais = [
+                // AMAZONAS - MONUMENTOS
+                {nome: "Teatro Amazonas", categoria: "monumentos", preco: "pago", lat: -3.1305, lng: -60.0239, valor: "R$ 20,00", link: "/teatro-amazonas.html", posX: 50, posY: 45},
+                {nome: "Forte de São José", categoria: "monumentos", preco: "pago", lat: -3.1365, lng: -60.0166, valor: "R$ 10,00", link: "/forte-sao-jose.html", posX: 45, posY: 48},
+                {nome: "Mercado Municipal", categoria: "monumentos", preco: "gratuito", lat: -3.1365, lng: -60.0166, valor: "Gratuito", link: "/mercado-municipal.html", posX: 48, posY: 52},
+                {nome: "Palácio da Justiça", categoria: "monumentos", preco: "gratuito", lat: -3.1300, lng: -60.0250, valor: "Gratuito", link: "/palacio-justica.html", posX: 47, posY: 46},
+                {nome: "Igreja de São Sebastião", categoria: "monumentos", preco: "gratuito", lat: -3.1320, lng: -60.0220, valor: "Gratuito", link: "/igreja-sao-sebastiao.html", posX: 49, posY: 47},
+                {nome: "Palácio Rio Negro", categoria: "monumentos", preco: "pago", lat: -3.1290, lng: -60.0210, valor: "R$ 5,00", link: "/palacio-rio-negro.html", posX: 51, posY: 44},
+                
+                // AMAZONAS - NATUREZA
+                {nome: "Floresta Amazônica", categoria: "natureza", preco: "pago", lat: -3.4653, lng: -62.2159, valor: "Varia por tour", link: "/floresta-amazonica.html", posX: 25, posY: 65},
+                {nome: "Encontro das Águas", categoria: "natureza", preco: "pago", lat: -3.1319, lng: -59.9825, valor: "R$ 80-150", link: "/encontro-aguas.html", posX: 75, posY: 50},
+                {nome: "Parque Nacional de Anavilhanas", categoria: "natureza", preco: "pago", lat: -2.3833, lng: -60.9167, valor: "R$ 15,00", link: "/parque-anavilhanas.html", posX: 35, posY: 25},
+                {nome: "Reserva Mamirauá", categoria: "natureza", preco: "pago", lat: -3.0833, lng: -64.8333, valor: "R$ 200-500/dia", link: "/reserva-mamiraui.html", posX: 15, posY: 55},
+                {nome: "Parque Nacional do Jaú", categoria: "natureza", preco: "pago", lat: -1.9000, lng: -61.6000, valor: "R$ 25,00", link: "/parque-jau.html", posX: 30, posY: 20},
+                {nome: "Rio Amazonas", categoria: "natureza", preco: "pago", lat: -3.1319, lng: -59.9825, valor: "Varia por atividade", link: "/rio-amazonas.html", posX: 70, posY: 48},
+                
+                // BRASIL - MONUMENTOS
+                {nome: "Cristo Redentor", categoria: "monumentos", preco: "pago", lat: -22.9519, lng: -43.2105, valor: "R$ 75,00", link: "/cristo-redentor.html", posX: 85, posY: 85},
+                {nome: "Pão de Açúcar", categoria: "monumentos", preco: "pago", lat: -22.9486, lng: -43.1566, valor: "R$ 120,00", link: "/pao-acucar.html", posX: 87, posY: 83},
+                {nome: "Pelourinho", categoria: "monumentos", preco: "gratuito", lat: -12.9714, lng: -38.5014, valor: "Gratuito", link: "/pelourinho.html", posX: 90, posY: 60},
+                
+                // BRASIL - NATUREZA
+                {nome: "Cataratas do Iguaçu", categoria: "natureza", preco: "pago", lat: -25.6953, lng: -54.4367, valor: "R$ 85,00", link: "/cataratas-iguacu.html", posX: 65, posY: 90},
+                {nome: "Fernando de Noronha", categoria: "natureza", preco: "pago", lat: -3.8549, lng: -32.4229, valor: "Taxa ambiental", link: "/fernando-noronha.html", posX: 95, posY: 35},
+                {nome: "Pantanal", categoria: "natureza", preco: "pago", lat: -19.0208, lng: -57.6531, valor: "Varia por tour", link: "/pantanal.html", posX: 55, posY: 75}
+            ];
+            
+            return todosLocais.filter(local => {
+                const passaCategoria = !categoria || local.categoria === categoria;
+                const passaPreco = !preco || local.preco === preco;
+                
+                // Calcular distância real
+                const distancia = calcularDistanciaSimples(
+                    localizacaoAtual.lat, 
+                    localizacaoAtual.lng, 
+                    local.lat, 
+                    local.lng
+                );
+                const passaDistancia = distancia <= distanciaMax;
+                
+                return passaCategoria && passaPreco && passaDistancia;
+            });
+        }
+        
+        function adicionarMarcadores(locais) {
+            // Remover marcadores existentes
+            marcadoresVisiveis.forEach(m => m.remove());
+            marcadoresVisiveis = [];
+            
+            // Adicionar novos marcadores
+            locais.forEach(local => {
+                const marcador = document.createElement('div');
+                marcador.className = `marcador ${local.categoria}`;
+                marcador.textContent = local.nome;
+                marcador.style.left = local.posX + '%';
+                marcador.style.top = local.posY + '%';
+                
+                marcador.onclick = () => {
+                    alert(`🎯 ${local.nome}\n💰 ${local.valor}\n\n🔗 Clique OK para ver detalhes!`);
+                    window.location.href = local.link;
+                };
+                
+                document.getElementById('map').appendChild(marcador);
+                marcadoresVisiveis.push(marcador);
+            });
+        }
+        
+        function calcularDistanciaSimples(lat1, lng1, lat2, lng2) {
+            const R = 6371;
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLng = (lng2 - lng1) * Math.PI / 180;
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) + 
+                     Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+                     Math.sin(dLng/2) * Math.sin(dLng/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
+        
         document.getElementById('distancia').addEventListener('input', function() {
             document.getElementById('distanciaValue').textContent = this.value + 'km';
         });
         
-        document.addEventListener('DOMContentLoaded', initMap);
+        // Garantir que o mapa carregue
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(initMap, 100);
+        });
+        
+        window.addEventListener('load', function() {
+            if (!document.getElementById('map').innerHTML.trim()) {
+                initMap();
+            }
+        });
     </script>
     
+    <script src="/mapa-marcadores.js"></script>
     <script src="/hamburger-nav.js"></script>
     <script src="/theme-manager.js"></script>
 
