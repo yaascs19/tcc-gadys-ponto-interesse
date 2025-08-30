@@ -274,19 +274,21 @@ function SobrePage() {
           }}>Nossos Objetivos</h2>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-            gap: '3rem'
+            gridTemplateColumns: 'repeat(2, 1fr)',
+            gap: '3rem',
+            maxWidth: '800px',
+            margin: '0 auto'
           }}>
             {[
-              { icon: '🏛️', title: 'Preservar', desc: 'Valorizar e promover o patrimônio histórico e cultural brasileiro', color: '#667eea' },
-              { icon: '🌳', title: 'Sustentabilidade', desc: 'Incentivar o turismo responsável e a preservação ambiental', color: '#764ba2' },
-              { icon: '🍽️', title: 'Cultura Local', desc: 'Destacar a riqueza gastronômica e tradições regionais', color: '#f093fb' },
-              { icon: '🎨', title: 'Diversidade', desc: 'Celebrar a pluralidade cultural e artística do Brasil', color: '#ffecd2' }
+              { title: 'Preservar', desc: 'Valorizar e promover o patrimônio histórico e cultural brasileiro', color: '#667eea' },
+              { title: 'Sustentabilidade', desc: 'Incentivar o turismo responsável e a preservação ambiental', color: '#764ba2' },
+              { title: 'Cultura Local', desc: 'Destacar a riqueza gastronômica e tradições regionais', color: '#f093fb' },
+              { title: 'Diversidade', desc: 'Celebrar a pluralidade cultural e artística do Brasil', color: '#ff6b6b' }
             ].map((item, index) => (
               <div 
                 key={index}
                 style={{
-                  background: darkMode ? 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)' : 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.6) 100%)',
+                  background: 'linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.6) 100%)',
                   padding: '3rem 2rem',
                   borderRadius: '25px',
                   backdropFilter: 'blur(20px)',
@@ -316,11 +318,7 @@ function SobrePage() {
                   height: '4px',
                   background: `linear-gradient(90deg, ${item.color}, transparent)`
                 }} />
-                <div style={{ 
-                  fontSize: '4rem', 
-                  marginBottom: '2rem',
-                  filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.3))'
-                }}>{item.icon}</div>
+
                 <h3 style={{ 
                   fontSize: '1.8rem', 
                   marginBottom: '1.5rem',
@@ -330,7 +328,8 @@ function SobrePage() {
                 <p style={{ 
                   opacity: 0.8,
                   lineHeight: 1.6,
-                  fontSize: '1.1rem'
+                  fontSize: '1.1rem',
+                  color: 'white'
                 }}>{item.desc}</p>
               </div>
             ))}
