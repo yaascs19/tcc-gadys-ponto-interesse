@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GADYS - Mapa Real com API</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .header { 
+            background: linear-gradient(135deg, #1a237e, #3f51b5); 
+            color: white; 
+            padding: 2rem; 
+            text-align: center;
+        }
+        #map { 
+            height: 70vh; 
+            width: 100%; 
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .filters { 
+            background: rgba(255,255,255,0.95);
+            padding: 2rem; 
+            border-radius: 20px;
+            display: flex; 
+            justify-content: space-between;
+            gap: 2rem; 
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        .filter-group { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 0.8rem;
+            min-width: 180px;
+            flex: 1;
+        }
+        .filter-group select, .filter-group input { 
+            padding: 0.8rem 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1rem;
+        }
+        .btn { 
+            background: linear-gradient(135deg, #1a237e, #3f51b5);
+            color: white; 
+            border: none; 
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        .btn.secondary {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+        .filter-stats {
+            background: linear-gradient(135deg, #00b894, #00a085);
+            color: white;
+            padding: 1rem;
+            border-radius: 15px;
+            margin-top: 1rem;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>🗺️ Mapa Real com API - GADYS</h1>
+        <p>Marcadores nas coordenadas geográficas exatas</p>
+    </header>
+    
+    <div class="container">
+        <div class="filters">
+            <div class="filter-group">
+                <label>📋 Categoria:</label>
+                <select id="categoria">
+                    <option value="">Todas as categorias</option>
+                    <option value="monumentos">🏛️ Monumentos</option>
+                    <option value="natureza">🌳 Natureza</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>💰 Preço:</label>
+                <select id="preco">
+                    <option value="">Todos os preços</option>
+                    <option value="gratuito">🆓 Gratuito</option>
+                    <option value="pago">💵 Pago</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>📍 Distância máxima:</label>
+                <input type="range" id="distancia" min="1" max="3000" value="3000">
+                <div id="distanciaValue">3000km</div>
+            </div>
+            <div class="filter-group">
+                <button class="btn" onclick="filtrarLocais()">🔍 Filtrar</button>
+                <button class="btn secondary" onclick="minhaLocalizacao()">📍 Localização</button>
+                <button class="btn" onclick="simularLocal()" style="background: #e67e22;">📍 Simular Local</button>
+            </div>
+        </div>
+        
+        <div id="map"></div>
+        
+        <div class="filter-stats" id="stats">
+            <div id="statsContent"></div>
+        </div>
+    </div>
+    
+    <script>
+        let map;
+        let markers = [];
+        let localizacaoAtual = {lat: -3.1319, lng: -60.0239};
+        
+        const todosLocais = [
+            {nome: "Teatro Amazonas", categoria: "monumentos", preco: "pago", lat: -3.1300, lng: -60.0200, valor: "R$ 20,00", link: "/teatro-amazonas.html"},
+            {nome: "Forte de São José", categoria: "monumentos", preco: "pago", lat: -2.5000, lng: -59.0000, valor: "R$ 10,00", link: "/forte-sao-jose.html"},
+            {nome: "Mercado Municipal", categoria: "monumentos", preco: "gratuito", lat: -4.0000, lng: -61.0000, valor: "Gratuito", link: "/mercado-municipal.html"},
+            {nome: "Floresta Amazônica", categoria: "natureza", preco: "pago", lat: -3.4653, lng: -62.2159, valor: "Varia por tour", link: "/floresta-amazonica.html"},
+            {nome: "Encontro das Águas", categoria: "natureza", preco: "pago", lat: -3.1319, lng: -59.9825, valor: "R$ 80-150", link: "/encontro-aguas.html"},
+            {nome: "Cristo Redentor", categoria: "monumentos", preco: "pago", lat: -22.9519, lng: -43.2105, valor: "R$ 75,00", link: "/cristo-redentor.html"},
+            {nome: "Cataratas do Iguaçu", categoria: "natureza", preco: "pago", lat: -25.6953, lng: -54.4367, valor: "R$ 85,00", link: "/cataratas-iguacu.html"},
+            {nome: "Fernando de Noronha", categoria: "natureza", preco: "pago", lat: -3.8549, lng: -32.4229, valor: "Taxa ambiental", link: "/fernando-noronha.html"}
+        ];
+        
+        function initMap() {
+            map = L.map('map').setView([-14.2350, -51.9253], 4);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+            
+            adicionarMarcadores(todosLocais);
+        }
+        
+        function adicionarMarcadores(locais) {
+            markers.forEach(marker => map.removeLayer(marker));
+            markers = [];
+            
+            locais.forEach(local => {
+                const cor = local.categoria === 'monumentos' ? '#8b4513' : '#228b22';
+                
+                const marker = L.circleMarker([local.lat, local.lng], {
+                    radius: 15,
+                    fillColor: cor,
+                    color: 'white',
+                    weight: 3,
+                    opacity: 1,
+                    fillOpacity: 1
+                }).addTo(map);
+                
+                const popupContent = `
+                    <div style="font-family: Arial; max-width: 300px;">
+                        <h3 style="margin: 0 0 10px 0; color: #1a237e;">${local.nome}</h3>
+                        <p><strong>Categoria:</strong> ${local.categoria === 'monumentos' ? '🏛️ Monumentos' : '🌳 Natureza'}</p>
+                        <p><strong>Preço:</strong> ${local.valor}</p>
+                        <div style="margin-top: 15px;">
+                            <a href="${local.link}" style="background: #1a237e; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Ver Detalhes</a>
+                        </div>
+                    </div>
+                `;
+                
+                marker.bindPopup(popupContent);
+                markers.push(marker);
+            });
+        }
+        
+        function filtrarLocais() {
+            const categoria = document.getElementById('categoria').value;
+            const preco = document.getElementById('preco').value;
+            const distancia = parseInt(document.getElementById('distancia').value);
+            
+            const locaisFiltrados = todosLocais.filter(local => {
+                const passaCategoria = !categoria || local.categoria === categoria;
+                const passaPreco = !preco || local.preco === preco;
+                
+                // Se distância for 3000km (máximo), mostrar todos os locais
+                if (distancia >= 3000) {
+                    return passaCategoria && passaPreco;
+                }
+                
+                const dist = calcularDistancia(
+                    localizacaoAtual.lat, 
+                    localizacaoAtual.lng, 
+                    local.lat, 
+                    local.lng
+                );
+                const passaDistancia = dist <= distancia;
+                
+                return passaCategoria && passaPreco && passaDistancia;
+            });
+            
+            adicionarMarcadores(locaisFiltrados);
+            
+            const statsDiv = document.getElementById('stats');
+            const statsContent = document.getElementById('statsContent');
+            
+            if (locaisFiltrados.length > 0) {
+                statsContent.innerHTML = `<h3>🏆 ${locaisFiltrados.length} locais encontrados!</h3>`;
+            } else {
+                statsContent.innerHTML = '<h3>😔 Nenhum local encontrado!</h3>';
+            }
+            
+            statsDiv.style.display = 'block';
+        }
+        
+        function minhaLocalizacao() {
+            if (navigator.geolocation) {
+                const btn = document.querySelector('.btn.secondary');
+                btn.innerHTML = '🔄 Localizando...';
+                btn.disabled = true;
+                
+                navigator.geolocation.getCurrentPosition((position) => {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    
+                    localizacaoAtual = {lat: lat, lng: lng};
+                    map.setView([lat, lng], 12);
+                    
+                    btn.innerHTML = '✅ Localizado!';
+                    setTimeout(() => {
+                        btn.innerHTML = '📍 Localização';
+                        btn.disabled = false;
+                    }, 2000);
+                });
+            }
+        }
+        
+        function calcularDistancia(lat1, lng1, lat2, lng2) {
+            const R = 6371;
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLng = (lng2 - lng1) * Math.PI / 180;
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) + 
+                     Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+                     Math.sin(dLng/2) * Math.sin(dLng/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
+        
+        document.getElementById('distancia').addEventListener('input', function() {
+            document.getElementById('distanciaValue').textContent = this.value + 'km';
+        });
+        
+        function simularLocal() {
+            const local = prompt('Digite o local que deseja simular (ex: São Paulo, Rio de Janeiro):');
+            if (!local || !local.trim()) {
+                return;
+            }
+            
+            const btn = event.target;
+            btn.innerHTML = '🔄 Buscando...';
+            btn.disabled = true;
+            
+            // Usar API de geocoding do Nominatim (OpenStreetMap)
+            fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(local.trim())}&limit=1`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length > 0) {
+                        const lat = parseFloat(data[0].lat);
+                        const lng = parseFloat(data[0].lon);
+                        const nome = data[0].display_name.split(',').slice(0, 3).join(', ');
+                        
+                        // Adicionar marcador simulado
+                        const marker = L.circleMarker([lat, lng], {
+                            radius: 15,
+                            fillColor: '#e67e22',
+                            color: 'white',
+                            weight: 3,
+                            opacity: 1,
+                            fillOpacity: 1
+                        }).addTo(map);
+                        
+                        const popupContent = `
+                            <div style="font-family: Arial; max-width: 300px;">
+                                <h3 style="margin: 0 0 10px 0; color: #e67e22;">📍 Local Simulado</h3>
+                                <p><strong>Local:</strong> ${nome}</p>
+                                <p><strong>Coordenadas:</strong> ${lat.toFixed(4)}, ${lng.toFixed(4)}</p>
+                            </div>
+                        `;
+                        
+                        marker.bindPopup(popupContent).openPopup();
+                        map.setView([lat, lng], 12);
+                        
+                        btn.innerHTML = '✅ Local Encontrado!';
+                        setTimeout(() => {
+                            btn.innerHTML = '📍 Simular Local';
+                            btn.disabled = false;
+                        }, 2000);
+                    } else {
+                        alert('Local não encontrado!');
+                        btn.innerHTML = '📍 Simular Local';
+                        btn.disabled = false;
+                    }
+                })
+                .catch(error => {
+                    alert('Erro ao buscar local!');
+                    btn.innerHTML = '📍 Simular Local';
+                    btn.disabled = false;
+                });
+        }
+        
+        // Inicializar mapa quando carregar
+        document.addEventListener('DOMContentLoaded', initMap);
+    </script>
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</body>
+</html>

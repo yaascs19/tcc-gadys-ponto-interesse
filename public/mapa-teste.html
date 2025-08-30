@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Mapa</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        #map { height: 500px; width: 100%; }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    
+    <script>
+        const locais = [
+            {nome: "Teatro Amazonas", lat: -3.1300, lng: -60.0200},
+            {nome: "Forte de São José", lat: -3.2000, lng: -59.9000},
+            {nome: "Mercado Municipal", lat: -3.0500, lng: -60.1500},
+            {nome: "Cristo Redentor", lat: -22.9519, lng: -43.2105},
+            {nome: "Fernando de Noronha", lat: -3.8549, lng: -32.4229}
+        ];
+        
+        const map = L.map('map').setView([-14.2350, -51.9253], 4);
+        
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+        
+        locais.forEach(local => {
+            L.circleMarker([local.lat, local.lng], {
+                radius: 10,
+                fillColor: 'red',
+                color: 'white',
+                weight: 2,
+                fillOpacity: 1
+            }).addTo(map).bindPopup(local.nome);
+        });
+    </script>
+</body>
+</html>
