@@ -6,6 +6,8 @@ import Home from './components/Home'
 import Amazonas from './components/Amazonas'
 import Lugares from './components/Lugares'
 import SobrePage from './components/SobrePage'
+import ContatoPage from './components/ContatoPage'
+import PerfilPage from './components/PerfilPage'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
@@ -180,7 +182,15 @@ function App() {
   }
   
   if (currentPage === 'sobrepage') {
-    return <SobrePage />
+    return <SobrePage setCurrentPage={setCurrentPage} />
+  }
+  
+  if (currentPage === 'contatopage') {
+    return <ContatoPage setCurrentPage={setCurrentPage} />
+  }
+  
+  if (currentPage === 'perfilpage') {
+    return <PerfilPage setCurrentPage={setCurrentPage} />
   }
   
   if (currentPage === 'sobre') {
@@ -332,7 +342,7 @@ function App() {
                   <a href="#">Tocantins</a>
                 </div>
               </li>
-              <li><a href="/perfil.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Meu Perfil</a></li>
+              <li><a href="#" onClick={() => {setCurrentPage('perfilpage'); document.querySelector('.nav-links').classList.remove('active')}}>Meu Perfil</a></li>
               <li><a href="/mapa-real-api.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Mapa</a></li>
               <li><a href="/sobre.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Sobre</a></li>
               <li><a href="/contato.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Contato</a></li>
@@ -346,10 +356,30 @@ function App() {
   }
 
   return (
-    <div className={`app ${darkMode ? 'dark-mode' : ''}`}>
-      <header className="header">
-        <nav className="nav">
-          <img src="/logo.png" alt="GADYS" className="logo" style={{height: '40px', background: 'linear-gradient(135deg, #667eea, #764ba2)', borderRadius: '50%', padding: '8px'}} />
+    <div className={`app ${darkMode ? 'dark-mode' : ''}`} style={{
+      background: darkMode ? 'linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%)' : 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
+      color: darkMode ? 'white' : '#2c3e50',
+      fontFamily: "'Inter', 'Segoe UI', sans-serif",
+      minHeight: '100vh',
+      overflowX: 'hidden'
+    }}>
+      <header className="header" style={{
+        background: darkMode ? 'rgba(15, 12, 41, 0.8)' : '#1a237e',
+        backdropFilter: 'blur(30px)',
+        padding: '1rem 2rem',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        position: 'sticky',
+        top: 0,
+        zIndex: 100,
+        borderBottom: '1px solid rgba(255,255,255,0.1)'
+      }}>
+        <nav className="nav" style={{ display: 'contents' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <img src="/logo.png" alt="GADYS" className="logo" style={{height: '40px', background: 'linear-gradient(135deg, #667eea, #764ba2)', borderRadius: '50%', padding: '8px'}} />
+            <span style={{ fontSize: '1.5rem', fontWeight: '700', letterSpacing: '1px', color: 'white' }}>GADYS</span>
+          </div>
           <div style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
             <button 
               onClick={(e) => {e.preventDefault(); toggleDarkMode()}} 
@@ -402,9 +432,9 @@ function App() {
 
             <li><a href="/mapa-real-api.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Mapa</a></li>
             <li><a href="#" onClick={(e) => {e.preventDefault(); if (!localStorage.getItem('isLoggedIn')) setCurrentPage('login'); else window.location.href='/adicionar-locais.html'; document.querySelector('.nav-links').classList.remove('active')}}>Adicionar Local</a></li>
-            <li><a href="/perfil.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Meu Perfil</a></li>
+            <li><a href="#" onClick={() => {setCurrentPage('perfilpage'); document.querySelector('.nav-links').classList.remove('active')}}>Meu Perfil</a></li>
             <li><a href="#" onClick={() => {setCurrentPage('sobrepage'); document.querySelector('.nav-links').classList.remove('active')}}>Sobre</a></li>
-            <li><a href="#" onClick={() => {setCurrentPage('contato'); document.querySelector('.nav-links').classList.remove('active')}}>Contato</a></li>
+            <li><a href="#" onClick={() => {setCurrentPage('contatopage'); document.querySelector('.nav-links').classList.remove('active')}}>Contato</a></li>
 
 
           </ul>

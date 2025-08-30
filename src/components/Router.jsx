@@ -4,7 +4,7 @@ import Home from './Home'
 import Amazonas from './Amazonas'
 import Lugares from './Lugares'
 import SobrePage from './SobrePage'
-import Contato from './Contato'
+import ContatoPage from './ContatoPage'
 
 function Router() {
   const [currentPage, setCurrentPage] = useState('')
@@ -40,7 +40,7 @@ function Router() {
     case 'sobre':
       return <SobrePage />
     case 'contato':
-      return <Contato />
+      return <ContatoPage />
     default:
       return <App />
   }
