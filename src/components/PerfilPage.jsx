@@ -18,6 +18,7 @@ function PerfilPage({ setCurrentPage }) {
   
   const [showPhotoOptions, setShowPhotoOptions] = useState(false)
   const [urlInput, setUrlInput] = useState('')
+  const [showEditModal, setShowEditModal] = useState(false)
 
   const toggleTheme = () => {
     const newDarkMode = !darkMode
@@ -300,10 +301,11 @@ function PerfilPage({ setCurrentPage }) {
           
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gridTemplateColumns: '1fr 2fr',
             gap: '3rem',
-            maxWidth: '800px',
-            margin: '0 auto'
+            maxWidth: '900px',
+            margin: '0 auto',
+            alignItems: 'start'
           }}>
             <div style={{
               background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
@@ -471,154 +473,166 @@ function PerfilPage({ setCurrentPage }) {
                 />
               </div>
               <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', fontWeight: '600' }}>{profileData.nome}</h3>
-              <p style={{ opacity: 0.7, fontSize: '1rem' }}>{profileData.email}</p>
-            </div>
-            
-            <div style={{
-              background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
-              padding: '2rem',
-              borderRadius: '20px'
-            }}>
-              <h3 style={{ fontSize: '1.5rem', marginBottom: '1.5rem', fontWeight: '600', color: '#667eea' }}>Dados Pessoais</h3>
-              {editMode ? (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                  <div>
-                    <strong>Nome:</strong>
-                    <input 
-                      type="text" 
-                      value={profileData.nome}
-                      onChange={(e) => setProfileData({...profileData, nome: e.target.value})}
-                      style={{
-                        width: '100%',
-                        padding: '0.5rem',
-                        marginTop: '0.5rem',
-                        borderRadius: '5px',
-                        border: '1px solid #ccc',
-                        background: darkMode ? '#333' : 'white',
-                        color: darkMode ? 'white' : '#333'
-                      }}
-                    />
-                  </div>
-                  <div>
-                    <strong>Email:</strong>
-                    <input 
-                      type="email" 
-                      value={profileData.email}
-                      onChange={(e) => setProfileData({...profileData, email: e.target.value})}
-                      style={{
-                        width: '100%',
-                        padding: '0.5rem',
-                        marginTop: '0.5rem',
-                        borderRadius: '5px',
-                        border: '1px solid #ccc',
-                        background: darkMode ? '#333' : 'white',
-                        color: darkMode ? 'white' : '#333'
-                      }}
-                    />
-                  </div>
-                  <div>
-                    <strong>Telefone:</strong>
-                    <input 
-                      type="text" 
-                      value={profileData.telefone}
-                      onChange={(e) => setProfileData({...profileData, telefone: e.target.value})}
-                      style={{
-                        width: '100%',
-                        padding: '0.5rem',
-                        marginTop: '0.5rem',
-                        borderRadius: '5px',
-                        border: '1px solid #ccc',
-                        background: darkMode ? '#333' : 'white',
-                        color: darkMode ? 'white' : '#333'
-                      }}
-                    />
-                  </div>
-                  <div>
-                    <strong>Cidade:</strong>
-                    <input 
-                      type="text" 
-                      value={profileData.cidade}
-                      onChange={(e) => setProfileData({...profileData, cidade: e.target.value})}
-                      style={{
-                        width: '100%',
-                        padding: '0.5rem',
-                        marginTop: '0.5rem',
-                        borderRadius: '5px',
-                        border: '1px solid #ccc',
-                        background: darkMode ? '#333' : 'white',
-                        color: darkMode ? 'white' : '#333'
-                      }}
-                    />
-                  </div>
-                  <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
-                    <button 
-                      onClick={handleSave}
-                      style={{
-                        background: '#667eea',
-                        color: 'white',
-                        border: 'none',
-                        padding: '0.5rem 1rem',
-                        borderRadius: '5px',
-                        cursor: 'pointer'
-                      }}
-                    >Salvar</button>
-                    <button 
-                      onClick={() => setEditMode(false)}
-                      style={{
-                        background: '#ccc',
-                        color: '#333',
-                        border: 'none',
-                        padding: '0.5rem 1rem',
-                        borderRadius: '5px',
-                        cursor: 'pointer'
-                      }}
-                    >Cancelar</button>
-                  </div>
-                </div>
-              ) : (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                  <div>
-                    <strong>Nome:</strong> {profileData.nome}
-                  </div>
-                  <div>
-                    <strong>Email:</strong> {profileData.email}
-                  </div>
-                  <div>
-                    <strong>Telefone:</strong> {profileData.telefone}
-                  </div>
-                  <div>
-                    <strong>Cidade:</strong> {profileData.cidade}
+              <p style={{ opacity: 0.7, fontSize: '1rem', marginBottom: '0.5rem' }}>{profileData.email}</p>
+              <p style={{ opacity: 0.7, fontSize: '1rem', marginBottom: '0.5rem' }}>{profileData.telefone}</p>
+              <p style={{ opacity: 0.7, fontSize: '1rem', marginBottom: '1rem' }}>{profileData.cidade}</p>
+              <button 
+                onClick={() => setShowEditModal(true)}
+                style={{
+                  background: '#667eea',
+                  color: 'white',
+                  border: 'none',
+                  padding: '0.5rem 1rem',
+                  borderRadius: '15px',
+                  cursor: 'pointer',
+                  fontSize: '0.9rem',
+                  fontWeight: '600',
+                  transition: 'all 0.3s'
+                }}
+              >
+                Editar Perfil
+              </button>
+              
+              {showEditModal && (
+                <div style={{
+                  position: 'fixed',
+                  top: 0,
+                  left: 0,
+                  width: '100vw',
+                  height: '100vh',
+                  background: 'rgba(0,0,0,0.7)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  zIndex: 2000
+                }}>
+                  <div style={{
+                    background: darkMode ? '#333' : 'white',
+                    padding: '2rem',
+                    borderRadius: '20px',
+                    maxWidth: '400px',
+                    width: '90%',
+                    boxShadow: '0 20px 40px rgba(0,0,0,0.3)'
+                  }}>
+                    <h3 style={{ marginBottom: '1.5rem', textAlign: 'center', color: '#667eea' }}>Editar Perfil</h3>
+                    
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                      <div>
+                        <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Nome:</label>
+                        <input 
+                          type="text" 
+                          value={profileData.nome}
+                          onChange={(e) => setProfileData({...profileData, nome: e.target.value})}
+                          style={{
+                            width: '100%',
+                            padding: '0.75rem',
+                            borderRadius: '10px',
+                            border: '1px solid #ccc',
+                            background: darkMode ? '#444' : 'white',
+                            color: darkMode ? 'white' : '#333',
+                            fontSize: '1rem'
+                          }}
+                        />
+                      </div>
+                      
+                      <div>
+                        <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Email:</label>
+                        <input 
+                          type="email" 
+                          value={profileData.email}
+                          onChange={(e) => setProfileData({...profileData, email: e.target.value})}
+                          style={{
+                            width: '100%',
+                            padding: '0.75rem',
+                            borderRadius: '10px',
+                            border: '1px solid #ccc',
+                            background: darkMode ? '#444' : 'white',
+                            color: darkMode ? 'white' : '#333',
+                            fontSize: '1rem'
+                          }}
+                        />
+                      </div>
+                      
+                      <div>
+                        <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Telefone:</label>
+                        <input 
+                          type="text" 
+                          value={profileData.telefone}
+                          onChange={(e) => setProfileData({...profileData, telefone: e.target.value})}
+                          style={{
+                            width: '100%',
+                            padding: '0.75rem',
+                            borderRadius: '10px',
+                            border: '1px solid #ccc',
+                            background: darkMode ? '#444' : 'white',
+                            color: darkMode ? 'white' : '#333',
+                            fontSize: '1rem'
+                          }}
+                        />
+                      </div>
+                      
+                      <div>
+                        <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Cidade:</label>
+                        <input 
+                          type="text" 
+                          value={profileData.cidade}
+                          onChange={(e) => setProfileData({...profileData, cidade: e.target.value})}
+                          style={{
+                            width: '100%',
+                            padding: '0.75rem',
+                            borderRadius: '10px',
+                            border: '1px solid #ccc',
+                            background: darkMode ? '#444' : 'white',
+                            color: darkMode ? 'white' : '#333',
+                            fontSize: '1rem'
+                          }}
+                        />
+                      </div>
+                    </div>
+                    
+                    <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
+                      <button 
+                        onClick={() => {
+                          localStorage.setItem('profileData', JSON.stringify(profileData))
+                          setShowEditModal(false)
+                          alert('Dados salvos com sucesso!')
+                        }}
+                        style={{
+                          flex: 1,
+                          background: '#667eea',
+                          color: 'white',
+                          border: 'none',
+                          padding: '0.75rem',
+                          borderRadius: '10px',
+                          cursor: 'pointer',
+                          fontWeight: '600'
+                        }}
+                      >
+                        Salvar
+                      </button>
+                      
+                      <button 
+                        onClick={() => setShowEditModal(false)}
+                        style={{
+                          flex: 1,
+                          background: '#ccc',
+                          color: '#333',
+                          border: 'none',
+                          padding: '0.75rem',
+                          borderRadius: '10px',
+                          cursor: 'pointer',
+                          fontWeight: '600'
+                        }}
+                      >
+                        Cancelar
+                      </button>
+                    </div>
                   </div>
                 </div>
               )}
             </div>
-          </div>
-        </section>
+            
 
-        <section style={{
-          background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)',
-          padding: '3rem 2rem',
-          borderRadius: '20px',
-          marginBottom: '4rem',
-          border: '1px solid rgba(102, 126, 234, 0.2)',
-          boxShadow: '0 15px 30px rgba(102, 126, 234, 0.1)',
-          maxWidth: '900px',
-          margin: '0 auto 4rem'
-        }}>
-          <h2 style={{ 
-            fontSize: '2rem', 
-            marginBottom: '2rem',
-            textAlign: 'center',
-            fontWeight: '600'
-          }}>Atividade Recente</h2>
-          
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: '2rem',
-            maxWidth: '800px',
-            margin: '0 auto'
-          }}>
             <div style={{
               display: 'flex',
               flexDirection: 'column',
@@ -627,29 +641,7 @@ function PerfilPage({ setCurrentPage }) {
               {[
                 { titulo: 'Último Acesso:', valor: new Date().toLocaleString('pt-BR') },
                 { titulo: 'Total de Acessos:', valor: `${JSON.parse(localStorage.getItem('userAccess'))?.find(user => user.userName === localStorage.getItem('userName'))?.accessCount || 1} vezes` },
-                { titulo: 'Locais Adicionados:', valor: '0 locais' }
-              ].map((item, index) => (
-                <div key={index} style={{
-                  background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
-                  padding: '1rem 1.5rem',
-                  borderRadius: '10px',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  border: '1px solid rgba(102, 126, 234, 0.1)'
-                }}>
-                  <span style={{ fontSize: '1.1rem', fontWeight: '500', color: darkMode ? '#ccc' : '#666' }}>{item.titulo}</span>
-                  <span style={{ fontSize: '1.1rem', fontWeight: '600', color: '#667eea' }}>{item.valor}</span>
-                </div>
-              ))}
-            </div>
-            
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '1rem'
-            }}>
-              {[
+                { titulo: 'Locais Adicionados:', valor: '0 locais' },
                 { titulo: 'Avaliações Feitas:', valor: '0 avaliações' },
                 { titulo: 'Comentários Feitos:', valor: '0 comentários' }
               ].map((item, index) => (
@@ -662,8 +654,8 @@ function PerfilPage({ setCurrentPage }) {
                   alignItems: 'center',
                   border: '1px solid rgba(102, 126, 234, 0.1)'
                 }}>
-                  <span style={{ fontSize: '1.1rem', fontWeight: '500', color: darkMode ? '#ccc' : '#666' }}>{item.titulo}</span>
-                  <span style={{ fontSize: '1.1rem', fontWeight: '600', color: '#667eea' }}>{item.valor}</span>
+                  <span style={{ fontSize: '1rem', fontWeight: '500', color: darkMode ? '#ccc' : '#666' }}>{item.titulo}</span>
+                  <span style={{ fontSize: '1rem', fontWeight: '600', color: '#667eea' }}>{item.valor}</span>
                 </div>
               ))}
             </div>
