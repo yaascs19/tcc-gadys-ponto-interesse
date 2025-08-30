@@ -62,6 +62,28 @@ function PerfilPage({ setCurrentPage }) {
     alert('Dados salvos com sucesso!')
   }
 
+  const buttonHoverStyle = {
+    onMouseEnter: (e) => {
+      e.target.style.transform = 'translateY(-3px) scale(1.05)'
+      e.target.style.boxShadow = '0 10px 25px rgba(102, 126, 234, 0.3)'
+    },
+    onMouseLeave: (e) => {
+      e.target.style.transform = 'translateY(0) scale(1)'
+      e.target.style.boxShadow = 'none'
+    }
+  }
+
+  const redButtonHoverStyle = {
+    onMouseEnter: (e) => {
+      e.target.style.transform = 'translateY(-3px) scale(1.05)'
+      e.target.style.boxShadow = '0 10px 25px rgba(220, 53, 69, 0.4)'
+    },
+    onMouseLeave: (e) => {
+      e.target.style.transform = 'translateY(0) scale(1)'
+      e.target.style.boxShadow = 'none'
+    }
+  }
+
   useEffect(() => {
     const style = document.createElement('style')
     style.textContent = `
@@ -260,11 +282,13 @@ function PerfilPage({ setCurrentPage }) {
 
         <section style={{
           background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)',
-          padding: '5rem 4rem',
-          borderRadius: '30px',
-          marginBottom: '6rem',
+          padding: '3rem 2rem',
+          borderRadius: '20px',
+          marginBottom: '4rem',
           border: '1px solid rgba(102, 126, 234, 0.2)',
-          boxShadow: '0 30px 60px rgba(102, 126, 234, 0.1)'
+          boxShadow: '0 15px 30px rgba(102, 126, 234, 0.1)',
+          maxWidth: '900px',
+          margin: '0 auto 4rem'
         }}>
           <h2 id="dados-pessoais" style={{ 
             fontSize: '3rem', 
@@ -573,117 +597,76 @@ function PerfilPage({ setCurrentPage }) {
 
         <section style={{
           background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)',
-          padding: '5rem 4rem',
-          borderRadius: '30px',
-          marginBottom: '6rem',
+          padding: '3rem 2rem',
+          borderRadius: '20px',
+          marginBottom: '4rem',
           border: '1px solid rgba(102, 126, 234, 0.2)',
-          boxShadow: '0 30px 60px rgba(102, 126, 234, 0.1)'
+          boxShadow: '0 15px 30px rgba(102, 126, 234, 0.1)',
+          maxWidth: '900px',
+          margin: '0 auto 4rem'
         }}>
           <h2 style={{ 
-            fontSize: '3rem', 
-            marginBottom: '3rem',
+            fontSize: '2rem', 
+            marginBottom: '2rem',
             textAlign: 'center',
-            fontWeight: '700'
-          }}>Preferências de Viagem</h2>
+            fontWeight: '600'
+          }}>Atividade Recente</h2>
           
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(2, 1fr)',
-            gap: '3rem',
+            gridTemplateColumns: '1fr 1fr',
+            gap: '2rem',
             maxWidth: '800px',
             margin: '0 auto'
           }}>
-            {[
-              { title: 'Destinos Favoritos', desc: 'Praias, Montanhas, Cidades Históricas', color: '#667eea' },
-              { title: 'Tipo de Turismo', desc: 'Ecoturismo, Turismo Cultural', color: '#764ba2' },
-              { title: 'Orçamento Preferido', desc: 'Médio (R$ 500 - R$ 1500)', color: '#f093fb' },
-              { title: 'Época do Ano', desc: 'Verão, Inverno', color: '#ff6b6b' }
-            ].map((item, index) => (
-              <div 
-                key={index}
-                style={{
-                  background: 'linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.6) 100%)',
-                  padding: '3rem 2rem',
-                  borderRadius: '25px',
-                  backdropFilter: 'blur(20px)',
-                  border: '1px solid rgba(255,255,255,0.1)',
-                  boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
-                  textAlign: 'center',
-                  position: 'relative',
-                  overflow: 'hidden'
-                }}
-              >
-                <div style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  height: '4px',
-                  background: `linear-gradient(90deg, ${item.color}, transparent)`
-                }} />
-                <h3 style={{ 
-                  fontSize: '1.8rem', 
-                  marginBottom: '1.5rem',
-                  fontWeight: '600',
-                  color: item.color
-                }}>{item.title}</h3>
-                <p style={{ 
-                  opacity: 0.8,
-                  lineHeight: 1.6,
-                  fontSize: '1.1rem',
-                  color: 'white'
-                }}>{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section style={{
-          background: darkMode ? 'linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)' : 'linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.5) 100%)',
-          padding: '5rem 4rem',
-          borderRadius: '30px',
-          marginBottom: '6rem',
-          border: darkMode ? '1px solid rgba(255,255,255,0.1)' : '1px solid rgba(0,0,0,0.1)'
-        }}>
-          <h2 style={{ 
-            fontSize: '3rem', 
-            marginBottom: '4rem',
-            textAlign: 'center',
-            fontWeight: '700'
-          }}>Histórico de Viagens</h2>
-          
-          <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            gap: '3rem',
-            flexWrap: 'wrap'
-          }}>
-            {[
-              { destino: 'Rio de Janeiro', data: 'Janeiro 2024', avaliacao: '⭐⭐⭐⭐⭐' },
-              { destino: 'Salvador', data: 'Março 2024', avaliacao: '⭐⭐⭐⭐' },
-              { destino: 'Gramado', data: 'Julho 2024', avaliacao: '⭐⭐⭐⭐⭐' }
-            ].map((viagem, index) => (
-              <div key={index} style={{ 
-                textAlign: 'center',
-                background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
-                padding: '2rem',
-                borderRadius: '20px',
-                minWidth: '200px'
-              }}>
-                <h4 style={{ 
-                  fontSize: '1.3rem',
-                  marginBottom: '0.5rem',
-                  fontWeight: '600',
-                  color: '#667eea'
-                }}>{viagem.destino}</h4>
-                <p style={{ 
-                  opacity: 0.7,
-                  fontSize: '1rem',
-                  marginBottom: '0.5rem'
-                }}>{viagem.data}</p>
-                <p style={{ fontSize: '1.2rem' }}>{viagem.avaliacao}</p>
-              </div>
-            ))}
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '1rem'
+            }}>
+              {[
+                { titulo: 'Último Acesso:', valor: new Date().toLocaleString('pt-BR') },
+                { titulo: 'Total de Acessos:', valor: `${JSON.parse(localStorage.getItem('userAccess'))?.find(user => user.userName === localStorage.getItem('userName'))?.accessCount || 1} vezes` },
+                { titulo: 'Locais Adicionados:', valor: '0 locais' }
+              ].map((item, index) => (
+                <div key={index} style={{
+                  background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
+                  padding: '1rem 1.5rem',
+                  borderRadius: '10px',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  border: '1px solid rgba(102, 126, 234, 0.1)'
+                }}>
+                  <span style={{ fontSize: '1.1rem', fontWeight: '500', color: darkMode ? '#ccc' : '#666' }}>{item.titulo}</span>
+                  <span style={{ fontSize: '1.1rem', fontWeight: '600', color: '#667eea' }}>{item.valor}</span>
+                </div>
+              ))}
+            </div>
+            
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '1rem'
+            }}>
+              {[
+                { titulo: 'Avaliações Feitas:', valor: '0 avaliações' },
+                { titulo: 'Comentários Feitos:', valor: '0 comentários' }
+              ].map((item, index) => (
+                <div key={index} style={{
+                  background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
+                  padding: '1rem 1.5rem',
+                  borderRadius: '10px',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  border: '1px solid rgba(102, 126, 234, 0.1)'
+                }}>
+                  <span style={{ fontSize: '1.1rem', fontWeight: '500', color: darkMode ? '#ccc' : '#666' }}>{item.titulo}</span>
+                  <span style={{ fontSize: '1.1rem', fontWeight: '600', color: '#667eea' }}>{item.valor}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -693,29 +676,16 @@ function PerfilPage({ setCurrentPage }) {
         }}>
           <div style={{
             display: 'flex',
+            flexDirection: 'column',
             gap: '2rem',
-            justifyContent: 'center',
-            flexWrap: 'wrap'
+            alignItems: 'center'
           }}>
-            <button 
-              onClick={() => setCurrentPage('home')}
-              style={{
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                color: 'white',
-                border: 'none',
-                padding: '1.5rem 3rem',
-                borderRadius: '50px',
-                cursor: 'pointer',
-                fontSize: '1.1rem',
-                fontWeight: '600',
-                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                boxShadow: '0 15px 35px rgba(102, 126, 234, 0.4)',
-                letterSpacing: '0.5px'
-              }}
-            >
-              Voltar ao Início
-            </button>
-            
+            <div style={{
+              display: 'flex',
+              gap: '1.5rem',
+              justifyContent: 'center',
+              flexWrap: 'wrap'
+            }}>
             <button 
               onClick={() => {
                 setEditMode(true)
@@ -723,22 +693,122 @@ function PerfilPage({ setCurrentPage }) {
                   document.getElementById('dados-pessoais')?.scrollIntoView({ behavior: 'smooth' })
                 }, 100)
               }}
+              {...buttonHoverStyle}
               style={{
                 background: 'transparent',
                 color: darkMode ? 'white' : '#2c3e50',
                 border: darkMode ? '2px solid rgba(255,255,255,0.3)' : '2px solid rgba(44, 62, 80, 0.3)',
-                padding: '1.5rem 3rem',
-                borderRadius: '50px',
+                padding: '1rem 2rem',
+                borderRadius: '25px',
                 cursor: 'pointer',
-                fontSize: '1.1rem',
+                fontSize: '1rem',
                 fontWeight: '600',
-                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                backdropFilter: 'blur(10px)',
-                letterSpacing: '0.5px'
+                transition: 'all 0.3s'
               }}
             >
               Editar Perfil
             </button>
+            
+            <button 
+              onClick={() => window.location.href = '/adicionar-locais.html'}
+              {...buttonHoverStyle}
+              style={{
+                background: 'transparent',
+                color: darkMode ? 'white' : '#2c3e50',
+                border: darkMode ? '2px solid rgba(255,255,255,0.3)' : '2px solid rgba(44, 62, 80, 0.3)',
+                padding: '1rem 2rem',
+                borderRadius: '25px',
+                cursor: 'pointer',
+                fontSize: '1rem',
+                fontWeight: '600',
+                transition: 'all 0.3s'
+              }}
+            >
+              Adicionar Locais
+            </button>
+            
+            <button 
+              {...buttonHoverStyle}
+              style={{
+                background: 'transparent',
+                color: darkMode ? 'white' : '#2c3e50',
+                border: darkMode ? '2px solid rgba(255,255,255,0.3)' : '2px solid rgba(44, 62, 80, 0.3)',
+                padding: '1rem 2rem',
+                borderRadius: '25px',
+                cursor: 'pointer',
+                fontSize: '1rem',
+                fontWeight: '600',
+                transition: 'all 0.3s'
+              }}
+            >
+              Minhas Perguntas
+            </button>
+            </div>
+            
+            <div style={{
+              display: 'flex',
+              gap: '1.5rem',
+              justifyContent: 'center',
+              flexWrap: 'wrap'
+            }}>
+            <button 
+              {...buttonHoverStyle}
+              style={{
+                background: 'transparent',
+                color: darkMode ? 'white' : '#2c3e50',
+                border: darkMode ? '2px solid rgba(255,255,255,0.3)' : '2px solid rgba(44, 62, 80, 0.3)',
+                padding: '1rem 2rem',
+                borderRadius: '25px',
+                cursor: 'pointer',
+                fontSize: '1rem',
+                fontWeight: '600',
+                transition: 'all 0.3s'
+              }}
+            >
+              Avaliações e Comentários
+            </button>
+            
+            <button 
+              onClick={() => setCurrentPage('home')}
+              {...buttonHoverStyle}
+              style={{
+                background: 'transparent',
+                color: darkMode ? 'white' : '#2c3e50',
+                border: darkMode ? '2px solid rgba(255,255,255,0.3)' : '2px solid rgba(44, 62, 80, 0.3)',
+                padding: '1rem 2rem',
+                borderRadius: '25px',
+                cursor: 'pointer',
+                fontSize: '1rem',
+                fontWeight: '600',
+                transition: 'all 0.3s'
+              }}
+            >
+              Voltar ao Início
+            </button>
+            
+            <button 
+              onClick={() => {
+                localStorage.removeItem('isLoggedIn')
+                localStorage.removeItem('userType')
+                localStorage.removeItem('userName')
+                setCurrentPage('home')
+              }}
+              {...redButtonHoverStyle}
+              style={{
+                background: '#dc3545',
+                color: 'white',
+                border: 'none',
+                padding: '1rem 2rem',
+                borderRadius: '25px',
+                cursor: 'pointer',
+                fontSize: '1rem',
+                fontWeight: '600',
+                transition: 'all 0.3s'
+              }}
+            >
+              Sair
+            </button>
+            </div>
           </div>
         </section>
       </main>
