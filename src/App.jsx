@@ -2,6 +2,10 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import Login from './Login'
 import AdminPanel from './AdminPanel'
+import Home from './components/Home'
+import Amazonas from './components/Amazonas'
+import Lugares from './components/Lugares'
+import SobrePage from './components/SobrePage'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
@@ -13,7 +17,19 @@ function App() {
   
   // Verificar admin ANTES de definir página inicial
   const shouldOpenAdmin = sessionStorage.getItem('openAdmin') === 'true' && localStorage.getItem('userType') === 'adm'
-  const [currentPage, setCurrentPage] = useState(shouldOpenLogin ? 'login' : shouldOpenAdmin ? 'admin' : 'home')
+  
+  // Roteamento simples baseado na URL
+  const getInitialPage = () => {
+    const path = window.location.pathname
+    if (shouldOpenLogin) return 'login'
+    if (shouldOpenAdmin) return 'admin'
+    if (path === '/home' || path === '/home.html') return 'welcome'
+    if (path === '/amazonas' || path === '/amazonas.html') return 'amazonas'
+    if (path === '/lugares' || path === '/lugares.html') return 'lugares'
+    return 'home'
+  }
+  
+  const [currentPage, setCurrentPage] = useState(getInitialPage)
   
   const [userType, setUserType] = useState(() => {
     return localStorage.getItem('userType') || 'usuario'
@@ -151,6 +167,108 @@ function App() {
     return () => clearTimeout(timer)
   }, [isLoggedIn, currentPage, userType])
 
+  if (currentPage === 'welcome') {
+    return <Home />
+  }
+  
+  if (currentPage === 'amazonas') {
+    return <Amazonas />
+  }
+  
+  if (currentPage === 'lugares') {
+    return <Lugares />
+  }
+  
+  if (currentPage === 'sobrepage') {
+    return <SobrePage />
+  }
+  
+  if (currentPage === 'sobre') {
+    return (
+      <div style={{
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #1a237e, #3f51b5)',
+        color: 'white',
+        fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
+      }}>
+        <div style={{
+          maxWidth: '800px',
+          margin: '0 auto',
+          padding: '4rem 2rem',
+          textAlign: 'center'
+        }}>
+          <img src="/logo.png" alt="GADYS" style={{
+            height: '80px',
+            marginBottom: '2rem',
+            background: 'lightblue',
+            borderRadius: '50%',
+            padding: '8px'
+          }} />
+          <h1 style={{fontSize: '3rem', marginBottom: '2rem'}}>Sobre o GADYS</h1>
+          <p style={{fontSize: '1.2rem', marginBottom: '3rem', opacity: 0.9}}>
+            Plataforma dedicada a promover os pontos de interesse mais incríveis do Brasil
+          </p>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gap: '2rem',
+            marginBottom: '3rem'
+          }}>
+            <div style={{
+              background: 'rgba(255,255,255,0.1)',
+              padding: '2rem',
+              borderRadius: '15px'
+            }}>
+              <h3 style={{marginBottom: '1rem'}}>🏛️ Monumentos</h3>
+              <p>Descubra a história do Brasil</p>
+            </div>
+            <div style={{
+              background: 'rgba(255,255,255,0.1)',
+              padding: '2rem',
+              borderRadius: '15px'
+            }}>
+              <h3 style={{marginBottom: '1rem'}}>🌿 Natureza</h3>
+              <p>Explore paisagens únicas</p>
+            </div>
+            <div style={{
+              background: 'rgba(255,255,255,0.1)',
+              padding: '2rem',
+              borderRadius: '15px'
+            }}>
+              <h3 style={{marginBottom: '1rem'}}>🍽️ Gastronomia</h3>
+              <p>Sabores regionais autênticos</p>
+            </div>
+          </div>
+          <button 
+            onClick={() => setCurrentPage('home')}
+            style={{
+              background: 'white',
+              color: '#1a237e',
+              border: 'none',
+              padding: '1rem 2rem',
+              borderRadius: '25px',
+              cursor: 'pointer',
+              fontSize: '1.1rem',
+              fontWeight: 'bold'
+            }}
+          >
+            Voltar ao Início
+          </button>
+        </div>
+      </div>
+    )
+  }
+  
+  if (currentPage === 'contato') {
+    return (
+      <div style={{padding: '2rem', textAlign: 'center'}}>
+        <h1>Contato</h1>
+        <p>Entre em contato conosco</p>
+        <button onClick={() => setCurrentPage('home')}>Voltar</button>
+      </div>
+    )
+  }
+  
   if (currentPage === 'login') {
     return <Login onLogin={handleLogin} />
   }
@@ -164,7 +282,7 @@ function App() {
       <div className={`app ${darkMode ? 'dark-mode' : ''}`}>
         <header className="header">
           <nav className="nav">
-            <img src="/logo.png" alt="GADYS" className="logo" style={{height: '40px'}} />
+            <img src="/logo.png" alt="GADYS" className="logo" style={{height: '40px', background: 'linear-gradient(135deg, #667eea, #764ba2)', borderRadius: '50%', padding: '8px'}} />
             <div style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
               <button 
                 onClick={(e) => {e.preventDefault(); toggleDarkMode()}} 
@@ -231,7 +349,7 @@ function App() {
     <div className={`app ${darkMode ? 'dark-mode' : ''}`}>
       <header className="header">
         <nav className="nav">
-          <img src="/logo.png" alt="GADYS" className="logo" style={{height: '40px'}} />
+          <img src="/logo.png" alt="GADYS" className="logo" style={{height: '40px', background: 'linear-gradient(135deg, #667eea, #764ba2)', borderRadius: '50%', padding: '8px'}} />
           <div style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
             <button 
               onClick={(e) => {e.preventDefault(); toggleDarkMode()}} 
@@ -285,8 +403,8 @@ function App() {
             <li><a href="/mapa-real-api.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Mapa</a></li>
             <li><a href="#" onClick={(e) => {e.preventDefault(); if (!localStorage.getItem('isLoggedIn')) setCurrentPage('login'); else window.location.href='/adicionar-locais.html'; document.querySelector('.nav-links').classList.remove('active')}}>Adicionar Local</a></li>
             <li><a href="/perfil.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Meu Perfil</a></li>
-            <li><a href="/sobre.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Sobre</a></li>
-            <li><a href="/contato.html" onClick={() => document.querySelector('.nav-links').classList.remove('active')}>Contato</a></li>
+            <li><a href="#" onClick={() => {setCurrentPage('sobrepage'); document.querySelector('.nav-links').classList.remove('active')}}>Sobre</a></li>
+            <li><a href="#" onClick={() => {setCurrentPage('contato'); document.querySelector('.nav-links').classList.remove('active')}}>Contato</a></li>
 
 
           </ul>

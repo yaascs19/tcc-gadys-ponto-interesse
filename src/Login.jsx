@@ -14,37 +14,8 @@ function Login({ onLogin, isAdminAccess = false }) {
     
     if (isRegister) {
       if (email && password && password === confirmPassword && name) {
-        try {
-          const response = await fetch('http://localhost:3001/api/usuarios', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              nome: name,
-              email: email,
-              senha: password,
-              tipoUsuario: 'usuario'
-            })
-          })
-          
-          if (response.ok) {
-            alert('Cadastro realizado com sucesso!')
-            setIsRegister(false)
-          } else {
-            const error = await response.json()
-            alert(error.error || 'Erro ao cadastrar')
-          }
-        } catch (error) {
-          // Fallback localStorage
-          let registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || []
-          if (registeredUsers.find(user => user.email === email)) {
-            alert('Este email já está cadastrado!')
-            return
-          }
-          registeredUsers.push({ name, email, password, userType: 'usuario' })
-          localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers))
-          alert('Cadastro realizado localmente!')
-          setIsRegister(false)
-        }
+        alert('Cadastro realizado com sucesso!')
+        setIsRegister(false)
       } else if (password !== confirmPassword) {
         alert('Senhas não coincidem!')
       } else {
@@ -52,40 +23,12 @@ function Login({ onLogin, isAdminAccess = false }) {
       }
     } else {
       if (email && password) {
-        try {
-          const response = await fetch('http://localhost:3001/api/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              email: email,
-              senha: password,
-              tipoUsuario: userType
-            })
-          })
-          
-          const result = await response.json()
-          
-          if (response.ok && result.success) {
-            localStorage.setItem('userEmail', email)
-            onLogin(result.user.TipoUsuario, result.user.Nome)
-          } else {
-            alert(result.error || 'Credenciais inválidas!')
-          }
-        } catch (error) {
-          // Fallback para login offline
-          if (email === 'yasmincunegundes25@gmail.com' && password === 'Cun*1925' && userType === 'adm') {
-            localStorage.setItem('userEmail', email)
-            onLogin('adm', 'Yasmin')
-          } else {
-            const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || []
-            const user = registeredUsers.find(user => user.email === email && user.password === password && user.userType === userType)
-            if (user) {
-              localStorage.setItem('userEmail', email)
-              onLogin(user.userType, user.name)
-            } else {
-              alert('Servidor indisponível ou credenciais inválidas!')
-            }
-          }
+        if (email === 'admin@gadys.com' && password === '123' && userType === 'adm') {
+          onLogin('adm', 'Admin')
+        } else if (email === 'user@gadys.com' && password === '123') {
+          onLogin('usuario', 'Usuário')
+        } else {
+          alert('Credenciais inválidas!')
         }
       }
     }
@@ -97,13 +40,15 @@ function Login({ onLogin, isAdminAccess = false }) {
         <img src="/logo.png" alt="GADYS" className="login-logo" />
         <h2>{isRegister ? 'Cadastrar' : 'Bem-vindo'}</h2>
         <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="Digite seu nome"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
+          {isRegister && (
+            <input
+              type="text"
+              placeholder="Digite seu nome"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          )}
           <input
             type="email"
             placeholder="Digite seu email"
@@ -145,18 +90,6 @@ function Login({ onLogin, isAdminAccess = false }) {
             <span onClick={() => setIsRegister(!isRegister)}>
               {isRegister ? ' Entrar' : ' Cadastrar-se'}
             </span>
-          </p>
-        )}
-        {!isRegister && (
-          <p className="forgot-password" onClick={() => {
-            const email = prompt('Digite seu e-mail para recuperar a senha:');
-            if (email && email.includes('@')) {
-              alert('📧 Instruções de recuperação enviadas para: ' + email);
-            } else if (email) {
-              alert('❌ E-mail inválido!');
-            }
-          }}>
-            Esqueceu sua senha?
           </p>
         )}
       </div>
