@@ -26,6 +26,8 @@ import ParqueJau from './components/ParqueJau'
 import ReservaMamiraua from './components/ReservaMamiraua';
 import FlorestaAmazonica from './components/FlorestaAmazonica';
 import RioAmazonas from './components/RioAmazonas';
+import ParqueAnavilhanas from './components/ParqueAnavilhanas';
+import CulturaAmazonas from './components/CulturaAmazonas';
 import ContatoPage from './components/ContatoPage';
 
 
@@ -59,6 +61,8 @@ function Router() {
         <Route path="/reserva-mamiraua" element={<ReservaMamiraua />} />
         <Route path="/floresta-amazonica" element={<FlorestaAmazonica />} />
         <Route path="/rio-amazonas" element={<RioAmazonas />} />
+        <Route path="/parque-anavilhanas" element={<ParqueAnavilhanas />} />
+        <Route path="/amazonas/cultura" element={<CulturaAmazonas />} />
         <Route path="/contato" element={<ContatoPage />} />
 
       </Routes>

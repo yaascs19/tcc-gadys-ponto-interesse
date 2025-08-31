@@ -1,54 +1,54 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
-function NaturezaAmazonas() {
+function CulturaAmazonas() {
   const navigate = useNavigate()
   const [darkMode, setDarkMode] = useState(() => {
     return localStorage.getItem('darkMode') === 'true'
   })
 
-  const natureza = [
+  const cultura = [
     {
-      nome: 'Encontro das Águas',
-      desc: 'Fenômeno natural dos rios Negro e Solimões',
-      detalhes: 'Espetáculo único onde as águas dos dois rios correm lado a lado sem se misturar',
-      img: '/encontro.jpeg',
-      localizacao: 'Manaus - AM'
+      nome: 'Festival de Parintins',
+      desc: 'Maior festival folclórico do Brasil com bois Garantido e Caprichoso',
+      detalhes: 'Espetáculo que celebra a cultura amazônica com música, dança e teatro',
+      img: '/festival.jpeg',
+      localizacao: 'Parintins - AM'
     },
     {
-      nome: 'Parque Nacional do Jaú',
-      desc: 'Maior parque nacional do Brasil',
-      detalhes: 'Unidade de conservação com 2,3 milhões de hectares de floresta preservada',
-      img: '/jau.jpeg',
-      localizacao: 'Novo Airão - AM'
+      nome: 'Lendas Amazônicas',
+      desc: 'Rica tradição oral com personagens míticos da floresta',
+      detalhes: 'Curupira, Boto-cor-de-rosa, Iara e outras lendas que encantam gerações',
+      img: '/curu.jpeg',
+      localizacao: 'Toda a Amazônia'
     },
     {
-      nome: 'Reserva Mamirauá',
-      desc: 'Reserva de desenvolvimento sustentável',
-      detalhes: 'Primeira reserva de desenvolvimento sustentável do Brasil na várzea amazônica',
-      img: '/reserva.jpeg',
-      localizacao: 'Tefé - AM'
+      nome: 'Artesanato Indígena',
+      desc: 'Arte tradicional dos povos originários da Amazônia',
+      detalhes: 'Cestaria, cerâmica, plumária e outros objetos com técnicas ancestrais',
+      img: '/art.jpeg',
+      localizacao: 'Comunidades Indígenas'
     },
     {
-      nome: 'Floresta Amazônica',
-      desc: 'A maior floresta tropical do mundo',
-      detalhes: 'Pulmão do mundo com biodiversidade incomparável e ecossistemas únicos',
-      img: '/floresta.jpeg',
-      localizacao: 'Amazonas - AM'
+      nome: 'Música Regional',
+      desc: 'Ritmos únicos como carimbó, lambada e brega paraense',
+      detalhes: 'Expressões musicais que retratam a vida e cultura amazônica',
+      img: '/car.jpg',
+      localizacao: 'Região Norte'
     },
     {
-      nome: 'Rio Amazonas',
-      desc: 'O maior rio do mundo em volume de água',
-      detalhes: 'Principal artéria fluvial da região, essencial para a vida amazônica',
-      img: '/rioamz.jpeg',
-      localizacao: 'Amazonas - AM'
+      nome: 'Danças Folclóricas',
+      desc: 'Manifestações culturais como quadrilha, carimbó e sirimbó',
+      detalhes: 'Danças que celebram as tradições e festividades regionais',
+      img: '/dancas.jpeg',
+      localizacao: 'Festivais Regionais'
     },
     {
-      nome: 'Parque Anavilhanas',
-      desc: 'Maior arquipélago fluvial do mundo',
-      detalhes: 'Conjunto de ilhas no Rio Negro com rica biodiversidade aquática',
-      img: '/anavilhas.jpeg',
-      localizacao: 'Novo Airão - AM'
+      nome: 'Literatura de Cordel',
+      desc: 'Tradição poética que narra histórias e lendas amazônicas',
+      detalhes: 'Versos rimados que preservam a memória cultural da região',
+      img: '/cordel.jpeg',
+      localizacao: 'Feiras e Mercados'
     }
   ]
 
@@ -210,7 +210,7 @@ function NaturezaAmazonas() {
         >
           <li><Link to="/" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Início</Link></li>
           <li><Link to="/amazonas" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Amazonas</Link></li>
-          <li><a href="#" style={{ color: '#ccc', textDecoration: 'none', padding: '0.5rem 1rem', cursor: 'not-allowed' }}>Natureza (atual)</a></li>
+          <li><a href="#" style={{ color: '#ccc', textDecoration: 'none', padding: '0.5rem 1rem', cursor: 'not-allowed' }}>Cultura (atual)</a></li>
           <li><Link to="/lugares" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Lugares</Link></li>
           <li><Link to="/mapa" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Mapa</Link></li>
           <li><Link to="/perfil" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Meu Perfil</Link></li>
@@ -243,7 +243,7 @@ function NaturezaAmazonas() {
             letterSpacing: '-3px',
             lineHeight: '1.1'
           }}>
-            Natureza do Amazonas
+            Cultura do Amazonas
           </h1>
           
           <p style={{
@@ -254,7 +254,7 @@ function NaturezaAmazonas() {
             lineHeight: '1.6',
             fontWeight: '300'
           }}>
-            Belezas naturais incomparáveis da Amazônia
+            Tradições e manifestações culturais da Amazônia
           </p>
         </section>
 
@@ -271,13 +271,13 @@ function NaturezaAmazonas() {
             marginBottom: '4rem', 
             textAlign: 'center',
             fontWeight: '700'
-          }}>Belezas Naturais</h2>
+          }}>Manifestações Culturais</h2>
           <div style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
             gap: '3rem'
           }}>
-            {natureza.map((local, index) => (
+            {cultura.map((item, index) => (
               <div
                 key={index}
                 style={{
@@ -298,8 +298,8 @@ function NaturezaAmazonas() {
                 }}
               >
                 <img 
-                  src={local.img}
-                  alt={local.nome}
+                  src={item.img}
+                  alt={item.nome}
                   style={{
                     width: '100%',
                     height: '250px',
@@ -313,14 +313,14 @@ function NaturezaAmazonas() {
                     color: '#4caf50',
                     fontWeight: '700'
                   }}>
-                    {local.nome}
+                    {item.nome}
                   </h3>
                   <p style={{
                     opacity: 0.8,
                     lineHeight: 1.6,
                     marginBottom: '1rem'
                   }}>
-                    {local.desc}
+                    {item.desc}
                   </p>
                   <p style={{
                     fontSize: '0.9rem',
@@ -328,7 +328,7 @@ function NaturezaAmazonas() {
                     marginBottom: '1rem',
                     fontStyle: 'italic'
                   }}>
-                    {local.detalhes}
+                    {item.detalhes}
                   </p>
                   <div style={{
                     display: 'flex',
@@ -338,24 +338,9 @@ function NaturezaAmazonas() {
                     color: '#4caf50',
                     fontSize: '0.9rem'
                   }}>
-                    📍 {local.localizacao}
+                    📍 {item.localizacao}
                   </div>
                   <button 
-                    onClick={() => {
-                      if (local.nome === 'Encontro das Águas') {
-                        navigate('/encontro-aguas')
-                      } else if (local.nome === 'Parque Nacional do Jaú') {
-                        navigate('/parque-jau')
-                      } else if (local.nome === 'Reserva Mamirauá') {
-                        navigate('/reserva-mamiraua')
-                      } else if (local.nome === 'Floresta Amazônica') {
-                        navigate('/floresta-amazonica')
-                      } else if (local.nome === 'Rio Amazonas') {
-                        navigate('/rio-amazonas')
-                      } else if (local.nome === 'Parque Anavilhanas') {
-                        navigate('/parque-anavilhanas')
-                      }
-                    }}
                     style={{
                       background: 'linear-gradient(135deg, #4caf50 0%, #8bc34a 100%)',
                       color: 'white',
@@ -439,4 +424,4 @@ function NaturezaAmazonas() {
   )
 }
 
-export default NaturezaAmazonas
+export default CulturaAmazonas

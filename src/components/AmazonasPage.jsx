@@ -352,6 +352,8 @@ function AmazonasPage() {
                   window.location.href = '/amazonas/monumentos'
                 } else if (categoria.key === 'natureza') {
                   window.location.href = '/amazonas/natureza'
+                } else if (categoria.key === 'cultura') {
+                  window.location.href = '/amazonas/cultura'
                 } else {
                   setCategoriaAtiva(categoria.key)
                 }
