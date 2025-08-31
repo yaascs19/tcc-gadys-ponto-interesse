@@ -322,28 +322,48 @@ function MapaPage({ setCurrentPage }) {
                   color: '#667eea'
                 }}>Localização:</label>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                  <button style={{
-                    width: '100%',
-                    padding: '0.75rem',
-                    borderRadius: '10px',
-                    border: '1px solid rgba(102, 126, 234, 0.3)',
-                    background: '#667eea',
-                    color: 'white',
-                    fontSize: '0.9rem',
-                    cursor: 'pointer'
-                  }}>
+                  <button 
+                    onMouseEnter={(e) => {
+                      e.target.style.transform = 'translateY(-3px) scale(1.05)'
+                      e.target.style.boxShadow = '0 8px 20px rgba(102, 126, 234, 0.4)'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.transform = 'translateY(0) scale(1)'
+                      e.target.style.boxShadow = 'none'
+                    }}
+                    style={{
+                      width: '100%',
+                      padding: '0.75rem',
+                      borderRadius: '10px',
+                      border: '1px solid rgba(102, 126, 234, 0.3)',
+                      background: '#667eea',
+                      color: 'white',
+                      fontSize: '0.9rem',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease'
+                    }}>
                     Minha Localização
                   </button>
-                  <button style={{
-                    width: '100%',
-                    padding: '0.75rem',
-                    borderRadius: '10px',
-                    border: '1px solid rgba(102, 126, 234, 0.3)',
-                    background: '#764ba2',
-                    color: 'white',
-                    fontSize: '0.9rem',
-                    cursor: 'pointer'
-                  }}>
+                  <button 
+                    onMouseEnter={(e) => {
+                      e.target.style.transform = 'translateY(-3px) scale(1.05)'
+                      e.target.style.boxShadow = '0 8px 20px rgba(118, 75, 162, 0.4)'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.transform = 'translateY(0) scale(1)'
+                      e.target.style.boxShadow = 'none'
+                    }}
+                    style={{
+                      width: '100%',
+                      padding: '0.75rem',
+                      borderRadius: '10px',
+                      border: '1px solid rgba(102, 126, 234, 0.3)',
+                      background: '#764ba2',
+                      color: 'white',
+                      fontSize: '0.9rem',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease'
+                    }}>
                     Simular Local
                   </button>
                 </div>
@@ -351,39 +371,51 @@ function MapaPage({ setCurrentPage }) {
             </div>
             
             <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-              <button style={{
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                color: 'white',
-                border: 'none',
-                padding: '1rem 3rem',
-                borderRadius: '25px',
-                cursor: 'pointer',
-                fontSize: '1.1rem',
-                fontWeight: '600',
-                transition: 'all 0.3s'
-              }}>
+              <button 
+                onMouseEnter={(e) => {
+                  e.target.style.transform = 'translateY(-3px) scale(1.05)'
+                  e.target.style.boxShadow = '0 10px 25px rgba(102, 126, 234, 0.4)'
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.transform = 'translateY(0) scale(1)'
+                  e.target.style.boxShadow = 'none'
+                }}
+                style={{
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                  color: 'white',
+                  border: 'none',
+                  padding: '1rem 3rem',
+                  borderRadius: '25px',
+                  cursor: 'pointer',
+                  fontSize: '1.1rem',
+                  fontWeight: '600',
+                  transition: 'all 0.3s ease'
+                }}>
                 Aplicar Filtros
               </button>
             </div>
             
             <div style={{
               background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
-              padding: '2rem',
+              padding: '1rem',
               borderRadius: '20px',
-              textAlign: 'center',
               minHeight: '600px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              border: '2px dashed rgba(102, 126, 234, 0.3)'
+              border: '1px solid rgba(102, 126, 234, 0.3)'
             }}>
-              <div>
-                <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🗺️</div>
-                <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: '#667eea' }}>Mapa Interativo</h3>
-                <p style={{ opacity: 0.7, fontSize: '1.1rem' }}>
-                  Aqui será exibido o mapa interativo com os pontos turísticos do Brasil
-                </p>
-              </div>
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15776119.828125!2d-54.0625!3d-14.235004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9c59c7ebcc28cf%3A0x295a1506f2293e63!2sBrasil!5e0!3m2!1spt-BR!2sbr!4v1704067200000!5m2!1spt-BR!2sbr"
+                width="100%"
+                height="580"
+                style={{
+                  border: 0,
+                  borderRadius: '15px',
+                  filter: darkMode ? 'invert(0.9) hue-rotate(180deg)' : 'none'
+                }}
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Mapa do Brasil"
+              />
             </div>
           </div>
         </section>

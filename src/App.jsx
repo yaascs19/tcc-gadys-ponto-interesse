@@ -9,6 +9,7 @@ import SobrePage from './components/SobrePage'
 import ContatoPage from './components/ContatoPage'
 import PerfilPage from './components/PerfilPage'
 import MapaPage from './components/MapaPage'
+import LugaresPage from './components/LugaresPage'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
@@ -28,7 +29,7 @@ function App() {
     if (shouldOpenAdmin) return 'admin'
     if (path === '/home' || path === '/home.html') return 'welcome'
     if (path === '/amazonas' || path === '/amazonas.html') return 'amazonas'
-    if (path === '/lugares' || path === '/lugares.html') return 'lugares'
+    if (path === '/lugares' || path === '/lugares.html') return 'lugarespage'
     return 'home'
   }
   
@@ -196,6 +197,10 @@ function App() {
   
   if (currentPage === 'mapapage') {
     return <MapaPage setCurrentPage={setCurrentPage} />
+  }
+  
+  if (currentPage === 'lugarespage') {
+    return <LugaresPage setCurrentPage={setCurrentPage} />
   }
   
   if (currentPage === 'sobre') {
@@ -435,6 +440,7 @@ function App() {
               </div>
             </li>
 
+            <li><a href="#" onClick={() => {setCurrentPage('lugarespage'); document.querySelector('.nav-links').classList.remove('active')}}>Lugares</a></li>
             <li><a href="#" onClick={(e) => {e.preventDefault(); console.log('Clicou no mapa'); setCurrentPage('mapapage'); document.querySelector('.nav-links').classList.remove('active')}}>Mapa</a></li>
             <li><a href="#" onClick={(e) => {e.preventDefault(); if (!localStorage.getItem('isLoggedIn')) setCurrentPage('login'); else window.location.href='/adicionar-locais.html'; document.querySelector('.nav-links').classList.remove('active')}}>Adicionar Local</a></li>
             <li><a href="#" onClick={() => {setCurrentPage('perfilpage'); document.querySelector('.nav-links').classList.remove('active')}}>Meu Perfil</a></li>
@@ -459,7 +465,7 @@ function App() {
                 )}
                 <h2>Descubra Lugares Incríveis</h2>
                 <p>Explore pontos de interesse únicos e encontre experiências inesquecíveis</p>
-                <button className="cta-button" onClick={() => window.location.href = '/lugares.html'}>Começar Exploração</button>
+                <button className="cta-button" onClick={(e) => {e.preventDefault(); console.log('Botão clicado!'); setCurrentPage('lugarespage')}}>Começar Exploração</button>
                 <div className="carousel-nav">
                   <span className="nav-dot active" data-slide="0" onClick={(e) => {e.preventDefault(); e.stopPropagation(); document.querySelectorAll('.carousel-slide').forEach((slide, i) => slide.classList.toggle('active', i === 0)); document.querySelectorAll('.nav-dot').forEach((dot, i) => dot.classList.toggle('active', i === 0));}}></span>
                   <span className="nav-dot" data-slide="1" onClick={(e) => {e.preventDefault(); e.stopPropagation(); document.querySelectorAll('.carousel-slide').forEach((slide, i) => slide.classList.toggle('active', i === 1)); document.querySelectorAll('.nav-dot').forEach((dot, i) => dot.classList.toggle('active', i === 1));}}></span>
@@ -477,7 +483,7 @@ function App() {
                 )}
                 <h2>Descubra Lugares Incríveis</h2>
                 <p>Explore pontos de interesse únicos e encontre experiências inesquecíveis</p>
-                <button className="cta-button" onClick={() => window.location.href = '/lugares.html'}>Começar Exploração</button>
+                <button className="cta-button" onClick={(e) => {e.preventDefault(); setCurrentPage('lugarespage')}}>Começar Exploração</button>
                 <div className="carousel-nav">
                   <span className="nav-dot" data-slide="0" onClick={(e) => {e.preventDefault(); e.stopPropagation();}}></span>
                   <span className="nav-dot active" data-slide="1" onClick={(e) => {e.preventDefault(); e.stopPropagation();}}></span>
@@ -495,7 +501,7 @@ function App() {
                 )}
                 <h2>Descubra Lugares Incríveis</h2>
                 <p>Explore pontos de interesse únicos e encontre experiências inesquecíveis</p>
-                <button className="cta-button" onClick={() => window.location.href = '/lugares.html'}>Começar Exploração</button>
+                <button className="cta-button" onClick={(e) => {e.preventDefault(); setCurrentPage('lugarespage')}}>Começar Exploração</button>
                 <div className="carousel-nav">
                   <span className="nav-dot" data-slide="0" onClick={(e) => {e.preventDefault(); e.stopPropagation();}}></span>
                   <span className="nav-dot" data-slide="1" onClick={(e) => {e.preventDefault(); e.stopPropagation();}}></span>
