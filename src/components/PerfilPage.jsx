@@ -19,6 +19,7 @@ function PerfilPage({ setCurrentPage }) {
   const [showPhotoOptions, setShowPhotoOptions] = useState(false)
   const [urlInput, setUrlInput] = useState('')
   const [showEditModal, setShowEditModal] = useState(false)
+  const [tempProfileData, setTempProfileData] = useState(profileData)
 
   const toggleTheme = () => {
     const newDarkMode = !darkMode
@@ -234,7 +235,7 @@ function PerfilPage({ setCurrentPage }) {
           <li><a href="/" style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Início</a></li>
           <li><a href="/amazonas.html" style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Amazonas</a></li>
           <li><a href="/lugares.html" style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Lugares</a></li>
-          <li><a href="/mapa-real-api.html" style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Mapa</a></li>
+          <li><a href="#" onClick={() => {setCurrentPage('mapapage'); document.querySelector('.nav-links').classList.remove('active')}} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Mapa</a></li>
           <li><a href="#" style={{ color: '#ccc', textDecoration: 'none', padding: '0.5rem 1rem', cursor: 'not-allowed' }}>Perfil (atual)</a></li>
           <li><a href="#" onClick={() => {setCurrentPage('sobrepage'); document.querySelector('.nav-links').classList.remove('active')}} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Sobre</a></li>
           <li><a href="#" onClick={() => {setCurrentPage('contatopage'); document.querySelector('.nav-links').classList.remove('active')}} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Contato</a></li>
@@ -301,7 +302,7 @@ function PerfilPage({ setCurrentPage }) {
           
           <div style={{
             display: 'grid',
-            gridTemplateColumns: '1fr 2fr',
+            gridTemplateColumns: '1fr 1fr',
             gap: '3rem',
             maxWidth: '900px',
             margin: '0 auto',
@@ -475,23 +476,7 @@ function PerfilPage({ setCurrentPage }) {
               <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', fontWeight: '600' }}>{profileData.nome}</h3>
               <p style={{ opacity: 0.7, fontSize: '1rem', marginBottom: '0.5rem' }}>{profileData.email}</p>
               <p style={{ opacity: 0.7, fontSize: '1rem', marginBottom: '0.5rem' }}>{profileData.telefone}</p>
-              <p style={{ opacity: 0.7, fontSize: '1rem', marginBottom: '1rem' }}>{profileData.cidade}</p>
-              <button 
-                onClick={() => setShowEditModal(true)}
-                style={{
-                  background: '#667eea',
-                  color: 'white',
-                  border: 'none',
-                  padding: '0.5rem 1rem',
-                  borderRadius: '15px',
-                  cursor: 'pointer',
-                  fontSize: '0.9rem',
-                  fontWeight: '600',
-                  transition: 'all 0.3s'
-                }}
-              >
-                Editar Perfil
-              </button>
+              <p style={{ opacity: 0.7, fontSize: '1rem' }}>{profileData.cidade}</p>
               
               {showEditModal && (
                 <div style={{
@@ -500,11 +485,11 @@ function PerfilPage({ setCurrentPage }) {
                   left: 0,
                   width: '100vw',
                   height: '100vh',
-                  background: 'rgba(0,0,0,0.7)',
+                  background: 'rgba(0,0,0,0.95)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  zIndex: 2000
+                  zIndex: 10000
                 }}>
                   <div style={{
                     background: darkMode ? '#333' : 'white',
@@ -521,8 +506,8 @@ function PerfilPage({ setCurrentPage }) {
                         <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Nome:</label>
                         <input 
                           type="text" 
-                          value={profileData.nome}
-                          onChange={(e) => setProfileData({...profileData, nome: e.target.value})}
+                          value={tempProfileData.nome}
+                          onChange={(e) => setTempProfileData({...tempProfileData, nome: e.target.value})}
                           style={{
                             width: '100%',
                             padding: '0.75rem',
@@ -539,8 +524,8 @@ function PerfilPage({ setCurrentPage }) {
                         <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Email:</label>
                         <input 
                           type="email" 
-                          value={profileData.email}
-                          onChange={(e) => setProfileData({...profileData, email: e.target.value})}
+                          value={tempProfileData.email}
+                          onChange={(e) => setTempProfileData({...tempProfileData, email: e.target.value})}
                           style={{
                             width: '100%',
                             padding: '0.75rem',
@@ -557,8 +542,8 @@ function PerfilPage({ setCurrentPage }) {
                         <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Telefone:</label>
                         <input 
                           type="text" 
-                          value={profileData.telefone}
-                          onChange={(e) => setProfileData({...profileData, telefone: e.target.value})}
+                          value={tempProfileData.telefone}
+                          onChange={(e) => setTempProfileData({...tempProfileData, telefone: e.target.value})}
                           style={{
                             width: '100%',
                             padding: '0.75rem',
@@ -575,8 +560,8 @@ function PerfilPage({ setCurrentPage }) {
                         <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Cidade:</label>
                         <input 
                           type="text" 
-                          value={profileData.cidade}
-                          onChange={(e) => setProfileData({...profileData, cidade: e.target.value})}
+                          value={tempProfileData.cidade}
+                          onChange={(e) => setTempProfileData({...tempProfileData, cidade: e.target.value})}
                           style={{
                             width: '100%',
                             padding: '0.75rem',
@@ -593,7 +578,8 @@ function PerfilPage({ setCurrentPage }) {
                     <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
                       <button 
                         onClick={() => {
-                          localStorage.setItem('profileData', JSON.stringify(profileData))
+                          setProfileData(tempProfileData)
+                          localStorage.setItem('profileData', JSON.stringify(tempProfileData))
                           setShowEditModal(false)
                           alert('Dados salvos com sucesso!')
                         }}
@@ -680,10 +666,8 @@ function PerfilPage({ setCurrentPage }) {
             }}>
             <button 
               onClick={() => {
-                setEditMode(true)
-                setTimeout(() => {
-                  document.getElementById('dados-pessoais')?.scrollIntoView({ behavior: 'smooth' })
-                }, 100)
+                setTempProfileData(profileData)
+                setShowEditModal(true)
               }}
               {...buttonHoverStyle}
               style={{
@@ -811,7 +795,7 @@ function PerfilPage({ setCurrentPage }) {
         padding: '3rem',
         borderTop: darkMode ? '1px solid rgba(255,255,255,0.1)' : '1px solid rgba(0,0,0,0.1)',
         position: 'relative',
-        zIndex: 10
+        zIndex: showEditModal ? -1 : 10
       }}>
         <p style={{ opacity: 0.7, fontSize: '1rem' }}>&copy; 2025 GADYS. Todos os direitos reservados.</p>
       </footer>
