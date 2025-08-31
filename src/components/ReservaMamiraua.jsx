@@ -1,56 +1,10 @@
 import { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
-function NaturezaAmazonas() {
-  const navigate = useNavigate()
+function ReservaMamiraua() {
   const [darkMode, setDarkMode] = useState(() => {
     return localStorage.getItem('darkMode') === 'true'
   })
-
-  const natureza = [
-    {
-      nome: 'Encontro das Águas',
-      desc: 'Fenômeno natural dos rios Negro e Solimões',
-      detalhes: 'Espetáculo único onde as águas dos dois rios correm lado a lado sem se misturar',
-      img: '/encontro.jpeg',
-      localizacao: 'Manaus - AM'
-    },
-    {
-      nome: 'Parque Nacional do Jaú',
-      desc: 'Maior parque nacional do Brasil',
-      detalhes: 'Unidade de conservação com 2,3 milhões de hectares de floresta preservada',
-      img: '/jau.jpeg',
-      localizacao: 'Novo Airão - AM'
-    },
-    {
-      nome: 'Reserva Mamirauá',
-      desc: 'Reserva de desenvolvimento sustentável',
-      detalhes: 'Primeira reserva de desenvolvimento sustentável do Brasil na várzea amazônica',
-      img: '/reserva.jpeg',
-      localizacao: 'Tefé - AM'
-    },
-    {
-      nome: 'Floresta Amazônica',
-      desc: 'A maior floresta tropical do mundo',
-      detalhes: 'Pulmão do mundo com biodiversidade incomparável e ecossistemas únicos',
-      img: '/floresta.jpeg',
-      localizacao: 'Amazonas - AM'
-    },
-    {
-      nome: 'Rio Amazonas',
-      desc: 'O maior rio do mundo em volume de água',
-      detalhes: 'Principal artéria fluvial da região, essencial para a vida amazônica',
-      img: '/rioamz.jpeg',
-      localizacao: 'Amazonas - AM'
-    },
-    {
-      nome: 'Parque Anavilhanas',
-      desc: 'Maior arquipélago fluvial do mundo',
-      detalhes: 'Conjunto de ilhas no Rio Negro com rica biodiversidade aquática',
-      img: '/anavilhas.jpeg',
-      localizacao: 'Novo Airão - AM'
-    }
-  ]
 
   const toggleTheme = () => {
     const newDarkMode = !darkMode
@@ -210,7 +164,7 @@ function NaturezaAmazonas() {
         >
           <li><Link to="/" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Início</Link></li>
           <li><Link to="/amazonas" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Amazonas</Link></li>
-          <li><a href="#" style={{ color: '#ccc', textDecoration: 'none', padding: '0.5rem 1rem', cursor: 'not-allowed' }}>Natureza (atual)</a></li>
+          <li><a href="#" style={{ color: '#ccc', textDecoration: 'none', padding: '0.5rem 1rem', cursor: 'not-allowed' }}>Reserva Mamirauá (atual)</a></li>
           <li><Link to="/lugares" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Lugares</Link></li>
           <li><Link to="/mapa" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Mapa</Link></li>
           <li><Link to="/perfil" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Meu Perfil</Link></li>
@@ -243,7 +197,7 @@ function NaturezaAmazonas() {
             letterSpacing: '-3px',
             lineHeight: '1.1'
           }}>
-            Natureza do Amazonas
+            Reserva Mamirauá
           </h1>
           
           <p style={{
@@ -254,7 +208,8 @@ function NaturezaAmazonas() {
             lineHeight: '1.6',
             fontWeight: '300'
           }}>
-            Belezas naturais incomparáveis da Amazônia
+            Primeira reserva de desenvolvimento sustentável do Brasil<br />
+            <span style={{ color: '#4caf50', fontWeight: '500' }}>Tefé - AM</span>
           </p>
         </section>
 
@@ -266,109 +221,144 @@ function NaturezaAmazonas() {
           border: '1px solid rgba(76, 175, 80, 0.2)',
           boxShadow: '0 30px 60px rgba(76, 175, 80, 0.1)'
         }}>
-          <h2 style={{ 
-            fontSize: '3rem', 
-            marginBottom: '4rem', 
-            textAlign: 'center',
-            fontWeight: '700'
-          }}>Belezas Naturais</h2>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-            gap: '3rem'
-          }}>
-            {natureza.map((local, index) => (
-              <div
-                key={index}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
+            <div>
+              <img 
+                src="/reserva.jpeg" 
+                alt="Reserva Mamirauá"
                 style={{
-                  background: darkMode ? 'linear-gradient(135deg, rgba(13, 40, 24, 0.8) 0%, rgba(26, 77, 46, 0.6) 100%)' : 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(232, 245, 232, 0.7) 100%)',
+                  width: '100%',
+                  height: '400px',
+                  objectFit: 'cover',
+                  objectPosition: 'center',
                   borderRadius: '20px',
-                  overflow: 'hidden',
-                  boxShadow: '0 10px 30px rgba(76, 175, 80, 0.1)',
-                  transition: 'all 0.3s',
-                  cursor: 'pointer'
+                  boxShadow: '0 20px 40px rgba(76, 175, 80, 0.2)'
                 }}
-                onMouseOver={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-10px)'
-                  e.currentTarget.style.boxShadow = '0 20px 40px rgba(76, 175, 80, 0.2)'
-                }}
-                onMouseOut={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)'
-                  e.currentTarget.style.boxShadow = '0 10px 30px rgba(76, 175, 80, 0.1)'
-                }}
-              >
-                <img 
-                  src={local.img}
-                  alt={local.nome}
-                  style={{
-                    width: '100%',
-                    height: '250px',
-                    objectFit: 'cover'
-                  }}
-                />
-                <div style={{ padding: '2rem' }}>
-                  <h3 style={{
-                    fontSize: '1.5rem',
-                    marginBottom: '1rem',
-                    color: '#4caf50',
-                    fontWeight: '700'
-                  }}>
-                    {local.nome}
-                  </h3>
-                  <p style={{
-                    opacity: 0.8,
-                    lineHeight: 1.6,
-                    marginBottom: '1rem'
-                  }}>
-                    {local.desc}
-                  </p>
-                  <p style={{
-                    fontSize: '0.9rem',
-                    opacity: 0.7,
-                    marginBottom: '1rem',
-                    fontStyle: 'italic'
-                  }}>
-                    {local.detalhes}
-                  </p>
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    marginBottom: '1.5rem',
-                    color: '#4caf50',
-                    fontSize: '0.9rem'
-                  }}>
-                    📍 {local.localizacao}
-                  </div>
-                  <button 
-                    onClick={() => {
-                      if (local.nome === 'Encontro das Águas') {
-                        navigate('/encontro-aguas')
-                      } else if (local.nome === 'Parque Nacional do Jaú') {
-                        navigate('/parque-jau')
-                      } else if (local.nome === 'Reserva Mamirauá') {
-                        navigate('/reserva-mamiraua')
-                      } else if (local.nome === 'Floresta Amazônica') {
-                        navigate('/floresta-amazonica')
-                      } else if (local.nome === 'Rio Amazonas') {
-                        navigate('/rio-amazonas')
-                      }
-                    }}
-                    style={{
-                      background: 'linear-gradient(135deg, #4caf50 0%, #8bc34a 100%)',
-                      color: 'white',
-                      border: 'none',
-                      padding: '0.8rem 2rem',
-                      borderRadius: '25px',
-                      cursor: 'pointer',
-                      fontSize: '1rem',
-                      fontWeight: '600',
-                      transition: 'all 0.3s'
-                    }}
-                  >
-                    Saiba Mais
-                  </button>
-                </div>
+              />
+            </div>
+            <div>
+              <h2 style={{ fontSize: '2.5rem', marginBottom: '2rem', fontWeight: '700' }}>Sobre o Local</h2>
+              <p style={{ fontSize: '1.2rem', lineHeight: 1.8, opacity: 0.9, marginBottom: '2rem' }}>
+                A Reserva de Desenvolvimento Sustentável Mamirauá foi a primeira unidade de conservação 
+                desta categoria criada no Brasil, em 1996. Localizada na várzea amazônica, 
+                abrange 1,1 milhão de hectares e é um modelo mundial de conservação que concilia 
+                proteção ambiental com desenvolvimento sustentável das comunidades locais.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section style={{
+          background: darkMode ? 'linear-gradient(135deg, rgba(76, 175, 80, 0.06) 0%, rgba(139, 195, 74, 0.02) 100%)' : 'linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.5) 100%)',
+          padding: '5rem 4rem',
+          borderRadius: '30px',
+          marginBottom: '6rem',
+          border: darkMode ? '1px solid rgba(76, 175, 80, 0.1)' : '1px solid rgba(76, 175, 80, 0.2)'
+        }}>
+          <h2 style={{ fontSize: '3rem', marginBottom: '3rem', textAlign: 'center', fontWeight: '700' }}>História</h2>
+          <p style={{ fontSize: '1.2rem', lineHeight: 1.8, opacity: 0.9, marginBottom: '2rem', textAlign: 'center', maxWidth: '900px', margin: '0 auto 2rem' }}>
+            Criada em 1996, a Reserva Mamirauá foi pioneira no conceito de desenvolvimento sustentável 
+            na Amazônia. Surgiu da necessidade de proteger a várzea amazônica e suas comunidades tradicionais, 
+            desenvolvendo um modelo inovador que permite a conservação da biodiversidade enquanto 
+            promove a melhoria da qualidade de vida das populações ribeirinhas.
+          </p>
+        </section>
+
+        <section style={{
+          background: 'linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(139, 195, 74, 0.1) 100%)',
+          padding: '5rem 4rem',
+          borderRadius: '30px',
+          marginBottom: '6rem',
+          border: '1px solid rgba(76, 175, 80, 0.2)',
+          boxShadow: '0 30px 60px rgba(76, 175, 80, 0.1)'
+        }}>
+          <h2 style={{ fontSize: '3rem', marginBottom: '4rem', textAlign: 'center', fontWeight: '700' }}>Informações Práticas</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '3rem' }}>
+            <div style={{
+              background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
+              padding: '2rem',
+              borderRadius: '20px'
+            }}>
+              <h3 style={{ fontSize: '1.5rem', marginBottom: '1.5rem', color: '#4caf50', fontWeight: '600' }}>Como Chegar</h3>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Tefé - AM</li>
+                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Barco pelo Rio Solimões</li>
+                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Voo para Tefé</li>
+              </ul>
+            </div>
+            <div style={{
+              background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
+              padding: '2rem',
+              borderRadius: '20px'
+            }}>
+              <h3 style={{ fontSize: '1.5rem', marginBottom: '1.5rem', color: '#4caf50', fontWeight: '600' }}>Visitação</h3>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Ecoturismo controlado</li>
+                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Pousada Uacari</li>
+                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Agendamento necessário</li>
+              </ul>
+            </div>
+            <div style={{
+              background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
+              padding: '2rem',
+              borderRadius: '20px'
+            }}>
+              <h3 style={{ fontSize: '1.5rem', marginBottom: '1.5rem', color: '#4caf50', fontWeight: '600' }}>Atividades</h3>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Observação de primatas</li>
+                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Pesca esportiva</li>
+                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Trilhas na floresta</li>
+              </ul>
+            </div>
+            <div style={{
+              background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
+              padding: '2rem',
+              borderRadius: '20px'
+            }}>
+              <h3 style={{ fontSize: '1.5rem', marginBottom: '1.5rem', color: '#4caf50', fontWeight: '600' }}>Dicas</h3>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Melhor época: seca</li>
+                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Leve repelente</li>
+                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Guia local obrigatório</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section style={{
+          background: darkMode ? 'linear-gradient(135deg, rgba(76, 175, 80, 0.06) 0%, rgba(139, 195, 74, 0.02) 100%)' : 'linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.5) 100%)',
+          padding: '5rem 4rem',
+          borderRadius: '30px',
+          marginBottom: '6rem',
+          border: darkMode ? '1px solid rgba(76, 175, 80, 0.1)' : '1px solid rgba(76, 175, 80, 0.2)'
+        }}>
+          <h2 style={{ fontSize: '3rem', marginBottom: '3rem', textAlign: 'center', fontWeight: '700' }}>Curiosidades</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}>
+            {[
+              { title: 'Pioneira', desc: 'Primeira RDS criada no Brasil em 1996' },
+              { title: 'Área', desc: '1,1 milhão de hectares de várzea amazônica' },
+              { title: 'Uacari', desc: 'Habitat do macaco-uacari-branco' },
+              { title: 'Sustentabilidade', desc: 'Modelo mundial de conservação' },
+              { title: 'Comunidades', desc: 'Mais de 10 mil moradores ribeirinhos' },
+              { title: 'Pesquisa', desc: 'Centro de pesquisa científica avançada' }
+            ].map((item, index) => (
+              <div key={index} style={{
+                background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
+                padding: '2rem',
+                borderRadius: '20px',
+                textAlign: 'center',
+                transition: 'all 0.3s'
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.transform = 'translateY(-5px)'
+                e.currentTarget.style.boxShadow = '0 15px 30px rgba(76, 175, 80, 0.2)'
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)'
+                e.currentTarget.style.boxShadow = 'none'
+              }}>
+                <h3 style={{ fontSize: '1.3rem', marginBottom: '1rem', color: '#4caf50', fontWeight: '600' }}>{item.title}</h3>
+                <p style={{ fontSize: '1rem', opacity: 0.8, lineHeight: 1.5 }}>{item.desc}</p>
               </div>
             ))}
           </div>
@@ -385,7 +375,7 @@ function NaturezaAmazonas() {
             flexWrap: 'wrap'
           }}>
             <Link 
-              to="/amazonas"
+              to="/amazonas/natureza"
               style={{
                 background: 'linear-gradient(135deg, #4caf50 0%, #8bc34a 100%)',
                 color: 'white',
@@ -395,11 +385,13 @@ function NaturezaAmazonas() {
                 cursor: 'pointer',
                 fontSize: '1.1rem',
                 fontWeight: '600',
-                transition: 'all 0.3s',
+                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                boxShadow: '0 15px 35px rgba(76, 175, 80, 0.4)',
+                letterSpacing: '0.5px',
                 textDecoration: 'none'
               }}
             >
-              Voltar ao Amazonas
+              Voltar à Natureza
             </Link>
             
             <Link 
@@ -407,13 +399,15 @@ function NaturezaAmazonas() {
               style={{
                 background: 'transparent',
                 color: darkMode ? '#e8f5e8' : '#1b5e20',
-                border: '2px solid #4caf50',
+                border: darkMode ? '2px solid rgba(76, 175, 80, 0.5)' : '2px solid rgba(76, 175, 80, 0.7)',
                 padding: '1.5rem 3rem',
                 borderRadius: '50px',
                 cursor: 'pointer',
                 fontSize: '1.1rem',
                 fontWeight: '600',
-                transition: 'all 0.3s',
+                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                backdropFilter: 'blur(10px)',
+                letterSpacing: '0.5px',
                 textDecoration: 'none'
               }}
             >
@@ -437,4 +431,4 @@ function NaturezaAmazonas() {
   )
 }
 
-export default NaturezaAmazonas
+export default ReservaMamiraua

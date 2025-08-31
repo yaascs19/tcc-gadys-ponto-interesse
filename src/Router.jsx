@@ -21,7 +21,11 @@ import MercadoMunicipal from './components/MercadoMunicipal'
 import IgrejaSaoSebastiao from './components/IgrejaSaoSebastiao'
 import PalacioRioNegro from './components/PalacioRioNegro'
 import NaturezaAmazonas from './components/NaturezaAmazonas'
-import EncontroAguas from './components/EncontroAguas';
+import EncontroAguas from './components/EncontroAguas'
+import ParqueJau from './components/ParqueJau'
+import ReservaMamiraua from './components/ReservaMamiraua';
+import FlorestaAmazonica from './components/FlorestaAmazonica';
+import RioAmazonas from './components/RioAmazonas';
 import ContatoPage from './components/ContatoPage';
 
 
@@ -51,6 +55,10 @@ function Router() {
         <Route path="/palacio-rio-negro" element={<PalacioRioNegro />} />
         <Route path="/amazonas/natureza" element={<NaturezaAmazonas />} />
         <Route path="/encontro-aguas" element={<EncontroAguas />} />
+        <Route path="/parque-jau" element={<ParqueJau />} />
+        <Route path="/reserva-mamiraua" element={<ReservaMamiraua />} />
+        <Route path="/floresta-amazonica" element={<FlorestaAmazonica />} />
+        <Route path="/rio-amazonas" element={<RioAmazonas />} />
         <Route path="/contato" element={<ContatoPage />} />
 
       </Routes>
