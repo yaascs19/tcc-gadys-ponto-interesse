@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-function Navbar({ darkMode, toggleTheme, userType }) {
+function Navbar({ darkMode, toggleTheme, userType, setCurrentPage }) {
   const [menuOpen, setMenuOpen] = useState(false)
 
   const toggleMenu = () => {
@@ -114,7 +114,8 @@ function Navbar({ darkMode, toggleTheme, userType }) {
         }}>
           <li>
             <a 
-              href="/" 
+              href="#" 
+              onClick={(e) => {e.preventDefault(); setCurrentPage('home')}} 
               style={{
                 color: 'white',
                 textDecoration: 'none',
@@ -146,7 +147,8 @@ function Navbar({ darkMode, toggleTheme, userType }) {
           
           <li>
             <a 
-              href="/mapa-real-api.html"
+              href="#" 
+              onClick={(e) => {e.preventDefault(); setCurrentPage('mapapage')}}
               style={{
                 color: 'white',
                 textDecoration: 'none',
@@ -163,7 +165,8 @@ function Navbar({ darkMode, toggleTheme, userType }) {
           
           <li>
             <a 
-              href="/perfil.html"
+              href="#" 
+              onClick={(e) => {e.preventDefault(); setCurrentPage('perfilpage')}}
               style={{
                 color: 'white',
                 textDecoration: 'none',
@@ -180,7 +183,8 @@ function Navbar({ darkMode, toggleTheme, userType }) {
           
           <li>
             <a 
-              href="/sobre.html"
+              href="#" 
+              onClick={(e) => {e.preventDefault(); setCurrentPage('sobrepage')}}
               style={{
                 color: 'white',
                 textDecoration: 'none',
@@ -197,7 +201,8 @@ function Navbar({ darkMode, toggleTheme, userType }) {
           
           <li>
             <a 
-              href="/contato.html"
+              href="#" 
+              style={{ color: '#ccc', cursor: 'not-allowed' }}
               style={{
                 color: 'white',
                 textDecoration: 'none',
@@ -208,7 +213,7 @@ function Navbar({ darkMode, toggleTheme, userType }) {
               onMouseOver={(e) => e.target.style.background = 'rgba(255, 255, 255, 0.1)'}
               onMouseOut={(e) => e.target.style.background = 'transparent'}
             >
-              Contato
+              Contato (atual)
             </a>
           </li>
         </ul>

@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
-function LugaresPage() {
-  const navigate = useNavigate()
+function Pelourinho() {
   const [darkMode, setDarkMode] = useState(() => {
     return localStorage.getItem('darkMode') === 'true'
   })
@@ -14,6 +13,7 @@ function LugaresPage() {
   }
 
   useEffect(() => {
+    window.scrollTo(0, 0)
     const style = document.createElement('style')
     style.textContent = `
       .nav-links.active {
@@ -30,45 +30,6 @@ function LugaresPage() {
     document.head.appendChild(style)
     return () => document.head.removeChild(style)
   }, [])
-
-  const lugares = [
-    {
-      nome: 'Cristo Redentor',
-      cidade: 'Rio de Janeiro - RJ',
-      descricao: 'Uma das Sete Maravilhas do Mundo Moderno',
-      imagem: '/cristo.jpg'
-    },
-    {
-      nome: 'Pão de Açúcar',
-      cidade: 'Rio de Janeiro - RJ',
-      descricao: 'Cartão postal do Rio de Janeiro',
-      imagem: '/pao.jpg'
-    },
-    {
-      nome: 'Cataratas do Iguaçu',
-      cidade: 'Foz do Iguaçu - PR',
-      descricao: 'Uma das maiores quedas d\'água do mundo',
-      imagem: '/cata.jpg'
-    },
-    {
-      nome: 'Pelourinho',
-      cidade: 'Salvador - BA',
-      descricao: 'Centro histórico de Salvador',
-      imagem: '/pelo.jpg'
-    },
-    {
-      nome: 'Fernando de Noronha',
-      cidade: 'Pernambuco - PE',
-      descricao: 'Paraíso ecológico brasileiro',
-      imagem: '/fer.jpg'
-    },
-    {
-      nome: 'Pantanal',
-      cidade: 'Mato Grosso - MT',
-      descricao: 'Maior planície alagável do mundo',
-      imagem: '/pan.jpg'
-    }
-  ]
 
   return (
     <div style={{
@@ -217,38 +178,11 @@ function LugaresPage() {
               display: 'none',
               zIndex: 1002
             }}>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Acre</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Alagoas</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Amapá</a>
-              <Link to="/amazonas" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Amazonas</Link>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Bahia</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Ceará</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Distrito Federal</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Espírito Santo</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Goiás</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Maranhão</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Mato Grosso</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Mato Grosso do Sul</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Minas Gerais</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Pará</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Paraíba</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Paraná</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Pernambuco</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Piauí</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Rio de Janeiro</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Rio Grande do Norte</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Rio Grande do Sul</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Rondônia</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Roraima</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Santa Catarina</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>São Paulo</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Sergipe</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Tocantins</a>
+              <a href="/amazonas.html" onClick={(e) => {e.preventDefault(); window.location.href='/amazonas.html'; document.querySelector('.nav-links').classList.remove('active')}} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Amazonas</a>
             </div>
           </li>
-          <li><a href="#" style={{ color: '#ccc', textDecoration: 'none', padding: '0.5rem 1rem', cursor: 'not-allowed' }}>Lugares (atual)</a></li>
+          <li><Link to="/lugares" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Lugares</Link></li>
           <li><Link to="/mapa" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Mapa</Link></li>
-          <li><a href="#" onClick={(e) => {e.preventDefault(); if (!localStorage.getItem('isLoggedIn')) setCurrentPage('login'); else window.location.href='/adicionar-locais.html'; document.querySelector('.nav-links').classList.remove('active')}} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Adicionar Local</a></li>
           <li><Link to="/perfil" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Meu Perfil</Link></li>
           <li><Link to="/sobre" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Sobre</Link></li>
           <li><Link to="/contato" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Contato</Link></li>
@@ -276,10 +210,10 @@ function LugaresPage() {
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             marginBottom: '2rem',
-            letterSpacing: '0px',
-            lineHeight: '1.3'
+            letterSpacing: '-3px',
+            lineHeight: '1.1'
           }}>
-            Lugares Mais Visitados
+            Pelourinho
           </h1>
           
           <p style={{
@@ -290,8 +224,8 @@ function LugaresPage() {
             lineHeight: '1.6',
             fontWeight: '300'
           }}>
-            Descubra os destinos mais procurados pelos turistas<br />
-            <span style={{ color: '#667eea', fontWeight: '500' }}>Explore as maravilhas do Brasil</span>
+            Centro histórico de Salvador<br />
+            <span style={{ color: '#667eea', fontWeight: '500' }}>Salvador - BA</span>
           </p>
         </section>
 
@@ -303,98 +237,144 @@ function LugaresPage() {
           border: '1px solid rgba(102, 126, 234, 0.2)',
           boxShadow: '0 30px 60px rgba(102, 126, 234, 0.1)'
         }}>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-            gap: '2rem'
-          }}>
-            {lugares.map((lugar, index) => (
-              <div 
-                key={index}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
+            <div>
+              <img 
+                src="/pelo.jpg" 
+                alt="Pelourinho"
                 style={{
-                  background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
+                  width: '100%',
+                  height: '400px',
+                  objectFit: 'cover',
+                  objectPosition: 'center',
                   borderRadius: '20px',
-                  overflow: 'hidden',
-                  boxShadow: '0 15px 30px rgba(102, 126, 234, 0.1)',
-                  transition: 'all 0.3s',
-                  border: '1px solid rgba(102, 126, 234, 0.2)'
+                  boxShadow: '0 20px 40px rgba(102, 126, 234, 0.2)'
                 }}
-                onMouseOver={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-10px)'
-                  e.currentTarget.style.boxShadow = '0 25px 50px rgba(102, 126, 234, 0.2)'
-                }}
-                onMouseOut={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)'
-                  e.currentTarget.style.boxShadow = '0 15px 30px rgba(102, 126, 234, 0.1)'
-                }}
-              >
-                <img 
-                  src={lugar.imagem} 
-                  alt={lugar.nome}
-                  style={{
-                    width: '100%',
-                    height: '250px',
-                    objectFit: 'cover',
-                    objectPosition: 'center top'
-                  }}
-                />
-                <div style={{ padding: '2rem' }}>
-                  <h3 style={{
-                    fontSize: '1.5rem',
-                    marginBottom: '0.5rem',
-                    color: darkMode ? '#f0f6fc' : '#2c3e50',
-                    fontWeight: '600'
-                  }}>
-                    {lugar.nome}
-                  </h3>
-                  <p style={{
-                    color: '#667eea',
-                    fontSize: '0.9rem',
-                    marginBottom: '1rem',
-                    fontWeight: '500'
-                  }}>
-                    {lugar.cidade}
-                  </p>
-                  <p style={{
-                    color: darkMode ? '#8b949e' : '#555',
-                    lineHeight: 1.6,
-                    marginBottom: '1.5rem'
-                  }}>
-                    {lugar.descricao}
-                  </p>
-                  <Link 
-                    to={lugar.nome === 'Cristo Redentor' ? '/cristo-redentor' :
-                        lugar.nome === 'Pão de Açúcar' ? '/pao-de-acucar' :
-                        lugar.nome === 'Cataratas do Iguaçu' ? '/cataratas-iguacu' :
-                        lugar.nome === 'Pelourinho' ? '/pelourinho' :
-                        lugar.nome === 'Fernando de Noronha' ? '/fernando-noronha' :
-                        lugar.nome === 'Pantanal' ? '/pantanal' : '#'}
-                    style={{
-                      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                      color: 'white',
-                      border: 'none',
-                      padding: '0.8rem 2rem',
-                      borderRadius: '25px',
-                      cursor: 'pointer',
-                      fontSize: '1rem',
-                      fontWeight: '600',
-                      transition: 'all 0.3s',
-                      boxShadow: '0 5px 15px rgba(102, 126, 234, 0.3)',
-                      textDecoration: 'none',
-                      display: 'inline-block'
-                    }}
-                    onMouseOver={(e) => {
-                      e.target.style.transform = 'translateY(-2px)'
-                      e.target.style.boxShadow = '0 8px 20px rgba(102, 126, 234, 0.4)'
-                    }}
-                    onMouseOut={(e) => {
-                      e.target.style.transform = 'translateY(0)'
-                      e.target.style.boxShadow = '0 5px 15px rgba(102, 126, 234, 0.3)'
-                    }}
-                  >
-                    Visitar
-                  </Link>
-                </div>
+              />
+            </div>
+            <div>
+              <h2 style={{ fontSize: '2.5rem', marginBottom: '2rem', fontWeight: '700' }}>Sobre o Local</h2>
+              <p style={{ fontSize: '1.2rem', lineHeight: 1.8, opacity: 0.9, marginBottom: '2rem' }}>
+                O Pelourinho é o centro histórico de Salvador, considerado Patrimônio Cultural da Humanidade pela UNESCO. 
+                Com suas ruas de paralelepípedos e casarões coloniais coloridos, representa um dos conjuntos arquitetônicos 
+                coloniais mais importantes das Américas. É o coração cultural da Bahia, onde pulsam a música, a dança, 
+                a gastronomia e as tradições afro-brasileiras.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section style={{
+          background: darkMode ? 'linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)' : 'linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.5) 100%)',
+          padding: '5rem 4rem',
+          borderRadius: '30px',
+          marginBottom: '6rem',
+          border: darkMode ? '1px solid rgba(255,255,255,0.1)' : '1px solid rgba(0,0,0,0.1)'
+        }}>
+          <h2 style={{ fontSize: '3rem', marginBottom: '3rem', textAlign: 'center', fontWeight: '700' }}>História</h2>
+          <p style={{ fontSize: '1.2rem', lineHeight: 1.8, opacity: 0.9, marginBottom: '2rem', textAlign: 'center', maxWidth: '900px', margin: '0 auto 2rem' }}>
+            Fundado em 1549, o Pelourinho foi o primeiro centro urbano do Brasil e um dos principais portos de entrada 
+            de escravos africanos. O nome deriva do pelourinho (poste onde eram castigados os escravos) que ficava na praça central. 
+            Após décadas de decadência, foi restaurado na década de 1990, recuperando sua importância como centro cultural 
+            e turístico, sendo declarado Patrimônio Mundial da UNESCO em 1985.
+          </p>
+        </section>
+
+        <section style={{
+          background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)',
+          padding: '5rem 4rem',
+          borderRadius: '30px',
+          marginBottom: '6rem',
+          border: '1px solid rgba(102, 126, 234, 0.2)',
+          boxShadow: '0 30px 60px rgba(102, 126, 234, 0.1)'
+        }}>
+          <h2 style={{ fontSize: '3rem', marginBottom: '4rem', textAlign: 'center', fontWeight: '700' }}>Informações Práticas</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '3rem' }}>
+            <div style={{
+              background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
+              padding: '2rem',
+              borderRadius: '20px'
+            }}>
+              <h3 style={{ fontSize: '1.5rem', marginBottom: '1.5rem', color: '#667eea', fontWeight: '600' }}>Como Chegar</h3>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Metrô: Estação Campo da Pólvora</li>
+                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Ônibus: Várias linhas até o Centro</li>
+                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Elevador Lacerda (Cidade Baixa)</li>
+              </ul>
+            </div>
+            <div style={{
+              background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
+              padding: '2rem',
+              borderRadius: '20px'
+            }}>
+              <h3 style={{ fontSize: '1.5rem', marginBottom: '1.5rem', color: '#667eea', fontWeight: '600' }}>Atrações</h3>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Igreja do Rosário dos Pretos</li>
+                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Fundação Casa de Jorge Amado</li>
+                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Museu da Cidade</li>
+              </ul>
+            </div>
+            <div style={{
+              background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
+              padding: '2rem',
+              borderRadius: '20px'
+            }}>
+              <h3 style={{ fontSize: '1.5rem', marginBottom: '1.5rem', color: '#667eea', fontWeight: '600' }}>Horários</h3>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Visitação: 24 horas</li>
+                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Museus: 9h às 18h</li>
+                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Apresentações: Terças às 20h</li>
+              </ul>
+            </div>
+            <div style={{
+              background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
+              padding: '2rem',
+              borderRadius: '20px'
+            }}>
+              <h3 style={{ fontSize: '1.5rem', marginBottom: '1.5rem', color: '#667eea', fontWeight: '600' }}>Dicas</h3>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Visite durante o dia</li>
+                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Prove a culinária baiana</li>
+                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Assista apresentações culturais</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section style={{
+          background: darkMode ? 'linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)' : 'linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.5) 100%)',
+          padding: '5rem 4rem',
+          borderRadius: '30px',
+          marginBottom: '6rem',
+          border: darkMode ? '1px solid rgba(255,255,255,0.1)' : '1px solid rgba(0,0,0,0.1)'
+        }}>
+          <h2 style={{ fontSize: '3rem', marginBottom: '3rem', textAlign: 'center', fontWeight: '700' }}>Curiosidades</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}>
+            {[
+              { title: 'Patrimônio UNESCO', desc: 'Primeiro sítio brasileiro declarado Patrimônio Mundial em 1985' },
+              { title: 'Casarões Coloridos', desc: 'Mais de 800 imóveis restaurados em cores vibrantes' },
+              { title: 'Berço do Axé', desc: 'Local onde nasceu o movimento musical Axé Music' },
+              { title: 'Jorge Amado', desc: 'Cenário de diversos romances do escritor baiano' },
+              { title: 'Olodum', desc: 'Sede do famoso bloco afro que conquistou o mundo' },
+              { title: 'Arquitetura Colonial', desc: 'Maior conjunto arquitetônico colonial do Brasil' }
+            ].map((item, index) => (
+              <div key={index} style={{
+                background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
+                padding: '2rem',
+                borderRadius: '20px',
+                textAlign: 'center',
+                transition: 'all 0.3s'
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.transform = 'translateY(-5px)'
+                e.currentTarget.style.boxShadow = '0 15px 30px rgba(102, 126, 234, 0.2)'
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)'
+                e.currentTarget.style.boxShadow = 'none'
+              }}>
+                <h3 style={{ fontSize: '1.3rem', marginBottom: '1rem', color: '#667eea', fontWeight: '600' }}>{item.title}</h3>
+                <p style={{ fontSize: '1rem', opacity: 0.8, lineHeight: 1.5 }}>{item.desc}</p>
               </div>
             ))}
           </div>
@@ -411,7 +391,7 @@ function LugaresPage() {
             flexWrap: 'wrap'
           }}>
             <Link 
-              to="/"
+              to="/lugares"
               style={{
                 background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                 color: 'white',
@@ -427,7 +407,7 @@ function LugaresPage() {
                 textDecoration: 'none'
               }}
             >
-              Voltar ao Início
+              Voltar aos Lugares
             </Link>
             
             <Link 
@@ -467,4 +447,4 @@ function LugaresPage() {
   )
 }
 
-export default LugaresPage
+export default Pelourinho

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Navbar from './Navbar'
 
-function Contato() {
+function Contato({ setCurrentPage }) {
   const [darkMode, setDarkMode] = useState(() => {
     return localStorage.getItem('darkMode') === 'true'
   })
@@ -43,11 +43,11 @@ function Contato() {
       color: darkMode ? '#e0e0e0' : '#333',
       background: darkMode ? '#1a1a1a' : '#fff'
     }}>
-      <Navbar darkMode={darkMode} toggleTheme={toggleTheme} />
+      <Navbar darkMode={darkMode} toggleTheme={toggleTheme} setCurrentPage={setCurrentPage} />
 
       <main style={{ flex: 1, padding: '4rem 2rem' }}>
         <div style={{
-          maxWidth: '800px',
+          maxWidth: '600px',
           margin: '0 auto'
         }}>
           <div style={{
@@ -69,11 +69,73 @@ function Contato() {
             <p style={{
               color: darkMode ? '#8b949e' : '#555',
               textAlign: 'center',
-              marginBottom: '2rem'
+              marginBottom: '3rem'
             }}>
               Tem alguma dúvida, sugestão ou quer compartilhar sua experiência? Estamos aqui para ajudar!
             </p>
 
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+              gap: '1.5rem',
+              marginBottom: '3rem'
+            }}>
+              <div style={{ textAlign: 'center' }}>
+                <h4 style={{ color: '#1a237e', marginBottom: '0.5rem' }}>📧 E-mail</h4>
+                <a href="mailto:contato@gadys.com.br" style={{ color: darkMode ? '#8b949e' : '#555', textDecoration: 'none' }}>contato@gadys.com.br</a>
+              </div>
+              <div style={{ textAlign: 'center' }}>
+                <h4 style={{ color: '#1a237e', marginBottom: '0.5rem' }}>📞 Telefone</h4>
+                <p style={{ color: darkMode ? '#8b949e' : '#555', margin: 0 }}>(11) 99999-9999</p>
+              </div>
+              <div style={{ textAlign: 'center' }}>
+                <h4 style={{ color: '#1a237e', marginBottom: '0.5rem' }}>📍 Endereço</h4>
+                <p style={{ color: darkMode ? '#8b949e' : '#555', margin: 0 }}>São Paulo - SP<br />Brasil</p>
+              </div>
+            </div>
+
+            <div style={{
+              textAlign: 'center',
+              marginBottom: '3rem'
+            }}>
+              <h4 style={{ color: '#1a237e', marginBottom: '1rem' }}>Redes Sociais</h4>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'center',
+                gap: '2rem',
+                flexWrap: 'wrap'
+              }}>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>📷</div>
+                  <p style={{ color: darkMode ? '#8b949e' : '#555', margin: 0, fontSize: '0.9rem' }}>Instagram<br />@gadys_brasil</p>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>👥</div>
+                  <p style={{ color: darkMode ? '#8b949e' : '#555', margin: 0, fontSize: '0.9rem' }}>Facebook<br />/gadys.brasil</p>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>🐦</div>
+                  <p style={{ color: darkMode ? '#8b949e' : '#555', margin: 0, fontSize: '0.9rem' }}>Twitter<br />@gadys_br</p>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>📺</div>
+                  <p style={{ color: darkMode ? '#8b949e' : '#555', margin: 0, fontSize: '0.9rem' }}>YouTube<br />/gadys-brasil</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+          <div style={{
+            background: darkMode ? '#21262d' : 'white',
+            padding: '3rem',
+            borderRadius: '15px',
+            boxShadow: '0 5px 20px rgba(0, 0, 0, 0.1)',
+            marginBottom: '2rem',
+            maxWidth: '400px',
+            margin: '0 auto'
+          }}>
             <form onSubmit={handleSubmit} style={{ maxWidth: '600px', margin: '0 auto' }}>
               <div style={{ marginBottom: '1.5rem' }}>
                 <label style={{
@@ -210,70 +272,6 @@ function Contato() {
                 Enviar Mensagem
               </button>
             </form>
-          </div>
-
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-            gap: '2rem'
-          }}>
-            <div style={{
-              background: darkMode ? '#21262d' : 'white',
-              padding: '2rem',
-              borderRadius: '15px',
-              boxShadow: '0 5px 20px rgba(0, 0, 0, 0.1)',
-              textAlign: 'center'
-            }}>
-              <h3 style={{
-                fontSize: '1.3rem',
-                marginBottom: '1rem',
-                color: '#1a237e'
-              }}>
-                📧 E-mail
-              </h3>
-              <p style={{ color: darkMode ? '#8b949e' : '#555' }}>
-                contato@gadys.com.br
-              </p>
-            </div>
-
-            <div style={{
-              background: darkMode ? '#21262d' : 'white',
-              padding: '2rem',
-              borderRadius: '15px',
-              boxShadow: '0 5px 20px rgba(0, 0, 0, 0.1)',
-              textAlign: 'center'
-            }}>
-              <h3 style={{
-                fontSize: '1.3rem',
-                marginBottom: '1rem',
-                color: '#1a237e'
-              }}>
-                📱 Redes Sociais
-              </h3>
-              <p style={{ color: darkMode ? '#8b949e' : '#555' }}>
-                @gadys_brasil
-              </p>
-            </div>
-
-            <div style={{
-              background: darkMode ? '#21262d' : 'white',
-              padding: '2rem',
-              borderRadius: '15px',
-              boxShadow: '0 5px 20px rgba(0, 0, 0, 0.1)',
-              textAlign: 'center'
-            }}>
-              <h3 style={{
-                fontSize: '1.3rem',
-                marginBottom: '1rem',
-                color: '#1a237e'
-              }}>
-                🕒 Horário
-              </h3>
-              <p style={{ color: darkMode ? '#8b949e' : '#555' }}>
-                Segunda a Sexta<br />
-                9h às 18h
-              </p>
-            </div>
           </div>
         </div>
       </main>

@@ -1,73 +1,14 @@
-import { useEffect, useState } from 'react'
-import './App.css'
-import Login from './Login'
-import AdminPanel from './AdminPanel'
-import Home from './components/Home'
-import Amazonas from './components/Amazonas'
-import Lugares from './components/Lugares'
-import SobrePage from './components/SobrePage'
-import ContatoPage from './components/ContatoPage'
-import PerfilPage from './components/PerfilPage'
-import MapaPage from './components/MapaPage'
-import LugaresPage from './components/LugaresPage'
-import CristoRedentor from './components/CristoRedentor'
+import { useState, useEffect } from 'react'
+import { useNavigate, Link } from 'react-router-dom'
 
-function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    return localStorage.getItem('isLoggedIn') === 'true'
-  })
-  
-  const [currentPage, setCurrentPage] = useState(() => {
-    // Sempre iniciar na página home
-    return 'home'
-  })
-  
-  const [userType, setUserType] = useState(() => {
-    return localStorage.getItem('userType') || 'usuario'
-  })
-  
+function HomePage() {
+  const navigate = useNavigate()
   const [darkMode, setDarkMode] = useState(() => {
     return localStorage.getItem('darkMode') === 'true'
   })
-
-  const handleLogin = async (loginUserType, userName) => {
-    setIsLoggedIn(true)
-    setUserType(loginUserType)
-    localStorage.setItem('isLoggedIn', 'true')
-    localStorage.setItem('userType', loginUserType)
-    localStorage.setItem('userName', userName)
-    
-    try {
-      await fetch('http://localhost:3001/api/usuarios/acesso', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          nome: userName,
-          tipoUsuario: loginUserType
-        })
-      })
-    } catch (error) {
-      const userAccess = JSON.parse(localStorage.getItem('userAccess')) || []
-      const existingUser = userAccess.find(user => user.userName === userName)
-      
-      if (existingUser) {
-        existingUser.lastAccess = new Date().toLocaleString('pt-BR')
-        existingUser.accessCount += 1
-      } else {
-        userAccess.push({
-          userName: userName,
-          userType: loginUserType,
-          lastAccess: new Date().toLocaleString('pt-BR'),
-          accessCount: 1,
-          ip: 'localhost'
-        })
-      }
-      
-      localStorage.setItem('userAccess', JSON.stringify(userAccess))
-    }
-    
-    setCurrentPage('home')
-  }
+  const [isLoggedIn] = useState(() => {
+    return localStorage.getItem('isLoggedIn') === 'true'
+  })
 
   const toggleDarkMode = () => {
     const newDarkMode = !darkMode
@@ -75,21 +16,9 @@ function App() {
     localStorage.setItem('darkMode', newDarkMode.toString())
   }
 
-  const handleLogout = () => {
-    setIsLoggedIn(false)
-    setUserType('usuario')
-    localStorage.removeItem('isLoggedIn')
-    localStorage.removeItem('userType')
-    localStorage.removeItem('userName')
-    setCurrentPage('login')
-  }
-
   useEffect(() => {
-    if (currentPage === 'login') return
-
     const timer = setTimeout(() => {
       const slides = document.querySelectorAll('.carousel-slide')
-      const dots = document.querySelectorAll('.nav-dot')
       let currentSlide = 0
       let autoSlideInterval
 
@@ -141,35 +70,7 @@ function App() {
     }, 100)
 
     return () => clearTimeout(timer)
-  }, [isLoggedIn, currentPage, userType])
-
-  if (currentPage === 'sobrepage') {
-    return <SobrePage setCurrentPage={setCurrentPage} />
-  }
-  
-  if (currentPage === 'contatopage') {
-    return <ContatoPage setCurrentPage={setCurrentPage} />
-  }
-  
-  if (currentPage === 'perfilpage') {
-    return <PerfilPage setCurrentPage={setCurrentPage} />
-  }
-  
-  if (currentPage === 'mapapage') {
-    return <MapaPage setCurrentPage={setCurrentPage} />
-  }
-  
-  if (currentPage === 'lugarespage') {
-    return <LugaresPage setCurrentPage={setCurrentPage} />
-  }
-  
-  if (currentPage === 'cristoredentor') {
-    return <CristoRedentor setCurrentPage={setCurrentPage} />
-  }
-  
-  if (currentPage === 'login') {
-    return <Login onLogin={handleLogin} />
-  }
+  }, [])
 
   return (
     <div className={`app ${darkMode ? 'dark-mode' : ''}`} style={{
@@ -213,39 +114,44 @@ function App() {
           <div className="nav-overlay" onClick={() => document.querySelector('.nav-links').classList.remove('active')}></div>
           <ul className="nav-links" style={{paddingTop: '5rem', justifyContent: 'flex-start', gap: '2rem'}}>
             <li><a href="#" style={{color: '#ccc', cursor: 'not-allowed'}} onClick={(e) => e.preventDefault()}>Início (atual)</a></li>
-            <li><a href="#">Acre</a></li>
-            <li><a href="#">Alagoas</a></li>
-            <li><a href="#">Amapá</a></li>
-            <li><a href="/amazonas.html">Amazonas</a></li>
-            <li><a href="#">Bahia</a></li>
-            <li><a href="#">Ceará</a></li>
-            <li><a href="#">Distrito Federal</a></li>
-            <li><a href="#">Espírito Santo</a></li>
-            <li><a href="#">Goiás</a></li>
-            <li><a href="#">Maranhão</a></li>
-            <li><a href="#">Mato Grosso</a></li>
-            <li><a href="#">Mato Grosso do Sul</a></li>
-            <li><a href="#">Minas Gerais</a></li>
-            <li><a href="#">Pará</a></li>
-            <li><a href="#">Paraíba</a></li>
-            <li><a href="#">Paraná</a></li>
-            <li><a href="#">Pernambuco</a></li>
-            <li><a href="#">Piauí</a></li>
-            <li><a href="#">Rio de Janeiro</a></li>
-            <li><a href="#">Rio Grande do Norte</a></li>
-            <li><a href="#">Rio Grande do Sul</a></li>
-            <li><a href="#">Rondônia</a></li>
-            <li><a href="#">Roraima</a></li>
-            <li><a href="#">Santa Catarina</a></li>
-            <li><a href="#">São Paulo</a></li>
-            <li><a href="#">Sergipe</a></li>
-            <li><a href="#">Tocantins</a></li>
-            <li><a href="#" onClick={() => {setCurrentPage('lugarespage'); document.querySelector('.nav-links').classList.remove('active')}}>Lugares</a></li>
-            <li><a href="#" onClick={() => {setCurrentPage('mapapage'); document.querySelector('.nav-links').classList.remove('active')}}>Mapa</a></li>
-            <li><a href="#" onClick={(e) => {e.preventDefault(); if (!localStorage.getItem('isLoggedIn')) setCurrentPage('login'); else window.location.href='/adicionar-locais.html'; document.querySelector('.nav-links').classList.remove('active')}}>Adicionar Local</a></li>
-            <li><a href="#" onClick={() => {setCurrentPage('perfilpage'); document.querySelector('.nav-links').classList.remove('active')}}>Meu Perfil</a></li>
-            <li><a href="#" onClick={() => {setCurrentPage('sobrepage'); document.querySelector('.nav-links').classList.remove('active')}}>Sobre</a></li>
-            <li><a href="#" onClick={() => {setCurrentPage('contatopage'); document.querySelector('.nav-links').classList.remove('active')}}>Contato</a></li>
+            <li className="dropdown">
+              <a href="#features" onClick={(e) => {e.preventDefault(); document.getElementById('features')?.scrollIntoView({behavior: 'smooth'})}}>Estados Brasileiros ▼</a>
+              <div className="dropdown-content">
+                <a href="#">Acre</a>
+                <a href="#">Alagoas</a>
+                <a href="#">Amapá</a>
+                <Link to="/amazonas" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Amazonas</Link>
+                <a href="#">Bahia</a>
+                <a href="#">Ceará</a>
+                <a href="#">Distrito Federal</a>
+                <a href="#">Espírito Santo</a>
+                <a href="#">Goiás</a>
+                <a href="#">Maranhão</a>
+                <a href="#">Mato Grosso</a>
+                <a href="#">Mato Grosso do Sul</a>
+                <a href="#">Minas Gerais</a>
+                <a href="#">Pará</a>
+                <a href="#">Paraíba</a>
+                <a href="#">Paraná</a>
+                <a href="#">Pernambuco</a>
+                <a href="#">Piauí</a>
+                <a href="#">Rio de Janeiro</a>
+                <a href="#">Rio Grande do Norte</a>
+                <a href="#">Rio Grande do Sul</a>
+                <a href="#">Rondônia</a>
+                <a href="#">Roraima</a>
+                <a href="#">Santa Catarina</a>
+                <a href="#">São Paulo</a>
+                <a href="#">Sergipe</a>
+                <a href="#">Tocantins</a>
+              </div>
+            </li>
+            <li><a href="#" onClick={() => {navigate('/lugares'); document.querySelector('.nav-links').classList.remove('active')}}>Lugares</a></li>
+            <li><a href="#" onClick={() => {navigate('/mapa'); document.querySelector('.nav-links').classList.remove('active')}}>Mapa</a></li>
+            <li><a href="#" onClick={(e) => {e.preventDefault(); if (!localStorage.getItem('isLoggedIn')) navigate('/login'); else window.location.href='/adicionar-locais.html'; document.querySelector('.nav-links').classList.remove('active')}}>Adicionar Local</a></li>
+            <li><a href="#" onClick={() => {navigate('/perfil'); document.querySelector('.nav-links').classList.remove('active')}}>Meu Perfil</a></li>
+            <li><a href="#" onClick={() => {navigate('/sobre'); document.querySelector('.nav-links').classList.remove('active')}}>Sobre</a></li>
+            <li><a href="#" onClick={() => {navigate('/contato'); document.querySelector('.nav-links').classList.remove('active')}}>Contato</a></li>
           </ul>
         </nav>
       </header>
@@ -263,7 +169,7 @@ function App() {
                 )}
                 <h2>Descubra Lugares Incríveis</h2>
                 <p>Explore pontos de interesse únicos e encontre experiências inesquecíveis</p>
-                <button className="cta-button" onClick={() => setCurrentPage('lugarespage')}>Começar Exploração</button>
+                <button className="cta-button" onClick={() => navigate('/lugares')}>Começar Exploração</button>
                 <div className="carousel-nav">
                   <span className="nav-dot active" data-slide="0"></span>
                   <span className="nav-dot" data-slide="1"></span>
@@ -281,7 +187,7 @@ function App() {
                 )}
                 <h2>Descubra Lugares Incríveis</h2>
                 <p>Explore pontos de interesse únicos e encontre experiências inesquecíveis</p>
-                <button className="cta-button" onClick={() => setCurrentPage('lugarespage')}>Começar Exploração</button>
+                <button className="cta-button" onClick={() => navigate('/lugares')}>Começar Exploração</button>
                 <div className="carousel-nav">
                   <span className="nav-dot" data-slide="0"></span>
                   <span className="nav-dot active" data-slide="1"></span>
@@ -299,7 +205,7 @@ function App() {
                 )}
                 <h2>Descubra Lugares Incríveis</h2>
                 <p>Explore pontos de interesse únicos e encontre experiências inesquecíveis</p>
-                <button className="cta-button" onClick={() => setCurrentPage('lugarespage')}>Começar Exploração</button>
+                <button className="cta-button" onClick={() => navigate('/lugares')}>Começar Exploração</button>
                 <div className="carousel-nav">
                   <span className="nav-dot" data-slide="0"></span>
                   <span className="nav-dot" data-slide="1"></span>
@@ -318,4 +224,4 @@ function App() {
   )
 }
 
-export default App
+export default HomePage

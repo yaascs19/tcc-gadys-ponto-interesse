@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
-function ContatoPage({ setCurrentPage }) {
+function ContatoPage() {
   const [darkMode, setDarkMode] = useState(() => {
     return localStorage.getItem('darkMode') === 'true'
   })
@@ -24,22 +25,6 @@ function ContatoPage({ setCurrentPage }) {
       .nav-links li:hover .dropdown-content {
         display: block !important;
       }
-      .contact-card {
-        transform: translateY(0);
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-      .contact-card:hover {
-        transform: translateY(-15px) scale(1.02);
-      }
-      .form-input {
-        transition: all 0.3s ease;
-      }
-      .form-input:focus {
-        outline: none;
-        border-color: #667eea;
-        box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
-        transform: scale(1.02);
-      }
     `
     document.head.appendChild(style)
     return () => document.head.removeChild(style)
@@ -60,9 +45,7 @@ function ContatoPage({ setCurrentPage }) {
         left: 0,
         right: 0,
         bottom: 0,
-        background: darkMode ? 
-          'radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.15) 0%, transparent 50%), radial-gradient(circle at 40% 40%, rgba(102, 126, 234, 0.2) 0%, transparent 50%)' : 
-          'radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%)',
+        background: darkMode ? 'radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.15) 0%, transparent 50%)' : 'radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%)',
         zIndex: 1
       }} />
 
@@ -76,8 +59,7 @@ function ContatoPage({ setCurrentPage }) {
         position: 'sticky',
         top: 0,
         zIndex: 100,
-        borderBottom: '1px solid rgba(255,255,255,0.1)',
-        boxShadow: '0 10px 30px rgba(0,0,0,0.2)'
+        borderBottom: '1px solid rgba(255,255,255,0.1)'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <img 
@@ -87,8 +69,7 @@ function ContatoPage({ setCurrentPage }) {
               height: '45px',
               background: 'linear-gradient(135deg, #667eea, #764ba2)',
               borderRadius: '50%',
-              padding: '8px',
-              filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))'
+              padding: '8px'
             }}
           />
           <span style={{ fontSize: '1.5rem', fontWeight: '700', letterSpacing: '1px', color: 'white' }}>GADYS</span>
@@ -97,9 +78,9 @@ function ContatoPage({ setCurrentPage }) {
           <button 
             onClick={toggleTheme}
             style={{
-              background: 'rgba(255,255,255,0.1)',
-              border: '1px solid rgba(255,255,255,0.2)',
-              color: 'white',
+              background: darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.1)',
+              border: darkMode ? '1px solid rgba(255,255,255,0.2)' : '1px solid rgba(255,255,255,0.2)',
+              color: darkMode ? 'white' : 'white',
               fontSize: '1.2rem',
               cursor: 'pointer',
               padding: '0.5rem',
@@ -165,7 +146,7 @@ function ContatoPage({ setCurrentPage }) {
             right: '-100%',
             width: '300px',
             height: '100vh',
-            background: '#1a237e',
+            background: darkMode ? '#1a237e' : '#1a237e',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'flex-start',
@@ -180,7 +161,7 @@ function ContatoPage({ setCurrentPage }) {
             boxShadow: '-5px 0 15px rgba(0,0,0,0.1)'
           }}
         >
-          <li><a href="#" onClick={() => {setCurrentPage('home'); document.querySelector('.nav-links').classList.remove('active')}} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Início</a></li>
+          <li><Link to="/" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Início</Link></li>
           <li className="dropdown" style={{ position: 'relative' }}>
             <a href="#" style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Estados Brasileiros ▼</a>
             <div className="dropdown-content" style={{
@@ -199,7 +180,7 @@ function ContatoPage({ setCurrentPage }) {
               <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Acre</a>
               <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Alagoas</a>
               <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Amapá</a>
-              <a href="/amazonas.html" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Amazonas</a>
+              <Link to="/amazonas" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Amazonas</Link>
               <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Bahia</a>
               <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Ceará</a>
               <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Distrito Federal</a>
@@ -225,11 +206,11 @@ function ContatoPage({ setCurrentPage }) {
               <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Tocantins</a>
             </div>
           </li>
-          <li><a href="#" onClick={() => {setCurrentPage('lugarespage'); document.querySelector('.nav-links').classList.remove('active')}} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Lugares</a></li>
-          <li><a href="#" onClick={() => {setCurrentPage('mapapage'); document.querySelector('.nav-links').classList.remove('active')}} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Mapa</a></li>
+          <li><Link to="/lugares" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Lugares</Link></li>
+          <li><Link to="/mapa" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Mapa</Link></li>
           <li><a href="#" onClick={(e) => {e.preventDefault(); if (!localStorage.getItem('isLoggedIn')) setCurrentPage('login'); else window.location.href='/adicionar-locais.html'; document.querySelector('.nav-links').classList.remove('active')}} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Adicionar Local</a></li>
-          <li><a href="#" onClick={() => {setCurrentPage('perfilpage'); document.querySelector('.nav-links').classList.remove('active')}} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Meu Perfil</a></li>
-          <li><a href="#" onClick={() => {setCurrentPage('sobrepage'); document.querySelector('.nav-links').classList.remove('active')}} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Sobre</a></li>
+          <li><Link to="/perfil" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Meu Perfil</Link></li>
+          <li><Link to="/sobre" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Sobre</Link></li>
           <li><a href="#" style={{ color: '#ccc', textDecoration: 'none', padding: '0.5rem 1rem', cursor: 'not-allowed' }}>Contato (atual)</a></li>
         </ul>
       </header>
@@ -246,21 +227,8 @@ function ContatoPage({ setCurrentPage }) {
           padding: '8rem 0 6rem',
           background: darkMode ? 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)' : 'linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 100%)',
           borderRadius: '0 0 50px 50px',
-          marginBottom: '6rem',
-          position: 'relative',
-          overflow: 'hidden'
+          marginBottom: '6rem'
         }}>
-          <div style={{
-            position: 'absolute',
-            top: '-50%',
-            left: '-50%',
-            width: '200%',
-            height: '200%',
-            background: 'conic-gradient(from 0deg, transparent, rgba(102, 126, 234, 0.1), transparent)',
-            animation: 'rotate 20s linear infinite',
-            zIndex: -1
-          }} />
-          
           <h1 style={{
             fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
             fontWeight: '900',
@@ -269,8 +237,7 @@ function ContatoPage({ setCurrentPage }) {
             WebkitTextFillColor: 'transparent',
             marginBottom: '2rem',
             letterSpacing: '-3px',
-            lineHeight: '1.1',
-            filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.1))'
+            lineHeight: '1.1'
           }}>
             Entre em Contato
           </h1>
@@ -283,8 +250,8 @@ function ContatoPage({ setCurrentPage }) {
             lineHeight: '1.6',
             fontWeight: '300'
           }}>
-            Estamos aqui para ajudar você<br />
-            <span style={{ color: '#667eea', fontWeight: '500' }}>Fale conosco através dos canais abaixo</span>
+            Tem dúvidas ou sugestões?<br />
+            <span style={{ color: '#667eea', fontWeight: '500' }}>Estamos aqui para ajudar você</span>
           </p>
         </section>
 
@@ -297,63 +264,118 @@ function ContatoPage({ setCurrentPage }) {
           boxShadow: '0 30px 60px rgba(102, 126, 234, 0.1)'
         }}>
           <h2 style={{ 
-            fontSize: '2.5rem', 
-            marginBottom: '3rem', 
+            fontSize: '3rem', 
+            marginBottom: '4rem',
             textAlign: 'center',
             fontWeight: '700'
           }}>Informações de Contato</h2>
+          
           <div style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: '2rem',
-            maxWidth: '900px',
-            margin: '0 auto'
+            gap: '3rem',
+            marginBottom: '4rem'
+          }}>
+            <div style={{
+              background: '#000',
+              padding: '2rem',
+              borderRadius: '20px',
+              textAlign: 'center',
+              border: '3px solid #667eea'
+            }}>
+              <h3 style={{ fontSize: '1.3rem', marginBottom: '1rem', color: '#667eea', fontWeight: '600' }}>E-mail</h3>
+              <p style={{ fontSize: '1rem', opacity: 0.8, color: 'white' }}>contato@gadys.com.br</p>
+            </div>
+            
+            <div style={{
+              background: '#000',
+              padding: '2rem',
+              borderRadius: '20px',
+              textAlign: 'center',
+              border: '3px solid #764ba2'
+            }}>
+              <h3 style={{ fontSize: '1.3rem', marginBottom: '1rem', color: '#764ba2', fontWeight: '600' }}>Telefone</h3>
+              <p style={{ fontSize: '1rem', opacity: 0.8, color: 'white' }}>(11) 99999-9999</p>
+            </div>
+            
+            <div style={{
+              background: '#000',
+              padding: '2rem',
+              borderRadius: '20px',
+              textAlign: 'center',
+              border: '3px solid #f093fb'
+            }}>
+              <h3 style={{ fontSize: '1.3rem', marginBottom: '1rem', color: '#f093fb', fontWeight: '600' }}>Endereço</h3>
+              <p style={{ fontSize: '1rem', opacity: 0.8, color: 'white' }}>São Paulo - SP<br />Brasil</p>
+            </div>
+          </div>
+          
+          <h3 style={{ 
+            fontSize: '2rem', 
+            marginBottom: '2rem',
+            textAlign: 'center',
+            fontWeight: '600'
+          }}>Redes Sociais</h3>
+          
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            gap: '3rem',
+            flexWrap: 'wrap'
           }}>
             {[
-              { title: 'Email', desc: 'contato@gadys.com.br', color: '#667eea' },
-              { title: 'Telefone', desc: '(11) 9999-9999', color: '#764ba2' },
-              { title: 'Endereço', desc: 'São Paulo, SP - Brasil', color: '#f093fb' }
-            ].map((item, index) => (
-              <div 
-                key={index}
-                style={{
-                  background: 'linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.6) 100%)',
-                  padding: '2rem',
-                  borderRadius: '25px',
-                  backdropFilter: 'blur(20px)',
-                  border: '1px solid rgba(255,255,255,0.1)',
-                  boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
-                  textAlign: 'center',
-                  position: 'relative',
-                  overflow: 'hidden'
-                }}
-              >
+              { name: 'Instagram', handle: '@gadys_brasil', color: '#E4405F' },
+              { name: 'Facebook', handle: '/gadys.brasil', color: '#1877F2' },
+              { name: 'Twitter', handle: '@gadys_br', color: '#1DA1F2' },
+              { name: 'YouTube', handle: '/gadys-brasil', color: '#FF0000' }
+            ].map((social, index) => (
+              <div key={index} style={{ 
+                textAlign: 'center',
+                transition: 'all 0.3s'
+              }}>
                 <div style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  height: '4px',
-                  background: `linear-gradient(90deg, ${item.color}, transparent)`
-                }} />
-                <h3 style={{ 
-                  fontSize: '1.3rem', 
-                  marginBottom: '1rem',
-                  fontWeight: '600',
-                  color: item.color
-                }}>{item.title}</h3>
-                <p style={{ 
-                  opacity: 0.8,
-                  lineHeight: 1.6,
-                  fontSize: '1rem',
+                  width: '80px',
+                  height: '80px',
+                  borderRadius: '50%',
+                  background: social.color,
+                  margin: '0 auto 1rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '2rem',
+                  boxShadow: `0 10px 30px ${social.color}40`,
+                  cursor: 'pointer',
+                  transition: 'all 0.3s',
                   color: 'white'
-                }}>{item.desc}</p>
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.transform = 'scale(1.1)'
+                  e.currentTarget.style.boxShadow = `0 15px 40px ${social.color}60`
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.transform = 'scale(1)'
+                  e.currentTarget.style.boxShadow = `0 10px 30px ${social.color}40`
+                }}
+                >
+                  {social.name === 'Instagram' && '📷'}
+                  {social.name === 'Facebook' && '👥'}
+                  {social.name === 'Twitter' && '🐦'}
+                  {social.name === 'YouTube' && '📺'}
+                </div>
+                <h4 style={{ 
+                  fontSize: '1.2rem',
+                  marginBottom: '0.5rem',
+                  fontWeight: '600'
+                }}>{social.name}</h4>
+                <p style={{ 
+                  opacity: 0.7,
+                  fontSize: '0.9rem',
+                  color: social.color
+                }}>{social.handle}</p>
               </div>
             ))}
           </div>
         </section>
-
-
 
         <section style={{
           background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)',
@@ -361,256 +383,168 @@ function ContatoPage({ setCurrentPage }) {
           borderRadius: '30px',
           marginBottom: '6rem',
           border: '1px solid rgba(102, 126, 234, 0.2)',
-          boxShadow: '0 30px 60px rgba(102, 126, 234, 0.1)'
+          boxShadow: '0 30px 60px rgba(102, 126, 234, 0.1)',
+          maxWidth: '600px',
+          margin: '0 auto 6rem'
         }}>
           <h2 style={{ 
-            fontSize: '2.5rem', 
+            fontSize: '3rem', 
             marginBottom: '3rem', 
             textAlign: 'center',
-            fontWeight: '700'
-          }}>Nossas Redes Sociais</h2>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: '2rem',
-            maxWidth: '900px',
-            margin: '0 auto'
-          }}>
-            {[
-              { title: 'Facebook', desc: '@gadys.oficial', color: '#1877f2' },
-              { title: 'Instagram', desc: '@gadys_turismo', color: '#e4405f' },
-              { title: 'Twitter', desc: '@gadys_br', color: '#1da1f2' },
-              { title: 'LinkedIn', desc: 'GADYS Turismo', color: '#0077b5' }
-            ].map((item, index) => (
-              <div 
-                key={index}
-                style={{
-                  background: 'linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.6) 100%)',
-                  padding: '2rem',
-                  borderRadius: '25px',
-                  backdropFilter: 'blur(20px)',
-                  border: '1px solid rgba(255,255,255,0.1)',
-                  boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
-                  textAlign: 'center',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s'
-                }}
-                onMouseOver={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-10px) scale(1.05)'
-                }}
-                onMouseOut={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0) scale(1)'
-                }}
-              >
-                <div style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  height: '4px',
-                  background: `linear-gradient(90deg, ${item.color}, transparent)`
-                }} />
-                <h3 style={{ 
-                  fontSize: '1.3rem', 
-                  marginBottom: '1rem',
-                  fontWeight: '600',
-                  color: item.color
-                }}>{item.title}</h3>
-                <p style={{ 
-                  opacity: 0.8,
-                  lineHeight: 1.6,
-                  fontSize: '1rem',
-                  color: 'white'
-                }}>{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section style={{
-          display: 'flex',
-          justifyContent: 'center',
-          marginBottom: '6rem'
-        }}>
-          <div 
-            className="contact-card"
-            style={{
-              background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%)',
-              padding: '4rem 3rem',
-              borderRadius: '30px',
-              border: '1px solid rgba(102, 126, 234, 0.3)',
-              boxShadow: '0 30px 60px rgba(102, 126, 234, 0.2)',
-              position: 'relative',
-              overflow: 'hidden',
-              maxWidth: '600px',
-              margin: '0 auto'
-            }}
-          >
-            <div style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              height: '4px',
-              background: 'linear-gradient(90deg, #667eea, #764ba2)'
-            }} />
-            
-            <h2 style={{ 
-              fontSize: '2.5rem', 
-              marginBottom: '3rem',
-              textAlign: 'center',
-              fontWeight: '700',
-              background: 'linear-gradient(135deg, #667eea, #764ba2)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent'
-            }}>Envie uma Mensagem</h2>
-            
-            <form 
-              style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}
-              onSubmit={(e) => {
-                e.preventDefault()
-                alert('Mensagem enviada com sucesso!')
+            fontWeight: '900',
+            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            letterSpacing: '-2px',
+            lineHeight: '1.1'
+          }}>Formulário de Contato</h2>
+          
+          <form style={{ maxWidth: '600px', margin: '0 auto' }}>
+            <div style={{ marginBottom: '2rem' }}>
+              <label style={{ 
+                display: 'block', 
+                marginBottom: '0.5rem', 
+                fontWeight: '600',
+                color: '#667eea'
+              }}>Nome:</label>
+              <input type="text" required style={{
+                width: '100%',
+                padding: '1rem',
+                borderRadius: '15px',
+                border: '1px solid rgba(102, 126, 234, 0.3)',
+                background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
+                color: darkMode ? 'white' : '#333',
+                fontSize: '1rem',
+                transition: 'all 0.3s ease',
+                outline: 'none'
               }}
-            >
-              <div style={{ position: 'relative' }}>
-                <input 
-                  type="text" 
-                  placeholder="Seu nome"
-                  className="form-input"
-                  required
-                  style={{
-                    width: '100%',
-                    padding: '1.5rem',
-                    borderRadius: '15px',
-                    border: '2px solid rgba(102, 126, 234, 0.3)',
-                    background: 'rgba(255,255,255,0.1)',
-                    color: darkMode ? 'white' : '#2c3e50',
-                    fontSize: '1.1rem',
-                    backdropFilter: 'blur(10px)'
-                  }}
-                />
-              </div>
-              
-              <div style={{ position: 'relative' }}>
-                <input 
-                  type="email" 
-                  placeholder="Seu email"
-                  className="form-input"
-                  required
-                  style={{
-                    width: '100%',
-                    padding: '1.5rem',
-                    borderRadius: '15px',
-                    border: '2px solid rgba(102, 126, 234, 0.3)',
-                    background: 'rgba(255,255,255,0.1)',
-                    color: darkMode ? 'white' : '#2c3e50',
-                    fontSize: '1.1rem',
-                    backdropFilter: 'blur(10px)'
-                  }}
-                />
-              </div>
-              
-              <div style={{ position: 'relative' }}>
-                <textarea 
-                  placeholder="Sua mensagem"
-                  rows="6"
-                  className="form-input"
-                  required
-                  style={{
-                    width: '100%',
-                    padding: '1.5rem',
-                    borderRadius: '15px',
-                    border: '2px solid rgba(102, 126, 234, 0.3)',
-                    background: 'rgba(255,255,255,0.1)',
-                    color: darkMode ? 'white' : '#2c3e50',
-                    fontSize: '1.1rem',
-                    resize: 'vertical',
-                    backdropFilter: 'blur(10px)'
-                  }}
-                />
-              </div>
-              
-              <button 
-                type="submit"
-                style={{
-                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                  color: 'white',
-                  border: 'none',
-                  padding: '1.5rem 2rem',
-                  borderRadius: '25px',
-                  cursor: 'pointer',
-                  fontSize: '1.2rem',
-                  fontWeight: '600',
-                  transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                  boxShadow: '0 15px 35px rgba(102, 126, 234, 0.4)',
-                  position: 'relative',
-                  overflow: 'hidden'
-                }}
-                onMouseOver={(e) => {
-                  e.target.style.transform = 'translateY(-5px) scale(1.02)'
-                  e.target.style.boxShadow = '0 25px 50px rgba(102, 126, 234, 0.6)'
-                }}
-                onMouseOut={(e) => {
-                  e.target.style.transform = 'translateY(0) scale(1)'
-                  e.target.style.boxShadow = '0 15px 35px rgba(102, 126, 234, 0.4)'
-                }}
-              >
-                <span style={{ position: 'relative', zIndex: 1 }}>Enviar Mensagem</span>
+              onFocus={(e) => {
+                e.target.style.border = '2px solid #667eea'
+                e.target.style.boxShadow = '0 0 20px rgba(102, 126, 234, 0.4)'
+                e.target.style.transform = 'scale(1.02)'
+              }}
+              onBlur={(e) => {
+                e.target.style.border = '1px solid rgba(102, 126, 234, 0.3)'
+                e.target.style.boxShadow = 'none'
+                e.target.style.transform = 'scale(1)'
+              }} />
+            </div>
+            
+            <div style={{ marginBottom: '2rem' }}>
+              <label style={{ 
+                display: 'block', 
+                marginBottom: '0.5rem', 
+                fontWeight: '600',
+                color: '#667eea'
+              }}>Email:</label>
+              <input type="email" required style={{
+                width: '100%',
+                padding: '1rem',
+                borderRadius: '15px',
+                border: '1px solid rgba(102, 126, 234, 0.3)',
+                background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
+                color: darkMode ? 'white' : '#333',
+                fontSize: '1rem',
+                transition: 'all 0.3s ease',
+                outline: 'none'
+              }}
+              onFocus={(e) => {
+                e.target.style.border = '2px solid #764ba2'
+                e.target.style.boxShadow = '0 0 20px rgba(118, 75, 162, 0.4)'
+                e.target.style.transform = 'scale(1.02)'
+              }}
+              onBlur={(e) => {
+                e.target.style.border = '1px solid rgba(102, 126, 234, 0.3)'
+                e.target.style.boxShadow = 'none'
+                e.target.style.transform = 'scale(1)'
+              }} />
+            </div>
+            
+            <div style={{ marginBottom: '2rem' }}>
+              <label style={{ 
+                display: 'block', 
+                marginBottom: '0.5rem', 
+                fontWeight: '600',
+                color: '#667eea'
+              }}>Mensagem:</label>
+              <textarea rows="5" required style={{
+                width: '100%',
+                padding: '1rem',
+                borderRadius: '15px',
+                border: '1px solid rgba(102, 126, 234, 0.3)',
+                background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
+                color: darkMode ? 'white' : '#333',
+                fontSize: '1rem',
+                resize: 'vertical',
+                transition: 'all 0.3s ease',
+                outline: 'none'
+              }}
+              onFocus={(e) => {
+                e.target.style.border = '2px solid #f093fb'
+                e.target.style.boxShadow = '0 0 20px rgba(240, 147, 251, 0.4)'
+                e.target.style.transform = 'scale(1.02)'
+              }}
+              onBlur={(e) => {
+                e.target.style.border = '1px solid rgba(102, 126, 234, 0.3)'
+                e.target.style.boxShadow = 'none'
+                e.target.style.transform = 'scale(1)'
+              }} />
+            </div>
+            
+            <div style={{ textAlign: 'center' }}>
+              <button type="submit" style={{
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                color: 'white',
+                border: 'none',
+                padding: '1rem 3rem',
+                borderRadius: '25px',
+                cursor: 'pointer',
+                fontSize: '1.1rem',
+                fontWeight: '600',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 10px 25px rgba(102, 126, 234, 0.3)',
+                transform: 'scale(1)'
+              }}
+              onMouseOver={(e) => {
+                e.target.style.transform = 'scale(1.05)'
+                e.target.style.boxShadow = '0 15px 35px rgba(102, 126, 234, 0.5)'
+                e.target.style.background = 'linear-gradient(135deg, #764ba2 0%, #f093fb 100%)'
+              }}
+              onMouseOut={(e) => {
+                e.target.style.transform = 'scale(1)'
+                e.target.style.boxShadow = '0 10px 25px rgba(102, 126, 234, 0.3)'
+                e.target.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+              }}>
+                Enviar Mensagem
               </button>
-            </form>
-          </div>
+            </div>
+          </form>
         </section>
 
         <section style={{
           textAlign: 'center',
           padding: '4rem 0 6rem'
         }}>
-          <div style={{
-            display: 'flex',
-            gap: '2rem',
-            justifyContent: 'center',
-            flexWrap: 'wrap'
-          }}>
-            <button 
-              onClick={() => window.location.href = '/'}
-              style={{
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                color: 'white',
-                border: 'none',
-                padding: '1.5rem 3rem',
-                borderRadius: '50px',
-                cursor: 'pointer',
-                fontSize: '1.1rem',
-                fontWeight: '600',
-                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                boxShadow: '0 15px 35px rgba(102, 126, 234, 0.4)',
-                letterSpacing: '0.5px'
-              }}
-            >
-              🏠 Voltar ao Início
-            </button>
-            
-            <button 
-              onClick={() => setCurrentPage('sobrepage')}
-              style={{
-                background: 'transparent',
-                color: darkMode ? 'white' : '#2c3e50',
-                border: darkMode ? '2px solid rgba(255,255,255,0.3)' : '2px solid rgba(44, 62, 80, 0.3)',
-                padding: '1.5rem 3rem',
-                borderRadius: '50px',
-                cursor: 'pointer',
-                fontSize: '1.1rem',
-                fontWeight: '600',
-                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                backdropFilter: 'blur(10px)',
-                letterSpacing: '0.5px'
-              }}
-            >
-              ℹ️ Sobre Nós
-            </button>
-          </div>
+          <Link 
+            to="/"
+            style={{
+              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              color: 'white',
+              border: 'none',
+              padding: '1.5rem 3rem',
+              borderRadius: '50px',
+              cursor: 'pointer',
+              fontSize: '1.1rem',
+              fontWeight: '600',
+              transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+              boxShadow: '0 15px 35px rgba(102, 126, 234, 0.4)',
+              letterSpacing: '0.5px',
+              textDecoration: 'none',
+              display: 'inline-block'
+            }}
+          >
+            Voltar ao Início
+          </Link>
         </section>
       </main>
 
