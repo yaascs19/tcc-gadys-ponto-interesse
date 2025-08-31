@@ -29,6 +29,7 @@ import RioAmazonas from './components/RioAmazonas';
 import ParqueAnavilhanas from './components/ParqueAnavilhanas';
 import CulturaAmazonas from './components/CulturaAmazonas';
 import FestivalParintins from './components/FestivalParintins';
+import LendasAmazonicas from './components/LendasAmazonicas';
 import ContatoPage from './components/ContatoPage';
 
 
@@ -65,6 +66,7 @@ function Router() {
         <Route path="/parque-anavilhanas" element={<ParqueAnavilhanas />} />
         <Route path="/amazonas/cultura" element={<CulturaAmazonas />} />
         <Route path="/festival-parintins" element={<FestivalParintins />} />
+        <Route path="/lendas-amazonicas" element={<LendasAmazonicas />} />
         <Route path="/contato" element={<ContatoPage />} />
 
       </Routes>
