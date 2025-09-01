@@ -17,6 +17,17 @@ function MapaLeaflet() {
     localStorage.setItem('darkMode', newDarkMode.toString())
   }
 
+  const calcularDistancia = (lat1, lng1, lat2, lng2) => {
+    const R = 6371 // Raio da Terra em km
+    const dLat = (lat2 - lat1) * Math.PI / 180
+    const dLng = (lng2 - lng1) * Math.PI / 180
+    const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+              Math.sin(dLng/2) * Math.sin(dLng/2)
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
+    return R * c
+  }
+
   const getMyLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -25,20 +36,23 @@ function MapaLeaflet() {
           const lng = position.coords.longitude
           setUserLocation({ lat, lng })
           
-          if (window.currentMap) {
-            window.currentMap.setView([lat, lng], 12)
-            
-            window.L.circleMarker([lat, lng], {
-              radius: 20,
-              fillColor: '#ff4444',
-              color: 'white',
-              weight: 4,
-              opacity: 1,
-              fillOpacity: 1
-            }).addTo(window.currentMap).bindPopup('Sua Localização')
-          }
-          
-          alert(`Localização encontrada: ${lat.toFixed(4)}, ${lng.toFixed(4)}`)
+          // Buscar nome da localização usando coordenadas
+          fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&limit=1`)
+            .then(response => response.json())
+            .then(data => {
+              if (data && data.display_name) {
+                const searchInput = document.getElementById('searchInput')
+                if (searchInput) {
+                  searchInput.value = data.display_name
+                }
+                alert(`Localização encontrada: ${data.display_name}`)
+              } else {
+                alert(`Localização encontrada: ${lat.toFixed(4)}, ${lng.toFixed(4)}`)
+              }
+            })
+            .catch(() => {
+              alert(`Localização encontrada: ${lat.toFixed(4)}, ${lng.toFixed(4)}`)
+            })
         },
         (error) => {
           alert('Erro ao obter localização: ' + error.message)
@@ -73,68 +87,121 @@ function MapaLeaflet() {
   useEffect(() => {
     setLugaresVisiveis(lugares)
     
-    // Carregar Leaflet
-    const link = document.createElement('link')
-    link.rel = 'stylesheet'
-    link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'
-    document.head.appendChild(link)
-    
-    const script = document.createElement('script')
-    script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'
-    script.onload = initMap
-    document.head.appendChild(script)
-    
-    function initMap() {
-      if (window.L && document.getElementById('map')) {
-        const map = window.L.map('map').setView([-14.2350, -51.9253], 4)
-        
-        window.L.tileLayer('https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', {
-          attribution: '© Google Maps',
-          maxZoom: 20
-        }).addTo(map)
-        
-        // Adicionar marcadores
-        lugares.forEach(lugar => {
-          const marker = window.L.circleMarker([lugar.lat, lugar.lng], {
-            radius: 15,
-            fillColor: lugar.cor,
-            color: 'white',
-            weight: 3,
-            opacity: 1,
-            fillOpacity: 1
-          }).addTo(map)
-          
-          marker.bindPopup(`
-            <div style="font-family: Arial; max-width: 300px;">
-              <h3 style="margin: 0 0 10px 0; color: #1a237e;">${lugar.nome}</h3>
-              <p><strong>Cidade:</strong> ${lugar.cidade}</p>
-              <p><strong>Categoria:</strong> ${lugar.categoria}</p>
-              <p><strong>Preço:</strong> ${lugar.preco}</p>
-            </div>
-          `)
-        })
-        
-        window.currentMap = map
+    // Aguardar um pouco antes de carregar o mapa
+    setTimeout(() => {
+      // Carregar Leaflet
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'
+      document.head.appendChild(link)
+      
+      const script = document.createElement('script')
+      script.src = `https://unpkg.com/leaflet@1.9.4/dist/leaflet.js?v=${Date.now()}`
+      script.onload = () => {
+        console.log('LEAFLET CARREGADO EM:', new Date().toLocaleTimeString())
+        setTimeout(() => {
+          if (window.L && document.getElementById('map')) {
+            const map = window.L.map('map').setView([-14.2350, -51.9253], 4)
+            
+            window.L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
+              attribution: '© Google Maps',
+              maxZoom: 20
+            }).addTo(map)
+            
+            window.mapMarkers = []
+            
+            // MARCADORES BONITOS - DEBUG
+            console.log('TOTAL DE LUGARES:', lugares.length)
+            lugares.forEach((lugar, index) => {
+              console.log(`MARCADOR ${index + 1}:`, lugar.nome, 'Coordenadas:', lugar.lat, lugar.lng, 'Cor:', lugar.cor)
+              
+              try {
+                const marker = window.L.circleMarker([lugar.lat, lugar.lng], {
+                  radius: 12,
+                  fillColor: lugar.cor,
+                  color: 'white',
+                  weight: 3,
+                  opacity: 1,
+                  fillOpacity: 0.9
+                }).addTo(map)
+                
+                console.log(`MARCADOR ${index + 1} CRIADO COM SUCESSO`)
+              
+              const icone = lugar.categoria === 'monumentos' ? '🏛️' : 
+                           lugar.categoria === 'natureza' ? '🌳' : 
+                           lugar.categoria === 'praias' ? '🏖️' : '🏢'
+              
+              marker.bindPopup(`
+                <div style="padding: 10px; font-family: Arial;">
+                  <h3 style="margin: 0 0 5px 0; color: #333;">${icone} ${lugar.nome}</h3>
+                  <p style="margin: 0 0 5px 0; color: #666;">${lugar.cidade}</p>
+                  <div style="display: flex; gap: 5px;">
+                    <span style="background: #667eea; color: white; padding: 2px 6px; border-radius: 10px; font-size: 11px;">${lugar.categoria}</span>
+                    <span style="background: ${lugar.preco === 'gratuito' ? '#2ecc71' : '#e74c3c'}; color: white; padding: 2px 6px; border-radius: 10px; font-size: 11px;">${lugar.preco}</span>
+                  </div>
+                </div>
+              `)
+              
+                window.mapMarkers.push(marker)
+                console.log(`MARCADOR ${index + 1} ADICIONADO AO ARRAY. Total no array:`, window.mapMarkers.length)
+              } catch (error) {
+                console.error(`ERRO AO CRIAR MARCADOR ${index + 1}:`, error)
+              }
+            })
+            
+            console.log('RESUMO FINAL:')
+            console.log('- Lugares processados:', lugares.length)
+            console.log('- Marcadores no array:', window.mapMarkers.length)
+            console.log('- Marcadores no mapa:', map._layers ? Object.keys(map._layers).length : 'N/A')
+            
+            window.currentMap = map
+            console.log('TOTAL DE MARCADORES:', window.mapMarkers.length)
+            alert(`${window.mapMarkers.length} MARCADORES COLORIDOS ADICIONADOS!`)
+          }
+        }, 500)
       }
-    }
+      document.head.appendChild(script)
+    }, 100)
   }, [])
 
   const buscarLocal = (local) => {
-    if (window.currentMap && local) {
-      fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(local)}&limit=1`)
-        .then(response => response.json())
-        .then(data => {
-          if (data.length > 0) {
-            const lat = parseFloat(data[0].lat)
-            const lng = parseFloat(data[0].lon)
-            window.currentMap.setView([lat, lng], 12)
+    if (!local) {
+      console.log('Local vazio')
+      return
+    }
+    
+    console.log('Buscando local:', local)
+    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(local)}&limit=1`)
+      .then(response => {
+        console.log('Response status:', response.status)
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`)
+        }
+        return response.json()
+      })
+      .then(data => {
+        console.log('Dados recebidos:', data)
+        if (data.length > 0 && data[0].lat && data[0].lon) {
+          const lat = parseFloat(data[0].lat)
+          const lng = parseFloat(data[0].lon)
+          if (!isNaN(lat) && !isNaN(lng) && lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180) {
+            setUserLocation({ lat, lng })
+            
+            if (window.currentMap) {
+              window.currentMap.setView([lat, lng], 8)
+            }
             alert(`Local encontrado: ${local}`)
           } else {
-            alert('Local não encontrado')
+            alert('Coordenadas inválidas')
           }
-        })
-        .catch(() => alert('Erro na busca'))
-    }
+        } else {
+          alert('Local não encontrado')
+        }
+      })
+      .catch(error => {
+        console.error('Erro na busca:', error)
+        alert(`Erro na busca: ${error.message}`)
+      })
   }
 
   return (
@@ -329,7 +396,11 @@ function MapaLeaflet() {
                   min="1" 
                   max="3000" 
                   value={distancia}
-                  onChange={(e) => setDistancia(e.target.value)}
+                  onChange={(e) => {
+                    const novaDistancia = parseInt(e.target.value)
+                    console.log('Distância alterada para:', novaDistancia)
+                    setDistancia(novaDistancia)
+                  }}
                   style={{
                     width: '100%',
                     marginBottom: '0.5rem'
@@ -350,44 +421,20 @@ function MapaLeaflet() {
                   color: '#667eea'
                 }}>Localização:</label>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                  <div style={{ display: 'flex', gap: '0.5rem' }}>
-                    <input 
-                      id="searchInput"
-                      type="text"
-                      placeholder="Buscar local (ex: Manaus)"
-                      onKeyPress={(e) => {
-                        if (e.key === 'Enter') {
-                          buscarLocal(e.target.value)
-                        }
-                      }}
-                      style={{
-                        flex: 1,
-                        padding: '0.75rem',
-                        borderRadius: '10px',
-                        border: '1px solid rgba(102, 126, 234, 0.3)',
-                        background: darkMode ? '#333' : 'white',
-                        color: darkMode ? 'white' : '#333',
-                        fontSize: '0.9rem'
-                      }}
-                    />
-                    <button 
-                      onClick={() => {
-                        const input = document.getElementById('searchInput')
-                        buscarLocal(input.value)
-                      }}
-                      style={{
-                        padding: '0.75rem 1rem',
-                        borderRadius: '10px',
-                        border: '1px solid rgba(102, 126, 234, 0.3)',
-                        background: '#667eea',
-                        color: 'white',
-                        fontSize: '0.9rem',
-                        cursor: 'pointer'
-                      }}
-                    >
-                      🔍
-                    </button>
-                  </div>
+                  <input 
+                    id="searchInput"
+                    type="text"
+                    placeholder="Buscar local (ex: Manaus)"
+                    style={{
+                      width: '100%',
+                      padding: '0.75rem',
+                      borderRadius: '10px',
+                      border: '1px solid rgba(102, 126, 234, 0.3)',
+                      background: darkMode ? '#333' : 'white',
+                      color: darkMode ? 'white' : '#333',
+                      fontSize: '0.9rem'
+                    }}
+                  />
                   <button 
                     onClick={getMyLocation}
                     style={{
@@ -430,22 +477,18 @@ function MapaLeaflet() {
             <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
               <button 
                 onClick={() => {
+                  alert('Botão clicado!')
+                  
                   let filtrados = lugares
                   
-                  if (categoria !== 'todas') {
-                    filtrados = filtrados.filter(lugar => lugar.categoria === categoria)
-                  }
-                  
-                  if (preco !== 'todos') {
-                    filtrados = filtrados.filter(lugar => lugar.preco === preco)
+                  if (preco === 'pago') {
+                    filtrados = lugares.filter(lugar => lugar.preco === 'pago')
+                  } else if (preco === 'gratuito') {
+                    filtrados = lugares.filter(lugar => lugar.preco === 'gratuito')
                   }
                   
                   setLugaresVisiveis(filtrados)
-                  
-                  const totalFiltrados = filtrados.length
-                  const totalOriginal = lugares.length
-                  
-                  alert(`Filtros aplicados! Mostrando ${totalFiltrados} de ${totalOriginal} lugares.`)
+                  alert(`Filtrado: ${filtrados.length} lugares`)
                 }}
                 style={{
                   background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -455,10 +498,9 @@ function MapaLeaflet() {
                   borderRadius: '25px',
                   cursor: 'pointer',
                   fontSize: '1.1rem',
-                  fontWeight: '600',
-                  transition: 'all 0.3s ease'
+                  fontWeight: '600'
                 }}>
-                Aplicar Filtros ({lugaresVisiveis.length})
+                Aplicar Filtros
               </button>
             </div>
           
