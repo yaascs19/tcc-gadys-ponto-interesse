@@ -1,7 +1,9 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import './Login.css'
 
 function Login({ onLogin, isAdminAccess = false }) {
+  const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [userType, setUserType] = useState(isAdminAccess ? 'adm' : 'usuario')
@@ -14,8 +16,18 @@ function Login({ onLogin, isAdminAccess = false }) {
     
     if (isRegister) {
       if (email && password && password === confirmPassword && name) {
+        // Salvar dados do cadastro
+        const users = JSON.parse(localStorage.getItem('registeredUsers')) || []
+        users.push({ email, password, name, userType })
+        localStorage.setItem('registeredUsers', JSON.stringify(users))
+        
         alert('Cadastro realizado com sucesso!')
         setIsRegister(false)
+        // Limpar campos
+        setEmail('')
+        setPassword('')
+        setConfirmPassword('')
+        setName('')
       } else if (password !== confirmPassword) {
         alert('Senhas não coincidem!')
       } else {
@@ -23,10 +35,34 @@ function Login({ onLogin, isAdminAccess = false }) {
       }
     } else {
       if (email && password) {
-        if (email === 'admin@gadys.com' && password === '123' && userType === 'adm') {
-          onLogin('adm', 'Admin')
+        // Verificar usuários cadastrados
+        const users = JSON.parse(localStorage.getItem('registeredUsers')) || []
+        const user = users.find(u => u.email === email && u.password === password)
+        
+        if (user) {
+          localStorage.setItem('isLoggedIn', 'true')
+          localStorage.setItem('userType', user.userType)
+          localStorage.setItem('userName', user.name)
+          localStorage.setItem('userEmail', user.email)
+          if (onLogin) onLogin(user.userType, user.name)
+          alert('Login realizado com sucesso!')
+          navigate('/perfil')
+        } else if (email === 'admin@gadys.com' && password === '123' && userType === 'adm') {
+          localStorage.setItem('isLoggedIn', 'true')
+          localStorage.setItem('userType', 'adm')
+          localStorage.setItem('userName', 'Admin')
+          localStorage.setItem('userEmail', email)
+          if (onLogin) onLogin('adm', 'Admin')
+          alert('Login realizado com sucesso!')
+          navigate('/perfil')
         } else if (email === 'user@gadys.com' && password === '123') {
-          onLogin('usuario', 'Usuário')
+          localStorage.setItem('isLoggedIn', 'true')
+          localStorage.setItem('userType', 'usuario')
+          localStorage.setItem('userName', 'Usuário')
+          localStorage.setItem('userEmail', email)
+          if (onLogin) onLogin('usuario', 'Usuário')
+          alert('Login realizado com sucesso!')
+          navigate('/perfil')
         } else {
           alert('Credenciais inválidas!')
         }

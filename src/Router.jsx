@@ -30,7 +30,20 @@ import ParqueAnavilhanas from './components/ParqueAnavilhanas';
 import CulturaAmazonas from './components/CulturaAmazonas';
 import FestivalParintins from './components/FestivalParintins';
 import LendasAmazonicas from './components/LendasAmazonicas';
+import ArtesanatoIndigena from './components/ArtesanatoIndigena';
+import MusicaRegional from './components/MusicaRegional';
+import DancasFolcloricas from './components/DancasFolcloricas';
+import LiteraturaCordel from './components/LiteraturaCordel';
+import GastronomiaAmazonas from './components/GastronomiaAmazonas';
+import Tacaca from './components/Tacaca';
+import Pirarucu from './components/Pirarucu';
+import Cupuacu from './components/Cupuacu';
+import Acai from './components/Acai';
+import Tucuma from './components/Tucuma';
+import FarinhaMandioca from './components/FarinhaMandioca';
 import ContatoPage from './components/ContatoPage';
+import Login from './Login';
+import MapaPageFuncional from './components/MapaPageFuncional';
 
 
 function Router() {
@@ -39,7 +52,7 @@ function Router() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/sobre" element={<SobrePage />} />
-        <Route path="/mapa" element={<MapaPage />} />
+
         <Route path="/lugares" element={<LugaresPage />} />
         <Route path="/perfil" element={<PerfilPage />} />
         <Route path="/cristo-redentor" element={<CristoRedentor />} />
@@ -67,7 +80,20 @@ function Router() {
         <Route path="/amazonas/cultura" element={<CulturaAmazonas />} />
         <Route path="/festival-parintins" element={<FestivalParintins />} />
         <Route path="/lendas-amazonicas" element={<LendasAmazonicas />} />
+        <Route path="/artesanato-indigena" element={<ArtesanatoIndigena />} />
+        <Route path="/musica-regional" element={<MusicaRegional />} />
+        <Route path="/dancas-folcloricas" element={<DancasFolcloricas />} />
+        <Route path="/literatura-cordel" element={<LiteraturaCordel />} />
+        <Route path="/amazonas/gastronomia" element={<GastronomiaAmazonas />} />
+        <Route path="/tacaca" element={<Tacaca />} />
+        <Route path="/pirarucu" element={<Pirarucu />} />
+        <Route path="/cupuacu" element={<Cupuacu />} />
+        <Route path="/acai" element={<Acai />} />
+        <Route path="/tucuma" element={<Tucuma />} />
+        <Route path="/farinha-mandioca" element={<FarinhaMandioca />} />
         <Route path="/contato" element={<ContatoPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/mapa" element={<MapaPageFuncional />} />
 
       </Routes>
     </BrowserRouter>

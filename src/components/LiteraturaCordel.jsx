@@ -1,56 +1,10 @@
 import { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
-function CulturaAmazonas() {
-  const navigate = useNavigate()
+function LiteraturaCordel() {
   const [darkMode, setDarkMode] = useState(() => {
     return localStorage.getItem('darkMode') === 'true'
   })
-
-  const cultura = [
-    {
-      nome: 'Festival de Parintins',
-      desc: 'Maior festival folclórico do Brasil com bois Garantido e Caprichoso',
-      detalhes: 'Espetáculo que celebra a cultura amazônica com música, dança e teatro',
-      img: '/festival.jpeg',
-      localizacao: 'Parintins - AM'
-    },
-    {
-      nome: 'Lendas Amazônicas',
-      desc: 'Rica tradição oral com personagens míticos da floresta',
-      detalhes: 'Curupira, Boto-cor-de-rosa, Iara e outras lendas que encantam gerações',
-      img: '/curu.jpeg',
-      localizacao: 'Toda a Amazônia'
-    },
-    {
-      nome: 'Artesanato Indígena',
-      desc: 'Arte tradicional dos povos originários da Amazônia',
-      detalhes: 'Cestaria, cerâmica, plumária e outros objetos com técnicas ancestrais',
-      img: '/art.jpeg',
-      localizacao: 'Comunidades Indígenas'
-    },
-    {
-      nome: 'Música Regional',
-      desc: 'Ritmos únicos como carimbó, lambada e brega paraense',
-      detalhes: 'Expressões musicais que retratam a vida e cultura amazônica',
-      img: '/car.jpg',
-      localizacao: 'Região Norte'
-    },
-    {
-      nome: 'Danças Folclóricas',
-      desc: 'Manifestações culturais como quadrilha, carimbó e sirimbó',
-      detalhes: 'Danças que celebram as tradições e festividades regionais',
-      img: '/sir.jpg',
-      localizacao: 'Festivais Regionais'
-    },
-    {
-      nome: 'Literatura de Cordel',
-      desc: 'Tradição poética que narra histórias e lendas amazônicas',
-      detalhes: 'Versos rimados que preservam a memória cultural da região',
-      img: '/cord.jpg',
-      localizacao: 'Feiras e Mercados'
-    }
-  ]
 
   const toggleTheme = () => {
     const newDarkMode = !darkMode
@@ -210,7 +164,7 @@ function CulturaAmazonas() {
         >
           <li><Link to="/" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Início</Link></li>
           <li><Link to="/amazonas" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Amazonas</Link></li>
-          <li><a href="#" style={{ color: '#ccc', textDecoration: 'none', padding: '0.5rem 1rem', cursor: 'not-allowed' }}>Cultura (atual)</a></li>
+          <li><a href="#" style={{ color: '#ccc', textDecoration: 'none', padding: '0.5rem 1rem', cursor: 'not-allowed' }}>Literatura de Cordel (atual)</a></li>
           <li><Link to="/lugares" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Lugares</Link></li>
           <li><Link to="/mapa" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Mapa</Link></li>
           <li><Link to="/perfil" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Meu Perfil</Link></li>
@@ -243,7 +197,7 @@ function CulturaAmazonas() {
             letterSpacing: '-3px',
             lineHeight: '1.1'
           }}>
-            Cultura do Amazonas
+            Literatura de Cordel
           </h1>
           
           <p style={{
@@ -254,7 +208,8 @@ function CulturaAmazonas() {
             lineHeight: '1.6',
             fontWeight: '300'
           }}>
-            Tradições e manifestações culturais da Amazônia
+            Tradição poética que narra histórias e lendas amazônicas<br />
+            <span style={{ color: '#4caf50', fontWeight: '500' }}>Feiras e Mercados</span>
           </p>
         </section>
 
@@ -266,111 +221,146 @@ function CulturaAmazonas() {
           border: '1px solid rgba(76, 175, 80, 0.2)',
           boxShadow: '0 30px 60px rgba(76, 175, 80, 0.1)'
         }}>
-          <h2 style={{ 
-            fontSize: '3rem', 
-            marginBottom: '4rem', 
-            textAlign: 'center',
-            fontWeight: '700'
-          }}>Manifestações Culturais</h2>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-            gap: '3rem'
-          }}>
-            {cultura.map((item, index) => (
-              <div
-                key={index}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
+            <div>
+              <img 
+                src="/cord.jpg" 
+                alt="Literatura de Cordel"
                 style={{
-                  background: darkMode ? 'linear-gradient(135deg, rgba(13, 40, 24, 0.8) 0%, rgba(26, 77, 46, 0.6) 100%)' : 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(232, 245, 232, 0.7) 100%)',
+                  width: '100%',
+                  height: '400px',
+                  objectFit: 'cover',
+                  objectPosition: 'center',
                   borderRadius: '20px',
-                  overflow: 'hidden',
-                  boxShadow: '0 10px 30px rgba(76, 175, 80, 0.1)',
-                  transition: 'all 0.3s',
-                  cursor: 'pointer'
+                  boxShadow: '0 20px 40px rgba(76, 175, 80, 0.2)'
                 }}
-                onMouseOver={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-10px)'
-                  e.currentTarget.style.boxShadow = '0 20px 40px rgba(76, 175, 80, 0.2)'
-                }}
-                onMouseOut={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)'
-                  e.currentTarget.style.boxShadow = '0 10px 30px rgba(76, 175, 80, 0.1)'
-                }}
-              >
-                <img 
-                  src={item.img}
-                  alt={item.nome}
-                  style={{
-                    width: '100%',
-                    height: '250px',
-                    objectFit: 'cover'
-                  }}
-                />
-                <div style={{ padding: '2rem' }}>
-                  <h3 style={{
-                    fontSize: '1.5rem',
-                    marginBottom: '1rem',
-                    color: '#4caf50',
-                    fontWeight: '700'
-                  }}>
-                    {item.nome}
-                  </h3>
-                  <p style={{
-                    opacity: 0.8,
-                    lineHeight: 1.6,
-                    marginBottom: '1rem'
-                  }}>
-                    {item.desc}
-                  </p>
-                  <p style={{
-                    fontSize: '0.9rem',
-                    opacity: 0.7,
-                    marginBottom: '1rem',
-                    fontStyle: 'italic'
-                  }}>
-                    {item.detalhes}
-                  </p>
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    marginBottom: '1.5rem',
-                    color: '#4caf50',
-                    fontSize: '0.9rem'
-                  }}>
-                    📍 {item.localizacao}
-                  </div>
-                  <button 
-                    onClick={() => {
-                      if (item.nome === 'Festival de Parintins') {
-                        navigate('/festival-parintins')
-                      } else if (item.nome === 'Lendas Amazônicas') {
-                        navigate('/lendas-amazonicas')
-                      } else if (item.nome === 'Artesanato Indígena') {
-                        navigate('/artesanato-indigena')
-                      } else if (item.nome === 'Música Regional') {
-                        navigate('/musica-regional')
-                      } else if (item.nome === 'Danças Folclóricas') {
-                        navigate('/dancas-folcloricas')
-                      } else if (item.nome === 'Literatura de Cordel') {
-                        navigate('/literatura-cordel')
-                      }
-                    }}
-                    style={{
-                      background: 'linear-gradient(135deg, #4caf50 0%, #8bc34a 100%)',
-                      color: 'white',
-                      border: 'none',
-                      padding: '0.8rem 2rem',
-                      borderRadius: '25px',
-                      cursor: 'pointer',
-                      fontSize: '1rem',
-                      fontWeight: '600',
-                      transition: 'all 0.3s'
-                    }}
-                  >
-                    Saiba Mais
-                  </button>
-                </div>
+              />
+            </div>
+            <div>
+              <h2 style={{ fontSize: '2.5rem', marginBottom: '2rem', fontWeight: '700' }}>Sobre o Cordel</h2>
+              <p style={{ fontSize: '1.2rem', lineHeight: 1.8, opacity: 0.9, marginBottom: '2rem' }}>
+                A literatura de cordel amazônica é uma forma de expressão poética popular 
+                que narra histórias, lendas e acontecimentos da região através de versos 
+                rimados. Os folhetos ilustrados com xilogravuras preservam a memória 
+                cultural, contando desde lendas do Curupira e Boto até crônicas do 
+                cotidiano ribeirinho e grandes acontecimentos regionais.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section style={{
+          background: darkMode ? 'linear-gradient(135deg, rgba(76, 175, 80, 0.06) 0%, rgba(139, 195, 74, 0.02) 100%)' : 'linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.5) 100%)',
+          padding: '5rem 4rem',
+          borderRadius: '30px',
+          marginBottom: '6rem',
+          border: darkMode ? '1px solid rgba(76, 175, 80, 0.1)' : '1px solid rgba(76, 175, 80, 0.2)'
+        }}>
+          <h2 style={{ fontSize: '3rem', marginBottom: '3rem', textAlign: 'center', fontWeight: '700' }}>História</h2>
+          <p style={{ fontSize: '1.2rem', lineHeight: 1.8, opacity: 0.9, marginBottom: '2rem', textAlign: 'center', maxWidth: '900px', margin: '0 auto 2rem' }}>
+            O cordel chegou à Amazônia através dos migrantes nordestinos no século XIX, 
+            adaptando-se às temáticas locais. Os cordelistas amazônicos criaram um estilo 
+            único, incorporando lendas indígenas, histórias ribeirinhas e a rica mitologia 
+            da floresta. Os folhetos eram vendidos em feiras e mercados, pendurados em 
+            cordões, daí o nome "literatura de cordel".
+          </p>
+        </section>
+
+        <section style={{
+          background: 'linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(139, 195, 74, 0.1) 100%)',
+          padding: '5rem 4rem',
+          borderRadius: '30px',
+          marginBottom: '6rem',
+          border: '1px solid rgba(76, 175, 80, 0.2)',
+          boxShadow: '0 30px 60px rgba(76, 175, 80, 0.1)'
+        }}>
+          <h2 style={{ fontSize: '3rem', marginBottom: '4rem', textAlign: 'center', fontWeight: '700' }}>Informações Práticas</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '3rem' }}>
+            <div style={{
+              background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
+              padding: '2rem',
+              borderRadius: '20px'
+            }}>
+              <h3 style={{ fontSize: '1.5rem', marginBottom: '1.5rem', color: '#4caf50', fontWeight: '600' }}>Onde Encontrar</h3>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Mercado Municipal</li>
+                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Feiras populares</li>
+                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Centros culturais</li>
+              </ul>
+            </div>
+            <div style={{
+              background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
+              padding: '2rem',
+              borderRadius: '20px'
+            }}>
+              <h3 style={{ fontSize: '1.5rem', marginBottom: '1.5rem', color: '#4caf50', fontWeight: '600' }}>Temas Principais</h3>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Lendas amazônicas</li>
+                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Vida ribeirinha</li>
+                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Acontecimentos regionais</li>
+              </ul>
+            </div>
+            <div style={{
+              background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
+              padding: '2rem',
+              borderRadius: '20px'
+            }}>
+              <h3 style={{ fontSize: '1.5rem', marginBottom: '1.5rem', color: '#4caf50', fontWeight: '600' }}>Características</h3>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Versos rimados</li>
+                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Xilogravuras</li>
+                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Linguagem popular</li>
+              </ul>
+            </div>
+            <div style={{
+              background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
+              padding: '2rem',
+              borderRadius: '20px'
+            }}>
+              <h3 style={{ fontSize: '1.5rem', marginBottom: '1.5rem', color: '#4caf50', fontWeight: '600' }}>Dicas</h3>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Converse com os cordelistas</li>
+                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Valorize a arte popular</li>
+                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Colecione os folhetos</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section style={{
+          background: darkMode ? 'linear-gradient(135deg, rgba(76, 175, 80, 0.06) 0%, rgba(139, 195, 74, 0.02) 100%)' : 'linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.5) 100%)',
+          padding: '5rem 4rem',
+          borderRadius: '30px',
+          marginBottom: '6rem',
+          border: darkMode ? '1px solid rgba(76, 175, 80, 0.1)' : '1px solid rgba(76, 175, 80, 0.2)'
+        }}>
+          <h2 style={{ fontSize: '3rem', marginBottom: '3rem', textAlign: 'center', fontWeight: '700' }}>Curiosidades</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}>
+            {[
+              { title: 'Xilogravura', desc: 'Ilustrações feitas em madeira' },
+              { title: 'Métrica', desc: 'Versos de sete sílabas poéticas' },
+              { title: 'Oralidade', desc: 'Tradição oral preservada' },
+              { title: 'Temática', desc: 'Lendas e histórias regionais' },
+              { title: 'Patrimônio', desc: 'Reconhecido pela UNESCO' },
+              { title: 'Resistência', desc: 'Mantém viva a cultura popular' }
+            ].map((item, index) => (
+              <div key={index} style={{
+                background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
+                padding: '2rem',
+                borderRadius: '20px',
+                textAlign: 'center',
+                transition: 'all 0.3s'
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.transform = 'translateY(-5px)'
+                e.currentTarget.style.boxShadow = '0 15px 30px rgba(76, 175, 80, 0.2)'
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)'
+                e.currentTarget.style.boxShadow = 'none'
+              }}>
+                <h3 style={{ fontSize: '1.3rem', marginBottom: '1rem', color: '#4caf50', fontWeight: '600' }}>{item.title}</h3>
+                <p style={{ fontSize: '1rem', opacity: 0.8, lineHeight: 1.5 }}>{item.desc}</p>
               </div>
             ))}
           </div>
@@ -387,7 +377,7 @@ function CulturaAmazonas() {
             flexWrap: 'wrap'
           }}>
             <Link 
-              to="/amazonas"
+              to="/amazonas/cultura"
               style={{
                 background: 'linear-gradient(135deg, #4caf50 0%, #8bc34a 100%)',
                 color: 'white',
@@ -397,11 +387,13 @@ function CulturaAmazonas() {
                 cursor: 'pointer',
                 fontSize: '1.1rem',
                 fontWeight: '600',
-                transition: 'all 0.3s',
+                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                boxShadow: '0 15px 35px rgba(76, 175, 80, 0.4)',
+                letterSpacing: '0.5px',
                 textDecoration: 'none'
               }}
             >
-              Voltar ao Amazonas
+              Voltar à Cultura
             </Link>
             
             <Link 
@@ -409,13 +401,15 @@ function CulturaAmazonas() {
               style={{
                 background: 'transparent',
                 color: darkMode ? '#e8f5e8' : '#1b5e20',
-                border: '2px solid #4caf50',
+                border: darkMode ? '2px solid rgba(76, 175, 80, 0.5)' : '2px solid rgba(76, 175, 80, 0.7)',
                 padding: '1.5rem 3rem',
                 borderRadius: '50px',
                 cursor: 'pointer',
                 fontSize: '1.1rem',
                 fontWeight: '600',
-                transition: 'all 0.3s',
+                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                backdropFilter: 'blur(10px)',
+                letterSpacing: '0.5px',
                 textDecoration: 'none'
               }}
             >
@@ -439,4 +433,4 @@ function CulturaAmazonas() {
   )
 }
 
-export default CulturaAmazonas
+export default LiteraturaCordel

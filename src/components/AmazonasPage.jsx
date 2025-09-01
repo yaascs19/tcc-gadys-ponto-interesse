@@ -354,6 +354,8 @@ function AmazonasPage() {
                   window.location.href = '/amazonas/natureza'
                 } else if (categoria.key === 'cultura') {
                   window.location.href = '/amazonas/cultura'
+                } else if (categoria.key === 'gastronomia') {
+                  window.location.href = '/amazonas/gastronomia'
                 } else {
                   setCategoriaAtiva(categoria.key)
                 }

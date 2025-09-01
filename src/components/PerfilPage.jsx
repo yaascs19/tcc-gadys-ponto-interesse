@@ -1,16 +1,25 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 function PerfilPage() {
+  const navigate = useNavigate()
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    return localStorage.getItem('isLoggedIn') === 'true'
+  })
+  const [showLoginModal, setShowLoginModal] = useState(false)
   const [darkMode, setDarkMode] = useState(() => {
     return localStorage.getItem('darkMode') === 'true'
   })
   
   const [editMode, setEditMode] = useState(false)
   const [profileData, setProfileData] = useState(() => {
-    return JSON.parse(localStorage.getItem('profileData')) || {
-      nome: 'João Silva',
-      email: 'joao.silva@email.com',
+    const savedProfile = JSON.parse(localStorage.getItem('profileData'))
+    const userName = localStorage.getItem('userName')
+    const userEmail = localStorage.getItem('userEmail')
+    
+    return savedProfile || {
+      nome: userName || 'Usuário',
+      email: userEmail || 'usuario@email.com',
       telefone: '(11) 99999-9999',
       cidade: 'São Paulo, SP',
       foto: null
@@ -88,6 +97,10 @@ function PerfilPage() {
   }
 
   useEffect(() => {
+    if (!isLoggedIn) {
+      setShowLoginModal(true)
+    }
+    
     const style = document.createElement('style')
     style.textContent = `
       .nav-links.active {
@@ -103,7 +116,71 @@ function PerfilPage() {
     `
     document.head.appendChild(style)
     return () => document.head.removeChild(style)
-  }, [])
+  }, [isLoggedIn])
+
+  if (showLoginModal && !isLoggedIn) {
+    return (
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+        background: 'rgba(0,0,0,0.8)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 10000
+      }}>
+        <div style={{
+          background: darkMode ? '#333' : 'white',
+          padding: '2rem',
+          borderRadius: '20px',
+          maxWidth: '400px',
+          width: '90%',
+          textAlign: 'center',
+          boxShadow: '0 20px 40px rgba(0,0,0,0.3)'
+        }}>
+          <h3 style={{ marginBottom: '1rem', color: '#667eea' }}>Acesso Restrito</h3>
+          <p style={{ marginBottom: '2rem', color: darkMode ? '#ccc' : '#666' }}>
+            Para acessar o "Meu Perfil" é necessário fazer login.
+          </p>
+          <div style={{ display: 'flex', gap: '1rem' }}>
+            <button 
+              onClick={() => navigate('/login')}
+              style={{
+                flex: 1,
+                background: '#667eea',
+                color: 'white',
+                border: 'none',
+                padding: '0.75rem',
+                borderRadius: '10px',
+                cursor: 'pointer',
+                fontWeight: '600'
+              }}
+            >
+              OK
+            </button>
+            <button 
+              onClick={() => navigate('/')}
+              style={{
+                flex: 1,
+                background: '#ccc',
+                color: '#333',
+                border: 'none',
+                padding: '0.75rem',
+                borderRadius: '10px',
+                cursor: 'pointer',
+                fontWeight: '600'
+              }}
+            >
+              Cancelar
+            </button>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div style={{

@@ -1,54 +1,54 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
-function CulturaAmazonas() {
+function GastronomiaAmazonas() {
   const navigate = useNavigate()
   const [darkMode, setDarkMode] = useState(() => {
     return localStorage.getItem('darkMode') === 'true'
   })
 
-  const cultura = [
+  const gastronomia = [
     {
-      nome: 'Festival de Parintins',
-      desc: 'Maior festival folclórico do Brasil com bois Garantido e Caprichoso',
-      detalhes: 'Espetáculo que celebra a cultura amazônica com música, dança e teatro',
-      img: '/festival.jpeg',
-      localizacao: 'Parintins - AM'
+      nome: 'Tacaçá',
+      desc: 'Prato típico com tucumã e camarão seco',
+      detalhes: 'Sopa quente servida em cuia com goma de mandioca, jambu e camarão',
+      img: '/taca.jpeg',
+      localizacao: 'Manaus - AM'
     },
     {
-      nome: 'Lendas Amazônicas',
-      desc: 'Rica tradição oral com personagens míticos da floresta',
-      detalhes: 'Curupira, Boto-cor-de-rosa, Iara e outras lendas que encantam gerações',
-      img: '/curu.jpeg',
-      localizacao: 'Toda a Amazônia'
+      nome: 'Pirarucu',
+      desc: 'Peixe gigante da Amazônia preparado tradicionalmente',
+      detalhes: 'Conhecido como bacalhau da Amazônia, preparado assado ou cozido',
+      img: '/pira.jpeg',
+      localizacao: 'Região Amazônica'
     },
     {
-      nome: 'Artesanato Indígena',
-      desc: 'Arte tradicional dos povos originários da Amazônia',
-      detalhes: 'Cestaria, cerâmica, plumária e outros objetos com técnicas ancestrais',
-      img: '/art.jpeg',
-      localizacao: 'Comunidades Indígenas'
+      nome: 'Cupuaçu',
+      desc: 'Fruta exótica com sabor único',
+      detalhes: 'Fruto amazônico usado em doces, sucos e sorvetes',
+      img: '/cupu.jpeg',
+      localizacao: 'Amazônia'
     },
     {
-      nome: 'Música Regional',
-      desc: 'Ritmos únicos como carimbó, lambada e brega paraense',
-      detalhes: 'Expressões musicais que retratam a vida e cultura amazônica',
-      img: '/car.jpg',
+      nome: 'Açaí',
+      desc: 'Superfruta energética da Amazônia',
+      detalhes: 'Consumido doce ou salgado, base da alimentação ribeirinha',
+      img: '/acai.jpeg',
+      localizacao: 'Pará - AM'
+    },
+    {
+      nome: 'Tucumã',
+      desc: 'Palmito amazônico rico em vitaminas',
+      detalhes: 'Fruto da palmeira consumido in natura ou em pratos típicos',
+      img: '/tucu.jpeg',
       localizacao: 'Região Norte'
     },
     {
-      nome: 'Danças Folclóricas',
-      desc: 'Manifestações culturais como quadrilha, carimbó e sirimbó',
-      detalhes: 'Danças que celebram as tradições e festividades regionais',
-      img: '/sir.jpg',
-      localizacao: 'Festivais Regionais'
-    },
-    {
-      nome: 'Literatura de Cordel',
-      desc: 'Tradição poética que narra histórias e lendas amazônicas',
-      detalhes: 'Versos rimados que preservam a memória cultural da região',
-      img: '/cord.jpg',
-      localizacao: 'Feiras e Mercados'
+      nome: 'Farinha de Mandioca',
+      desc: 'Base da alimentação amazônica',
+      detalhes: 'Acompanha praticamente todas as refeições regionais',
+      img: '/mand.jpeg',
+      localizacao: 'Toda Amazônia'
     }
   ]
 
@@ -210,7 +210,7 @@ function CulturaAmazonas() {
         >
           <li><Link to="/" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Início</Link></li>
           <li><Link to="/amazonas" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Amazonas</Link></li>
-          <li><a href="#" style={{ color: '#ccc', textDecoration: 'none', padding: '0.5rem 1rem', cursor: 'not-allowed' }}>Cultura (atual)</a></li>
+          <li><a href="#" style={{ color: '#ccc', textDecoration: 'none', padding: '0.5rem 1rem', cursor: 'not-allowed' }}>Gastronomia (atual)</a></li>
           <li><Link to="/lugares" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Lugares</Link></li>
           <li><Link to="/mapa" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Mapa</Link></li>
           <li><Link to="/perfil" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Meu Perfil</Link></li>
@@ -243,7 +243,7 @@ function CulturaAmazonas() {
             letterSpacing: '-3px',
             lineHeight: '1.1'
           }}>
-            Cultura do Amazonas
+            Gastronomia do Amazonas
           </h1>
           
           <p style={{
@@ -254,7 +254,7 @@ function CulturaAmazonas() {
             lineHeight: '1.6',
             fontWeight: '300'
           }}>
-            Tradições e manifestações culturais da Amazônia
+            Sabores únicos e ingredientes exóticos da Amazônia
           </p>
         </section>
 
@@ -271,13 +271,13 @@ function CulturaAmazonas() {
             marginBottom: '4rem', 
             textAlign: 'center',
             fontWeight: '700'
-          }}>Manifestações Culturais</h2>
+          }}>Sabores Amazônicos</h2>
           <div style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
             gap: '3rem'
           }}>
-            {cultura.map((item, index) => (
+            {gastronomia.map((prato, index) => (
               <div
                 key={index}
                 style={{
@@ -298,8 +298,8 @@ function CulturaAmazonas() {
                 }}
               >
                 <img 
-                  src={item.img}
-                  alt={item.nome}
+                  src={prato.img}
+                  alt={prato.nome}
                   style={{
                     width: '100%',
                     height: '250px',
@@ -313,14 +313,14 @@ function CulturaAmazonas() {
                     color: '#4caf50',
                     fontWeight: '700'
                   }}>
-                    {item.nome}
+                    {prato.nome}
                   </h3>
                   <p style={{
                     opacity: 0.8,
                     lineHeight: 1.6,
                     marginBottom: '1rem'
                   }}>
-                    {item.desc}
+                    {prato.desc}
                   </p>
                   <p style={{
                     fontSize: '0.9rem',
@@ -328,7 +328,7 @@ function CulturaAmazonas() {
                     marginBottom: '1rem',
                     fontStyle: 'italic'
                   }}>
-                    {item.detalhes}
+                    {prato.detalhes}
                   </p>
                   <div style={{
                     display: 'flex',
@@ -338,22 +338,22 @@ function CulturaAmazonas() {
                     color: '#4caf50',
                     fontSize: '0.9rem'
                   }}>
-                    📍 {item.localizacao}
+                    📍 {prato.localizacao}
                   </div>
                   <button 
                     onClick={() => {
-                      if (item.nome === 'Festival de Parintins') {
-                        navigate('/festival-parintins')
-                      } else if (item.nome === 'Lendas Amazônicas') {
-                        navigate('/lendas-amazonicas')
-                      } else if (item.nome === 'Artesanato Indígena') {
-                        navigate('/artesanato-indigena')
-                      } else if (item.nome === 'Música Regional') {
-                        navigate('/musica-regional')
-                      } else if (item.nome === 'Danças Folclóricas') {
-                        navigate('/dancas-folcloricas')
-                      } else if (item.nome === 'Literatura de Cordel') {
-                        navigate('/literatura-cordel')
+                      if (prato.nome === 'Tacaçá') {
+                        navigate('/tacaca')
+                      } else if (prato.nome === 'Pirarucu') {
+                        navigate('/pirarucu')
+                      } else if (prato.nome === 'Cupuaçu') {
+                        navigate('/cupuacu')
+                      } else if (prato.nome === 'Açaí') {
+                        navigate('/acai')
+                      } else if (prato.nome === 'Tucumã') {
+                        navigate('/tucuma')
+                      } else if (prato.nome === 'Farinha de Mandioca') {
+                        navigate('/farinha-mandioca')
                       }
                     }}
                     style={{
@@ -439,4 +439,4 @@ function CulturaAmazonas() {
   )
 }
 
-export default CulturaAmazonas
+export default GastronomiaAmazonas
