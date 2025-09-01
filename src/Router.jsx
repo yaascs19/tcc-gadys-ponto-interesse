@@ -43,7 +43,7 @@ import Tucuma from './components/Tucuma';
 import FarinhaMandioca from './components/FarinhaMandioca';
 import ContatoPage from './components/ContatoPage';
 import Login from './Login';
-import MapaPageFuncional from './components/MapaPageFuncional';
+import MapaLeaflet from './components/MapaLeaflet';
 
 
 function Router() {
@@ -93,7 +93,7 @@ function Router() {
         <Route path="/farinha-mandioca" element={<FarinhaMandioca />} />
         <Route path="/contato" element={<ContatoPage />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/mapa" element={<MapaPageFuncional />} />
+        <Route path="/mapa" element={<MapaLeaflet />} />
 
       </Routes>
     </BrowserRouter>

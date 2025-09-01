@@ -1,16 +1,14 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
-function MapaPageFuncional() {
+function MapaLeaflet() {
   const [darkMode, setDarkMode] = useState(() => {
     return localStorage.getItem('darkMode') === 'true'
   })
-  const [distancia, setDistancia] = useState(3000)
-  const [userLocation, setUserLocation] = useState(null)
-  const [showBrazilMarkers, setShowBrazilMarkers] = useState(true)
-  const [mapSrc, setMapSrc] = useState('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15776119.828125!2d-54.0625!3d-14.235004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9c59c7ebcc28cf%3A295a1506f2293e63!2sBrasil!5e0!3m2!1spt-BR!2sbr!4v1704067200000!5m2!1spt-BR!2sbr')
   const [categoria, setCategoria] = useState('todas')
   const [preco, setPreco] = useState('todos')
+  const [distancia, setDistancia] = useState(3000)
+  const [userLocation, setUserLocation] = useState(null)
   const [lugaresVisiveis, setLugaresVisiveis] = useState([])
 
   const toggleTheme = () => {
@@ -27,20 +25,17 @@ function MapaPageFuncional() {
           const lng = position.coords.longitude
           setUserLocation({ lat, lng })
           
-          // Usar Google Maps API para centralizar na localização
           if (window.currentMap) {
-            window.currentMap.setCenter({ lat, lng })
-            window.currentMap.setZoom(12)
+            window.currentMap.setView([lat, lng], 12)
             
-            // Adicionar marcador da localização do usuário
-            new window.google.maps.Marker({
-              position: { lat, lng },
-              map: window.currentMap,
-              title: 'Sua Localização',
-              icon: {
-                url: `data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='25' height='25'%3E%3Ccircle cx='12.5' cy='12.5' r='10' fill='%23ff4444' stroke='white' stroke-width='3'/%3E%3C/svg%3E`
-              }
-            })
+            window.L.circleMarker([lat, lng], {
+              radius: 20,
+              fillColor: '#ff4444',
+              color: 'white',
+              weight: 4,
+              opacity: 1,
+              fillOpacity: 1
+            }).addTo(window.currentMap).bindPopup('Sua Localização')
           }
           
           alert(`Localização encontrada: ${lat.toFixed(4)}, ${lng.toFixed(4)}`)
@@ -62,6 +57,12 @@ function MapaPageFuncional() {
     { nome: 'Fernando de Noronha', lat: -3.8549, lng: -32.4229, cor: '#9b59b6', cidade: 'Pernambuco - PE', categoria: 'praias', preco: 'pago' },
     { nome: 'Pantanal', lat: -16.3394, lng: -56.4669, cor: '#1abc9c', cidade: 'Mato Grosso - MT', categoria: 'natureza', preco: 'pago' },
     { nome: 'Teatro Amazonas', lat: -3.1302, lng: -60.0231, cor: '#4caf50', cidade: 'Manaus - AM', categoria: 'monumentos', preco: 'pago' },
+    { nome: 'Palácio da Justiça', lat: -3.1319, lng: -60.0212, cor: '#ff5722', cidade: 'Manaus - AM', categoria: 'monumentos', preco: 'gratuito' },
+    { nome: 'Mercado Municipal Adolpho Lisboa', lat: -3.1365, lng: -60.0235, cor: '#795548', cidade: 'Manaus - AM', categoria: 'monumentos', preco: 'gratuito' },
+    { nome: 'Igreja São Sebastião', lat: -3.1298, lng: -60.0178, cor: '#607d8b', cidade: 'Manaus - AM', categoria: 'monumentos', preco: 'gratuito' },
+    { nome: 'Palácio Rio Negro', lat: -3.1285, lng: -60.0195, cor: '#9c27b0', cidade: 'Manaus - AM', categoria: 'monumentos', preco: 'pago' },
+    { nome: 'Centro Cultural Palácio da Justiça', lat: -3.1315, lng: -60.0208, cor: '#ff9800', cidade: 'Manaus - AM', categoria: 'monumentos', preco: 'gratuito' },
+    { nome: 'Monumento à Abertura dos Portos', lat: -3.1275, lng: -60.0165, cor: '#3f51b5', cidade: 'Manaus - AM', categoria: 'monumentos', preco: 'gratuito' },
     { nome: 'Encontro das Águas', lat: -3.1285, lng: -59.9070, cor: '#8bc34a', cidade: 'Manaus - AM', categoria: 'natureza', preco: 'gratuito' },
     { nome: 'Parque Nacional do Jaú', lat: -1.9000, lng: -61.6000, cor: '#cddc39', cidade: 'Novo Airão - AM', categoria: 'natureza', preco: 'pago' },
     { nome: 'Reserva Mamirauá', lat: -3.0833, lng: -64.8500, cor: '#66bb6a', cidade: 'Tefé - AM', categoria: 'natureza', preco: 'pago' },
@@ -72,39 +73,69 @@ function MapaPageFuncional() {
   useEffect(() => {
     setLugaresVisiveis(lugares)
     
-    // Iframe direto no JSX
+    // Carregar Leaflet
+    const link = document.createElement('link')
+    link.rel = 'stylesheet'
+    link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'
+    document.head.appendChild(link)
     
-    function getMarkerPosition(lugar) {
-      // Converter coordenadas GPS para posição no mapa
-      const latNorm = (lugar.lat + 35) / 40
-      const lngNorm = (lugar.lng + 75) / 40
-      return {
-        x: (1 - lngNorm) * 100 + '%',
-        y: latNorm * 100 + '%'
+    const script = document.createElement('script')
+    script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'
+    script.onload = initMap
+    document.head.appendChild(script)
+    
+    function initMap() {
+      if (window.L && document.getElementById('map')) {
+        const map = window.L.map('map').setView([-14.2350, -51.9253], 4)
+        
+        window.L.tileLayer('https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', {
+          attribution: '© Google Maps',
+          maxZoom: 20
+        }).addTo(map)
+        
+        // Adicionar marcadores
+        lugares.forEach(lugar => {
+          const marker = window.L.circleMarker([lugar.lat, lugar.lng], {
+            radius: 15,
+            fillColor: lugar.cor,
+            color: 'white',
+            weight: 3,
+            opacity: 1,
+            fillOpacity: 1
+          }).addTo(map)
+          
+          marker.bindPopup(`
+            <div style="font-family: Arial; max-width: 300px;">
+              <h3 style="margin: 0 0 10px 0; color: #1a237e;">${lugar.nome}</h3>
+              <p><strong>Cidade:</strong> ${lugar.cidade}</p>
+              <p><strong>Categoria:</strong> ${lugar.categoria}</p>
+              <p><strong>Preço:</strong> ${lugar.preco}</p>
+            </div>
+          `)
+        })
+        
+        window.currentMap = map
       }
     }
-    
-    const style = document.createElement('style')
-    style.textContent = `
-      .nav-links.active {
-        right: 0 !important;
-      }
-      .nav-overlay.active {
-        opacity: 1 !important;
-        visibility: visible !important;
-      }
-      .nav-links li:hover .dropdown-content {
-        display: block !important;
-      }
-      @keyframes pulse {
-        0% { transform: translate(-50%, -50%) scale(1); }
-        50% { transform: translate(-50%, -50%) scale(1.2); }
-        100% { transform: translate(-50%, -50%) scale(1); }
-      }
-    `
-    document.head.appendChild(style)
-    return () => document.head.removeChild(style)
   }, [])
+
+  const buscarLocal = (local) => {
+    if (window.currentMap && local) {
+      fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(local)}&limit=1`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.length > 0) {
+            const lat = parseFloat(data[0].lat)
+            const lng = parseFloat(data[0].lon)
+            window.currentMap.setView([lat, lng], 12)
+            alert(`Local encontrado: ${local}`)
+          } else {
+            alert('Local não encontrado')
+          }
+        })
+        .catch(() => alert('Erro na busca'))
+    }
+  }
 
   return (
     <div style={{
@@ -156,84 +187,7 @@ function MapaPageFuncional() {
           >
             {darkMode ? '☀️' : '🌙'}
           </button>
-          <div 
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              cursor: 'pointer',
-              zIndex: 1002
-            }}
-            onClick={() => document.querySelector('.nav-links').classList.toggle('active')}
-          >
-            <span style={{
-              width: '25px',
-              height: '3px',
-              background: 'white',
-              margin: '3px 0',
-              transition: '0.3s'
-            }} />
-            <span style={{
-              width: '25px',
-              height: '3px',
-              background: 'white',
-              margin: '3px 0',
-              transition: '0.3s'
-            }} />
-            <span style={{
-              width: '25px',
-              height: '3px',
-              background: 'white',
-              margin: '3px 0',
-              transition: '0.3s'
-            }} />
-          </div>
         </div>
-        <div 
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100vw',
-            height: '100vh',
-            background: 'rgba(0, 0, 0, 0.5)',
-            zIndex: 1000,
-            opacity: 0,
-            visibility: 'hidden',
-            transition: 'all 0.3s ease'
-          }}
-          className="nav-overlay"
-          onClick={() => document.querySelector('.nav-links').classList.remove('active')}
-        />
-        <ul 
-          className="nav-links"
-          style={{
-            position: 'fixed',
-            top: 0,
-            right: '-100%',
-            width: '300px',
-            height: '100vh',
-            background: '#1a237e',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            alignItems: 'center',
-            gap: '2rem',
-            margin: 0,
-            padding: '4rem 0',
-            listStyle: 'none',
-            transition: 'right 0.3s ease',
-            zIndex: 1001,
-            overflowY: 'scroll',
-            boxShadow: '-5px 0 15px rgba(0,0,0,0.1)'
-          }}
-        >
-          <li><Link to="/" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Início</Link></li>
-          <li><Link to="/lugares" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Lugares</Link></li>
-          <li><a href="#" style={{ color: '#ccc', textDecoration: 'none', padding: '0.5rem 1rem', cursor: 'not-allowed' }}>Mapa (atual)</a></li>
-          <li><Link to="/perfil" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Meu Perfil</Link></li>
-          <li><Link to="/sobre" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Sobre</Link></li>
-          <li><Link to="/contato" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Contato</Link></li>
-        </ul>
       </header>
 
       <main style={{
@@ -403,19 +357,7 @@ function MapaPageFuncional() {
                       placeholder="Buscar local (ex: Manaus)"
                       onKeyPress={(e) => {
                         if (e.key === 'Enter') {
-                          const local = e.target.value
-                          if (local) {
-                            // Encontrar lugares próximos ao local buscado
-                            const lugaresPróximos = lugares.filter(lugar => 
-                              lugar.cidade.toLowerCase().includes(local.toLowerCase()) ||
-                              lugar.nome.toLowerCase().includes(local.toLowerCase())
-                            )
-                            
-                            // Buscar atualizando mapSrc
-                            const searchUrl = `https://maps.google.com/maps?q=${encodeURIComponent(local)}&t=&z=12&ie=UTF8&iwloc=&output=embed`
-                            setMapSrc(searchUrl)
-                            alert(`Buscando: ${local} - ${lugaresPróximos.length} lugares encontrados`)
-                          }
+                          buscarLocal(e.target.value)
                         }
                       }}
                       style={{
@@ -431,19 +373,7 @@ function MapaPageFuncional() {
                     <button 
                       onClick={() => {
                         const input = document.getElementById('searchInput')
-                        const local = input.value
-                        if (local) {
-                          // Encontrar lugares próximos ao local buscado
-                          const lugaresPróximos = lugares.filter(lugar => 
-                            lugar.cidade.toLowerCase().includes(local.toLowerCase()) ||
-                            lugar.nome.toLowerCase().includes(local.toLowerCase())
-                          )
-                          
-                          // Buscar atualizando mapSrc
-                          const searchUrl = `https://maps.google.com/maps?q=${encodeURIComponent(local)}&t=&z=12&ie=UTF8&iwloc=&output=embed`
-                          setMapSrc(searchUrl)
-                          alert(`Buscando: ${local} - ${lugaresPróximos.length} lugares encontrados`)
-                        }
+                        buscarLocal(input.value)
                       }}
                       style={{
                         padding: '0.75rem 1rem',
@@ -475,7 +405,9 @@ function MapaPageFuncional() {
                   </button>
                   <button 
                     onClick={() => {
-                      setMapSrc('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15776119.828125!2d-54.0625!3d-14.235004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9c59c7ebcc28cf%3A295a1506f2293e63!2sBrasil!5e0!3m2!1spt-BR!2sbr!4v1704067200000!5m2!1spt-BR!2sbr')
+                      if (window.currentMap) {
+                        window.currentMap.setView([-14.2350, -51.9253], 4)
+                      }
                       setUserLocation(null)
                     }}
                     style={{
@@ -535,54 +467,13 @@ function MapaPageFuncional() {
               padding: '1rem',
               borderRadius: '20px',
               minHeight: '600px',
-              border: '1px solid rgba(102, 126, 234, 0.3)',
-              position: 'relative'
+              border: '1px solid rgba(102, 126, 234, 0.3)'
             }}>
-              <iframe
-                src={mapSrc}
-                width="100%"
-                height="580"
-                style={{
-                  border: 0,
-                  borderRadius: '15px'
-                }}
-                allowFullScreen=""
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Mapa do Brasil"
-              />
-              
-              <div style={{
-                position: 'absolute',
-                top: '1rem',
-                left: '1rem',
-                right: '1rem',
-                bottom: '1rem',
-                pointerEvents: 'none',
+              <div id="map" style={{
+                width: '100%',
+                height: '580px',
                 borderRadius: '15px'
-              }}>
-                {/* Marcadores serão adicionados via JavaScript no overlay */}
-                
-                {userLocation && (
-                  <div
-                    style={{
-                      position: 'absolute',
-                      left: '50%',
-                      top: '50%',
-                      width: '25px',
-                      height: '25px',
-                      background: '#ff4444',
-                      border: '4px solid white',
-                      borderRadius: '50%',
-                      boxShadow: '0 0 20px rgba(255, 68, 68, 0.6)',
-                      transform: 'translate(-50%, -50%)',
-                      zIndex: 200,
-                      animation: 'pulse 2s infinite'
-                    }}
-                    title="Sua Localização"
-                  />
-                )}
-              </div>
+              }}></div>
             </div>
           </div>
         </section>
@@ -717,4 +608,4 @@ function MapaPageFuncional() {
   )
 }
 
-export default MapaPageFuncional
+export default MapaLeaflet
