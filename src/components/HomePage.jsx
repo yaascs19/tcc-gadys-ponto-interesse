@@ -141,14 +141,17 @@ function HomePage() {
                 <a href="#">Rondônia</a>
                 <a href="#">Roraima</a>
                 <a href="#">Santa Catarina</a>
-                <a href="#">São Paulo</a>
+                <Link to="/sao-paulo" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>São Paulo</Link>
                 <a href="#">Sergipe</a>
                 <a href="#">Tocantins</a>
               </div>
             </li>
             <li><a href="#" onClick={() => {navigate('/lugares'); document.querySelector('.nav-links').classList.remove('active')}}>Lugares</a></li>
             <li><a href="#" onClick={() => {navigate('/mapa'); document.querySelector('.nav-links').classList.remove('active')}}>Mapa</a></li>
-            <li><a href="#" onClick={(e) => {e.preventDefault(); if (!localStorage.getItem('isLoggedIn')) navigate('/login'); else window.location.href='/adicionar-locais.html'; document.querySelector('.nav-links').classList.remove('active')}}>Adicionar Local</a></li>
+            <li><a href="#" onClick={() => {navigate('/adicionar-local'); document.querySelector('.nav-links').classList.remove('active')}}>Adicionar Local</a></li>
+            {localStorage.getItem('userType') === 'adm' && (
+              <li><a href="#" onClick={() => {navigate('/painel-adm'); document.querySelector('.nav-links').classList.remove('active')}}>Administração</a></li>
+            )}
             <li><a href="#" onClick={() => {navigate('/perfil'); document.querySelector('.nav-links').classList.remove('active')}}>Meu Perfil</a></li>
             <li><a href="#" onClick={() => {navigate('/sobre'); document.querySelector('.nav-links').classList.remove('active')}}>Sobre</a></li>
             <li><a href="#" onClick={() => {navigate('/contato'); document.querySelector('.nav-links').classList.remove('active')}}>Contato</a></li>

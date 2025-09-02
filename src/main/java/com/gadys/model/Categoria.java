@@ -1,4 +1,4 @@
-package com.gadys.model;
+                               package com.gadys.model;
 
 import jakarta.persistence.*;
 import java.util.ArrayList;

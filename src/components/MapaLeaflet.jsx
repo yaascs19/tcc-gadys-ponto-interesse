@@ -17,6 +17,8 @@ function MapaLeaflet() {
     localStorage.setItem('darkMode', newDarkMode.toString())
   }
 
+
+
   const calcularDistancia = (lat1, lng1, lat2, lng2) => {
     const R = 6371 // Raio da Terra em km
     const dLat = (lat2 - lat1) * Math.PI / 180
@@ -85,6 +87,21 @@ function MapaLeaflet() {
   ]
 
   useEffect(() => {
+    const style = document.createElement('style')
+    style.textContent = `
+      .nav-links.active {
+        right: 0 !important;
+      }
+      .nav-overlay.active {
+        opacity: 1 !important;
+        visibility: visible !important;
+      }
+      .nav-links li:hover .dropdown-content {
+        display: block !important;
+      }
+    `
+    document.head.appendChild(style)
+    
     setLugaresVisiveis(lugares)
     
     // Aguardar um pouco antes de carregar o mapa
@@ -132,13 +149,35 @@ function MapaLeaflet() {
                            lugar.categoria === 'praias' ? '🏖️' : '🏢'
               
               marker.bindPopup(`
-                <div style="padding: 10px; font-family: Arial;">
-                  <h3 style="margin: 0 0 5px 0; color: #333;">${icone} ${lugar.nome}</h3>
-                  <p style="margin: 0 0 5px 0; color: #666;">${lugar.cidade}</p>
-                  <div style="display: flex; gap: 5px;">
-                    <span style="background: #667eea; color: white; padding: 2px 6px; border-radius: 10px; font-size: 11px;">${lugar.categoria}</span>
-                    <span style="background: ${lugar.preco === 'gratuito' ? '#2ecc71' : '#e74c3c'}; color: white; padding: 2px 6px; border-radius: 10px; font-size: 11px;">${lugar.preco}</span>
+                <div style="padding: 15px; font-family: Arial; min-width: 200px;">
+                  <h3 style="margin: 0 0 8px 0; color: #333; font-size: 16px;">${icone} ${lugar.nome}</h3>
+                  <p style="margin: 0 0 10px 0; color: #666; font-size: 13px;">${lugar.cidade}</p>
+                  <div style="display: flex; gap: 5px; margin-bottom: 12px;">
+                    <span style="background: #667eea; color: white; padding: 3px 8px; border-radius: 12px; font-size: 11px;">${lugar.categoria}</span>
+                    <span style="background: ${lugar.preco === 'gratuito' ? '#2ecc71' : '#e74c3c'}; color: white; padding: 3px 8px; border-radius: 12px; font-size: 11px;">${lugar.preco}</span>
                   </div>
+                  <button 
+                    onclick="window.location.href='${lugar.cidade.includes('AM') ? '/amazonas' : '/lugares'}'" 
+                    style="
+                      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                      color: white;
+                      border: none;
+                      padding: 10px 20px;
+                      border-radius: 25px;
+                      cursor: pointer;
+                      font-size: 13px;
+                      font-weight: 600;
+                      width: 100%;
+                      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+                      transition: all 0.3s ease;
+                      text-transform: uppercase;
+                      letter-spacing: 0.5px;
+                    "
+                    onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.6)'"
+                    onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.4)'"
+                  >
+                    Ver Detalhes
+                  </button>
                 </div>
               `)
               
@@ -162,6 +201,8 @@ function MapaLeaflet() {
       }
       document.head.appendChild(script)
     }, 100)
+    
+    return () => document.head.removeChild(style)
   }, [])
 
   const buscarLocal = (local) => {
@@ -188,7 +229,7 @@ function MapaLeaflet() {
             setUserLocation({ lat, lng })
             
             if (window.currentMap) {
-              window.currentMap.setView([lat, lng], 8)
+              window.currentMap.setView([lat, lng], 10)
             }
             alert(`Local encontrado: ${local}`)
           } else {
@@ -242,9 +283,9 @@ function MapaLeaflet() {
           <button 
             onClick={toggleTheme}
             style={{
-              background: 'rgba(255,255,255,0.1)',
-              border: '1px solid rgba(255,255,255,0.2)',
-              color: 'white',
+              background: darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
+              border: darkMode ? '1px solid rgba(255,255,255,0.2)' : '1px solid rgba(0,0,0,0.2)',
+              color: darkMode ? 'white' : '#2c3e50',
               fontSize: '1.2rem',
               cursor: 'pointer',
               padding: '0.5rem',
@@ -254,7 +295,129 @@ function MapaLeaflet() {
           >
             {darkMode ? '☀️' : '🌙'}
           </button>
+          <div 
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              cursor: 'pointer',
+              zIndex: 1002
+            }}
+            onClick={() => document.querySelector('.nav-links').classList.toggle('active')}
+          >
+            <span style={{
+              width: '25px',
+              height: '3px',
+              background: 'white',
+              margin: '3px 0',
+              transition: '0.3s'
+            }} />
+            <span style={{
+              width: '25px',
+              height: '3px',
+              background: 'white',
+              margin: '3px 0',
+              transition: '0.3s'
+            }} />
+            <span style={{
+              width: '25px',
+              height: '3px',
+              background: 'white',
+              margin: '3px 0',
+              transition: '0.3s'
+            }} />
+          </div>
         </div>
+        <div 
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
+            background: 'rgba(0, 0, 0, 0.5)',
+            zIndex: 1000,
+            opacity: 0,
+            visibility: 'hidden',
+            transition: 'all 0.3s ease'
+          }}
+          className="nav-overlay"
+          onClick={() => document.querySelector('.nav-links').classList.remove('active')}
+        />
+        <ul 
+          className="nav-links"
+          style={{
+            position: 'fixed',
+            top: 0,
+            right: '-100%',
+            width: '300px',
+            height: '100vh',
+            background: darkMode ? '#1a237e' : '#1a237e',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            gap: '2rem',
+            margin: 0,
+            padding: '4rem 0',
+            listStyle: 'none',
+            transition: 'right 0.3s ease',
+            zIndex: 1001,
+            overflowY: 'scroll',
+            boxShadow: '-5px 0 15px rgba(0,0,0,0.1)'
+          }}
+        >
+          <li><Link to="/" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Início</Link></li>
+          <li className="dropdown" style={{ position: 'relative' }}>
+            <a href="#" style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Estados Brasileiros ▼</a>
+            <div className="dropdown-content" style={{
+              position: 'absolute',
+              top: '100%',
+              left: 0,
+              background: 'white',
+              minWidth: '200px',
+              maxHeight: '300px',
+              overflowY: 'auto',
+              boxShadow: '0 8px 16px rgba(0,0,0,0.2)',
+              borderRadius: '5px',
+              display: 'none',
+              zIndex: 1002
+            }}>
+              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Acre</a>
+              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Alagoas</a>
+              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Amapá</a>
+              <Link to="/amazonas" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Amazonas</Link>
+              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Bahia</a>
+              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Ceará</a>
+              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Distrito Federal</a>
+              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Espírito Santo</a>
+              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Goiás</a>
+              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Maranhão</a>
+              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Mato Grosso</a>
+              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Mato Grosso do Sul</a>
+              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Minas Gerais</a>
+              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Pará</a>
+              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Paraíba</a>
+              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Paraná</a>
+              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Pernambuco</a>
+              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Piauí</a>
+              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Rio de Janeiro</a>
+              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Rio Grande do Norte</a>
+              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Rio Grande do Sul</a>
+              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Rondônia</a>
+              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Roraima</a>
+              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Santa Catarina</a>
+              <Link to="/sao-paulo" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>São Paulo</Link>
+              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Sergipe</a>
+              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Tocantins</a>
+            </div>
+          </li>
+          <li><Link to="/lugares" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Lugares</Link></li>
+          <li><a href="#" style={{ color: '#ccc', textDecoration: 'none', padding: '0.5rem 1rem', cursor: 'not-allowed' }}>Mapa (atual)</a></li>
+          <li><Link to="/adicionar-local" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Adicionar Local</Link></li>
+          <li><Link to="/perfil" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Meu Perfil</Link></li>
+          <li><Link to="/sobre" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Sobre</Link></li>
+          <li><Link to="/contato" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Contato</Link></li>
+        </ul>
       </header>
 
       <main style={{
@@ -477,18 +640,133 @@ function MapaLeaflet() {
             <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
               <button 
                 onClick={() => {
-                  alert('Botão clicado!')
+                  console.log('=== APLICANDO FILTROS ===')
                   
                   let filtrados = lugares
                   
-                  if (preco === 'pago') {
-                    filtrados = lugares.filter(lugar => lugar.preco === 'pago')
-                  } else if (preco === 'gratuito') {
-                    filtrados = lugares.filter(lugar => lugar.preco === 'gratuito')
+                  // Filtro por categoria
+                  if (categoria !== 'todas') {
+                    filtrados = filtrados.filter(lugar => lugar.categoria === categoria)
+                    console.log(`Filtro categoria '${categoria}':`, filtrados.length, 'lugares')
                   }
                   
+                  // Filtro por preço
+                  if (preco !== 'todos') {
+                    filtrados = filtrados.filter(lugar => lugar.preco === preco)
+                    console.log(`Filtro preço '${preco}':`, filtrados.length, 'lugares')
+                  }
+                  
+                  // Filtro por distância
+                  if (userLocation) {
+                    filtrados = filtrados.filter(lugar => {
+                      const distanciaKm = calcularDistancia(
+                        userLocation.lat, userLocation.lng,
+                        lugar.lat, lugar.lng
+                      )
+                      return distanciaKm <= parseInt(distancia)
+                    })
+                    console.log(`Filtro distância ${distancia}km:`, filtrados.length, 'lugares')
+                  }
+                  
+                  // Atualizar lista
                   setLugaresVisiveis(filtrados)
-                  alert(`Filtrado: ${filtrados.length} lugares`)
+                  
+                  // Atualizar marcadores no mapa
+                  if (window.currentMap && window.mapMarkers) {
+                    console.log('Removendo', window.mapMarkers.length, 'marcadores antigos')
+                    
+                    // Remover todos os marcadores
+                    window.mapMarkers.forEach(marker => {
+                      window.currentMap.removeLayer(marker)
+                    })
+                    window.mapMarkers = []
+                    
+                    // Adicionar apenas marcadores filtrados
+                    console.log('Adicionando', filtrados.length, 'marcadores filtrados:')
+                    filtrados.forEach((lugar, index) => {
+                      console.log(`  ${index + 1}. ${lugar.nome} em [${lugar.lat}, ${lugar.lng}] - Cor: ${lugar.cor}`)
+                      
+                      // Verificar se já existe marcador nessa posição
+                      const coordsExistentes = window.mapMarkers.find(m => 
+                        m.getLatLng && m.getLatLng().lat === lugar.lat && m.getLatLng().lng === lugar.lng
+                      )
+                      if (coordsExistentes) {
+                        console.log(`    ATENÇÃO: Já existe marcador em [${lugar.lat}, ${lugar.lng}]`)
+                      }
+                      
+                      const marker = window.L.circleMarker([lugar.lat, lugar.lng], {
+                        radius: 15, // Aumentando o raio para ficar mais visível
+                        fillColor: lugar.cor,
+                        color: 'white',
+                        weight: 4,
+                        opacity: 1,
+                        fillOpacity: 1
+                      }).addTo(window.currentMap)
+                      
+                      console.log(`    Marcador ${index + 1} criado com sucesso`)
+                      
+                      const icone = lugar.categoria === 'monumentos' ? '🏛️' : 
+                                   lugar.categoria === 'natureza' ? '🌳' : 
+                                   lugar.categoria === 'praias' ? '🏖️' : '🏢'
+                      
+                      marker.bindPopup(`
+                        <div style="padding: 15px; font-family: Arial; min-width: 200px;">
+                          <h3 style="margin: 0 0 8px 0; color: #333; font-size: 16px;">${icone} ${lugar.nome}</h3>
+                          <p style="margin: 0 0 10px 0; color: #666; font-size: 13px;">${lugar.cidade}</p>
+                          <div style="display: flex; gap: 5px; margin-bottom: 12px;">
+                            <span style="background: #667eea; color: white; padding: 3px 8px; border-radius: 12px; font-size: 11px;">${lugar.categoria}</span>
+                            <span style="background: ${lugar.preco === 'gratuito' ? '#2ecc71' : '#e74c3c'}; color: white; padding: 3px 8px; border-radius: 12px; font-size: 11px;">${lugar.preco}</span>
+                          </div>
+                          <button 
+                            onclick="window.location.href='${lugar.cidade.includes('AM') ? '/amazonas' : '/lugares'}'" 
+                            style="
+                              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                              color: white;
+                              border: none;
+                              padding: 10px 20px;
+                              border-radius: 25px;
+                              cursor: pointer;
+                              font-size: 13px;
+                              font-weight: 600;
+                              width: 100%;
+                              box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+                              transition: all 0.3s ease;
+                              text-transform: uppercase;
+                              letter-spacing: 0.5px;
+                            "
+                            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.6)'"
+                            onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.4)'"
+                          >
+                            Ver Detalhes
+                          </button>
+                        </div>
+                      `)
+                      
+                      window.mapMarkers.push(marker)
+                      console.log(`    Marcador ${index + 1} adicionado ao array. Total: ${window.mapMarkers.length}`)
+                    })
+                    
+                    console.log('\n=== RESUMO FINAL ===')
+                    console.log('Lugares filtrados:', filtrados.length)
+                    console.log('Marcadores criados:', window.mapMarkers.length)
+                    console.log('Lista de marcadores:')
+                    window.mapMarkers.forEach((marker, i) => {
+                      if (marker.getLatLng) {
+                        const pos = marker.getLatLng()
+                        console.log(`  Marcador ${i + 1}: [${pos.lat}, ${pos.lng}]`)
+                      }
+                    })
+                  }
+                  
+                  // Buscar local se digitado
+                  const searchInput = document.getElementById('searchInput')
+                  if (searchInput && searchInput.value.trim()) {
+                    console.log('Buscando local:', searchInput.value)
+                    buscarLocal(searchInput.value)
+                  }
+                  
+                  const msgDistancia = userLocation ? ` (dentro de ${distancia}km)` : ''
+                  alert(`Filtros aplicados! ${filtrados.length} lugares mostrados${msgDistancia}`)
                 }}
                 style={{
                   background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -500,7 +778,7 @@ function MapaLeaflet() {
                   fontSize: '1.1rem',
                   fontWeight: '600'
                 }}>
-                Aplicar Filtros
+                🔍 Aplicar Filtros
               </button>
             </div>
           

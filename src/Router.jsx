@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
 import App from './App';
 import HomePage from './components/HomePage';
 import SobrePage from './components/SobrePage';
@@ -43,10 +44,32 @@ import Tucuma from './components/Tucuma';
 import FarinhaMandioca from './components/FarinhaMandioca';
 import ContatoPage from './components/ContatoPage';
 import Login from './Login';
-import MapaLeaflet from './components/MapaLeaflet';
+import MapaLeaflet from './components/MapaLeaflet'
+import AdicionarLocal from './components/AdicionarLocal'
+import AdminPanel from './AdminPanel';
+import SaoPaulo from './components/SaoPaulo';
 
 
 function Router() {
+  useEffect(() => {
+    // Cadastrar administrador padrão
+    const adminUser = {
+      email: "yasmincunegundes25@gmail.com",
+      password: "Cun*1925",
+      userType: "adm",
+      userName: "Yasmin Admin"
+    }
+    
+    let users = JSON.parse(localStorage.getItem('users')) || []
+    const adminExists = users.find(user => user.email === adminUser.email)
+    
+    if (!adminExists) {
+      users.push(adminUser)
+      localStorage.setItem('users', JSON.stringify(users))
+      console.log('Administrador cadastrado automaticamente!')
+    }
+  }, [])
+  
   return (
     <BrowserRouter>
       <Routes>
@@ -94,6 +117,9 @@ function Router() {
         <Route path="/contato" element={<ContatoPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/mapa" element={<MapaLeaflet />} />
+        <Route path="/adicionar-local" element={<AdicionarLocal />} />
+        <Route path="/painel-adm" element={<AdminPanel />} />
+        <Route path="/sao-paulo" element={<SaoPaulo />} />
 
       </Routes>
     </BrowserRouter>
