@@ -10,7 +10,7 @@ classDiagram
         -String email
         -String senha
         -TipoUsuario tipoUsuario
-        -LocalDateTime ultimoAcesso
+        -LocalDateTime ultimoAcesso eededededededededededededededededededededeeeeeeeeeeexxxxxxxxxxxxx v v                                  v
         -Integer totalAcessos
         -String ipAcesso
         -LocalDateTime dataCadastro

@@ -10,24 +10,36 @@ function AmazonasPage() {
   
   const atrativos = {
     monumentos: [
-      { nome: 'Teatro Amazonas', desc: 'Majestoso teatro do período áureo da borracha', img: '/teatro-amazonas1.jpeg' },
-      { nome: 'Forte de São José', desc: 'Fortaleza histórica que marca o início da colonização', img: '/forte.jpeg' },
-      { nome: 'Palácio da Justiça', desc: 'Edifício histórico com arquitetura colonial', img: '/jus.jpeg' }
+      { nome: 'Teatro Amazonas', desc: 'Majestoso teatro construído durante o período áureo da borracha, símbolo de Manaus', img: '/teatro-amazonas1.jpeg', horario: 'Ter-Sáb: 9h-17h', preco: 'R$ 20,00' },
+      { nome: 'Forte de São José', desc: 'Fortaleza histórica que marca o início da colonização de Manaus', img: '/forte.jpeg', horario: 'Ter-Dom: 8h-17h', preco: 'R$ 10,00' },
+      { nome: 'Mercado Municipal', desc: 'Mercado histórico inspirado no mercado Les Halles de Paris', img: '/mercado.jpeg', horario: 'Seg-Sáb: 6h-18h', preco: 'Gratuito' },
+      { nome: 'Palácio da Justiça', desc: 'Edifício histórico com arquitetura colonial preservada', img: '/jus.jpeg', horario: 'Seg-Sex: 8h-17h', preco: 'Gratuito' },
+      { nome: 'Igreja de São Sebastião', desc: 'Igreja histórica com arquitetura colonial e importância religiosa', img: '/igreja.jpeg', horario: 'Diário: 6h-18h', preco: 'Gratuito' },
+      { nome: 'Palácio Rio Negro', desc: 'Antiga residência dos governadores, hoje centro cultural', img: '/palacio.jpeg', horario: 'Ter-Dom: 10h-17h', preco: 'R$ 5,00' }
     ],
     natureza: [
-      { nome: 'Encontro das Águas', desc: 'Fenômeno natural dos rios Negro e Solimões', img: '/encontro.jpeg' },
-      { nome: 'Parque Nacional do Jaú', desc: 'Maior parque nacional do Brasil', img: '/jau.jpeg' },
-      { nome: 'Reserva Mamirauá', desc: 'Reserva de desenvolvimento sustentável', img: '/reserva.jpeg' }
+      { nome: 'Floresta Amazônica', desc: 'A maior floresta tropical do mundo com biodiversidade única', img: '/floresta.jpeg', horario: '24 horas', preco: 'Varia por tour' },
+      { nome: 'Encontro das Águas', desc: 'Fenômeno natural onde os rios Negro e Solimões se encontram', img: '/encontro.jpeg', horario: 'Diário: 6h-18h', preco: 'R$ 80-150' },
+      { nome: 'Parque Nacional de Anavilhanas', desc: 'Maior arquipélago fluvial do mundo com rica biodiversidade', img: '/anavilhanas.jpeg', horario: 'Diário: 8h-17h', preco: 'R$ 15,00' },
+      { nome: 'Reserva Mamirauá', desc: 'Maior reserva de várzea do mundo com fauna única', img: '/reserva.jpeg', horario: 'Tours programados', preco: 'R$ 200-500/dia' },
+      { nome: 'Parque Nacional do Jaú', desc: 'Uma das maiores unidades de conservação da Amazônia', img: '/jau.jpeg', horario: 'Acesso controlado', preco: 'R$ 25,00' },
+      { nome: 'Rio Amazonas', desc: 'O maior rio do mundo em volume de água e extensão', img: '/rio.jpeg', horario: '24 horas', preco: 'Varia por atividade' }
     ],
     cultura: [
-      { nome: 'Festival de Parintins', desc: 'Maior festival folclórico do Norte', img: '/festival.jpeg' },
-      { nome: 'Artesanato Indígena', desc: 'Arte tradicional dos povos amazônicos', img: '/art.jpeg' },
-      { nome: 'Rituais Xamânicos', desc: 'Tradições espirituais milenares', img: '/rit.jpeg' }
+      { nome: 'Festival de Parintins', desc: 'Maior festival folclórico do Norte com Boi Garantido e Caprichoso', img: '/festival.jpeg', horario: 'Última semana de junho', preco: 'R$ 50-200' },
+      { nome: 'Lendas Amazônicas', desc: 'Rica tradição oral com personagens como Curupira e Boto', img: '/lendas.jpeg', horario: 'Contação permanente', preco: 'Varia por local' },
+      { nome: 'Artesanato Indígena', desc: 'Arte tradicional dos povos amazônicos com materiais naturais', img: '/art.jpeg', horario: 'Feiras e mercados', preco: 'R$ 20-500' },
+      { nome: 'Música Regional', desc: 'Ritmos típicos como carimbó e boi-bumbá', img: '/musica.jpeg', horario: 'Apresentações variadas', preco: 'Gratuito a R$ 50' },
+      { nome: 'Danças Folclóricas', desc: 'Manifestações culturais tradicionais amazônicas', img: '/dancas.jpeg', horario: 'Eventos culturais', preco: 'Gratuito a R$ 30' },
+      { nome: 'Literatura de Cordel', desc: 'Tradição literária popular nordestina presente na Amazônia', img: '/cordel.jpeg', horario: 'Feiras culturais', preco: 'R$ 5-15' }
     ],
     gastronomia: [
-      { nome: 'Tacaçá', desc: 'Prato típico com tucumã e camarão seco', img: '/taca.jpeg' },
-      { nome: 'Pirarucu', desc: 'Peixe gigante da Amazônia preparado tradicionalmente', img: '/pira.jpeg' },
-      { nome: 'Cupuaçu', desc: 'Fruta exótica com sabor único', img: '/cupu.jpeg' }
+      { nome: 'Açaí', desc: 'Fruto amazônico rico em nutrientes e sabor único', img: '/acai.jpeg', horario: 'Disponível o ano todo', preco: 'R$ 8-15' },
+      { nome: 'Tucumã', desc: 'Fruto típico consumido com farinha de mandioca', img: '/tucuma.jpeg', horario: 'Safra: Mar-Jul', preco: 'R$ 5-10' },
+      { nome: 'Pirarucu', desc: 'Peixe gigante da Amazônia preparado de diversas formas', img: '/pira.jpeg', horario: 'Disponível o ano todo', preco: 'R$ 40-80/kg' },
+      { nome: 'Cupuaçu', desc: 'Fruto amazônico usado em doces e sucos refrescantes', img: '/cupu.jpeg', horario: 'Safra: Dez-Mar', preco: 'R$ 10-20' },
+      { nome: 'Tacaçá', desc: 'Prato típico amazônico com tucumã e camarão seco', img: '/taca.jpeg', horario: 'Vendido à tarde/noite', preco: 'R$ 8-12' },
+      { nome: 'Farinha de Mandioca', desc: 'Alimento básico da culinária amazônica', img: '/farinha.jpeg', horario: 'Disponível o ano todo', preco: 'R$ 5-8/kg' }
     ]
   }
 
